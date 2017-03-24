@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('article/{n}', function($n) { 
+    return view('article')->with('numero', $n); 
+})->where('n', '[0-9]+');

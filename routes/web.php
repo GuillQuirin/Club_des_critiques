@@ -25,3 +25,8 @@ Route::get('article/{n}', function($n) {
 //Routes vers un Controlleur qui décide de quelle vue afficher 
 Route::get('/', 'WelcomeController@index');
 Route::get('article/{n}', 'ArticleController@show')->where('n', '[0-9]+');
+
+
+//Routes d'un formulaire
+Route::get('users', 'UsersController@getInfos');
+Route::post('users', 'UsersController@postInfos');

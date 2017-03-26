@@ -30,3 +30,7 @@ Route::get('article/{n}', 'ArticleController@show')->where('n', '[0-9]+');
 //Routes d'un formulaire
 Route::get('users', 'UsersController@getInfos');
 Route::post('users', 'UsersController@postInfos');
+
+//Formulaire de contact
+Route::get('contact', 'ContactController@getForm');
+Route::post('contact', 'ContactController@postForm');

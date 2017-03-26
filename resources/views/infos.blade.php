@@ -14,7 +14,7 @@
 
 {{--
 
---Alternative à la création d'un formulaire (pour imposer des disabled ou des required)
+--Alternative à la création d'un formulaire
 
 @section('contenu')
 	<form method="POST" action="{!! url('users') !!}" accept-charset="UTF-8">

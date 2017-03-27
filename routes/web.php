@@ -38,3 +38,7 @@ Route::post('contact', 'ContactController@postForm');
 //Redirection pour les uploads
 Route::get('photo', 'PhotoController@getForm');
 Route::post('photo', 'PhotoController@postForm');
+
+//Enregistrement des emails en Base de données
+Route::get('email', 'EmailController@getForm');
+Route::post('email', ['uses' => 'EmailController@postForm', 'as' => 'storeEmail']);

@@ -22,8 +22,23 @@ Route::get('article/{n}', function($n) {
 })->where('n', '[0-9]+');
 */
 
-//Routes vers un Controlleur qui décide quelle vue afficher 
+/* Routes vers un Controlleur qui décide quelle vue afficher */
+
+//Accueil
 Route::get('/', 'WelcomeController@index');
+
+//Oeuvres
+Route::get('/livres', 'BooksController@index');
+Route::get('/films', 'MoviesController@index');
+Route::get('/expositions', 'ExhibitionsController@index');
+
+//Profil utilisateur
+Route::get('/utilisateur', 'UserController@index');
+
+//Liste salons
+Route::get('/salons', 'RoomsController@index');
+
+
 /*Route::get('article/{n}', 'ArticleController@show')->where('n', '[0-9]+');
 
 

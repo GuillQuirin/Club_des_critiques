@@ -20,12 +20,28 @@
 	</head>
 	<body>
 		<header>
-            <img src="#" alt="#">
-            <a href="#">Accueil</a>
-            <a href="#">Contenus</a>
-            <a href="#">Salons</a>
-            <a href="#">Administration</a>
-            <a href="#">Mon compte / Se connecter</a>
+            <nav>
+                <img src="#" alt="#">
+                <a href="/">Accueil</a>
+                <a href="#">Contenus</a>
+                <a href="/salons">Salons</a>
+                <a href="#">Administration</a>
+                <a href="/utilisateur">Mon compte / Se connecter</a>
+            </nav>
+            <!-- Contenus -->
+            <div>
+                <a href="/livres">Livres</a>
+                <a href="/films">Films</a>
+                <a href="/expositions">Expositions</a>
+            </div>
+            <!-- Salons -->
+            <div>
+
+            </div>
+            <!-- Volet Utilisateur -->
+            <div>
+
+            </div>
         </header>
 		
         @yield('content')

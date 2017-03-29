@@ -22,9 +22,9 @@ Route::get('article/{n}', function($n) {
 })->where('n', '[0-9]+');
 */
 
-//Routes vers un Controlleur qui décide de quelle vue afficher 
+//Routes vers un Controlleur qui décide quelle vue afficher 
 Route::get('/', 'WelcomeController@index');
-Route::get('article/{n}', 'ArticleController@show')->where('n', '[0-9]+');
+/*Route::get('article/{n}', 'ArticleController@show')->where('n', '[0-9]+');
 
 
 //Routes d'un formulaire
@@ -43,4 +43,4 @@ Route::post('photo', 'PhotoController@postForm');
 Route::get('email', 'EmailController@getForm');
 Route::post('email', ['uses' => 'EmailController@postForm', 'as' => 'storeEmail']);
 
-Route::resource('user', 'UserController');
+Route::resource('user', 'UserController');*/

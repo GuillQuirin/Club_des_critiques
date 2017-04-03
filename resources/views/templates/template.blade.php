@@ -41,7 +41,23 @@
                   
                   <ul class="nav navbar-nav">
                     <li class="active"><a href="/">Accueil<span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">Contenus</a></li>
+                    <li class="dropdown">
+                        <a  href="#" 
+                            class="dropdown-toggle" 
+                            data-toggle="dropdown" 
+                            role="button" 
+                            aria-haspopup="true" 
+                            aria-expanded="false">Oeuvres <span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a href="/livres">Livres</a></li>
+                            <li><a href="/films">Films</a></li>
+                            <li><a href="/expositions">Expositions</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/salons">Rechercher une oeuvre</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a  href="#" 
                             class="dropdown-toggle" 
@@ -51,14 +67,28 @@
                             aria-expanded="false">Salons <span class="caret"></span></a>
 
                         <ul class="dropdown-menu">
-                            <li><a href="/livres">Livres</a></li>
-                            <li><a href="/films">Films</a></li>
-                            <li><a href="/expositions">Expositions</a></li>
+                            <li><a href="/">Les salons à venir</a></li>
+                            <li><a href="/">Mes salons</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/salons">Tous les salons</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
                         </ul>
+                    </li>
+
+                    <li class="dropdown dropdownCountdown">
+                        <a  id="nextRoomCountdown" 
+                            data-countdown="2017/07/19"
+                            class="dropdown-toggle" 
+                            data-toggle="dropdown" 
+                            role="button" 
+                            aria-haspopup="true" 
+                            aria-expanded="false"></a>
+
+                        <div id="nextRoomDetails" class="dropdown-menu">
+                            <p>Prochain salon :</p>
+                            <p>Oeuvre</p>
+                            <p>Date de lancement:</p>
+                            <a href=''>Accèdez à la fiche du salon</a>
+                        </div>
                     </li>
                   </ul>
 
@@ -70,14 +100,19 @@
                             data-toggle="dropdown" 
                             role="button" 
                             aria-haspopup="true" 
-                            aria-expanded="false">Mon compte / Se connecter <span class="caret"></span></a>
+                            aria-expanded="false">Connexion<span class="caret"></span></a>
 
                         <ul class="dropdown-menu">
                             <li></li>
-                            <li><a href="/utilisateur">Another action <span class="badge">42</span></a></li>
-                            <li><a href="#">Something else here</a></li>
+                            <li>
+                                <a href="" data-toggle="modal" data-target="#loginModal">Authentification 
+                                    <span class="badge">42</span>
+                                </a>
+                            </li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
+                            <li>
+                                <a href="" data-toggle="modal" data-target="#registerModal">Inscription</a>
+                            </li>
                         </ul>
                     </li>
                   </ul>
@@ -85,24 +120,91 @@
               </div><!-- /.container -->
             </nav>
         </header>
-		
-        <!-- FIL D'ARIANE -->
-        <div class="container">
+        
+        <?php 
+        //FIL D'ARIANE
+        $breadcrumbs = new Creitive\Breadcrumbs\Breadcrumbs; 
+        $breadcrumbs->addCrumb('Accueil', '/');
+        $breadcrumbs->addCrumb('Livres', '/livres');
+        //echo $breadcrumbs->render();
+        ?>
+        
+        <!-- <div class="container">
             <ol class="breadcrumb">
               <li><a href="#">Un </a></li>
               <li><a href="#">fil</a></li>
               <li class="active">d'ariane</li>
             </ol>
-        </div>
-                    
-        @yield('content')
-
+        </div> -->
+        
+        <span id="content">
+            @yield('content')
+        </span>
+        
         <footer>
             <a href="#">Footer</a>
         </footer>
        
+      <!-- MODAL CONNEXION -->
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+              </div>
+              <div class="modal-body">
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- MODAL INSCRIPTION -->
+        <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Rejoignez-nous</h4>
+              </div>
+              {!! Form::open(['url' => '/']) !!}
+              <div id="popupRegister" class="modal-body">
+                    <p>Adresse email :</p>
+                    <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
+                        {!! Form::text('email','', ['class' => 'form-control']) !!}
+                        {!! $errors->first('email', '<small class="help-block">:message</small>') !!}
+                    </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                {!! Form::submit("S'inscrire", ['class' => 'btn btn-info pull-right']) !!}
+              </div>
+              {!! Form::close() !!}
+            </div>
+          </div>
+        </div>
+
         <!-- JAVASCRIPT -->
             {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js') !!}
             {!! HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js') !!}
+            {!! HTML::script('js/jquery.countdown.js') !!}
+            <script type="text/javascript">
+                $(document).ready(function(){
+
+                    /* COUNTDOWN */
+                    $('[data-countdown]').each(function() {
+                      var $this = $(this), finalDate = $(this).data('countdown');
+                      $this.countdown(finalDate, function(event) {
+                        $this.html(event.strftime('%D jours %H:%M:%S'));
+                      });
+                    });
+
+                });
+            </script>
 	</body>
 </html>

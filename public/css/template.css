@@ -1,4 +1,22 @@
 BODY{
-	color:red;
 	padding-top: 70px;
+}
+
+li.dropdownCountdown{
+	width: 200px;
+}
+
+#nextRoomCountdown{
+	text-align: center;
+    font-weight: bold;
+}
+
+#nextRoomDetails{
+	width: 100%;
+    padding: 20px 10px;
+}
+
+
+#popupRegister{
+    display: block;
 }

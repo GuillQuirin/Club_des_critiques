@@ -1,9 +1,22 @@
-BODY{
-	
-}
-
 .jumbotron{
 	background-image: url(/images/welcome.jpeg);
 	background-size: cover;
     min-height: 500px;
+}
+
+figure img{
+	max-width: 100%;
+}
+
+figcaption{
+	text-align: center;
+    font-size: 1.25em;
+}
+
+figcaption .title{
+	
+}
+
+figcaption .author{
+
 }

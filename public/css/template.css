@@ -2,6 +2,8 @@ BODY{
 	padding-top: 70px;
 }
 
+/* HEADER */
+
 li.dropdownCountdown{
 	width: 200px;
 }
@@ -19,4 +21,35 @@ li.dropdownCountdown{
 
 #popupRegister{
     display: block;
+}
+
+
+/* CSS appliqué pour l'ensemble des container hormis l'accueil*/
+.container:not(.notPadding){
+	padding-right: 75px;
+    padding-left: 75px;
+}
+
+/* FIGCAPTION du site */
+
+figure img{
+	max-width: 100%;
+}
+
+figcaption{
+	text-align: center;
+    font-size: 1.25em;
+}
+
+figcaption .title{
+	
+}
+
+figcaption .author{
+
+}
+
+h1{
+	margin-top: 20px;
+	margin-bottom: 20px;
 }

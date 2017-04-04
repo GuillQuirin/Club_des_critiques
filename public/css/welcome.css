@@ -4,6 +4,18 @@
     min-height: 500px;
 }
 
+.jumbotron .container-fluid{
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.jumbotron h1{
+	text-align: center;
+}
+
+.jumbotron small{
+	color:white;
+}
+
 figure img{
 	max-width: 100%;
 }

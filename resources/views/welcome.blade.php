@@ -11,11 +11,11 @@
 @section('content')
     
     <div class="jumbotron">
-      <div class="container">
+      <div class="container-fluid">
         <h1>Le club des critiques <br><small>Lisez, rencontrez, partagez</small></h1>
       </div>
     </div>
-    <div class="container">       
+    <div class="container notPadding">       
         <div>
             <h2>Le concept</h2>
             <p>

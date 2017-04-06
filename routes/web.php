@@ -32,7 +32,8 @@ Route::get('/livres', 'BooksController@index');
 Route::get('/films', 'MoviesController@index');
 Route::get('/expositions', 'ExhibitionsController@index');
 
-//Profil utilisateur
+//Utilisateur
+Route::get('/utilisateurs', 'UsersController@index');
 Route::get('/utilisateur', 'UserController@index');
 
 //Liste salons

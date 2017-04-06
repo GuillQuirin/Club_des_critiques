@@ -93,7 +93,6 @@
                   </ul>
 
                   <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Administration</a></li>
                     <li class="dropdown">
                         <a  href="#" 
                             class="dropdown-toggle" 
@@ -103,7 +102,6 @@
                             aria-expanded="false">Connexion<span class="caret"></span></a>
 
                         <ul class="dropdown-menu">
-                            <li></li>
                             <li>
                                 <a href="" data-toggle="modal" data-target="#loginModal">Authentification 
                                     <span class="badge">42</span>
@@ -113,6 +111,8 @@
                             <li>
                                 <a href="" data-toggle="modal" data-target="#registerModal">Inscription</a>
                             </li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Administration</a></li>
                         </ul>
                     </li>
                   </ul>

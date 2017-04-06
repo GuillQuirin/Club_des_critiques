@@ -1,3 +1,11 @@
-BODY{
-	text-decoration: underline;
+
+#profilPicture{
+	max-width: 100%;
+	max-height: 300px;
+	min-height: 150px;
+}
+
+.description{
+	font-style: italic;
+	transform: translateY(50%);
 }

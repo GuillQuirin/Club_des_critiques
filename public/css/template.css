@@ -1,8 +1,16 @@
 BODY{
-	padding-top: 70px;
+	padding-top: 50px;
 }
 
 /* HEADER */
+.navbar{
+	height: 50px;
+}
+
+.logo{
+    max-height: 50px;
+    margin: 0 20px;
+}
 
 li.dropdownCountdown{
 	width: 200px;

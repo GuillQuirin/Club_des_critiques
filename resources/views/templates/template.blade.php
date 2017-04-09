@@ -13,6 +13,7 @@
     			{{ Html::style('https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js') }}
     			{{ Html::style('https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js') }}
     		<![endif]-->
+            {!! HTML::style('font-awesome-4.7.0/css/font-awesome.css'); !!}
             {!! HTML::style('css/template.css'); !!}
             @yield('css')
 	</head>
@@ -33,14 +34,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="/"><img src="#" alt="#"></a>
+                  <a href="/"><img class="logo" src="/images/logo.png" alt="logo"></a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   
                   <ul class="nav navbar-nav">
-                    <li class="active"><a href="/">Accueil<span class="sr-only">(current)</span></a></li>
+                    <li class="active hidden-sm"><a href="/">Accueil<span class="sr-only">(current)</span></a></li>
                     <li class="dropdown">
                         <a  href="#" 
                             class="dropdown-toggle" 
@@ -94,12 +95,22 @@
 
                   <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
+                        
                         <a  href="#" 
-                            class="dropdown-toggle" 
+                            class="dropdown-toggle hidden-sm" 
                             data-toggle="dropdown" 
                             role="button" 
                             aria-haspopup="true" 
                             aria-expanded="false">Connexion<span class="caret"></span></a>
+                        
+                        <a  href="#" 
+                            class="dropdown-toggle visible-sm-block" 
+                            data-toggle="dropdown" 
+                            role="button" 
+                            aria-haspopup="true" 
+                            aria-expanded="false">
+                                <i  class="fa fa-sign-in" aria-hidden="true"></i>
+                                <span class="caret"></span></a>
 
                         <ul class="dropdown-menu">
                             <li>
@@ -110,6 +121,10 @@
                             <li role="separator" class="divider"></li>
                             <li>
                                 <a href="" data-toggle="modal" data-target="#registerModal">Inscription</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="/utilisateur">Mon compte</a>
                             </li>
                             <li role="separator" class="divider"></li>
                             <li><a href="#">Administration</a></li>

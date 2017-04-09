@@ -36,6 +36,11 @@ li.dropdownCountdown{
 .container:not(.notPadding){
 	padding-right: 75px;
     padding-left: 75px;
+    position: relative;
+}
+
+small{
+    display: block;
 }
 
 /* FIGCAPTION du site */

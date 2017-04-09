@@ -212,23 +212,7 @@
             {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js') !!}
             {!! HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js') !!}
             {!! HTML::script('js/jquery.countdown.js') !!}
-            <script type="text/javascript">
-                $(document).ready(function(){
-
-                    /* COUNTDOWN */
-                    $('[data-countdown]').each(function() {
-                      var $this = $(this), finalDate = $(this).data('countdown');
-                      $this.countdown(finalDate, function(event) {
-                        $this.html(event.strftime('%D jours %H:%M:%S'));
-                      });
-                    });
-
-                    /* VOLET DEROULANT */
-                    $("#menu-toggle").click(function(e) {
-                        e.preventDefault();
-                        $("#wrapper").toggleClass("toggled");
-                    });
-                });
-            </script>
+            {!! HTML::script('js/template.js') !!}
+            @yield('js')
 	</body>
 </html>

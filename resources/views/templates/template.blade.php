@@ -18,8 +18,8 @@
             @yield('css')
 	</head>
 	<body>
-		<header>
-            <nav class="navbar navbar-default navbar-fixed-top">
+		<header id="wrapper">
+            <nav id="page-content-wrapper" class="navbar navbar-default navbar-fixed-top">
               <div class="container">
 
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -28,6 +28,7 @@
                             class="navbar-toggle collapsed" 
                             data-toggle="collapse" 
                             data-target="#bs-example-navbar-collapse-1" 
+                            id="menu-toggle"
                             aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
@@ -39,8 +40,9 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  
-                  <ul class="nav navbar-nav">
+                 <div id="sidebar-wrapper"> 
+                  <ul class="nav navbar-nav" class="sidebar-nav">
+                    <li class="visible-xs-block"><a href="/"><img class="logo" src="/images/logo.png" alt="logo"></a></li>
                     <li class="active hidden-sm"><a href="/">Accueil<span class="sr-only">(current)</span></a></li>
                     <li class="dropdown">
                         <a  href="#" 
@@ -93,7 +95,7 @@
                     </li>
                   </ul>
 
-                  <ul class="nav navbar-nav navbar-right">
+                  <ul class="nav navbar-nav navbar-right sidebar-nav">
                     <li class="dropdown">
                         
                         <a  href="#" 
@@ -131,9 +133,11 @@
                         </ul>
                     </li>
                   </ul>
+                 </div>
                 </div><!-- /.navbar-collapse -->
               </div><!-- /.container -->
             </nav>
+            
         </header>
         
         <?php 
@@ -219,6 +223,11 @@
                       });
                     });
 
+                    /* VOLET DEROULANT */
+                    $("#menu-toggle").click(function(e) {
+                        e.preventDefault();
+                        $("#wrapper").toggleClass("toggled");
+                    });
                 });
             </script>
 	</body>

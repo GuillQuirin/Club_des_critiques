@@ -58,7 +58,7 @@
                             <li><a href="{{ route('show_category', ['id' => 2]) }}">Films</a></li>
                             <li><a href="{{ route('show_category', ['id' => 3]) }}">Expositions</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="{{ route('search_element') }}">Rechercher une oeuvre</a></li>
+                            <li><a href="{{ route('elements') }}">Toutes les oeuvres</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -90,9 +90,7 @@
                             <p>Prochain salon :</p>
                             <p>Oeuvre</p>
                             <p>Date de lancement:</p>
-<!-- A décommenter -->
-                            <!-- <a href="{{ route('show_room', ['id' => 1]) }}">Accèdez à la fiche du salon</a> -->
-                            <a href=''>Accèdez à la fiche du salon</a>
+                            <a href="{{ route('show_room', ['id' => 1]) }}">Accèdez à la fiche du salon</a>
                         </div>
                     </li>
                   </ul>
@@ -128,7 +126,7 @@
                             </li>
                             <li role="separator" class="divider"></li>
                             <li>
-                                <a href="/utilisateur">Mon compte</a>
+                                <a href="{{ route('show_user', ['id' => 1]) }}">Mon compte</a>
                             </li>
                             <li role="separator" class="divider"></li>
                             <li><a href="#">Administration</a></li>

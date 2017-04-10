@@ -1,9 +1,9 @@
 @extends('templates/template')
 
 @section('title')
-    Test
+    Salon
 @endsection
 
 @section('content')
-	<!-- PAGE D'UN SALON -->
+	PAGE D'UN SALON
 @endsection

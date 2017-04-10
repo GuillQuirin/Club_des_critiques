@@ -11,6 +11,7 @@
 |
 */
 
+
 //Accueil
 Route::get('/', ['as' => 'home', 'uses' => 'WelcomeController@index']);
 
@@ -21,7 +22,6 @@ Route::get('category/{id}', ['as' => 'show_category', 'uses' => 'CategoryControl
 //Oeuvres
 Route::get('elements', ['as' => 'elements', 'uses' => 'ElementController@index']);
 Route::get('element/{id}', ['as' => 'show_element', 'uses' => 'ElementController@show']);
-Route::get('element/search', ['as' => 'search_element', 'uses' => 'ElementController@search']);
 
 //Utilisateur
 Route::get('users', ['as' => 'users', 'uses' => 'UserController@index']);

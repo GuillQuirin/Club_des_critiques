@@ -12,6 +12,11 @@ class CategoryController extends Controller
 
 	public function index()
 	{
-		return view('element.index');
+		return view('category.index');
+	}
+
+	public function show($id)
+	{
+		return view('category.show');
 	}
 }

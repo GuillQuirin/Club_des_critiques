@@ -1,9 +1,9 @@
 @extends('templates/template')
 
 @section('title')
-    Test
+    Oeuvres
 @endsection
 
 @section('content')
-	<!-- PAGE DE RECHERCHE D'UNE OEUVRE -->
+	LISTE DE TOUTES LES OEUVRES
 @endsection

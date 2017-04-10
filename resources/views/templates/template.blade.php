@@ -142,8 +142,10 @@
         </span>
         
         <footer>
-            <a href="#">Footer</a>
-        </footer>
+			<div class="container">
+				<span class="text-muted">Place sticky footer content here.</span>
+			</div>
+		</footer>
        
       <!-- MODAL CONNEXION -->
         <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

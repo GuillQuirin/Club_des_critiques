@@ -11,6 +11,35 @@
 |
 */
 
+//Accueil
+Route::get('/', ['as' => 'home', 'uses' => 'WelcomeController@index']);
+
+//Catégorie
+Route::get('categories', ['as' => 'categories', 'uses' => 'CategoryController@index']);
+Route::get('category/{id}', ['as' => 'show_category', 'uses' => 'CategoryController@show']);
+
+//Oeuvres
+Route::get('elements', ['as' => 'elements', 'uses' => 'ElementController@index']);
+Route::get('element/{id}', ['as' => 'show_element', 'uses' => 'ElementController@show']);
+Route::get('element/search', ['as' => 'search_element', 'uses' => 'ElementController@search']);
+
+//Utilisateur
+Route::get('users', ['as' => 'users', 'uses' => 'UserController@index']);
+Route::get('user/{id}', ['as' => 'show_user', 'uses' => 'UserController@show']);
+Route::post('user/{id}', ['as' => 'update_user', 'uses' => 'UserController@updateInfo']);
+Route::post('user/{id}', ['as' => 'update_password_user', 'uses' => 'UserController@updatePassword']);
+
+//Salons
+Route::get('rooms', ['as' => 'rooms', 'uses' => 'RoomsController@index']);
+Route::get('rooms/futur_rooms', ['as' => 'futur_rooms', 'uses' => 'RoomsController@showFuturRooms']);
+Route::get('rooms/my_rooms', ['as' => 'my_rooms', 'uses' => 'RoomsController@showMyRooms']);
+Route::get('room/{id}', ['as' => 'show_room', 'uses' => 'RoomsController@show']);
+Route::post('room/join/{id}', ['as' => 'join_room', 'uses' => 'RoomsController@join']);
+
+//Contact
+Route::post('contact', ['as' => 'contact', 'uses' => 'ContactController@postForm']);
+
+
 //Routes classiques directement vers une Vue en particulier
 /* 
 Route::get('/', function () {
@@ -24,7 +53,7 @@ Route::get('article/{n}', function($n) {
 
 /* Routes vers un Controlleur qui décide quelle vue afficher */
 
-//Accueil
+/*//Accueil
 Route::get('/', 'WelcomeController@index');
 
 //Oeuvres
@@ -37,7 +66,7 @@ Route::get('/utilisateurs', 'UsersController@index');
 Route::get('/utilisateur', 'UserController@index');
 
 //Liste salons
-Route::get('/salons', 'RoomsController@index');
+Route::get('/salons', 'RoomsController@index');*/
 
 
 /*Route::get('article/{n}', 'ArticleController@show')->where('n', '[0-9]+');

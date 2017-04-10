@@ -13,12 +13,13 @@
     			{{ Html::style('https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js') }}
     			{{ Html::style('https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js') }}
     		<![endif]-->
+            {!! HTML::style('font-awesome-4.7.0/css/font-awesome.css'); !!}
             {!! HTML::style('css/template.css'); !!}
             @yield('css')
 	</head>
 	<body>
-		<header>
-            <nav class="navbar navbar-default navbar-fixed-top">
+		<header id="wrapper">
+            <nav id="page-content-wrapper" class="navbar navbar-default navbar-fixed-top">
               <div class="container">
 
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -27,13 +28,14 @@
                             class="navbar-toggle collapsed" 
                             data-toggle="collapse" 
                             data-target="#bs-example-navbar-collapse-1" 
+                            id="menu-toggle"
                             aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="/"><img src="#" alt="#"></a>
+                  <a href="/"><img class="logo" src="/images/logo.png" alt="logo"></a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -95,14 +97,24 @@
                     </li>
                   </ul>
 
-                  <ul class="nav navbar-nav navbar-right">
+                  <ul class="nav navbar-nav navbar-right sidebar-nav">
                     <li class="dropdown">
+                        
                         <a  href="#" 
-                            class="dropdown-toggle" 
+                            class="dropdown-toggle hidden-sm" 
                             data-toggle="dropdown" 
                             role="button" 
                             aria-haspopup="true" 
                             aria-expanded="false">Connexion<span class="caret"></span></a>
+                        
+                        <a  href="#" 
+                            class="dropdown-toggle visible-sm-block" 
+                            data-toggle="dropdown" 
+                            role="button" 
+                            aria-haspopup="true" 
+                            aria-expanded="false">
+                                <i  class="fa fa-sign-in" aria-hidden="true"></i>
+                                <span class="caret"></span></a>
 
                         <ul class="dropdown-menu">
                             <li>
@@ -115,13 +127,19 @@
                                 <a href="" data-toggle="modal" data-target="#registerModal">Inscription</a>
                             </li>
                             <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="/utilisateur">Mon compte</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
                             <li><a href="#">Administration</a></li>
                         </ul>
                     </li>
                   </ul>
+                 </div>
                 </div><!-- /.navbar-collapse -->
               </div><!-- /.container -->
             </nav>
+            
         </header>
         
         <?php 
@@ -196,18 +214,7 @@
             {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js') !!}
             {!! HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js') !!}
             {!! HTML::script('js/jquery.countdown.js') !!}
-            <script type="text/javascript">
-                $(document).ready(function(){
-
-                    /* COUNTDOWN */
-                    $('[data-countdown]').each(function() {
-                      var $this = $(this), finalDate = $(this).data('countdown');
-                      $this.countdown(finalDate, function(event) {
-                        $this.html(event.strftime('%D jours %H:%M:%S'));
-                      });
-                    });
-
-                });
-            </script>
+            {!! HTML::script('js/template.js') !!}
+            @yield('js')
 	</body>
 </html>

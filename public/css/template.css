@@ -1,8 +1,16 @@
 BODY{
-	padding-top: 70px;
+	padding-top: 50px;
 }
 
 /* HEADER */
+.navbar{
+	height: 50px;
+}
+
+.logo{
+    max-height: 50px;
+    margin: 0 20px;
+}
 
 li.dropdownCountdown{
 	width: 200px;
@@ -28,6 +36,11 @@ li.dropdownCountdown{
 .container:not(.notPadding){
 	padding-right: 75px;
     padding-left: 75px;
+    position: relative;
+}
+
+small{
+    display: block;
 }
 
 /* FIGCAPTION du site */
@@ -52,4 +65,50 @@ figcaption .author{
 h1{
 	margin-top: 20px;
 	margin-bottom: 20px;
+}
+
+/* FORMAT XS */
+
+@media(max-width:768px){
+
+	/* VOLET DEROULANT */
+	
+    #wrapper {
+        padding-left: 0;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+    
+    #page-content-wrapper {
+        width: 100%;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 250px;
+    }
+    
+    #sidebar-wrapper {
+        z-index: 1040;
+        position: fixed;
+        left: 250px;
+        width: 0;
+        top: 0;
+        height: 100%;
+        margin-left: -250px;
+        overflow-y: auto;
+        background: #fbfbfb;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+
+    #sidebar-wrapper ul{
+        margin: 0;
+        text-align: center;
+    }
+
+
 }

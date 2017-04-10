@@ -12,6 +12,12 @@ class WelcomeController extends Controller
 {
     public function index()
 	{
+
+		/**
+		 * concept
+		 * liste des oeuvres à la une
+		 * contact info
+		 */
 		return view('welcome');
 	}
 }

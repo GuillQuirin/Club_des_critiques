@@ -38,9 +38,10 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  
-                  <ul class="nav navbar-nav">
-                    <li class="active"><a href="/">Accueil<span class="sr-only">(current)</span></a></li>
+                 <div id="sidebar-wrapper"> 
+                  <ul class="nav navbar-nav" class="sidebar-nav">
+                    <li class="visible-xs-block"><a href="{{ route('home') }}"><img class="logo" src="/images/logo.png" alt="logo"></a></li>
+                    <li class="active hidden-sm"><a href="{{ route('home') }}">Accueil<span class="sr-only">(current)</span></a></li>
                     <li class="dropdown">
                         <a  href="#" 
                             class="dropdown-toggle" 
@@ -51,11 +52,11 @@
                         </a>
 
                         <ul class="dropdown-menu">
-                            <li><a href="/livres">Livres</a></li>
-                            <li><a href="/films">Films</a></li>
-                            <li><a href="/expositions">Expositions</a></li>
+                            <li><a href="{{ route('show_category', ['id' => 1]) }}">Livres</a></li>
+                            <li><a href="{{ route('show_category', ['id' => 2]) }}">Films</a></li>
+                            <li><a href="{{ route('show_category', ['id' => 3]) }}">Expositions</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/salons">Rechercher une oeuvre</a></li>
+                            <li><a href="{{ route('search_element') }}">Rechercher une oeuvre</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -67,10 +68,10 @@
                             aria-expanded="false">Salons <span class="caret"></span></a>
 
                         <ul class="dropdown-menu">
-                            <li><a href="/">Les salons à venir</a></li>
-                            <li><a href="/">Mes salons</a></li>
+                            <li><a href="{{ route('futur_rooms') }}">Les salons à venir</a></li>
+                            <li><a href="{{ route('my_rooms') }}">Mes salons</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/salons">Tous les salons</a></li>
+                            <li><a href="{{ route('rooms') }}">Tous les salons</a></li>
                         </ul>
                     </li>
 
@@ -87,6 +88,8 @@
                             <p>Prochain salon :</p>
                             <p>Oeuvre</p>
                             <p>Date de lancement:</p>
+<!-- A décommenter -->
+                            <!-- <a href="{{ route('show_room', ['id' => 1]) }}">Accèdez à la fiche du salon</a> -->
                             <a href=''>Accèdez à la fiche du salon</a>
                         </div>
                     </li>

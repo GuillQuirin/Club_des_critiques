@@ -1,0 +1,20 @@
+
+.jumbotron .container-fluid{
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.jumbotron h1{
+	text-align: center;
+}
+
+i{
+	cursor: pointer;
+}
+
+.fa-trash{
+	color: #d9534f;
+}
+
+.fa-pencil{
+	color: #245580;
+}

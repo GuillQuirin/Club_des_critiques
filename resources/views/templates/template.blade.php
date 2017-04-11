@@ -15,6 +15,7 @@
     		<![endif]-->
             {!! HTML::style('font-awesome-4.7.0/css/font-awesome.css'); !!}
             {!! HTML::style('css/template.css'); !!}
+            {!! HTML::style('DataTables/datatables.min.css'); !!}
             @yield('css')
 	</head>
 	<body>
@@ -129,7 +130,7 @@
                                 <a href="{{ route('show_user', ['id' => 1]) }}">Mon compte</a>
                             </li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">Administration</a></li>
+                            <li><a href="{{ route('admin') }}">Administration</a></li>
                         </ul>
                     </li>
                   </ul>
@@ -213,6 +214,7 @@
             {!! HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js') !!}
             {!! HTML::script('js/jquery.countdown.js') !!}
             {!! HTML::script('js/template.js') !!}
+            {!! HTML::script('DataTables/datatables.min.js') !!}
             @yield('js')
 	</body>
 </html>

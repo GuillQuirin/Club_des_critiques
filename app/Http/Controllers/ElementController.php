@@ -8,15 +8,61 @@ use App\Http\Controllers\Controller;
 
 class ElementController extends Controller
 {
-	// Liste de toutes les oeuvres
+	/**
+     * Affiche la liste de toutes les oeuvres
+     *
+     * @return view
+     */
 	public function index()
 	{
 		return view('element.index');
 	} 
 
-	// Affiche le profil d'un utilisateur
+
+	/** 
+	 * @todo à supprimse (-> pop up)
+     * Affiche la page d'un élément
+     *
+     * @param  int  $id
+     * @return view
+     */
 	public function show($id)
 	{
 		return view('element.show');
 	}
+
+
+	/////// ADMINISTRATION ///////
+
+	/**
+     * Ajout d'un nouvel élément
+     *
+     * @return view
+     */
+    public function add()
+    {
+    	# code...
+    }
+
+    /**
+     * Modification d'un élément
+     *
+     * @param  int  $id
+     * @return view
+     */
+    public function edit($id)
+    {
+    	# code...
+    }
+
+    /**
+     * Suppression d'un élément
+     *
+     * @param  int  $id
+     * @return view
+     */
+    public function delete($id)
+    {
+    	# code...
+    }
 }

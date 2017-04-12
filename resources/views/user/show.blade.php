@@ -94,7 +94,8 @@
                     {!! Form::label('Votre message') !!}
                     {!! Form::textarea('message', null, 
                         array('required', 
-                              'class'=>'form-control', 
+                              'class'=>'form-control',
+                              'size' => '30x5', 
                               'placeholder'=>'Rédigez ici votre message')) !!}
                 </div>
 
@@ -112,11 +113,22 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
             <ul id="popUpEdit" class="nav nav-pills" role="tablist">
-              <li role="informations" class="active"><a href="#informations" aria-controls="informations" role="tab" data-toggle="tab">Informations</a></li>
-              <li role="password"><a href="#password" aria-controls="password" role="tab" data-toggle="tab">Mot de passe</a></li>
-              <li role="delete"><a href="#delete" aria-controls="delete" role="tab" data-toggle="tab">Suppression</a></li>
+              <li role="informations" class="active">
+                <a href="#informations" aria-controls="informations" role="tab" data-toggle="tab">Informations</a>
+              </li>
+              <li role="exchange">
+                <a href="#exchange" aria-controls="exchange" role="tab" data-toggle="tab">Echanges</a>
+              </li>
+              <li role="password">
+                <a href="#password" aria-controls="password" role="tab" data-toggle="tab">Mot de passe</a>
+              </li>
+              <li role="delete">
+                <a href="#delete" aria-controls="delete" role="tab" data-toggle="tab">Suppression</a>
+              </li>
             </ul>
           </div>
           
@@ -124,7 +136,7 @@
               <!-- Modification des informations générales -->
               <div id="informations" role="tabpanel" class="tab-pane fade in active">
                     {!! Form::open(['url' => '/']) !!}
-                    <div id="popupRegister" class="modal-body row">
+                    <div class="modal-body row">
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <p>Nom :</p>
                             <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
@@ -170,7 +182,8 @@
                         <div class="col-md-12">
                             <p>Description :</p>
                             <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
-                                {!! Form::textarea('email','', ['class' => 'form-control']) !!}
+                                {!! Form::textarea('email','', 
+                                      ['class' => 'form-control', 'size' => '30x5', ]) !!}
                                 {!! $errors->first('email', '<small class="help-block">:message</small>') !!}
                             </div>
                         </div>
@@ -183,9 +196,36 @@
               </div>
               
               <!-- Modification du mot de passe -->
+              <div id="exchange" role="tabpanel" class="tab-pane fade">
+                  {!! Form::open(['url' => '/']) !!}
+                  <div class="modal-body">
+                        <p>Mot de passe actuel :</p>
+                        <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
+                            {!! Form::text('email','', ['class' => 'form-control']) !!}
+                            {!! $errors->first('email', '<small class="help-block">:message</small>') !!}
+                        </div>
+                        <p>Nouveau mot de passe :</p>
+                        <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
+                            {!! Form::text('email','', ['class' => 'form-control']) !!}
+                            {!! $errors->first('email', '<small class="help-block">:message</small>') !!}
+                        </div>
+                        <p>Confirmation du nouveau mot de passe :</p>
+                        <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
+                            {!! Form::text('email','', ['class' => 'form-control']) !!}
+                            {!! $errors->first('email', '<small class="help-block">:message</small>') !!}
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                    {!! Form::submit("S'inscrire", ['class' => 'btn btn-info pull-right']) !!}
+                  </div>
+                  {!! Form::close() !!}
+              </div>
+
+              <!-- Modification du mot de passe -->
               <div id="password" role="tabpanel" class="tab-pane fade">
                   {!! Form::open(['url' => '/']) !!}
-                  <div id="popupRegister" class="modal-body">
+                  <div class="modal-body">
                         <p>Mot de passe actuel :</p>
                         <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
                             {!! Form::text('email','', ['class' => 'form-control']) !!}
@@ -212,7 +252,7 @@
               <!-- Suppression du compte-->    
               <div id="delete" role="tabpanel" class="tab-pane fade">
                   {!! Form::open(['url' => '/']) !!}
-                  <div id="popupRegister" class="modal-body">
+                  <div class="modal-body">
                         <p>Mot de passe actuel :</p>
                         <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
                             {!! Form::text('email','', ['class' => 'form-control']) !!}

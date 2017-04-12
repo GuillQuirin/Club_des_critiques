@@ -21,7 +21,7 @@
 	<body>
 		<header id="wrapper">
             <nav id="page-content-wrapper" class="navbar navbar-default navbar-fixed-top">
-              <div class="container">
+              <div class="container-fluid">
 
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -77,6 +77,13 @@
                             <li><a href="{{ route('rooms') }}">Tous les salons</a></li>
                         </ul>
                     </li>
+                    
+                    <li class="dropdown">
+                        <a href="{{ route('users') }}">
+                            <span class="hidden-sm">La communauté</span>
+                            <i class="visible-sm-block fa fa-users" aria-hidden="true"></i>
+                            </a>
+                    </li>
 
                     <li class="dropdown dropdownCountdown">
                         <a  id="nextRoomCountdown" 
@@ -94,6 +101,7 @@
                             <a href="{{ route('show_room', ['id' => 1]) }}">Accèdez à la fiche du salon</a>
                         </div>
                     </li>
+
                   </ul>
 
                   <ul class="nav navbar-nav navbar-right sidebar-nav">

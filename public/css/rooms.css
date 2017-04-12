@@ -1,3 +1,81 @@
 BODY{
 	text-decoration: underline;
 }
+
+.chat
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.chat li
+{
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+    color: #777777;
+}
+
+.panel .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
+
+.body-panel
+{
+    overflow-y: scroll;
+    height: 450px;
+}
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+
+.panel-primary>.panel-heading {
+	background-image:linear-gradient(to bottom,#70BEB1,#70BEB1 100%);
+	border-color: #70BEB1;
+}
+
+.panel-primary{
+	border-color: #70BEB1;
+}
+
+.btn-warning{
+	background-image:linear-gradient(to bottom, #D99E7E, #D99E7E 100%);
+	border-color: #D99E7E;
+}
+
+.btn-warning:hover {
+	background-color: #D99E7E;
+}

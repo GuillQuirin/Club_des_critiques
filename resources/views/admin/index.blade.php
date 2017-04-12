@@ -14,131 +14,36 @@
         <h1>Administration</h1>
       </div>
     </div>
-
-
     <div class="container notPadding"> 
    		<div class="panel-group" id="accordion">
 		  	<div class="panel panel-default">
 		    	<div class="panel-heading">
 		      		<h4 class="panel-title">
-		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseHome">
 		        		Page d'accueil</a>
 		      		</h4>
 		    	</div>
-		    	<div id="collapse1" class="panel-collapse collapse in">
-		      		<div class="panel-body">
-		      			<div class="row">
-			      			<form class="col-md-12">
-				      			<div class="form-group">
-								    <h4>Le concept : </h4>
-								    <textarea class="form-control" id="contenu" rows="3"></textarea>
-								</div>
-								<button type="submit" class="btn btn-danger pull-right">Submit</button>
-							</form>
-						</div>	
-
-						<div class="row">
-							<div class="col-md-12">
-								<h4>A la une : </h4><br>
-								<table id="elementTable" class="display" cellspacing="0" width="100%">
-									<thead>
-		            					<tr>
-		            						<th>Nom</th>
-		            						<th>Auteur</th>
-		            						<th>Catégorie</th>
-		            						<th>Sous catégorie</th>
-		            						<th>Action</th>            					
-		        						</tr>
-		    						</thead>
-		    						<tbody>
-										<tr>
-		            						<th>Le petit chaperon rouge</th>
-		            						<th>Elise Poirier</th>
-		            						<th>Livre</th>
-		            						<th>Pour les bébé</th>
-		            						<th>
-		            							<i class="fa fa-trash" aria-hidden="true"></i>
-		            							<i class="fa fa-pencil" aria-hidden="true"></i>
-
-											</th>            					
-		        						</tr>
-		    						</tbody>		
-								</table>
-							</div>
-						</div>
-		      		</div>
+		    	<div id="collapseHome" class="panel-collapse collapse in">
+		      		@include('admin.home')
 		    	</div>
 		  	</div>
 		  	<div class="panel panel-default">
 		    	<div class="panel-heading">
 		     		<h4 class="panel-title">
-		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseCategory">
 		        		Catégories</a>
 		      		</h4>
 		    	</div>
-		    	<div id="collapse2" class="panel-collapse collapse">
-		      		<div class="panel-body">
-		      			<div class="row">
-							<div class="col-md-12">
-								<h4>A la une : </h4><br>
-								<table id="categoryTable" class="display" cellspacing="0" width="100%">
-									<thead>
-		            					<tr>
-		            						<th>Nom</th>
-		            						<th>Parent</th>
-		            						<th>Url image</th>
-		            						<th>Action</th>
-		        						</tr>
-		    						</thead>
-		    						<tbody>
-										<tr>
-		            						<th>Livre</th>
-		            						<th></th>
-		            						<th>petite url</th>
-		            						<th>
-		            							<i class="fa fa-trash" aria-hidden="true"></i>
-		            							<i class="fa fa-pencil" aria-hidden="true"></i>
-											</th>            					
-		        						</tr>
-		        						<tr>
-		            						<th>Film</th>
-		            						<th></th>
-		            						<th>petite url</th>
-		            						<th>
-		            							<i class="fa fa-trash" aria-hidden="true"></i>
-		            							<i class="fa fa-pencil" aria-hidden="true"></i>
-											</th>            					
-		        						</tr>
-		        						<tr>
-		            						<th>Roman policier</th>
-		            						<th>Livre</th>
-		            						<th>petite url</th>
-		            						<th>
-		            							<i class="fa fa-trash" aria-hidden="true"></i>
-		            							<i class="fa fa-pencil" aria-hidden="true"></i>
-											</th>            					
-		        						</tr>
-		    						</tbody>		
-								</table>
-							</div>
-						</div>
-		      		</div>
-		    	</div>
+		    	@include('admin.category')
 		  	</div>
 		  	<div class="panel panel-default">
 		    	<div class="panel-heading">
 		     		<h4 class="panel-title">
-		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-		        		Contenus</a>
+		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseElement">
+		        		Oeuvres</a>
 		      		</h4>
 		    	</div>
-		    	<div id="collapse2" class="panel-collapse collapse">
-		      		<div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-		      		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-		      		minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-		      		commodo consequat.
-		      		</div>
-		    	</div>
+		    	@include('admin.element')
 		  	</div>
 		  	<div class="panel panel-default">
 		    	<div class="panel-heading">
@@ -148,10 +53,8 @@
 		      		</h4>
 		    	</div>
 		    	<div id="collapse3" class="panel-collapse collapse">
-		      		<div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-		      		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-		      		minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-		      		commodo consequat.
+		      		<div class="panel-body">
+
 		      		</div>
 		    	</div>
 		  	</div>
@@ -162,13 +65,7 @@
 		        		Salons</a>
 		      		</h4>
 		    	</div>
-		    	<div id="collapse4" class="panel-collapse collapse">
-		      		<div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-		      		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-		      		minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-		      		commodo consequat.
-		      		</div>
-		    	</div>
+		    	@include('admin.room')
 		  	</div>
 		  	<div class="panel panel-default">
 		    	<div class="panel-heading">
@@ -177,23 +74,98 @@
 		        		Membres</a>
 		      		</h4>
 		    	</div>
-		    	<div id="collapse5" class="panel-collapse collapse">
-		      		<div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-		      		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-		      		minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-		      		commodo consequat.
-		      		</div>
-		    	</div>
-		  	</div>
+		    	@include('admin.user')
+		    </div>
 		</div> 
     </div>
+
+
+
+
 @endsection
 
 
 @section('js')
 <script type="text/javascript">
 	$(document).ready(function() {
-    	 initializedDataTable('elementTable');
-	} );
+
+		$('#elementManual').show();
+    	$('#elementAutomatic').hide();
+
+    	initializedDataTable('elementTable');
+    	initializedDataTable('elementTopTable');
+    	initializedDataTable('categoryTable');
+    	initializedDataTable('roomTable');
+    	initializedDataTable('userTable');
+
+    	$( "#date_start" ).datepicker();
+    	$( "#date_end" ).datepicker();
+
+    	// Affiche le bon formulaire d'ajout d'oeuvre
+    	$('input[type=radio][name=radioElement]').change(function() {
+	        if (this.value == 'manual') {
+	            $('#elementManual').show();
+    			$('#elementAutomatic').hide();
+	        }
+	        else if (this.value == 'automatic') {
+	            $('#elementAutomatic').show();
+    			$('#elementManual').hide();
+	        }
+	    });
+
+
+    	$('#parent_cat').change(function() {
+    		console.log( this );
+	    	if( this.value == 1 || this.value == 2){
+	    		$('#datePublication').show();
+	    		$('#dateStart').hide();
+	    		$('#dateEnd').hide();	
+	    	} else {
+	    		$('#datePublication').hide();
+	    		$('#dateStart').show();
+	    		$('#dateEnd').show();
+	    	}
+	    });
+	    $('#parent_cat_edit').change(function() {
+	    	if( this.value == 1 || this.value == 2){
+	    		$('#datePublicationEdit').show();
+	    		$('#dateStartEdit').hide();
+	    		$('#dateEndEdit').hide();	
+	    	} else {
+	    		$('#datePublicationEdit').hide();
+	    		$('#dateStartEdit').show();
+	    		$('#dateEndEdit').show();
+	    	}
+	    });
+
+        function initializedDataTable(id) {
+        	$('#' + id).DataTable({
+        		"language": {
+	              	"sProcessing":     "Traitement en cours...",
+		          	"sSearch":         "Rechercher&nbsp;:",
+		          	"sLengthMenu":     "Afficher _MENU_ éléments",
+		          	"sInfo":           "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+		          	"sInfoEmpty":      "Affichage de l'élément 0 à 0 sur 0 élément",
+		          	"sInfoFiltered":   "(filtré de _MAX_ éléments au total)",
+		          	"sInfoPostFix":    "",
+		          	"sLoadingRecords": "Chargement en cours...",
+		          	"sZeroRecords":    "Aucun élément à afficher",
+		          	"sEmptyTable":     "Aucune donnée disponible dans le tableau",
+		          	"oPaginate": {
+		              	"sFirst":      "Premier",
+		              	"sPrevious":   "Précédent",
+		              	"sNext":       "Suivant",
+		              	"sLast":       "Dernier"
+		          	},
+		          	"oAria": {
+	              		"sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+	              	"	sSortDescending": ": activer pour trier la colonne par ordre décroissant"
+          			}
+        		} 
+        	});
+        }
+
+
+	});
 </script>
 @endsection

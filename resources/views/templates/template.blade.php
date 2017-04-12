@@ -17,6 +17,7 @@
             {!! HTML::style('font-awesome-4.7.0/css/font-awesome.css'); !!}
             {!! HTML::style('css/template.css'); !!}
             {!! HTML::style('DataTables/datatables.min.css'); !!}
+            {!! HTML::style('bootstrap-datepicker/css/bootstrap-datepicker.min.css'); !!}
             @yield('css')
     </head>
     <body>
@@ -266,6 +267,7 @@
             {!! HTML::script('js/jquery.countdown.js') !!}
             {!! HTML::script('js/template.js') !!}
             {!! HTML::script('DataTables/datatables.min.js') !!}
+            {!! HTML::script('bootstrap-datepicker/js/bootstrap-datepicker.min.js') !!}
             @yield('js')
     </body>
 </html>

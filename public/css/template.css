@@ -67,6 +67,10 @@ h1{
 	margin-bottom: 20px;
 }
 
+hr{
+    border: 1px solid #e5e5e5;/* Meme couleur que les bordures de modal */ 
+}
+
 /* FORMAT XS */
 
 @media(max-width:768px){

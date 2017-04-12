@@ -1,0 +1,5 @@
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^club-des-critiques.gqui.eu$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.club-des-critiques.gqui.eu$
+RewriteCond %{REQUEST_URI} !public/
+RewriteRule (.*) /public/$1 [L]

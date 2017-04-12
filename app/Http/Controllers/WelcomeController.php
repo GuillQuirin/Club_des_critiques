@@ -14,9 +14,9 @@ class WelcomeController extends Controller
 	{
 
 		/**
-		 * concept
-		 * liste des oeuvres à la une
-		 * contact info
+		 * get concept
+		 * get oeuvres à la une
+		 * get contact info
 		 */
 		return view('welcome');
 	}

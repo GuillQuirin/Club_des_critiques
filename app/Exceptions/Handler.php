@@ -42,16 +42,40 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
-    {
-        //Affichage détaillé des erreurs PDO
-        /*if($e instanceof \PDOException)
-        {
-            return response()->view('errors.pdo', [], 500);
-        }*/
-        return parent::render($request, $exception);
-    }
+    // public function render($request, Exception $exception)
+    // {
+    //     //Affichage détaillé des erreurs PDO
+    //     if($exception instanceof \PDOException)
+    //     {
+    //         return response()->view('errors.pdo', [], 500);
+    //     }
+    //     return parent::render($request, $exception);
+    // }
+    public function render($request, Exception $e)
+{
+        if($this->isHttpException($e)){
+            switch ($e->getStatusCode()) {
+                case '404':
+                            \Log::error($e);
+                        return \Response::view('errors.404');
+                break;
 
+                case '500':
+                    \Log::error($exception);
+                        return \Response::view('errors.500');   
+                break;
+
+                default:
+                    return $this->renderHttpException($e);
+                break;
+            }
+        }
+        else
+        {
+            return parent::render($request, $e);
+        }
+    }
+    
     /**
      * Convert an authentication exception into an unauthenticated response.
      *

@@ -1,6 +1,6 @@
-@extends('template')
+<!-- @extends('template') -->
 
-@section('contenu')
+<!-- @section('contenu') -->
     <br>
     <div class="col-sm-offset-4 col-sm-4">
 		<div class="panel panel-danger">
@@ -12,4 +12,4 @@
 			</div>
 		</div>
 	</div>
-@endsection
+<!-- @endsection -->

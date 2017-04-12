@@ -15,6 +15,7 @@
     		<![endif]-->
             {!! HTML::style('font-awesome-4.7.0/css/font-awesome.css'); !!}
             {!! HTML::style('css/template.css'); !!}
+            {!! HTML::style('DataTables/datatables.min.css'); !!}
             @yield('css')
 	</head>
 	<body>
@@ -58,7 +59,7 @@
                             <li><a href="{{ route('show_category', ['id' => 2]) }}">Films</a></li>
                             <li><a href="{{ route('show_category', ['id' => 3]) }}">Expositions</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="{{ route('search_element') }}">Rechercher une oeuvre</a></li>
+                            <li><a href="{{ route('elements') }}">Toutes les oeuvres</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -90,9 +91,7 @@
                             <p>Prochain salon :</p>
                             <p>Oeuvre</p>
                             <p>Date de lancement:</p>
-<!-- A décommenter -->
-                            <!-- <a href="{{ route('show_room', ['id' => 1]) }}">Accèdez à la fiche du salon</a> -->
-                            <a href=''>Accèdez à la fiche du salon</a>
+                            <a href="{{ route('show_room', ['id' => 1]) }}">Accèdez à la fiche du salon</a>
                         </div>
                     </li>
                   </ul>
@@ -128,10 +127,10 @@
                             </li>
                             <li role="separator" class="divider"></li>
                             <li>
-                                <a href="/utilisateur">Mon compte</a>
+                                <a href="{{ route('show_user', ['id' => 1]) }}">Mon compte</a>
                             </li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">Administration</a></li>
+                            <li><a href="{{ route('admin') }}">Administration</a></li>
                         </ul>
                     </li>
                   </ul>
@@ -217,6 +216,7 @@
             {!! HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js') !!}
             {!! HTML::script('js/jquery.countdown.js') !!}
             {!! HTML::script('js/template.js') !!}
+            {!! HTML::script('DataTables/datatables.min.js') !!}
             @yield('js')
 	</body>
 </html>

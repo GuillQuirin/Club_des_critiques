@@ -20,9 +20,46 @@
         </div>
         
         <hr>
+    
+        <div class="row">
+            <form action="" id="searchUser">
+                <div class="row">
+                    
+                    <select name="dateRegis" 
+                            class="text-center 
+                                    col-xs-8 col-xs-offset-2 
+                                    col-sm-4 col-sm-offset-0
+                                    col-md-4">
+                        <option>Inscription la plus récente</option>
+                        <option>Inscription la plus ancienne</option>
+                    </select>
+
+                    <input type="text" name="pnom" placeholder="Prénom" 
+                            class="text-center 
+                                    col-xs-8 col-xs-offset-2 
+                                    col-sm-4 col-sm-offset-0
+                                    col-md-4">
+
+                    <select name="countRooms" 
+                            class="text-center 
+                                    col-xs-8 col-xs-offset-2 
+                                    col-sm-4 col-sm-offset-0
+                                    col-md-4">
+                        <option>+ de participations aux salons</option>
+                        <option>- de participations aux salons</option>
+                    </select>
+                    
+                    <div class="text-center col-md-12">
+                       <input type="submit" class="btn" value="Rechercher un utilisateur">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <hr>
 
         <div class="row">
-        <?php for($i=0; $i<10; $i++): ?>
+        <?php for($i=0; $i<8; $i++): ?>
             <div class="col-xs-6 col-md-3">
                 <a href="{{ route('show_user',[ 'id' => 1 ]) }}" class="thumbnail">
                     <figure>

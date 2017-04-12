@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
     <head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>@yield('title')</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="TVA3m8pMDsnZVrewoidSwfikQtr8esxp1ftFD55VsSc" />
+        <title>@yield('title')</title>
     
         <!-- CSS -->
-    		{!! Html::style('https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css') !!}
-    		{!! Html::style('https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css') !!}
-    		<!--[if lt IE 9]>
-    			{{ Html::style('https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js') }}
-    			{{ Html::style('https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js') }}
-    		<![endif]-->
+            {!! Html::style('https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css') !!}
+            {!! Html::style('https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css') !!}
+            <!--[if lt IE 9]>
+                {{ Html::style('https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js') }}
+                {{ Html::style('https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js') }}
+            <![endif]-->
             {!! HTML::style('font-awesome-4.7.0/css/font-awesome.css'); !!}
             {!! HTML::style('css/template.css'); !!}
             {!! HTML::style('DataTables/datatables.min.css'); !!}
             @yield('css')
-	</head>
-	<body>
-		<header id="wrapper">
+    </head>
+    <body>
+        <header id="wrapper">
             <nav id="page-content-wrapper" class="navbar navbar-default navbar-fixed-top">
               <div class="container-fluid">
 
@@ -174,31 +175,71 @@
         </footer>
        
       <!-- MODAL CONNEXION -->
-        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalAuth">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
-              <div class="modal-header">
+              <div class="modal-header text-center">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel"></h4>
+                <h4 class="modal-title" id="myModalAuth">Accès à votre compte utilisateur</h4>
               </div>
-              <div class="modal-body">
-                
+              <div id="popupRegister" class="modal-body">
+                <!-- Authentification -->
+                {!! Form::open(['url' => '/']) !!}
+                    <p>Adresse email :</p>
+                    <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
+                        {!! Form::text('email','', ['class' => 'form-control']) !!}
+                        {!! $errors->first('email', '<small class="help-block">:message</small>') !!}
+                    </div>
+                    <p>Mot de passe :</p>
+                    <div class="form-group {!! $errors->has('password') ? 'has-error' : '' !!}">
+                        {!! Form::text('password','', ['class' => 'form-control']) !!}
+                        {!! $errors->first('password', '<small class="help-block">:message</small>') !!}
+                    </div>
+                    <div class="row">
+                        <span class="col-md-6 text-left">
+                            <a  class="btn btn-warning" role="button" data-toggle="collapse" 
+                                href="#forgetPwd" aria-expanded="false" aria-controls="forgetPwd">
+                                Mot de passe oublié ?</a>
+                        </span>
+                        <span class="col-md-6 text-right">
+                            {!! Form::submit("Se connecter", ['class' => 'btn btn-success']) !!}
+                        </span>
+                    </div>
+                {!! Form::close() !!}
+
+                <!-- Récupération de mot de passe -->
+                <div class="collapse" id="forgetPwd">
+                  <hr>
+                  <div class="text-center">
+                      <h4 class="modal-title">Récupération de votre compte</h4>
+                  </div>
+                  <hr>
+                  {!! Form::open(['url' => '/']) !!}
+                    <p>Un email vous sera envoyé à cette adresse : </p>
+                    <div class="form-group {!! $errors->has('email') ? 'has-error' : '' !!}">
+                        {!! Form::text('email','', ['class' => 'form-control']) !!}
+                        {!! $errors->first('email', '<small class="help-block">:message</small>') !!}
+                    </div>
+                    <div class="text-right">
+                        {!! Form::submit("Récupérer mon compte", ['class' => 'btn btn-success']) !!}
+                    </div>
+                  {!! Form::close() !!}
+                </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
               </div>
             </div>
           </div>
         </div>
     
         <!-- MODAL INSCRIPTION -->
-        <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalRegis">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
-              <div class="modal-header">
+              <div class="modal-header text-center">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Rejoignez-nous</h4>
+                <h4 class="modal-title" id="myModalRegis">Rejoignez-nous !</h4>
               </div>
               {!! Form::open(['url' => '/']) !!}
               <div id="popupRegister" class="modal-body">
@@ -210,7 +251,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                {!! Form::submit("S'inscrire", ['class' => 'btn btn-info pull-right']) !!}
+                {!! Form::submit("S'inscrire", ['class' => 'btn btn-success pull-right']) !!}
               </div>
               {!! Form::close() !!}
             </div>
@@ -224,5 +265,5 @@
             {!! HTML::script('js/template.js') !!}
             {!! HTML::script('DataTables/datatables.min.js') !!}
             @yield('js')
-	</body>
+    </body>
 </html>

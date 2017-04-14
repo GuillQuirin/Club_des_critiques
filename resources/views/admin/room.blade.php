@@ -2,7 +2,7 @@
 <div id="collapse4" class="panel-collapse collapse">                     
     <div class="panel-body">                
         <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAddSalon" aria-expanded="false" aria-controls="collapseAddSalon">
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAddSalon" aria-expanded="false" aria-controls="collapseAddSalon" id="btnShowAddRoom">
             Ajouter un salon
           </button>
         </p>
@@ -10,36 +10,52 @@
             <div class="card card-block">
                 <form>
                     <div class="form-group">
-                        <label for="name" class="col-2 col-form-label">Nom : </label>
+                        <label for="room_name" class="col-2 col-form-label">Nom : </label>
                         <div class="col-10">
-                            <input class="form-control" type="text" id="name" name="name">
+                            <input class="form-control" type="text" id="room_name" name="room_name">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="parent" class="col-2 col-form-label">Oeuvre : </label>
+                        <label for="room_category" class="col-2 col-form-label">Catégorie : </label>
                         <div class="col-10">
-                            <select class="form-control" id="parent" name="parent">
-                                <option>Choisir une oeuvre</option>
-                                <option value="">Le petit haperon rouge</option>
-                                <option value="1">La belle et la bete</option>
-                                <option value="2">Le roi lion</option>
+                            <select class="form-control" id="room_category" name="room_category">
+                                <option>Choisir une catégorie</option>
+                                <option value="1">Livre</option>
+                                <option value="2">Film</option>
                                 <option value="3">...</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="date_start" class="col-2 col-form-label">Date début : </label>
+                        <label for="room_element" class="col-2 col-form-label">Oeuvre : </label>
                         <div class="col-10">
-                            <input class="form-control" type="text" id="date_start" name="date_start">
+                            <select class="form-control" id="room_element" name="room_element">
+                                <option>Choisir une oeuvre</option>
+                                <option value="1">Le petit chaperon rouge</option>
+                                <option value="2">La belle et la bete</option>
+                                <option value="3">Le roi lion</option>
+                                <option value="4">...</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="date_end" class="col-2 col-form-label">Date fin : </label>
+                        <label for="room_date_start" class="col-2 col-form-label">Date début : </label>
                         <div class="col-10">
-                            <input class="form-control" type="date" id="date_end" name="date_end">
+                            <input class="form-control" type="text" id="room_date_start" name="room_date_start">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success pull-right">Ajouter un salon</button>
+                    <div class="form-group">
+                        <label for="room_date_end" class="col-2 col-form-label">Date fin : </label>
+                        <div class="col-10">
+                            <input class="form-control" type="date" id="room_date_end" name="room_date_end">
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#collapseAddSalon" aria-expanded="false" aria-controls="collapseAddSalon" id="btnHideAddRoom">
+                            Annuler
+                        </button>
+                        <button type="submit" class="btn btn-success">Ajouter un salon</button>
+                    </div>
                 </form>
                 <br><br>
             </div>
@@ -104,15 +120,26 @@
             <form>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="name" class="col-2 col-form-label">Nom : </label>
-                            <div class="col-10">
-                                <input class="form-control" type="text" id="name" name="name">
-                            </div>
+                        <label for="room_name_edit" class="col-2 col-form-label">Nom : </label>
+                        <div class="col-10">
+                            <input class="form-control" type="text" id="room_name_edit" name="room_name_edit">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="parent" class="col-2 col-form-label">Oeuvre : </label>
+                        <label for="room_category_edit" class="col-2 col-form-label">Catégorie : </label>
                         <div class="col-10">
-                            <select class="form-control" id="parent" name="parent">
+                            <select class="form-control" id="room_category_edit" name="room_category_edit">
+                                <option>Choisir une catégorie</option>
+                                <option value="1">Livre</option>
+                                <option value="2">Film</option>
+                                <option value="3">...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="room_element_edit" class="col-2 col-form-label">Oeuvre : </label>
+                        <div class="col-10">
+                            <select class="form-control" id="room_element_edit" name="room_element_edit">
                                 <option>Choisir une oeuvre</option>
                                 <option value="">Le petit haperon rouge</option>
                                 <option value="1">La belle et la bete</option>
@@ -122,15 +149,15 @@
                         </div>
                     </div>
                         <div class="form-group">
-                            <label for="date_start" class="col-2 col-form-label">Date début : </label>
+                            <label for="room_date_start_edit" class="col-2 col-form-label">Date début : </label>
                             <div class="col-10">
-                                <input class="form-control" type="text" id="date_start" name="date_start">
+                                <input class="form-control" type="text" id="room_date_start_edit" name="room_date_start_edit">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="date_end" class="col-2 col-form-label">Date fin : </label>
+                            <label for="room_date_end_edit" class="col-2 col-form-label">Date fin : </label>
                         <div class="col-10">
-                            <input class="form-control" type="date" id="date_end" name="date_end">
+                            <input class="form-control" type="date" id="room_date_end_edit" name="room_date_end_edit">
                         </div>
                     </div>
                 </div>

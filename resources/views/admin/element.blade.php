@@ -1,7 +1,7 @@
 <div id="collapseElement" class="panel-collapse collapse">
     <div class="panel-body">
         <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAddElement" aria-expanded="false" aria-controls="collapseAddElement">
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAddElement" aria-expanded="false" aria-controls="collapseAddElement" id="btnShowAddElement">
             Ajouter une oeuvre
           </button>
         </p>
@@ -98,8 +98,12 @@
                     </div>
 
                 </div>
-            
-                <button type="submit" class="btn btn-success pull-right">Ajouter l'oeuvre</button>
+                <div class="pull-right">
+                    <button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#collapseAddElement" aria-expanded="false" aria-controls="collapseAddElement" id="btnHideAddElement">
+                        Annuler
+                    </button>
+                    <button type="submit" class="btn btn-success">Ajouter l'oeuvre</button>
+                </div>                
             </form>
             <br><br>
           </div>
@@ -125,7 +129,6 @@
                         <th>
                             <i class="fa fa-trash" aria-hidden="true"></i>
                             <i class="fa fa-pencil" data-toggle="modal" data-target="#editElementModal" aria-hidden="true"></i>
-
                         </th>                               
                     </tr>
                 </tbody>        

@@ -1,7 +1,7 @@
 <div id="collapseCategory" class="panel-collapse collapse">
     <div class="panel-body">
         <p>
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="btnShowAddCategory">
                 Ajouter une catégorie
             </button>
         </p>
@@ -31,7 +31,12 @@
                         <input class="form-control" type="text" id="url_picture" name="url_picture">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-success pull-right">Ajouter la catégorie</button>
+                <div class="pull-right">
+                    <button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="btnHideAddCategory">
+                        Annuler
+                    </button>   
+                    <button type="submit" class="btn btn-success">Ajouter la catégorie</button>
+                </div>
             </form>
             <br><br>
           </div>

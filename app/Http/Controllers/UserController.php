@@ -14,10 +14,15 @@ class UserController extends Controller
      * @return view
      */
      public function index()
-
      {
-          $xx = ['lol','coucou','coucou','coucou','coucou','coucou','coucou','coucou','coucou','coucou'];
-		return view('user.index', compact('xx'));
+          $array['redirect'] = 'show_user';
+          $array['items'] = [
+                    ['id' => 1, 'name' => 'Guillaume', 'subname' => 'Quirin', 'url_img' => '/images/oeuvre.jpg'],
+                    ['id' => 2, 'name' => 'Elise', 'subname' => 'Poirier', 'url_img' => '/images/oeuvre1.jpg'],
+                    ['id' => 3, 'name' => 'Laurie', 'subname' => 'Guibert', 'url_img' => '/images/oeuvre2.jpg'],
+               ];
+		return view('user.index')
+                    ->with(compact('array'));
 	}
 
 	/**

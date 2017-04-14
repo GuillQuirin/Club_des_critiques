@@ -15,7 +15,21 @@ class ElementController extends Controller
      */
 	public function index()
 	{
-		return view('element.index');
+        $categories = [1 => 'Film', 2 => 'Livre', 3 => 'Exposition'];
+        $subCategories = [1 => 'Fiction', 2 => 'Horreur', 3 => 'Humour'];
+
+        $popUp = 'element.show';
+        $array['items'] = [
+                ['id' => 1, 'name' => 'Harry Potter', 'subname' => 'Livre', 'url_img' => '/images/oeuvre.jpg'],
+                ['id' => 2, 'name' => 'Interstellar', 'subname' => 'Film', 'url_img' => '/images/oeuvre1.jpg'],
+                ['id' => 3, 'name' => 'Paris Games Week', 'subname' => 'Exposition', 'url_img' => '/images/oeuvre2.jpg'],
+            ];
+
+		return view('element.index')
+                ->with(compact('categories'))
+                ->with(compact('subCategories'))
+                ->with(compact('popUp'))
+                ->with(compact('array'));
 	} 
 
 

@@ -14,7 +14,7 @@
 			<h4>A la une : </h4><br>
 
 			<p>
-	          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAddElementTop" aria-expanded="false" aria-controls="collapseAddElementTop">
+	          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAddElementTop" aria-expanded="false" aria-controls="collapseAddElementTop" id="btnShowAddTopElement">
 	            Ajouter une oeuvre
 	          </button>
 	        </p>
@@ -25,7 +25,7 @@
 	            		<div class="form-group">
 	                        <label for="top_parent_cat" class="col-2 col-form-label">Catégorie : </label>
 	                        <div class="col-10">
-	                            <select class="form-control" id="top_parent_cat" name="parent_cat">*
+	                            <select class="form-control" id="top_parent_cat" name="top_parent_cat">*
                                 	<option>Choisir une catégorie</option>	                           
 	                                <option value="1">Livre</option>
 	                                <option value="2">Film</option>
@@ -35,9 +35,10 @@
 	                    </div>
 
 	                    <div class="form-group">
-	                        <label for="creator" class="col-2 col-form-label">Auteur / réalisateur : </label>
+	                        <label for="top_creator" class="col-2 col-form-label">Auteur / réalisateur : </label>
 	                        <div class="col-10">
-	                            <select class="form-control" id="creator" name="creator">
+	                            <select class="form-control" id="top_creator" name="top_creator" disabled>
+	                            	<option>Vous devez choisir une catégorie</option>
 	                                <option value="1">Victor Hugo</option>
 	                                <option value="2">Molière</option>
 	                                <option value="3">Emile Zola</option>
@@ -46,17 +47,22 @@
 	                    </div>
 
 	                    <div class="form-group">
-	                        <label for="creator" class="col-2 col-form-label">Titre : </label>
+	                        <label for="top_element" class="col-2 col-form-label">Titre : </label>
 	                        <div class="col-10">
-	                            <select class="form-control" id="creator" name="creator">
+	                            <select class="form-control" id="	" name="top_element" disabled>
+	                            	<option>Vous devez choisir un auteur / réalisateur</option>
 	                                <option value="1">Le petit chaperon rouge</option>
 	                                <option value="2">Les misérables</option>
 	                                <option value="3">...</option>
 	                            </select>
 	                        </div>
 	                    </div>
-	                    
-	                    <button type="submit" class="btn btn-success pull-right">Ajouter</button>
+	                    <div class="pull-right">
+	                    	<button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#collapseAddElementTop" aria-expanded="false" aria-controls="collapseAddElementTop" id="btnHideAddTopElement">
+	           					Annuler
+	          				</button>
+	                    	<button type="submit" class="btn btn-success">Ajouter</button>
+	                    </div>
 	            	</form>
 	            </div>
 	            <br>

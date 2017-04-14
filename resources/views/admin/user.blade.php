@@ -1,7 +1,7 @@
 <div id="collapse5" class="panel-collapse collapse">
     <div class="panel-body">
         <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAddUser" aria-expanded="false" aria-controls="collapseAddUser">
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAddUser" aria-expanded="false" aria-controls="collapseAddUser" id="btnShowAddUser">
             Ajouter un utilisateur
           </button>
         </p>
@@ -44,7 +44,12 @@
                             <input class="form-control" type="date" id="email" name="email">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success pull-right">Ajouter un utilisateur</button>
+                    <div class="pull-right">
+                        <button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#collapseAddUser" aria-expanded="false" aria-controls="collapseAddUser" id="btnHideAddUser">
+                            Annuel
+                        </button>
+                        <button type="submit" class="btn btn-success">Ajouter un utilisateur</button>
+                    </div>
                 </form>
                 <br><br>
             </div>

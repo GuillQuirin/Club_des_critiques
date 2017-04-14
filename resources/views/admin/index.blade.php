@@ -101,7 +101,53 @@
     	$( "#date_start" ).datepicker();
     	$( "#date_end" ).datepicker();
 
-    	// Affiche le bon formulaire d'ajout d'oeuvre
+
+// HOME
+
+		// Cache le bouton "ajouter un element"
+		$('#btnShowAddTopElement').click(function() {
+			$('#btnShowAddTopElement').hide();
+		});
+		// Affiche le bouton "ajouter un element"
+		$('#btnHideAddTopElement').click(function() {
+			$('#btnShowAddTopElement').show();
+		});
+    	
+    	// Débloque les listes déroulantes
+		$('#top_parent_cat').change(function() {
+			if (this.value != null) {
+				$('#top_creator').prop('disabled', false);
+			}
+		});
+		$('#top_creator').change(function() {
+			if (this.value != null) {
+				$('#top_element').prop('disabled', false);
+			}
+		});
+
+// CATEGORY
+
+		// Cache le bouton "ajouter une categorie"
+		$('#btnShowAddCategory').click(function() {
+			$('#btnShowAddCategory').hide();
+		});
+		// Affiche le bouton "ajouter une categorie"
+		$('#btnHideAddCategory').click(function() {
+			$('#btnShowAddCategory').show();
+		});
+
+// ELEMENT
+
+		// Cache le bouton "ajouter un element"
+		$('#btnShowAddElement').click(function() {
+			$('#btnShowAddElement').hide();
+		});
+		// Affiche le bouton "ajouter un element"
+		$('#btnHideAddElement').click(function() {
+			$('#btnShowAddElement').show();
+		});
+
+		// Affiche le bon formulaire d'ajout d'oeuvre
     	$('input[type=radio][name=radioElement]').change(function() {
 	        if (this.value == 'manual') {
 	            $('#elementManual').show();
@@ -113,9 +159,8 @@
 	        }
 	    });
 
-
+    	// Affiche les bonnes dates pour le formulaire d'une oeuvre
     	$('#parent_cat').change(function() {
-    		console.log( this );
 	    	if( this.value == 1 || this.value == 2){
 	    		$('#datePublication').show();
 	    		$('#dateStart').hide();
@@ -137,6 +182,34 @@
 	    		$('#dateEndEdit').show();
 	    	}
 	    });
+
+// ROOM
+
+		// Cache le bouton "ajouter un salon"
+		$('#btnShowAddRoom').click(function() {
+			$('#btnShowAddRoom').hide();
+		});
+		
+		// Affiche le bouton "ajouter un salon"
+		$('#btnHideAddRoom').click(function() {
+			$('#btnShowAddRoom').show();
+		});
+
+
+// USER
+
+		// Cache le bouton "ajouter un utilisateur"
+		$('#btnShowAddUser').click(function() {
+			$('#btnShowAddUser').hide();
+		});
+		
+		// Affiche le bouton "ajouter un utilisateur"
+		$('#btnHideAddUser').click(function() {
+			$('#btnShowAddUser').show();
+		});
+
+
+// FUNCTIONS
 
         function initializedDataTable(id) {
         	$('#' + id).DataTable({

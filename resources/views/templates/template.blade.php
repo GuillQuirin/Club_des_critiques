@@ -15,9 +15,9 @@
                 {{ Html::style('https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js') }}
             <![endif]-->
             {!! HTML::style('font-awesome-4.7.0/css/font-awesome.css'); !!}
-            {!! HTML::style('css/template.css'); !!}
             {!! HTML::style('DataTables/datatables.min.css'); !!}
             {!! HTML::style('bootstrap-datepicker/css/bootstrap-datepicker.min.css'); !!}
+            {!! HTML::style('css/template.css'); !!}
             @yield('css')
     </head>
     <body>
@@ -45,8 +45,13 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                  <div id="sidebar-wrapper"> 
                   <ul class="nav navbar-nav" class="sidebar-nav">
+
                     <li class="visible-xs-block"><a href="{{ route('home') }}"><img class="logo" src="/images/logo.png" alt="logo"></a></li>
-                    <li class="active hidden-sm"><a href="{{ route('home') }}">Accueil<span class="sr-only">(current)</span></a></li>
+                  
+                    <li class="hidden-xs hidden-sm"><a href="{{ route('home') }}">Accueil<span class="sr-only">(current)</span></a></li>
+
+                    <hr class="visible-xs-block">
+
                     <li class="dropdown">
                         <a  href="#" 
                             class="dropdown-toggle" 
@@ -64,6 +69,9 @@
                             <li><a href="{{ route('elements') }}">Toutes les oeuvres</a></li>
                         </ul>
                     </li>
+
+                    <hr class="visible-xs-block">
+
                     <li class="dropdown">
                         <a  href="#" 
                             class="dropdown-toggle" 
@@ -79,13 +87,17 @@
                             <li><a href="{{ route('rooms') }}">Tous les salons</a></li>
                         </ul>
                     </li>
-                    
+ 
+                    <hr class="visible-xs-block">
+
                     <li class="dropdown">
                         <a href="{{ route('users') }}">
                             <span class="hidden-sm">La communauté</span>
                             <i class="visible-sm-block fa fa-users" aria-hidden="true"></i>
                             </a>
                     </li>
+
+                    <hr class="visible-xs-block">
 
                     <li class="dropdown dropdownCountdown">
                         <a  id="nextRoomCountdown" 
@@ -103,7 +115,8 @@
                             <a href="{{ route('show_room', ['id' => 1]) }}">Accèdez à la fiche du salon</a>
                         </div>
                     </li>
-
+                    
+                    <hr class="visible-xs-block">
                   </ul>
 
                   <ul class="nav navbar-nav navbar-right sidebar-nav">
@@ -265,9 +278,9 @@
             {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js') !!}
             {!! HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js') !!}
             {!! HTML::script('js/jquery.countdown.js') !!}
-            {!! HTML::script('js/template.js') !!}
             {!! HTML::script('DataTables/datatables.min.js') !!}
             {!! HTML::script('bootstrap-datepicker/js/bootstrap-datepicker.min.js') !!}
+            {!! HTML::script('js/template.js') !!}
             @yield('js')
     </body>
 </html>

@@ -2,6 +2,7 @@
 	background-image: url(/images/welcome.jpeg);
 	background-size: cover;
     min-height: 500px;
+    background-position: 50%;
 }
 
 .jumbotron .container-fluid{

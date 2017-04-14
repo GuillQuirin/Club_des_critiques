@@ -13,7 +13,7 @@ BODY{
 }
 
 li.dropdownCountdown{
-	width: 200px;
+	min-width: 200px;
 }
 
 #nextRoomCountdown{
@@ -24,6 +24,7 @@ li.dropdownCountdown{
 #nextRoomDetails{
 	width: 100%;
     padding: 20px 10px;
+    background-color: #fdb16e;
 }
 
 
@@ -111,8 +112,17 @@ hr{
 
     #sidebar-wrapper ul{
         margin: 0;
-        text-align: center;
     }
 
+    ul.navbar-nav ul.dropdown-menu{
+        background-color: #dcf9e4 !important;
+    }
+    
+    ul.navbar-nav>li.dropdown>a{
+        padding-left: 25%;
+    }
 
+    #nextRoomCountdown{
+        text-align: left;
+    }
 }

@@ -14,8 +14,10 @@ class UserController extends Controller
      * @return view
      */
      public function index()
+
      {
-		return view('user.index');
+          $xx = ['lol','coucou','coucou','coucou','coucou','coucou','coucou','coucou','coucou','coucou'];
+		return view('user.index', compact('xx'));
 	}
 
 	/**

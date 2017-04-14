@@ -58,21 +58,7 @@
 
         <hr>
 
-        <div class="row">
-        <?php for($i=0; $i<8; $i++): ?>
-            <div class="col-xs-6 col-md-3">
-                <a href="{{ route('show_user',[ 'id' => 1 ]) }}" class="thumbnail">
-                    <figure>
-                        <img src="/images/oeuvre.jpg" alt="...">
-                        <figcaption>
-                            <p class="title">Utilisateur<?php echo $i; ?></p>
-                            <p class="author">Auteur</p>
-                        </figcaption>
-                    </figure>
-                </a>
-            </div>
-        <?php endfor; ?>
-        </div>
+        @include('templates.mosaique')
         
         <div class="row text-center">
             <ul class="pagination">

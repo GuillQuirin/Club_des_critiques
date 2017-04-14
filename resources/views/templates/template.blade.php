@@ -212,12 +212,12 @@
                         {!! $errors->first('password', '<small class="help-block">:message</small>') !!}
                     </div>
                     <div class="row">
-                        <span class="col-md-6 text-left">
+                        <span class="col-xs-6 col-sm-6 col-md-6 text-left">
                             <a  class="btn btn-warning" role="button" data-toggle="collapse" 
                                 href="#forgetPwd" aria-expanded="false" aria-controls="forgetPwd">
                                 Mot de passe oublié ?</a>
                         </span>
-                        <span class="col-md-6 text-right">
+                        <span class="col-xs-6 col-sm-6 col-md-6 text-right">
                             {!! Form::submit("Se connecter", ['class' => 'btn btn-success']) !!}
                         </span>
                     </div>

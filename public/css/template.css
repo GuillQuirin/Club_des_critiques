@@ -45,14 +45,25 @@ small{
 }
 
 /* FIGCAPTION du site */
+figure{
+    position: relative;
+    height: 200px;
+    background-size: cover;
+    background-position: 50% 25%;
+}
 
 figure img{
 	max-width: 100%;
 }
 
 figcaption{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    font-size: 1.5em;
 	text-align: center;
-    font-size: 1.25em;
+    background-color: rgba(206, 255, 206, 0.64);
+    color: black;
 }
 
 figcaption .title{

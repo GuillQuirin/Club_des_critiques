@@ -13,8 +13,7 @@
                 data-toggle="modal" 
                 data-target="#openModal">
         @endif
-            <figure>
-                <img src="{{ $value['url_img'] }}" alt="">
+            <figure style="background-image: url({{$value['url_img']}})">
                 <figcaption>
                 	<p class="title">{{$value['name']}}</p>
                     <p class="author">{{$value['subname']}}</p>

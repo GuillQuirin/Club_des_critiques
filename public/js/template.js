@@ -40,4 +40,15 @@ $(document).ready(function(){
     //     } 
     //   });
     // }
+
+    $('#openModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var modal = $(this);
+
+        modal.find('#picture').attr('src',button.data('picture'));
+        modal.find('#first_text').html(button.data('first_text'));
+        modal.find('#second_text').html(button.data('second_text'));
+        modal.find('#description').html(button.data('description'));
+        
+    });
 });

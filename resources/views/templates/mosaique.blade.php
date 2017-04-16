@@ -6,14 +6,18 @@
         @else
             <a  href="#" 
                 class="thumbnail"
+                data-picture="{{$value['url_img']}}" 
+                data-first_text="{{$value['name']}}" 
+                data-second_text="{{$value['subname']}}" 
+                data-description="{{$value['description']}}" 
                 data-toggle="modal" 
                 data-target="#openModal">
         @endif
             <figure>
                 <img src="{{ $value['url_img'] }}" alt="">
                 <figcaption>
-                	<p class="title">{{ $value['name'] }}</p>
-                    <p class="author">{{ $value['subname'] }}</p>
+                	<p class="title">{{$value['name']}}</p>
+                    <p class="author">{{$value['subname']}}</p>
                 </figcaption>
             </figure>
         </a>

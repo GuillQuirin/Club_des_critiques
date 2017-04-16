@@ -33,7 +33,28 @@ class UserController extends Controller
      */
 	public function show($id)
 	{
-		return view('user.show');
+          $infos = ["f_name" => "PRENOM",
+                    "l_name" => "NOM",
+                    "status" => "Administrateur",
+                    "image" => "/uploads/id.jpg",
+                    "localization" => "Hauts-de-Seine",
+                    "description" => "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    "is_joignable" => false];
+
+          $exchange = [1, 2, 3, 4];
+
+          $popUp = 'element.show';
+          $array['items'] = [
+                ['id' => 1, 'name' => 'Harry Potter', 'subname' => 'Livre', 'url_img' => '/images/oeuvre.jpg', 'description' => "COUCOU"],
+                ['id' => 2, 'name' => 'Interstellar', 'subname' => 'Film', 'url_img' => '/images/oeuvre1.jpg', 'description' => "COUCOU"],
+                ['id' => 3, 'name' => 'Paris Games Week', 'subname' => 'Exposition', 'url_img' => '/images/oeuvre2.jpg', 'description' => "COUCOU"],
+          ];
+
+		return view('user.show')
+                    ->with(compact('infos'))
+                    ->with(compact('exchange'))
+                    ->with(compact('array'))
+                    ->with(compact('popUp'));
 	}
 
 	/**

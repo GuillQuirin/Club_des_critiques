@@ -26,12 +26,14 @@
                 class="valig-center col-xs-12 col-sm-4 col-md-4"><!-- --><p class="description valig-center col-xs-12 col-sm-8 col-md-8">{{$infos['description']}}</p>
         </div>
         
-        <a href="" title="Parametrer mon compte" data-toggle="modal" data-target="#edit">
-            <button class="btn editProfile">
-                <span class="hidden-xs">Modifier</span>
-                <i class="fa fa-cog" aria-hidden="true"></i>
-            </button>
-        </a>
+        @if($infos['editAccount'])
+          <a href="" title="Parametrer mon compte" data-toggle="modal" data-target="#edit">
+              <button class="btn editProfile">
+                  <span class="hidden-xs">Modifier</span>
+                  <i class="fa fa-cog" aria-hidden="true"></i>
+              </button>
+          </a>
+        @endif
 
         <hr>
         

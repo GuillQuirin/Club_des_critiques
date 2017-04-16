@@ -39,7 +39,8 @@ class UserController extends Controller
                     "image" => "/uploads/id.jpg",
                     "localization" => "Hauts-de-Seine",
                     "description" => "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                    "is_joignable" => false];
+                    "is_joignable" => false,
+                    "editAccount" => true];
 
           $exchange = [1, 2, 3, 4];
 

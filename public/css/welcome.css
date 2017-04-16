@@ -1,5 +1,5 @@
 .jumbotron{
-	background-image: url(/images/welcome.jpeg);
+	/*background-image: url(/images/welcome.jpeg);*/
 	background-size: cover;
     min-height: 500px;
     background-position: 50%;
@@ -15,21 +15,4 @@
 
 .jumbotron small{
 	color:white;
-}
-
-figure img{
-	max-width: 100%;
-}
-
-figcaption{
-	text-align: center;
-    font-size: 1.25em;
-}
-
-figcaption .title{
-	
-}
-
-figcaption .author{
-
 }

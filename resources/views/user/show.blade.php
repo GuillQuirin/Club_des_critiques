@@ -27,12 +27,14 @@
         </div>
         
         @if($infos['editAccount'])
+          <!-- POP-UP CONFIG COMPTE -->
           <a href="" title="Parametrer mon compte" data-toggle="modal" data-target="#edit">
               <button class="btn editProfile">
                   <span class="hidden-xs">Modifier</span>
                   <i class="fa fa-cog" aria-hidden="true"></i>
               </button>
           </a>
+          @include('user.edit')
         @endif
 
         <hr>
@@ -99,10 +101,6 @@
               @endif
             </div>
         </div>
-    </div> <!-- /.Container -->
-
-    <!-- POP-UP CONFIG COMPTE -->
-    @include('user.edit')
-    
+    </div> <!-- /.Container -->    
 
 @endsection

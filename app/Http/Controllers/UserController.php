@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\User;
 
 class UserController extends Controller
 {
@@ -15,6 +16,9 @@ class UserController extends Controller
      */
      public function index()
      {
+          // Collection de tous les users
+          // $users = User::all();
+
           $array['redirect'] = 'show_user';
           $array['items'] = [
                     ['id' => 1, 'name' => 'Guillaume', 'subname' => 'Quirin', 'url_img' => '/images/oeuvre.jpg'],
@@ -33,6 +37,9 @@ class UserController extends Controller
      */
 	public function show($id)
 	{
+          // Récupère l'utilisateur
+          // $user = User::find($id);
+
           $infos = ["f_name" => "PRENOM",
                     "l_name" => "NOM",
                     "status" => "Administrateur",
@@ -67,6 +74,12 @@ class UserController extends Controller
      */
 	public function updateInfo(Request $request, $id)
 	{
+          // Exemple de modification de user :
+          // $user = User::find($id);
+          // $user->first_name = $request->first_name;
+          // $user->save();   
+
+
 		return view('user.show');
 	}
 

@@ -76,6 +76,12 @@ BODY{
 	border-color: #D99E7E;
 }
 
-.btn-warning:hover {
+.btn-warning:hover, .btn-warning:focus, .btn-warning:active:hover {
 	background-color: #D99E7E;
+    border-color: #D99E7E;
+}
+
+.padding-top-strong{
+    padding-top: 6px;
+    padding-left: 0px;
 }

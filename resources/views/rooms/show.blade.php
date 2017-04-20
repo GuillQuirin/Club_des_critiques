@@ -11,8 +11,8 @@
 @section('content')
         <h1 class="text-center text-uppercase col-xs-10 col-sm-12">Titre du livre <small>Nom Prénom de l'auteur</small></h1>
         <div class="row">
-        	<div class="col-md-7">
-	        	<div class="col-xs-12 col-md-offset-2 col-md-8 col-lg-8 col-lg-offset-2">
+        	<div class="col-md-8">
+	        	<div class="col-xs-12 col-md-offset-1 col-md-10 col-lg-offset-1">
 		            <div class="panel panel-primary">
 		                <div class="panel-heading">
 		                    <span class="glyphicon glyphicon-comment"></span> Commentaires
@@ -95,8 +95,8 @@
 		            </div>
 		        </div>
 		    </div>
-        	<div class="col-md-5">
-        		<div class="col-xs-12 col-md-8 col-lg-10">
+        	<div class="col-md-4">
+        		<div class="col-xs-12 col-md-11">
 		            <div class="panel panel-primary">
 		                <div class="panel-heading">
 		                    <span class="glyphicon glyphicon-user"></span> Membres du salon
@@ -114,46 +114,56 @@
 		                    <ul class="chat">
 		                        <li class="clearfix">
 		                            <div class="chat-body clearfix">
-		                            	<p>
-		                                    <strong class="primary-font">Jack Sparrow</strong> 
-		                                	<button class="btn btn-warning" id="btn-chat">Signaler</button>
-		                                	<button class="btn btn-warning" id="btn-chat">Contacter</button>
-		                                </p>
+                                        <div class="col-xs-6 text-left padding-top-strong">
+                                            <strong class="primary-font">Jack Sparrow</strong>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <button class="btn btn-warning" id="btn-chat">Signaler</button>
+                                            <button class="btn btn-warning" id="btn-chat">Contacter</button>
+                                        </div>
 		                            </div>
 		                        </li>
 		                        <li class="clearfix">
 		                            <div class="chat-body clearfix">
-		                            	<p>
-		                                    <strong class="primary-font">John Lennon</strong> 
-		                                	<button class="btn btn-warning" id="btn-chat">Signaler</button>
-		                                	<button class="btn btn-warning" id="btn-chat">Contacter</button>
-		                                </p>
+                                        <div class="col-xs-6 text-left padding-top-strong">
+                                            <strong class="primary-font">Jack Sparrow</strong>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <button class="btn btn-warning" id="btn-chat">Signaler</button>
+                                            <button class="btn btn-warning" id="btn-chat">Contacter</button>
+                                        </div>
 		                            </div>
 		                        </li>
 		                        <li class="clearfix">
 		                            <div class="chat-body clearfix">
-		                            	<p>
-		                                    <strong class="primary-font">Martine Brulet</strong>
-		                                	<button class="btn btn-warning" id="btn-chat">Signaler</button>
-		                                	<button class="btn btn-warning" id="btn-chat">Contacter</button>
-		                                </p>
+                                        <div class="col-xs-6 text-left padding-top-strong">
+                                            <strong class="primary-font">Jack Sparrow</strong>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <button class="btn btn-warning" id="btn-chat">Signaler</button>
+                                            <button class="btn btn-warning" id="btn-chat">Contacter</button>
+                                        </div>
 		                            </div>
 		                        </li>
 		                        <li class="clearfix">
 		                            <div class="chat-body clearfix">
-		                            	<p>
-		                                    <strong class="primary-font">Franck Bernard</strong>
-		                                	<button class="btn btn-warning" id="btn-chat">Signaler</button>
-		                                	<button class="btn btn-warning" id="btn-chat">Contacter</button>
-		                                </p>
+                                        <div class="col-xs-6 text-left padding-top-strong">
+                                            <strong class="primary-font">Jack Sparrow</strong>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <button class="btn btn-warning" id="btn-chat">Signaler</button>
+                                            <button class="btn btn-warning" id="btn-chat">Contacter</button>
+                                        </div>
 		                            </div>
 		                        </li>
 		                    </ul>
 		                </div>
 		        	</div>
-		        </div>
+					<div class="col-md-12 text-center">
+                        <a href="#" class="btn btn-warning btn-lg" role="button">Ajouter un contact <span class="glyphicon glyphicon-plus"></span></a>
+                    </div>
+				</div>
 		    </div>
-		    <p><a href="#" class="">Ajouter un contact </a><span class="glyphicon glyphicon-plus"></span></p>
 		</div>
 @endsection
 

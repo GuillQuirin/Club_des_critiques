@@ -1,5 +1,5 @@
 BODY{
-	text-decoration: underline;
+    height: 100%;
 }
 
 .chat
@@ -84,4 +84,12 @@ BODY{
 .padding-top-strong{
     padding-top: 6px;
     padding-left: 0px;
+}
+
+.table>tbody>tr>td{
+    vertical-align: middle;
+}
+
+tr{
+    background-color: #70BEB1;
 }

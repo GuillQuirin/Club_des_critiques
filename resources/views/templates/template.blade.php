@@ -14,10 +14,10 @@
                 {{ Html::style('https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js') }}
                 {{ Html::style('https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js') }}
             <![endif]-->
-            {!! HTML::style('font-awesome-4.7.0/css/font-awesome.css'); !!}
-            {!! HTML::style('DataTables/datatables.min.css'); !!}
-            {!! HTML::style('bootstrap-datepicker/css/bootstrap-datepicker.min.css'); !!}
-            {!! HTML::style('css/template.css'); !!}
+            {!! HTML::style('font-awesome-4.7.0/css/font-awesome.css') !!}
+            {!! HTML::style('DataTables/datatables.min.css') !!}
+            {!! HTML::style('bootstrap-datepicker/css/bootstrap-datepicker.min.css') !!}
+            {!! HTML::style('css/template.css') !!}
             @yield('css')
     </head>
     <body>
@@ -185,7 +185,7 @@
         </span>
         
         <footer>
-			<div class="container">
+			<div class="site-footer">
 				<span class="text-muted">Place sticky footer content here.</span>
 			</div>
 		</footer>

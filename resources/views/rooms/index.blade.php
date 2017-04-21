@@ -12,36 +12,36 @@
     <div class="container">
         <div class="text-center">
             <h1>Les salons à venir</h1>
+            <table id="salons" class="table table-hover table-responsive" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Titre (auteur)</th>
+                        <th>Dates du salon</th>
+                        <th>Numéro du salon</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php for ($i = 1; $i <= 15; $i++) { ?>
+                    <tr>
+                        <td>Harry Potter <?php echo $i;?> (J.K Rowling)</td>
+                        <td>Du 01/05/2017 au 01/07/2017</td>
+                        <td>Salon 1</td>
+                        <td><button type="button"
+                                    class="btn btn-success"
+                                    data-toggle="modal"
+                                    data-target="#join"
+                                    data-title="Harry Potter <?php echo $i?>"
+                                    data-autor="J.K Rowling"
+                                    data-salon="Salon 1">
+                                Rejoindre le salon
+                            </button>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
         </div>
-        <table id="salons" class="table table-hover table-responsive" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>Titre (auteur)</th>
-                    <th>Dates du salon</th>
-                    <th>Numéro du salon</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php for ($i = 1; $i <= 15; $i++) { ?>
-                <tr>
-                    <td>Harry Potter <?php echo $i;?> (J.K Rowling)</td>
-                    <td>Du 01/05/2017 au 01/07/2017</td>
-                    <td>Salon 1</td>
-                    <td><button type="button"
-                                class="btn btn-success"
-                                data-toggle="modal"
-                                data-target="#join"
-                                data-title="Harry Potter <?php echo $i?>"
-                                data-autor="J.K Rowling"
-                                data-salon="Salon 1">
-                            Rejoindre le salon
-                        </button>
-                    </td>
-                </tr>
-                <?php } ?>
-            </tbody>
-        </table>
     </div>
 
     <div class="modal fade" id="join" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

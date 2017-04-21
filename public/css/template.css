@@ -83,6 +83,21 @@ hr{
     border: 1px solid #e5e5e5;/* Meme couleur que les bordures de modal */ 
 }
 
+footer a{
+    color: #777;
+    padding-left:60px;
+}
+
+footer a:hover, footer a:active, footer a:focus{
+    color:#333;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.no-padding-left{
+    padding-left:0px;
+}
+
 /* FORMAT XS */
 
 @media(max-width:768px){

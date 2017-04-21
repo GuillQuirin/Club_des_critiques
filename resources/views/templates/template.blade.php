@@ -184,9 +184,15 @@
             @yield('content')
         </span>
         
-        <footer>
-			<div class="site-footer">
-				<span class="text-muted">Place sticky footer content here.</span>
+        <footer class="footer">
+			<div class="container text-center">
+				<span class="text-muted">
+                        <a href="#" class="no-padding-left">Notre concept</a>
+                        <a href="#">Nous contacter</a>
+                        <a href="/"><img class="logo" src="/images/logo.png" alt="logo"></a>
+                        <a href="{{ route('admin') }}">Administration</a>
+                        <a href="#">Copyright</a>
+                </span>
 			</div>
 		</footer>
        

@@ -27,17 +27,8 @@ li.dropdownCountdown{
     background-color: #fdb16e;
 }
 
-
-#popupRegister{
-    display: block;
-}
-
-
-/* CSS appliqué pour l'ensemble des container hormis l'accueil*/
-.container:not(.notPadding){
-	padding-right: 75px;
-    padding-left: 75px;
-    position: relative;
+.alert{
+    display: none;
 }
 
 small{
@@ -98,8 +89,14 @@ footer a:hover, footer a:active, footer a:focus{
     padding-left:0px;
 }
 
-/* FORMAT XS */
+/* CSS appliqué pour l'ensemble des container hormis l'accueil*/
+.container:not(.notPadding){
+    padding-right: 75px;
+    padding-left: 75px;
+    position: relative;
+}
 
+/* FORMAT XS */
 @media(max-width:768px){
 
 	/* VOLET DEROULANT */

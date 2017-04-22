@@ -51,4 +51,43 @@ $(document).ready(function(){
         modal.find('#description').html(button.data('description'));
         
     });
+
+    $('.modal form').submit(function(){
+        var form = $(this);
+        var i=0;
+        var message =' ';
+        
+        $.ajax({
+            url: '*"é(é"(',
+            type: 'PUT',
+            data: '',
+            async: false
+            })
+                .done(function () {
+                    i = 1;
+                    //i=2;
+                })
+                .fail(function () {
+                    i = 3;
+                });
+
+        switch(i){
+            case 1: // OK
+                message += '.alert-success';
+                break;
+            case 2: // Problème fonctionnel
+                message += '.alert-warning';
+                break;
+            case 3: // Problème technique
+                message += '.alert-danger';
+                break;
+        }
+        
+        form.find('.alert').hide();
+        form.find(message).fadeIn();
+        
+        if(form.hasClass('notRedirect') || i!=1)
+            return false;
+    });
+
 });

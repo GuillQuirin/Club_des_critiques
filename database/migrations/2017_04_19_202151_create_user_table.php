@@ -26,8 +26,9 @@ class CreateUserTable extends Migration
             $table->string('token',100);
             $table->boolean('is_reported')->default(false);
             $table->boolean('is_contactable')->default(true);
-            $table->timestamps('date_created');
-            $table->timestamps('date_updated');
+            $table->timestamps();
+            //$table->timestamps('date_created');
+            //$table->timestamps('date_updated');
         });
     }
 

@@ -12,6 +12,13 @@ class User extends Model
     const CREATED_AT = 'date_created';
     const UPDATED_AT = 'date_updated';
 
+    // protected $fillable = [
+    //     'first_name',
+    //     'last_name',
+    // ];
+ 
+    public $timestamps = true;
+
     /**
      * Define one-to-many relation between user and its userElements
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -24,7 +31,11 @@ class User extends Model
     // Get all elements shared by the user
     public function elementShared()
     {
-    	$elements =  DB::select(DB::raw('select * from element where id = (select id_element from user_element where id_user = ' . $this->id . ' and is_exchangeable = 1)'));
+    	$elements =  DB::select(DB::raw('SELECT * FROM element 
+                                                    WHERE id = (SELECT id_element 
+                                                                FROM user_element 
+                                                                WHERE  is_exchangeable = 1
+                                                                    AND id_user = ' . $this->id . ')'));
 
         // Array to Model
         $elements = Element::hydrate($elements);
@@ -45,7 +56,10 @@ class User extends Model
     // A UTILISER COMME CA : $user->rooms() (et non $user->rooms)
     public function rooms()
     {
-    	$rooms = DB::select('select * from room where id = (select id_room from user_room where id_user = ' . $this->id . ')');
+    	$rooms = DB::select('SELECT * FROM room 
+                                        WHERE id = (SELECT id_room 
+                                                        FROM user_room 
+                                                        WHERE id_user = ' . $this->id . ')');
 
         $rooms = Element::hydrate($rooms);
 

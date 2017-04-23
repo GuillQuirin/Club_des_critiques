@@ -9,7 +9,7 @@ use App\User;
 
 class UserController extends Controller
 {
-	/**
+     /**
      * Affiche la liste de tous les utilisateurs
      *
      * @return view
@@ -18,13 +18,9 @@ class UserController extends Controller
      {
           // Collection de tous les users
           // $users = User::all();
+          $array = User::latest('updated_at')->get();
+          $array->redirect = 'show_user';
 
-          $array['redirect'] = 'show_user';
-          $array['items'] = [
-                    ['id' => 1, 'name' => 'Guillaume', 'subname' => 'Quirin', 'url_img' => '/images/oeuvre.jpg'],
-                    ['id' => 2, 'name' => 'Elise', 'subname' => 'Poirier', 'url_img' => '/images/oeuvre1.jpg'],
-                    ['id' => 3, 'name' => 'Laurie', 'subname' => 'Guibert', 'url_img' => '/images/oeuvre2.jpg'],
-               ];
 		return view('user.index')
                     ->with(compact('array'));
 	}
@@ -38,32 +34,24 @@ class UserController extends Controller
 	public function show($id)
 	{
           // Récupère l'utilisateur
-          // $user = User::find($id);
+          $infos = User::findOrFail($id);
 
-          $infos = ["f_name" => "PRENOM",
-                    "l_name" => "NOM",
-                    "status" => "Administrateur",
-                    "image" => "/uploads/id.jpg",
-                    "localization" => "Hauts-de-Seine",
-                    "description" => "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                    "is_joignable" => false,
-                    "editAccount" => true];
-
-          $exchange = [1, 2, 3, 4];
-
+          //Récupère les oeuvres que l'utilisateur soihaite échanger
+          /*$exchange = [1, 2, 3, 4];
           $popUp = 'element.show';
-          $array['items'] = [
+          $array->items = [
                 ['id' => 1, 'name' => 'Harry Potter', 'subname' => 'Livre', 'url_img' => '/images/oeuvre.jpg', 'description' => "COUCOU"],
                 ['id' => 2, 'name' => 'Interstellar', 'subname' => 'Film', 'url_img' => '/images/oeuvre1.jpg', 'description' => "COUCOU"],
                 ['id' => 3, 'name' => 'Paris Games Week', 'subname' => 'Exposition', 'url_img' => '/images/oeuvre2.jpg', 'description' => "COUCOU"],
-          ];
+          ];*/
 
 		return view('user.show')
-                    ->with(compact('infos'))
+                    ->with(compact('infos'));/*
                     ->with(compact('exchange'))
                     ->with(compact('array'))
-                    ->with(compact('popUp'));
+                    ->with(compact('popUp'));*/
 	}
+
 
 	/**
      * Modification des info personnelles d'un utilisateur

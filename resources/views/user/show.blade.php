@@ -9,24 +9,24 @@
 @endsection
 
 @section('title')
-    {{$infos['f_name']}}
+    {{$infos->first_name}}
 @endsection
 
 @section('content')
     <div class="container">
-        <h1 class="text-center col-xs-10 col-xs-offset-1 col-sm-12">{{$infos['f_name']}}
-          <small>{{$infos['status']}} ({{$infos['localization']}})</small>
+        <h1 class="text-center col-xs-10 col-xs-offset-1 col-sm-12">{{$infos->first_name}}
+          <small>{{$infos->status}} ({{$infos->location}})</small>
         </h1>
 
         <div class="row">
             <!-- Aucun espace entre l'image et la description afin que le vertical-align soit pris en compte -->
-            <img src="{{$infos['image']}}" 
+            <img src="{{$infos->picture}}" 
                 alt='Photo de profil' 
                 id="profilPicture" 
-                class="valig-center col-xs-12 col-sm-4 col-md-4"><!-- --><p class="description valig-center col-xs-12 col-sm-8 col-md-8">{{$infos['description']}}</p>
+                class="valig-center col-xs-12 col-sm-4 col-md-4"><!-- --><p class="description valig-center col-xs-12 col-sm-8 col-md-8">{{$infos->description}}</p>
         </div>
         
-        @if($infos['editAccount'])
+        @if($infos->editAccount)
           <!-- POP-UP CONFIG COMPTE -->
           <a href="" title="Parametrer mon compte" data-toggle="modal" data-target="#edit">
               <button class="btn editProfile">
@@ -41,16 +41,16 @@
         
         <!-- ECHANGES -->
         <h3>Propose d'échanger : </h3>
-        @include('templates.mosaique')
+        {{-- @include('templates.mosaique') --}}
         
         <hr>
         
         <!-- FORMULAIRE DE CONTACT -->
-        <h3>Contacter {{$infos['f_name']}}</h3>
+        <h3>Contacter {{$infos->first_name}}</h3>
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-              @if(!$infos['is_joignable'])
-                <p>{{$infos['f_name']}} n'est pas joignable actuellement.</p>
+              @if(!$infos->is_contactable)
+                <p>{{$infos->first_name}} n'est pas joignable actuellement.</p>
               @else
                 <ul>
                     @foreach($errors->all() as $error)

@@ -35,7 +35,7 @@ class UserController extends Controller
 	{
           // Récupère l'utilisateur
           $infos = User::findOrFail($id);
-
+          $infos->editAccount  = true;
           //Récupère les oeuvres que l'utilisateur soihaite échanger
           /*$exchange = [1, 2, 3, 4];
           $popUp = 'element.show';
@@ -63,9 +63,14 @@ class UserController extends Controller
 	public function updateInfo(Request $request, $id)
 	{
           // Exemple de modification de user :
-          // $user = User::find($id);
-          // $user->first_name = $request->first_name;
-          // $user->save();   
+          $user = User::findOrFail($id);
+          $this->validate($request, [
+               'first_name' => 'required',
+               'last_name' => 'required',
+          ]);
+          $input = $request->all();
+
+          $user->fill($input)->save();
 
 
 		return view('user.show');

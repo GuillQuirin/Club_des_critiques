@@ -12,10 +12,16 @@ class User extends Model
     const CREATED_AT = 'date_created';
     const UPDATED_AT = 'date_updated';
 
-    // protected $fillable = [
-    //     'first_name',
-    //     'last_name',
-    // ];
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'description',
+        'picture',
+        'location',
+        'email',
+        'status',
+        'password',
+    ];
  
     public $timestamps = true;
 

@@ -12,35 +12,42 @@
 */
 
 
-//Accueil
+/* ACCUEIL */
 Route::get('/', ['as' => 'home', 'uses' => 'WelcomeController@index']);
 
-//Catégorie
+/* CATEGORIES */
 Route::get('categories', ['as' => 'categories', 'uses' => 'CategoryController@index']);
 Route::get('category/{id}', ['as' => 'show_category', 'uses' => 'CategoryController@show']);
 
-//Oeuvres
+/* OEUVRE */
 Route::get('elements', ['as' => 'elements', 'uses' => 'ElementController@index']);
 Route::get('element/{id}', ['as' => 'show_element', 'uses' => 'ElementController@show']);
 
-//Utilisateur
-Route::get('users', ['as' => 'users', 'uses' => 'UserController@index']);
-Route::get('user/{id}', ['as' => 'show_user', 'uses' => 'UserController@show']);
-Route::post('user/{id}', ['as' => 'update_user', 'uses' => 'UserController@updateInfo']);
-Route::post('user/{id}', ['as' => 'update_password_user', 'uses' => 'UserController@updatePassword']);
 
-//Salons
+/* UTILISATEUR */
+
+//Liste des utilisateurs
+Route::get('users', ['as' => 'users', 'uses' => 'UserController@index']);
+//Affichage d'un utilisateur
+Route::get('user/{id}', ['as' => 'show_user', 'uses' => 'UserController@show']);
+//Modifications de l'utilisateur
+Route::patch('user/{id}', ['as' => 'update_user', 'uses' => 'UserController@updateInfo']);
+Route::post('user/{id}', ['as' => 'update_password_user', 'uses' => 'UserController@updatePassword']);
+//Inscription
+Route::post('register', ['as' => '/', 'uses' => 'UserController@register']);
+
+/* SALONS */
 Route::get('rooms', ['as' => 'rooms', 'uses' => 'RoomsController@index']);
 Route::get('rooms/futur_rooms', ['as' => 'futur_rooms', 'uses' => 'RoomsController@showFuturRooms']);
 Route::get('rooms/my_rooms', ['as' => 'my_rooms', 'uses' => 'RoomsController@showMyRooms']);
 Route::get('room/{id}', ['as' => 'show_room', 'uses' => 'RoomsController@show']);
 Route::post('room/join/{id}', ['as' => 'join_room', 'uses' => 'RoomsController@join']);
 
-//Contact
+/* CONTACT */
 Route::post('contact', ['as' => 'contact', 'uses' => 'ContactController@postForm']);
 
 
-// Administration
+/* ADMINISTRATION */
 Route::get('admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
 
 

@@ -9,12 +9,12 @@
             </div>
 
             {!! Form::open(['url' => '/', 'class' => 'notRedirect', 'id' => 'formRegister']) !!}
-            
+            <p class="url" data-url="register"></p>
             <div class="modal-body">
                 <div class="form-group">
                     {!! Form::label('emailRegister','Saisissez votre adresse e-mail') !!}
-                    {!! Form::email('emailRegister','', ['class' => 'form-control', 'required' => 'true']) !!}
-                    {!! $errors->first('emailRegister', '<small class="help-block">:message</small>') !!}
+                    {!! Form::email('email','', ['emailRegister','class' => 'form-control', 'required' => 'true']) !!}
+                    {!! $errors->first('email', '<small class="help-block">:message</small>') !!}
                     
                     <div class="alert alert-dismissible alert-success" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

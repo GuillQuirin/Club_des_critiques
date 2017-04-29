@@ -52,42 +52,62 @@ $(document).ready(function(){
         
     });
 
-    $('.modal form').submit(function(){
+    //Formulaires AJAX
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $('.modal form.notRedirect').submit(function(event){
         var form = $(this);
         var i=0;
-        var message =' ';
-        
+        var popUpMessage =' ';
+        var erreur ='';
+        var url = $(this).find('.url').data('url');
+        console.log("URL du controlleur : "+url);
+        console.log(form.serialize());
         $.ajax({
-            url: '*"é(é"(',
-            type: 'PUT',
-            data: '',
+            url: url,
+            type: 'POST',
+            data: form.serialize(),
             async: false
             })
-                .done(function () {
+                .done(function (data) {
                     i = 1;
                     //i=2;
+                    console.log('Appel du controlleur : ok');
+                    //erreur = JSON.parse(data);
+                    console.log(data);
+                    return false;
                 })
-                .fail(function () {
+                .fail(function (data) {
                     i = 3;
+                    console.log('Appel du controleur : fail');
+                    //erreur = JSON.parse(data);
+                    console.log(data);
+                    return false;
                 });
 
         switch(i){
             case 1: // OK
-                message += '.alert-success';
+                popUpMessage += '.alert-success';
                 break;
             case 2: // Problème fonctionnel
-                message += '.alert-warning';
+                popUpMessage += '.alert-warning';
                 break;
             case 3: // Problème technique
-                message += '.alert-danger';
+                popUpMessage += '.alert-danger';
                 break;
         }
         
         form.find('.alert').hide();
-        form.find(message).fadeIn();
+        form.find(popUpMessage).fadeIn();
         
-        if(form.hasClass('notRedirect') || i!=1)
+        if(form.hasClass('notRedirect') || i!=1){
+            event.preventDefault();
             return false;
+        }
     });
 
 });

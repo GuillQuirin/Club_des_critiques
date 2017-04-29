@@ -12,11 +12,11 @@
                 {!! Form::open(['url' => '/', 'id' => 'formLogin']) !!}
                 <div class="form-group">
                     {!! Form::label('emailLogin','Saisissez votre adresse e-mail') !!}
-                    {!! Form::email('emailLogin','', ['class' => 'form-control', 'required' => 'true']) !!}
+                    {!! Form::email('email','', ['id'=>'emailLogin', 'class' => 'form-control', 'required' => 'true']) !!}
                     {!! $errors->first('emailLogin', '<small class="help-block">:message</small>') !!}
 
                     {!! Form::label('passwordLogin','Saisissez votre mot de passe') !!}
-                    {!! Form::password('passwordLogin', ['class' => 'form-control', 'required' => 'true']) !!}
+                    {!! Form::password('password', ['id' => 'passwordLogin','class' => 'form-control', 'required' => 'true']) !!}
                     {!! $errors->first('passwordLogin', '<small class="help-block">:message</small>') !!}
                     <div class="alert alert-dismissible alert-warning" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -56,7 +56,7 @@
                     {!! Form::open(['url' => '/', 'class' => 'notRedirect', 'id' => 'formBackUp']) !!}
                     <div class="form-group">
                         {!! Form::label('emailBackUp','Un email vous sera envoyé.') !!}
-                        {!! Form::email('emailBackUp','', ['class' => 'form-control', 'required' => 'true']) !!}
+                        {!! Form::email('email','', ['id' => 'emailBackUp','class' => 'form-control', 'required' => 'true']) !!}
                         {!! $errors->first('emailBackUp', '<small class="help-block">:message</small>') !!}
                         <div class="alert alert-dismissible alert-success" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">

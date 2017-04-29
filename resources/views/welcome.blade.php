@@ -26,7 +26,7 @@
     
         <hr>
 
-        @include('templates.mosaique')
+        {{-- @include('templates.mosaique') --}}
         
         <hr>
 

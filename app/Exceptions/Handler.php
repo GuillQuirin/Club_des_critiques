@@ -53,6 +53,13 @@ class Handler extends ExceptionHandler
     // }
     public function render($request, Exception $e)
 {
+        if($request->ajax())
+        {
+            return response()->json([
+                'responseText' => $e->getMessage()
+            ], 500);
+        }
+
         if($this->isHttpException($e)){
             switch ($e->getStatusCode()) {
                 case '404':

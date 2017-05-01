@@ -31,7 +31,7 @@
 
         <hr>
 
-        @include('templates.mosaique')
+        {{-- @include('templates.mosaique') --}}
         
         <div class="row text-center">
             <ul class="pagination">

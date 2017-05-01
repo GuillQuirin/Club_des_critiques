@@ -74,9 +74,6 @@ class UserController extends Controller
           $input = $request->all();
 
           $user->fill($input)->save();
-
-          //Session::flash('flash_message', 'Task successfully modified!');
-
 		return $this->show($id);
 	}
 
@@ -104,6 +101,10 @@ class UserController extends Controller
 		//
 	}
 
+     /**
+     * Inscription d'un utilisateur
+     *
+     */
      public function register(Request $request){
           $this->validate($request, [
                'email' => 'required',
@@ -131,6 +132,9 @@ class UserController extends Controller
 
           return 1;
      }
+
+
+
 
 	////// ADMINISTRATION ///////
 

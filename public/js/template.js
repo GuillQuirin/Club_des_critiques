@@ -61,12 +61,14 @@ $(document).ready(function(){
 
     $('.modal form.notRedirect').submit(function(event){
         var form = $(this);
-        var i=0;
+        var i=3;
         var popUpMessage =' ';
         var erreur ='';
         var url = $(this).find('.url').data('url');
+
         console.log("URL du controlleur : "+url);
         console.log(form.serialize());
+
         $.ajax({
             url: url,
             type: 'POST',
@@ -74,19 +76,14 @@ $(document).ready(function(){
             async: false
             })
                 .done(function (data) {
-                    i = 1;
-                    //i=2;
                     console.log('Appel du controlleur : ok');
-                    //erreur = JSON.parse(data);
                     console.log(data);
-                    return false;
+                    i = parseInt(data);
                 })
                 .fail(function (data) {
-                    i = 3;
                     console.log('Appel du controleur : fail');
-                    //erreur = JSON.parse(data);
                     console.log(data);
-                    return false;
+                    i = 3;
                 });
 
         switch(i){
@@ -96,7 +93,7 @@ $(document).ready(function(){
             case 2: // Problème fonctionnel
                 popUpMessage += '.alert-warning';
                 break;
-            case 3: // Problème technique
+            default: // Problème technique
                 popUpMessage += '.alert-danger';
                 break;
         }

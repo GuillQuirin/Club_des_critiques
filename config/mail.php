@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'spartandu54@hotmail.fr'),
-        'name' => env('MAIL_FROM_NAME', 'Guillaume'),
+        'address' => env('MAIL_FROM_ADDRESS', 'ClubCritiques@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'Club des critiques'),
     ],
 
     /*
@@ -118,6 +118,20 @@ return [
         'paths' => [
             resource_path('views/vendor/mail'),
         ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Test des envois de mail
+    |--------------------------------------------------------------------------
+    |
+    |Retirer le parametre "to" lorsque c'est en PROD
+    | 
+    */    
+    
+    'to' => [
+        'address' => 'spartandu54@hotmail.fr',
+        'name' => 'Guillaume-TEST'
     ],
 
 ];

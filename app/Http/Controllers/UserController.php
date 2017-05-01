@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Mail\Register;
 use App\User;
 
 class UserController extends Controller
@@ -72,8 +75,9 @@ class UserController extends Controller
 
           $user->fill($input)->save();
 
+          //Session::flash('flash_message', 'Task successfully modified!');
 
-		return view('user.show');
+		return $this->show($id);
 	}
 
 	/**
@@ -97,9 +101,36 @@ class UserController extends Controller
      */
 	public function contact(Request $request, $id)
 	{
-		# code...
+		//
 	}
 
+     public function register(Request $request){
+          $this->validate($request, [
+               'email' => 'required',
+          ]);
+          $input = $request->all();
+
+          //Création de l'utilisateur
+          try{
+               $user = User::create($input);
+          }
+          catch(\Exception $e){
+               var_dump($e->getMessage());
+               return 2;
+          }
+
+          //Envoi du mail
+          try{
+               $user->token = "88888";
+               Mail::to($user->email)->send(new Register($user->token));
+          }
+          catch(\Exception $e){
+               var_dump($e->getMessage());
+               return 3;
+          }
+
+          return 1;
+     }
 
 	////// ADMINISTRATION ///////
 
@@ -114,14 +145,15 @@ class UserController extends Controller
 	}
 
 	/**
-     * Modification d'un utilisation
+     * Modification d'un utilisateur
      *
      * @param  int  $id
      * @return view
      */
 	public function edit($id)
 	{
-		# code...
+		$user = User::findOrFail($id);
+          $this->show($id);
 	}
 
 	/**

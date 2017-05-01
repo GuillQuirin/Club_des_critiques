@@ -72,4 +72,10 @@ class User extends Model
         return $rooms;
     }
 
+
+    public function getEmailAttribute($value){return $value;}
+    public function getTokenAttribute($value){return $value;}
+
+    public function setEmailAttribute($value){$this->attributes['email'] = $value;}
+    public function setTokenAttribute($value){$this->attributes['token'] = $value;}
 }

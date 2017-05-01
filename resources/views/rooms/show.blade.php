@@ -10,7 +10,7 @@
 
 @section('content')
 		<div class="row">
-            <h1 class="text-center col-xs-10 col-xs-offset-1 col-sm-10">Nom du salon
+            <h1 class="text-center col-xs-10 col-xs-offset-1 col-sm-10 text-uppercase">Nom du salon
                 <small>Du 01/07/2017 au 01/09/2017</small>
             </h1>
             <div class="col-sm-3 col-sm-offset-1">
@@ -21,7 +21,7 @@
                 <div class="panel-group">
                     <div class="panel panel-color panel-border">
                         <div class="panel-heading">
-                            Informations
+							<span class="glyphicon glyphicon-info-sign"></span> Informations
                         </div>
                         <div class="panel-body">
                             <div class="col-sm-6">
@@ -38,10 +38,13 @@
                     </div>
                     <div class="panel panel-color panel-border">
                         <div class="panel-heading">
-                            Synopsis
+							<span class="glyphicon glyphicon-book"></span> Synopsis
                         </div>
                         <div class="panel-body">
+							Après la mort tragique de Lily et James Potter, leur fils Harry est recueilli par sa tante Pétunia, la sœur de Lily et son oncle Vernon. Son oncle et sa tante, possédant une haine féroce envers les parents d'Harry, le maltraitent et laissent leur fils Dudley l'humilier. Harry ne sait rien sur ses parents. On lui a toujours dit qu’ils étaient morts dans un accident de voiture.
 
+							Un jour de juillet, peu avant son onzième anniversaire, Harry reçoit une lettre de Poudlard, l'école de magie et de sorcellerie, l'invitant à s'y présenter pour la rentrée des classes, mais son oncle la lui confisque avant qu'il ne puisse la lire, ne voulant pas que Harry devienne sorcier. L'école ne recevant aucune réponse, d'autres lettres, en nombre croissant, sont envoyées en vain par la directrice-adjointe de Poudlard, Minerva McGonagall. Finalement, le directeur Albus Dumbledore envoie Rubeus Hagrid, un demi-géant, gardien des clés et des lieux à Poudlard, chercher Harry le jour de son anniversaire, le 31 juillet.
+							Avec l'aide de Hagrid, il achète ses fournitures scolaires au Chemin de Traverse, parmi lesquelles se trouve sa baguette magique en bois de houx contenant une plume de phénix en son cœur, qu'il achète dans la boutique Ollivander.
                         </div>
                     </div>
                 </div>
@@ -89,7 +92,7 @@
 												<span class="glyphicon glyphicon-time"></span>15 mins ago</small>
 										</div>
 										<p>
-											Guillaume tu veux sortir avec moi ?
+											J'ai adoré ce livre !
 										</p>
 									</div>
 								</li>
@@ -102,7 +105,7 @@
 												<span class="glyphicon glyphicon-time"></span>12 mins ago</small>
 										</div>
 										<p>
-											Pour quoi faire ?
+											Moi aussi, sur la fin.
 										</p>
 									</div>
 								</li>
@@ -115,7 +118,7 @@
 												<span class="glyphicon glyphicon-time"></span>10 mins ago</small>
 										</div>
 										<p>
-											Au secours !
+											J'ai trouvé ça un peu ennuyeux.
 										</p>
 									</div>
 								</li>
@@ -153,8 +156,7 @@
                                             <strong class="primary-font">Jack Sparrow</strong>
                                         </div>
                                         <div class="col-xs-6 text-right">
-                                            <button class="btn btn-warning" id="btn-chat">Signaler</button>
-                                            <button class="btn btn-warning" id="btn-chat">Contacter</button>
+                                            <button class="btn btn-warning" id="btn-chat">Consulter le profil</button>
                                         </div>
 		                            </div>
 		                        </li>
@@ -164,8 +166,7 @@
                                             <strong class="primary-font">Elise Poirier</strong>
                                         </div>
                                         <div class="col-xs-6 text-right">
-                                            <button class="btn btn-warning" id="btn-chat">Signaler</button>
-                                            <button class="btn btn-warning" id="btn-chat">Contacter</button>
+                                            <button class="btn btn-warning" id="btn-chat">Consulter le profil</button>
                                         </div>
 		                            </div>
 		                        </li>
@@ -175,8 +176,7 @@
                                             <strong class="primary-font">Guillaume Quirin</strong>
                                         </div>
                                         <div class="col-xs-6 text-right">
-                                            <button class="btn btn-warning" id="btn-chat">Signaler</button>
-                                            <button class="btn btn-warning" id="btn-chat">Contacter</button>
+                                            <button class="btn btn-warning" id="btn-chat">Consulter le profil</button>
                                         </div>
 		                            </div>
 		                        </li>
@@ -186,8 +186,7 @@
                                             <strong class="primary-font">Laurie Guibert</strong>
                                         </div>
                                         <div class="col-xs-6 text-right">
-                                            <button class="btn btn-warning" id="btn-chat">Signaler</button>
-                                            <button class="btn btn-warning" id="btn-chat">Contacter</button>
+                                            <button class="btn btn-warning" id="btn-chat">Consulter le profil</button>
                                         </div>
 		                            </div>
 		                        </li>
@@ -195,10 +194,31 @@
 		                </div>
 		        	</div>
 					<div class="col-md-12 text-center">
-                        <a href="#" class="btn btn-warning btn-lg" role="button">Ajouter un contact <span class="glyphicon glyphicon-plus"></span></a>
+                        <a href="#" class="btn btn-warning btn-lg" role="button" data-toggle="modal" data-target="#addUser">Ajouter un contact <span class="glyphicon glyphicon-plus"></span></a>
                     </div>
 				</div>
 		    </div>
+		</div>
+		<!--Modal ajout utilisateur-->
+		<div id="addUser" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Ajout d'un membre au salon 1</h4>
+					</div>
+					<div class="modal-body">
+						<input type="text" class="form-control" placeholder="Autocomplétion des users en bdd ou invitation par mail ?">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" data-dismiss="modal">Valider</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+					</div>
+				</div>
+
+			</div>
 		</div>
 @endsection
 

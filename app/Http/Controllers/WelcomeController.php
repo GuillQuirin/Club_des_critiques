@@ -7,6 +7,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
+use DB;
+use Illuminate\Database\Eloquent\Model;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use App\Mail\Register;
+use App\User;
 
 class WelcomeController extends Controller
 {
@@ -37,5 +45,24 @@ class WelcomeController extends Controller
 		return view('welcome')
 				->with(compact('array'))
 				->with(compact('popUp'));
+	}
+
+	public function checkRegister($id)
+	{
+		$userAccount = DB::table('user')
+                     	->select(DB::raw('id'))
+	                    ->where('token', '=', $id)
+	                    ->get();
+	    try{
+	    	$user = User::findOrFail($userAccount[0]->id);
+		 	$user->token="";
+		 	$user->status=1;
+		 	$user->save();
+		}
+		catch(\Exception $e){
+			var_dump($e->getMessage());
+			die;
+		}
+		return redirect('/');
 	}
 }

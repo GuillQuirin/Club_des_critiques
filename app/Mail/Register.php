@@ -30,6 +30,7 @@ class Register extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.register');
+        return $this->view('emails.register')
+                    ->with('token',$this->token);
     }
 }

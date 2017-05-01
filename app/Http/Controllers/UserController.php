@@ -21,7 +21,7 @@ class UserController extends Controller
      {
           // Collection de tous les users
           // $users = User::all();
-          $array = User::latest('updated_at')->get();
+          $array = User::latest('date_created')->get();
           $array->redirect = 'show_user';
 
 		return view('user.index')
@@ -122,8 +122,9 @@ class UserController extends Controller
 
           //Envoi du mail
           try{
-               $user->token = "88888";
-               Mail::to($user->email)->send(new Register($user->token));
+               $token = str_random(60);
+               $user->fill(['token' => $token])->save();
+               Mail::to($user->email)->send(new Register($token));
           }
           catch(\Exception $e){
                var_dump($e->getMessage());
@@ -132,7 +133,6 @@ class UserController extends Controller
 
           return 1;
      }
-
 
 
 

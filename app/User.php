@@ -21,6 +21,7 @@ class User extends Model
         'email',
         'status',
         'password',
+        'token',
     ];
  
     public $timestamps = true;
@@ -42,7 +43,6 @@ class User extends Model
                                                                 FROM user_element 
                                                                 WHERE  is_exchangeable = 1
                                                                     AND id_user = ' . $this->id . ')'));
-
         // Array to Model
         $elements = Element::hydrate($elements);
 
@@ -66,7 +66,6 @@ class User extends Model
                                         WHERE id = (SELECT id_room 
                                                         FROM user_room 
                                                         WHERE id_user = ' . $this->id . ')');
-
         $rooms = Element::hydrate($rooms);
 
         return $rooms;

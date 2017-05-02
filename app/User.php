@@ -74,7 +74,11 @@ class User extends Model
 
     public function getEmailAttribute($value){return $value;}
     public function getTokenAttribute($value){return $value;}
+    public function getPictureAttribute($value){return $value;}
+    public function getIs_contactableAttribute($value){return $value;}
 
     public function setEmailAttribute($value){$this->attributes['email'] = $value;}
     public function setTokenAttribute($value){$this->attributes['token'] = $value;}
+    public function setPictureAttribute($value){$this->attributes['picture'] = $value;}
+    public function setIs_contactableAttribute($value){$this->attributes['is_contactable'] = $value;}
 }

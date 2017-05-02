@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Input;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -65,15 +66,29 @@ class UserController extends Controller
      */
 	public function updateInfo(Request $request, $id)
 	{
-          // Exemple de modification de user :
           $user = User::findOrFail($id);
+          $oldPicture = $user->picture;
+
           $this->validate($request, [
                'first_name' => 'required',
                'last_name' => 'required',
           ]);
           $input = $request->all();
+          $user->fill($input);
+          $user->is_contactable = Input::get('is_contactable');
 
-          $user->fill($input)->save();
+          //Enregistrement de la nouvelle image uploadée
+          if (Input::file('picture')!==NULL && Input::file('picture')->isValid()){
+               $destinationPath = 'uploads/';
+               $extension = Input::file('picture')->getClientOriginalExtension(); // getting image extension
+               $fileName = rand(11111,99999).'.'.$extension; // renameing image
+               Input::file('picture')->move($destinationPath, $fileName); // uploading file to given path
+               $user->picture = "/uploads/".$fileName;
+          }
+          else 
+               $user->picture = $oldPicture;               
+
+          $user->save();
 		return $this->show($id);
 	}
 

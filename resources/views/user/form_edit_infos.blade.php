@@ -1,5 +1,5 @@
 <div id="informations" role="tabpanel" class="tab-pane fade in active">
-    {!! Form::model($infos, ['method' => 'PATCH','route' => ['update_user', $infos->id]]) !!}
+    {!! Form::model($infos, ['method' => 'PATCH','files'=> true ,'route' => ['update_user', $infos->id]]) !!}
     <div class="modal-body row">
         <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
@@ -27,7 +27,7 @@
         <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
               {!! Form::label('isContactable','Joignable par email') !!}
-              {!! Form::text('is_contactable','', ['id' => 'isContactable','class' => 'form-control']) !!}
+              {!! Form::checkbox('is_contactable', '1', $infos->is_contactable,['id' => 'isContactable','class' => 'form-control']) !!}
               {!! $errors->first('isContactable', '<small class="help-block">:message</small>') !!}
             </div>
         </div>

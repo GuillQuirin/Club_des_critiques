@@ -1,6 +1,8 @@
 
 #profilPicture{
 	max-width: 100%;
+    width: auto;
+    max-height: 250px;
 }
 
 .description{
@@ -10,6 +12,7 @@
 .valig-center{
     float: none;
     display: inline-block;
+    vertical-align: middle;
 }
 
 .editProfile{

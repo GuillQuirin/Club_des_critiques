@@ -54,6 +54,7 @@
                     </div>
                     <hr>
                     {!! Form::open(['url' => '/', 'class' => 'notRedirect', 'id' => 'formBackUp']) !!}
+                    <p class="url" data-url="forgot"></p>
                     <div class="form-group">
                         {!! Form::label('emailBackUp','Un email vous sera envoyé.') !!}
                         {!! Form::email('email','', ['id' => 'emailBackUp','class' => 'form-control', 'required' => 'true']) !!}
@@ -62,7 +63,13 @@
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                            Un email vient de vous être adressé.
+                            L'email de récupération vient de vous être adressé.
+                        </div>
+                        <div class="alert alert-dismissible alert-warning" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            Aucun compte n'est associé à cette adresse email.
                         </div>
                         <div class="alert alert-dismissible alert-danger" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">

@@ -52,19 +52,20 @@ $(document).ready(function(){
         
     });
 
-    //Formulaires AJAX
+    //Configuration AJAX pour le CSRF
     $.ajaxSetup({
         headers: {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         }
     });
 
+    //Soumission des formulaires AJAX
     $('.modal form.notRedirect').submit(function(event){
         var form = $(this);
         var i=3;
         var popUpMessage =' ';
         var erreur ='';
-        var url = $(this).find('.url').data('url');
+        var url = form.find('.url').data('url');
 
         console.log("URL du controlleur : "+url);
         console.log(form.serialize());
@@ -101,10 +102,8 @@ $(document).ready(function(){
         form.find('.alert').hide();
         form.find(popUpMessage).fadeIn();
         
-        if(form.hasClass('notRedirect') || i!=1){
-            event.preventDefault();
-            return false;
-        }
+        event.preventDefault();
+        return false;
     });
 
 });

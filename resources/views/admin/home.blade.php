@@ -1,12 +1,12 @@
 <div class="panel-body">
 	<div class="row">
-		<form class="col-md-12">
+		{{ Form::open(['route' => 'edit_concept', 'method' => 'put', 'class' => 'col-md-12']) }}
 			<div class="form-group">
 	    		<h4>Le concept : </h4>
-		    	<textarea class="form-control" id="contenu" rows="3"></textarea>
+		    	<textarea class="form-control" name="home_concept" id="home_concept" rows="3">{{$concept->value}}</textarea>
 			</div>
-			<button type="submit" class="btn btn-success pull-right">Modifier</button>
-		</form>
+			<button type="submit" class="btn btn-success pull-right" id="editConcept">Modifier</button>
+		{{ Form::close() }}
 	</div>	
 
 	<div class="row">
@@ -20,50 +20,52 @@
 	        </p>
 	        <div class="collapse" id="collapseAddElementTop">
 	          	<div class="card card-block">
-	            	<form>
-	            	<!-- Select avec recherche auto completion -->
+	            	{{ Form::open(['route' => 'add_top_element', 'method' => 'put', 'class' => 'col-md-12']) }}
 	            		<div class="form-group">
-	                        <label for="top_parent_cat" class="col-2 col-form-label">Catégorie : </label>
+	                        <label for="top_category" class="col-2 col-form-label">Catégorie : </label>
 	                        <div class="col-10">
-	                            <select class="form-control" id="top_parent_cat" name="top_parent_cat">*
-                                	<option>Choisir une catégorie</option>	                           
-	                                <option value="1">Livre</option>
-	                                <option value="2">Film</option>
-	                                <option value="3">Expo</option>
-	                            </select>
+	                        	<select id="top_category" name="top_category" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required" title="Choisir une catégorie">
+					                @foreach($categories as $category)
+					                    <option value="{{$category->id}}">{{$category->name}}</option>
+					                @endforeach
+					            </select>
+	                        </div>
+	                    </div>
+
+	                    <div class="form-group">
+	                        <label for="top_sub_category" class="col-2 col-form-label">Sous catégorie : </label>
+	                        <div class="col-10">
+	                        	<select id="top_sub_category" name="top_sub_category" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required" disabled>
+	                        		<option value="">Vous devez choisir une catégorie</option>
+					            </select>
 	                        </div>
 	                    </div>
 
 	                    <div class="form-group">
 	                        <label for="top_creator" class="col-2 col-form-label">Auteur / réalisateur : </label>
 	                        <div class="col-10">
-	                            <select class="form-control" id="top_creator" name="top_creator" disabled>
-	                            	<option>Vous devez choisir une catégorie</option>
-	                                <option value="1">Victor Hugo</option>
-	                                <option value="2">Molière</option>
-	                                <option value="3">Emile Zola</option>
-	                            </select>
+	                           <select id="top_creator" name="top_creator" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required" disabled>
+	                        		<option value="">Vous devez choisir une sous catégorie</option>
+					            </select>
 	                        </div>
 	                    </div>
 
 	                    <div class="form-group">
-	                        <label for="top_element" class="col-2 col-form-label">Titre : </label>
+	                        <label for="top_element" class="col-2 col-form-label">Oeuvre : </label>
 	                        <div class="col-10">
-	                            <select class="form-control" id="	" name="top_element" disabled>
-	                            	<option>Vous devez choisir un auteur / réalisateur</option>
-	                                <option value="1">Le petit chaperon rouge</option>
-	                                <option value="2">Les misérables</option>
-	                                <option value="3">...</option>
-	                            </select>
+	                           <select id="top_element" name="top_element" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required" disabled>
+	                        		<option value="">Vous devez choisir un auteur / réalisateur</option>
+					            </select>
 	                        </div>
 	                    </div>
+	                    
 	                    <div class="pull-right">
 	                    	<button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#collapseAddElementTop" aria-expanded="false" aria-controls="collapseAddElementTop" id="btnHideAddTopElement">
 	           					Annuler
 	          				</button>
 	                    	<button type="submit" class="btn btn-success">Ajouter</button>
 	                    </div>
-	            	</form>
+	            	{{ Form::close() }}
 	            </div>
 	            <br>
 	        </div>
@@ -79,15 +81,17 @@
 					</tr>
 				</thead>
 				<tbody>
+					@foreach($topElements as $element)
 					<tr>
-						<th>Le petit chaperon rouge</th>
-						<th>Elise Poirier</th>
-						<th>Livre</th>
-						<th>Pour les bébé</th>
+						<th>{{ $element->name }}</th>
+						<th>{{ $element->creator }}</th>
+						<th>{{ $element->category->parent->name}}</th>
+						<th>{{ $element->category->name }}</th>
 						<th>
-							<i class="fa fa-trash" aria-hidden="true"></i>
+							<i class="fa fa-trash delete-top-element" aria-hidden="true" id="{{ $element->id }}"></i>
 						</th>            					
 					</tr>
+					@endforeach
 				</tbody>		
 			</table>
 		</div>

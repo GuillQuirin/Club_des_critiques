@@ -14,7 +14,6 @@
 
 /* ACCUEIL */
 Route::get('/', ['as' => 'home', 'uses' => 'WelcomeController@index']);
-Route::get('checkRegister/{token}', ['as' => 'checkToken', 'uses' => 'WelcomeController@checkRegister']);
 
 /* CATEGORIES */
 Route::get('categories', ['as' => 'categories', 'uses' => 'CategoryController@index']);
@@ -36,6 +35,12 @@ Route::patch('user/{id}', ['as' => 'update_user', 'uses' => 'UserController@upda
 Route::post('user/{id}', ['as' => 'update_password_user', 'uses' => 'UserController@updatePassword']);
 //Inscription
 Route::post('register', ['as' => '/', 'uses' => 'UserController@register']);
+//Authentification
+Route::post('login', ['as' => '/', 'uses' => 'UserController@login']);
+Route::post('forgot', ['as' => '/', 'uses' => 'UserController@forgotPwd']);
+//Renouvellement du mot de passe
+Route::get('checkToken/{token}', ['as' => '/checkToken', 'uses' => 'UserController@checkToken']);
+Route::post('checkToken', ['as' => '/checkToken', 'uses' => 'UserController@newPwd']);
 
 /* SALONS */
 Route::get('rooms', ['as' => 'rooms', 'uses' => 'RoomsController@index']);

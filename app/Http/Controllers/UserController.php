@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Mail\Register;
+use App\Mail\BackUp;
 use App\User;
 
 class UserController extends Controller
@@ -131,7 +132,7 @@ class UserController extends Controller
                $user = User::create($input);
           }
           catch(\Exception $e){
-               var_dump($e->getMessage());
+               //var_dump($e->getMessage());
                return 2;
           }
 
@@ -149,7 +150,90 @@ class UserController extends Controller
           return 1;
      }
 
+     /**
+     * Authentification
+     *
+     */
+     public function login(Request $request){
+          //
+     }
 
+     /**
+     * Mot de passe oublié
+     *
+     */
+     public function forgotPwd(Request $request){
+          $this->validate($request, [
+               'email' => 'required',
+          ]);
+          $input = $request->all();
+
+          //Récupération de l'utilisateur
+          try{
+               $user = User::where('email', Input::get('email'))->first();
+          }
+          catch(\Exception $e){
+               //var_dump($e->getMessage());
+               return 2;
+          }
+
+          //Envoi du mail
+          try{
+               $token = str_random(60);
+               $user->token = $token;
+               $user->save();
+               Mail::to($user->email)->send(new BackUp($token));
+          }
+          catch(\Exception $e){
+               //var_dump($e->getMessage());
+               return 3;
+          }
+
+          return 1;
+     }
+
+     /**
+     * Vérification du token
+     *
+     */
+     public function checkToken($token){
+          //Vérification de la validité
+          try{
+               $user = User::where('token', $token)->first();
+          }
+          catch(\Exception $e){
+               var_dump($e->getMessage());
+               die;
+          }
+          return view('user.backUp')
+                    ->with('token',$token);
+     }
+
+     /**
+     * Remplacement du mot de passe
+     *
+     */
+     public function newPwd(Request $request){
+          $this->validate($request, [
+               'new_pwd' => 'required',
+               'new_pwd_confirm' => 'required',
+               'token' => 'required',
+          ]);
+          $input = $request->all();
+
+          //Récupération de l'utilisateur
+          try{
+               $user = User::where('token', Input::get('token'))->first();
+               $user->password = Input::get('new_pwd');
+               $user->save();
+          }
+          catch(\Exception $e){
+               var_dump($e->getMessage());
+               die;
+          }
+          echo "OK";
+          die;
+     }
 
 	////// ADMINISTRATION ///////
 

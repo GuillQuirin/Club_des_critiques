@@ -2,6 +2,7 @@
 
 namespace App;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -22,7 +23,14 @@ class Category extends Model
 
     public function isSubCategory()
     {
-        return $this->whereNotNull('id_parent');
+        $bool = true;
+        $response = DB::table('category')->select('id_parent')->where('id', $this->id)->first();
+
+        if($response->id_parent == null){
+            $bool = false;
+        }
+
+        return $bool;
     }
 
     /**
@@ -31,7 +39,7 @@ class Category extends Model
      */
     public function parent()
     {
-        return $this->belongTo(Category::class, 'id_parent');
+        return $this->belongsTo(Category::class, 'id_parent');
     }
 
     /**
@@ -40,6 +48,6 @@ class Category extends Model
      */
     public function children()
     {
-       return $this->hasMany(Category::class, 'id_parent')
+       return $this->hasMany(Category::class, 'id_parent');
     }
 }

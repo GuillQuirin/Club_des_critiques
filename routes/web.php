@@ -55,7 +55,15 @@ Route::post('contact', ['as' => 'contact', 'uses' => 'ContactController@postForm
 
 /* ADMINISTRATION */
 Route::get('admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
+Route::put('admin/*edit-concept*/', ['as' => 'edit_concept', 'uses' => 'AdminController@editConcept']);
+Route::put('admin/add-top-element', ['as' => 'add_top_element', 'uses' => 'AdminController@addTopElement']);
+Route::put('admin/delete-top-element', ['as' => 'delete_top_element', 'uses' => 'AdminController@deleteTopElement']);
 
+
+// Ajax
+Route::get('admin/sub-categories', ['as' => 'get_sub_categories', 'uses' => 'AjaxController@getSubCategories']);
+Route::get('admin/creators', ['as' => 'get_creators', 'uses' => 'AjaxController@getCreatorForSubCat']);
+Route::get('admin/elements', ['as' => 'get_elements', 'uses' => 'AjaxController@getElementForCreatorAndCategory']);
 
 
 //Routes classiques directement vers une Vue en particulier

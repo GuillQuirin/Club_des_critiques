@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+
+use DB;
+use App\Other;
+use App\Element;
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 
 class AdminController extends Controller
 {
@@ -14,7 +20,11 @@ class AdminController extends Controller
      */
     public function index()
     {
-    	return view('admin.index');
+        $concept = DB::table('other')->where('name', 'home_concept')->first();
+        $categories = Category::whereNull('id_parent')->get();
+        $topElements = Element::where('is_new', 1)->get();
+
+    	return view('admin.index', compact('concept', 'categories', 'topElements'));
     }
 
     /**
@@ -22,18 +32,46 @@ class AdminController extends Controller
      *
      * @return view
      */
-    public function editConcept()
+    public function editConcept(Request $request)
     {
-    	# code...
+        $line = Other::where('name', 'home_concept')->first();
+        $line->value = $request->home_concept;
+        $line->save();
+
+        $response = array(
+            'status' => 'success',
+            'msg' => 'Setting created successfully',
+        );
+
+        return redirect(route('admin'));
     }
 
     /**
-     * Modification des éléments qui sont à la une (en page d'accueil)
+     * Ajout d'un élémente à la une (en page d'accueil)
      *
      * @return view
      */
-    public function editTopElement()
+    public function addTopElement(Request $request)
     {
-    	# code...
+        $element = Element::find($request->top_element);
+        $element->is_new = 1;
+        $element->save();
+
+        return redirect(route('admin'));
+    }
+
+    /**
+     * Supprimer un élémente à la une (en page d'accueil)
+     *
+     * @return view
+     */
+    public function deleteTopElement()
+    {
+        $elementId = Input::get('elementId');
+        $element = Element::find($elementId);
+        // $element->is_new = 0;
+        $element->save();
+
+        // return Response::json(array_pluck($elements, 'attributes'));
     }
 }

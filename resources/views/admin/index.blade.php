@@ -103,6 +103,10 @@
 
 
 // HOME
+		var selectCat = $('#top_category');
+		var selectSubCat = $('#top_sub_category');
+		var selectCreator = $('#top_creator');
+		var selectElement = $('#top_element');
 
 		// Cache le bouton "ajouter un element"
 		$('#btnShowAddTopElement').click(function() {
@@ -111,19 +115,112 @@
 		// Affiche le bouton "ajouter un element"
 		$('#btnHideAddTopElement').click(function() {
 			$('#btnShowAddTopElement').show();
+			// $('#collapseAddElementTop').hide();
 		});
     	
-    	// Débloque les listes déroulantes
-		$('#top_parent_cat').change(function() {
-			if (this.value != null) {
-				$('#top_creator').prop('disabled', false);
-			}
-		});
-		$('#top_creator').change(function() {
-			if (this.value != null) {
-				$('#top_element').prop('disabled', false);
-			}
-		});
+
+		// Sélection de la catégorie => affichage des sous catégories
+		$("#top_category").change(function() {
+	        var categoryId = this.value;
+
+	        if (categoryId.length) {
+	            {{-- Call Ajax Request to get sub categories for the category --}}
+	            $.ajax({
+	                data : { categoryId : categoryId },
+	                url: "{{ route('get_sub_categories') }}",
+	                type: 'get',
+	                success: function(data) {
+	                    if (data.length) {
+	                        selectSubCat.attr('disabled',false);
+	                        selectSubCat.html('<option value="" disabled selected>Choisissez une sous ctégorie</option>');
+	                        jQuery.each(data, function() {
+	                            selectSubCat.append(new Option(this.name, this.id));
+	                        });
+	                        selectSubCat.selectpicker('refresh');
+	                    } else {
+	                        selectSubCat.html('<option value="" disabled selected>Pas de sous catégorie disponible</option>');
+	                        selectSubCat.selectpicker('refresh');
+	                    }
+	                }
+	            });
+	        }
+	    });
+
+	    // Sélection de la sous catégorie => affichage des auteurs
+		selectSubCat.change(function() {
+	        var subCatId = this.value;
+
+	        if (subCatId.length) {
+	            {{-- Call Ajax Request to get creator for the sub category --}}
+	            $.ajax({
+	                data : { subCatId : subCatId },
+	                url: "{{ route('get_creators') }}",
+	                type: 'get',
+	                success: function(data) {
+	                    if (data.length) {
+	                        selectCreator.attr('disabled',false);
+	                        selectCreator.html('<option value="" disabled selected>Choisissez un auteur / réalisateur </option>');
+	                        jQuery.each(data, function() {
+	                            selectCreator.append(new Option(this.creator, this.creator));
+	                        });
+	                        selectCreator.selectpicker('refresh');
+	                    } else {
+	                        selectCreator.html('<option value="" disabled selected>Pas d\'auteur / réalisateur disopnible pour cette catégorie</option>');
+	                        selectCreator.selectpicker('refresh');
+	                    }
+	                }
+	            });
+	        }
+	    });
+
+		// Sélection de l'auteur => affichage des oeuvres
+		selectCreator.change(function() {
+	        var subCatId = selectSubCat.val();
+	        var creator = this.value;
+
+	        if (subCatId.length && creator.length) {
+	            {{-- Call Ajax Request to get element for the creator --}}
+	            $.ajax({
+	                data : { subCatId : subCatId, creator : creator },
+	                url: "{{ route('get_elements') }}",
+	                type: 'get',
+	                success: function(data) {
+	                    if (data.length) {
+	                        selectElement.attr('disabled',false);
+	                        selectElement.html('<option value="" disabled selected>Choisissez une oeuvre </option>');
+	                        jQuery.each(data, function() {
+	                            selectElement.append(new Option(this.name, this.id));
+	                        });
+	                        selectElement.selectpicker('refresh');
+	                    } else {
+	                        selectElement.html('<option value="" disabled selected>Pas d\'oeuvre disopnible pour cet  auteur / réalisateur</option>');
+	                        selectElement.selectpicker('refresh');
+	                    }
+	                }
+	            });
+	        }
+	    });
+
+		// Supprime un élément à la une
+	    $('.delete-top-element').click(function(){
+	    	if (confirm("Voulez vous vraiement supprimer cet oeuvre?")) {
+		    	// tab = $( this ).parent().parent().remove();
+		    	elementId = this.id;
+		    	{{-- Call Ajax Request to delete top element --}}
+	            $.ajax({
+	                data : { elementId : elementId },
+	                url: "{{ route('delete_top_element') }}",
+	                type: 'put',
+	                success: function(data) {
+	                	// Modifier le tableau
+	                },
+	                error : function() {
+	                	// gestion d'erreur
+	                }
+	            });
+		       }	
+	    });
+
 
 // CATEGORY
 
@@ -236,9 +333,7 @@
           			}
         		} 
         	});
-        }
-
-
+        };
 	});
 </script>
 @endsection

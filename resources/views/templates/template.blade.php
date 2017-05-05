@@ -138,21 +138,30 @@
                                 <span class="caret"></span></a>
 
                         <ul class="dropdown-menu">
-                            <li>
-                                <a href="" data-toggle="modal" data-target="#loginModal">Authentification 
-                                    <span class="badge">42</span>
-                                </a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a href="" data-toggle="modal" data-target="#registerModal">Inscription</a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a href="{{ route('show_user', ['id' => 1]) }}">Mon compte</a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="{{ route('admin') }}">Administration</a></li>
+                            @if(Auth::guest())
+                                <li>
+                                    <a href="" data-toggle="modal" data-target="#loginModal">Authentification 
+                                        <span class="badge">42</span>
+                                    </a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="" data-toggle="modal" data-target="#registerModal">Inscription</a>
+                                </li>
+                            @endif
+                            
+                            @if(Auth::check())
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="{{ route('show_user', ['id' => 1]) }}">Mon compte</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="">Déconnexion</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="{{ route('admin') }}">Administration</a></li>
+                            @endif
                         </ul>
                     </li>
                   </ul>

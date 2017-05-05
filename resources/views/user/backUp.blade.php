@@ -20,7 +20,9 @@
         <div class="row">
             {!! Form::open(['url' => 'checkToken']) !!}
             <div>
-                  {{ Form::hidden('token', $token) }}
+                  @if($token)
+                    {{ Form::hidden('token', $token) }}
+                  @endif
                   <div class="form-group">
                     {!! Form::label('new_pwdUpdate','Nouveau mot de passe') !!}
                     {!! Form::password('new_pwd', [ 'id' => 'new_pwdUpdate',

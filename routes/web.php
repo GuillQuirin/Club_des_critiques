@@ -30,17 +30,19 @@ Route::get('element/{id}', ['as' => 'show_element', 'uses' => 'ElementController
 Route::get('users', ['as' => 'users', 'uses' => 'UserController@index']);
 //Affichage d'un utilisateur
 Route::get('user/{id}', ['as' => 'show_user', 'uses' => 'UserController@show']);
-//Modifications de l'utilisateur
-Route::patch('user/{id}', ['as' => 'update_user', 'uses' => 'UserController@updateInfo']);
-Route::post('user/{id}', ['as' => 'update_password_user', 'uses' => 'UserController@updatePassword']);
 //Inscription
 Route::post('register', ['as' => '/', 'uses' => 'UserController@register']);
 //Authentification
 Route::post('login', ['as' => '/', 'uses' => 'UserController@login']);
 Route::post('forgot', ['as' => '/', 'uses' => 'UserController@forgotPwd']);
-//Renouvellement du mot de passe
+//Création-Renouvellement du mot de passe
 Route::get('checkToken/{token}', ['as' => '/checkToken', 'uses' => 'UserController@checkToken']);
 Route::post('checkToken', ['as' => '/checkToken', 'uses' => 'UserController@newPwd']);
+//Modifications de l'utilisateur
+Route::patch('user/{id}', ['as' => 'update_user', 'uses' => 'UserController@updateInfo']);
+Route::post('user/{id}', ['as' => 'update_password_user', 'uses' => 'UserController@updatePassword']);
+//Suppression
+Route::post('deleteAccount', ['as' => '/', 'uses' => 'UserController@deleteAccount']);
 
 /* SALONS */
 Route::get('rooms', ['as' => 'rooms', 'uses' => 'RoomsController@index']);

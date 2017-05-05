@@ -129,9 +129,9 @@ return [
     | 
     */    
     
-    'to' => [
-        'address' => 'spartandu54@hotmail.fr',
-        'name' => 'Guillaume-TEST'
-    ],
+    // 'to' => [
+    //     'address' => 'spartandu54@hotmail.fr',
+    //     'name' => 'Guillaume-TEST'
+    // ],
 
 ];

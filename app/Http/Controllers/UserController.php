@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -40,7 +41,7 @@ class UserController extends Controller
 	{
           // Récupère l'utilisateur
           $infos = User::findOrFail($id);
-          $infos->editAccount  = true;
+          $infos->editAccount  = (Auth::check() && Auth::id() == $id);
           //Récupère les oeuvres que l'utilisateur soihaite échanger
           /*$exchange = [1, 2, 3, 4];
           $popUp = 'element.show';
@@ -67,7 +68,7 @@ class UserController extends Controller
      */
 	public function updateInfo(Request $request, $id)
 	{
-          $user = User::findOrFail($id);
+          $user = Auth::user();
           $oldPicture = $user->picture;
 
           $this->validate($request, [
@@ -155,7 +156,28 @@ class UserController extends Controller
      *
      */
      public function login(Request $request){
-          //
+          $this->validate($request, [
+               'email' => 'required',
+               'password' => 'required',
+          ]);
+          $input = $request->all();
+          try{
+             var_dump(Auth::attempt(['email' => $input['email'], 'password' => password_hash($input['password'], PASSWORD_DEFAULT)]));  
+          }
+          catch(\Exception $e){
+               var_dump($e->getMessage());
+          }
+          // Authentication passed...
+          //return redirect()->route('user/1');
+          die;
+     }
+
+     /**
+     * Déconnexion
+     *
+     */
+     public function logout(Request $request){
+         //
      }
 
      /**
@@ -193,20 +215,13 @@ class UserController extends Controller
      }
 
      /**
-     * Vérification du token
+     * Vérification du token en GET
      *
      */
      public function checkToken($token){
           //Vérification de la validité
-          try{
-               $user = User::where('token', $token)->first();
-          }
-          catch(\Exception $e){
-               var_dump($e->getMessage());
-               die;
-          }
-          return view('user.backUp')
-                    ->with('token',$token);
+          $user = User::where('token', $token)->first();
+          return ($user) ? view('user.backUp')->with('token',$token) :  redirect('/');
      }
 
      /**
@@ -215,24 +230,50 @@ class UserController extends Controller
      */
      public function newPwd(Request $request){
           $this->validate($request, [
+               'pwd' => '',
                'new_pwd' => 'required',
                'new_pwd_confirm' => 'required',
-               'token' => 'required',
+               'token' => '',
           ]);
           $input = $request->all();
 
           //Récupération de l'utilisateur
           try{
-               $user = User::where('token', Input::get('token'))->first();
-               $user->password = Input::get('new_pwd');
+               //SOIT TOKEN, SOIT SESSION DE L'UTILISATEUR POUR CHANGEMENT DE MDP
+               $user = (Auth::check()) ? Auth::user() : User::where('token', Input::get('token'))->first();
+               $user->password = password_hash(Input::get('new_pwd'), PASSWORD_DEFAULT);
+               $user->token ="";
                $user->save();
           }
           catch(\Exception $e){
                var_dump($e->getMessage());
-               die;
+               return back()->withInput();
           }
-          echo "OK";
-          die;
+          return (Auth::check()) ? redirect('user/'.$user->id) : redirect('/');
+     }
+
+     /**
+     * Suppression du compte
+     *
+     */
+     public function deleteAccount(Request $request){
+          $this->validate($request, [
+               'pwd_unsub' => 'required',
+          ]);
+          $input = $request->all();
+
+          //Récupération de l'utilisateur
+          try{
+               $user = (Input::get('token')!="") ? User::where('token', Input::get('token'))->first()
+                                                  :  Auth::user();
+               $user->password = password_hash(Input::get('new_pwd'), PASSWORD_DEFAULT);
+               $user->save();
+          }
+          catch(\Exception $e){
+               var_dump($e->getMessage());
+               return back()->withInput();
+          }
+          return redirect()->route('/');
      }
 
 	////// ADMINISTRATION ///////

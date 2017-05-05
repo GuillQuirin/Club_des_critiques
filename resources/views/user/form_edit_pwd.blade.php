@@ -1,5 +1,5 @@
 <div id="password" role="tabpanel" class="tab-pane fade">
-    {!! Form::open(['url' => '/']) !!}
+    {!! Form::open(['url' => 'checkToken']) !!}
     <div class="modal-body">
           <div class="form-group">
             {!! Form::label('pwdUpdate','Mot de passe actuel') !!}

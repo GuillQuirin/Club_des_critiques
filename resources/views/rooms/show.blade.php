@@ -10,8 +10,8 @@
 
 @section('content')
 		<div class="row">
-            <h1 class="text-center col-xs-10 col-xs-offset-1 col-sm-10 text-uppercase">Nom du salon
-                <small>Du 01/07/2017 au 01/09/2017</small>
+            <h1 class="text-center col-xs-10 col-xs-offset-1 col-sm-10 text-uppercase">{{$header->name}}
+                <small>Du {{date("d/m/Y", strtotime($header->date_start))}} au {{date("d/m/Y", strtotime($header->date_end))}}</small>
             </h1>
             <div class="col-sm-3 col-sm-offset-1">
                 <img src="http://iut.univ-amu.fr/sites/iut.univ-amu.fr/files/departement/1472852001.jpg"
@@ -25,14 +25,19 @@
                         </div>
                         <div class="panel-body">
                             <div class="col-sm-6">
-                                <p>Type d'oeuvre:</p>
-                                <p>Titre :</p>
-                                <p>Auteur:</p>
-                                <p>Année de parution :</p>
+                                <p>Type d'oeuvre : </p>
+                                <p>Titre : {{$element->name}}</p>
+                                <p>Auteur : {{$element->creator}}</p>
+                                <p>Date de parution : {{date("d/m/Y", strtotime($element->date_publication))}}</p>
                             </div>
                             <div class="col-sm-6">
-                                <p>Votre note :</p>
-                                <p>Note globale des lecteurs :</p>
+                                <p>Votre note : {{$mark->mark}}</p>
+								<?php $sum = 0;?>
+								@foreach ($global_mark as $marks)
+									{{ $marks->mark }}
+									{{ $sum = $sum + $marks->mark }}
+								@endforeach
+                                <p>Note globale des lecteurs : {{$sum/($global_mark->count())}}</p>
                             </div>
                         </div>
                     </div>
@@ -41,10 +46,7 @@
 							<span class="glyphicon glyphicon-book"></span> Synopsis
                         </div>
                         <div class="panel-body">
-							Après la mort tragique de Lily et James Potter, leur fils Harry est recueilli par sa tante Pétunia, la sœur de Lily et son oncle Vernon. Son oncle et sa tante, possédant une haine féroce envers les parents d'Harry, le maltraitent et laissent leur fils Dudley l'humilier. Harry ne sait rien sur ses parents. On lui a toujours dit qu’ils étaient morts dans un accident de voiture.
-
-							Un jour de juillet, peu avant son onzième anniversaire, Harry reçoit une lettre de Poudlard, l'école de magie et de sorcellerie, l'invitant à s'y présenter pour la rentrée des classes, mais son oncle la lui confisque avant qu'il ne puisse la lire, ne voulant pas que Harry devienne sorcier. L'école ne recevant aucune réponse, d'autres lettres, en nombre croissant, sont envoyées en vain par la directrice-adjointe de Poudlard, Minerva McGonagall. Finalement, le directeur Albus Dumbledore envoie Rubeus Hagrid, un demi-géant, gardien des clés et des lieux à Poudlard, chercher Harry le jour de son anniversaire, le 31 juillet.
-							Avec l'aide de Hagrid, il achète ses fournitures scolaires au Chemin de Traverse, parmi lesquelles se trouve sa baguette magique en bois de houx contenant une plume de phénix en son cœur, qu'il achète dans la boutique Ollivander.
+							{{$element->description}}
                         </div>
                     </div>
                 </div>

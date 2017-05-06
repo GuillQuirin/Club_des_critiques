@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Element;
+use App\Room;
+use App\UserElement;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -49,7 +53,19 @@ class RoomsController extends Controller
      */
 	public function show($id)
 	{
-		return view('rooms.show');
+        $header = Room::findOrFail($id);
+        $element = Element::findOrFail($header->id_element);
+        //$subcat = SubCategory::findOrFail($element->id_sub_category);
+        //$cat = Category::findOrFail($subcat->id_category);
+        $mark = UserElement::where('id_element', $element->id)->where('id_user', $element->id)->first();
+        $global_mark = UserElement::where('id_element', $element->id)->get();
+		return view('rooms.show')
+            ->with(compact('header'))
+            ->with(compact('element'))
+            ->with(compact('mark'))
+		    ->with(compact('global_mark'));
+            //->with(compact('subcat'))
+            //->with(compact('cat'));
 	}
 
 	/**

@@ -192,6 +192,14 @@
             @yield('content')
         </span>
         
+        @if(!isset($_COOKIE['alert_cookies']))
+            <div id="alert_cookies" class="alert alert-warning alert-dismissible fade in" role="alert"> 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <p>En poursuivant votre navigation sur ce site, vous acceptez l'utilisation de cookies afin d'améliorer son fonctionnement. Pour en savoir plus et paramétrer les cookies, cliquez ici.</p>
+            </div>
+        @endif
         <footer class="footer">
 			<div class="container text-center">
 				<span class="text-muted">

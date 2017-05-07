@@ -30,6 +30,19 @@ li.dropdownCountdown{
 .alert{
     display: none;
 }
+.alert.fade.in{
+    display: block;
+}
+
+#alert_cookies{
+    position: fixed;
+    bottom: 0;
+    margin: 0;
+    z-index: 10;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75%;
+}
 
 small{
     display: block;

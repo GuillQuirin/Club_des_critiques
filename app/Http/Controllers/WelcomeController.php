@@ -46,4 +46,13 @@ class WelcomeController extends Controller
 				->with(compact('array'))
 				->with(compact('popUp'));
 	}
+
+
+	public function cookie()
+	{
+		if(!isset($_COOKIE['alert_cookies'])){
+			setcookie("alert_cookies",1,time()+60*60*24*30*12);//Expiration dans 1 an
+		}
+
+	}
 }

@@ -14,6 +14,7 @@
 
 /* ACCUEIL */
 Route::get('/', ['as' => 'home', 'uses' => 'WelcomeController@index']);
+Route::post('cookie', ['as' => '/', 'uses' => 'WelcomeController@cookie']);
 
 /* CATEGORIES */
 Route::get('categories', ['as' => 'categories', 'uses' => 'CategoryController@index']);

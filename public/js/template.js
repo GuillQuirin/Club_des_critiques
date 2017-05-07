@@ -76,16 +76,16 @@ $(document).ready(function(){
             data: form.serialize(),
             async: false
             })
-                .done(function (data) {
-                    console.log('Appel du controlleur : ok');
-                    console.log(data);
-                    i = parseInt(data);
-                })
-                .fail(function (data) {
-                    console.log('Appel du controleur : fail');
-                    console.log(data);
-                    i = 3;
-                });
+            .done(function (data) {
+                console.log('Appel du controlleur : ok');
+                console.log(data);
+                i = parseInt(data);
+            })
+            .fail(function (data) {
+                console.log('Appel du controleur : fail');
+                console.log(data);
+                i = 3;
+            });
 
         switch(i){
             case 1: // OK
@@ -106,4 +106,17 @@ $(document).ready(function(){
         return false;
     });
 
+    //Validation des cookies
+    $('#alert_cookies button').click(function(){
+        $.ajax({
+            url: 'cookie',
+            type: 'POST'
+        })
+        .done(function (data) {
+            console.log('Création du cookie: ok');
+        })
+        .fail(function (data) {
+            console.log('Création du cookie : fail');
+        });
+    });
 });

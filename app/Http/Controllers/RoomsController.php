@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Chatbox;
 use App\Element;
 use App\Room;
+use App\User;
 use App\UserElement;
-use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\UserRoom;
 
 class RoomsController extends Controller
 {
@@ -55,17 +55,24 @@ class RoomsController extends Controller
 	{
         $header = Room::findOrFail($id);
         $element = Element::findOrFail($header->id_element);
-        //$subcat = SubCategory::findOrFail($element->id_sub_category);
-        //$cat = Category::findOrFail($subcat->id_category);
+        $cat = Category::findOrFail($element->id_category);
         $mark = UserElement::where('id_element', $element->id)->where('id_user', $element->id)->first();
         $global_mark = UserElement::where('id_element', $element->id)->get();
+        $user_room = UserRoom::where('id_room', $header->id)->get();
+        foreach ($user_room as $u){
+            $users[] = User::where('id', $u->id_user)->get();
+        }
+        $chatbox = Chatbox::where('id_room', $header->id)->get();
+        //$user_chatbox = User::where('id', $chatbox->id_user_sender);
 		return view('rooms.show')
             ->with(compact('header'))
             ->with(compact('element'))
             ->with(compact('mark'))
-		    ->with(compact('global_mark'));
-            //->with(compact('subcat'))
-            //->with(compact('cat'));
+		    ->with(compact('global_mark'))
+            ->with(compact('user_room'))
+            ->with(compact('users'))
+            ->with(compact('chatbox'))
+            ->with(compact('cat'));
 	}
 
 	/**

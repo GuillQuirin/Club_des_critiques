@@ -25,7 +25,7 @@
                         </div>
                         <div class="panel-body">
                             <div class="col-sm-6">
-                                <p>Type d'oeuvre : </p>
+                                <p>Type d'oeuvre : {{ $cat->name }}</p>
                                 <p>Titre : {{$element->name}}</p>
                                 <p>Auteur : {{$element->creator}}</p>
                                 <p>Date de parution : {{date("d/m/Y", strtotime($element->date_publication))}}</p>
@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-        <h1 class="text-center text-uppercase col-sm-12">Titre du livre <small>Nom Prénom de l'auteur</small></h1>
+        <h1 class="text-center text-uppercase col-sm-12">Participez au chat ! <small></small></h1>
         <div class="row">
         	<div class="col-md-6 col-sm-offset-1">
 	        	<div class="col-xs-12 col-md-12">
@@ -64,66 +64,28 @@
 		                            <span class="glyphicon glyphicon-chevron-down"></span>
 		                        </button>
 		                        <ul class="dropdown-menu slidedown">
-		                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-refresh">
+		                            <li><a href="#"><span class="glyphicon glyphicon-refresh">
 		                            </span>Rafraîchir</a></li>
 		                        </ul>
 		                    </div>
 		                </div>
 		                <div class="panel-body body-panel">
 		                    <ul class="chat">
+                                @foreach($chatbox as $chat)
 		                        <li class="left clearfix"><span class="chat-img pull-left">
 		                            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
 		                        </span>
 		                            <div class="chat-body clearfix">
 		                                <div class="header">
-		                                    <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-		                                        <span class="glyphicon glyphicon-time"></span>20 mins ago</small>
+		                                    <strong class="primary-font">{{$chat->id_user_sender}}</strong> <small class="pull-right text-muted">
+		                                        <span class="glyphicon glyphicon-time"></span>{{date("d/m/Y H:i:s", strtotime($chat->date_post))}}</small>
 		                                </div>
 		                                <p>
-		                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-		                                    dolor, quis ullamcorper ligula sodales.
+		                                    {{$chat->message}}
 		                                </p>
 		                            </div>
 		                        </li>
-								<li class="left clearfix"><span class="chat-img pull-left">
-		                            <img src="http://placehold.it/50/55C1E7/fff&text=EP" alt="User Avatar" class="img-circle" />
-		                        </span>
-									<div class="chat-body clearfix">
-										<div class="header">
-											<strong class="primary-font">Elise Poirier</strong> <small class="pull-right text-muted">
-												<span class="glyphicon glyphicon-time"></span>15 mins ago</small>
-										</div>
-										<p>
-											J'ai adoré ce livre !
-										</p>
-									</div>
-								</li>
-								<li class="left clearfix"><span class="chat-img pull-left">
-		                            <img src="http://placehold.it/50/55C1E7/fff&text=QR" alt="User Avatar" class="img-circle" />
-		                        </span>
-									<div class="chat-body clearfix">
-										<div class="header">
-											<strong class="primary-font">Guillaume Quirin</strong> <small class="pull-right text-muted">
-												<span class="glyphicon glyphicon-time"></span>12 mins ago</small>
-										</div>
-										<p>
-											Moi aussi, sur la fin.
-										</p>
-									</div>
-								</li>
-								<li class="left clearfix"><span class="chat-img pull-left">
-		                            <img src="http://placehold.it/50/55C1E7/fff&text=LG" alt="User Avatar" class="img-circle" />
-		                        </span>
-									<div class="chat-body clearfix">
-										<div class="header">
-											<strong class="primary-font">Laurie Guibert</strong> <small class="pull-right text-muted">
-												<span class="glyphicon glyphicon-time"></span>10 mins ago</small>
-										</div>
-										<p>
-											J'ai trouvé ça un peu ennuyeux.
-										</p>
-									</div>
-								</li>
+                                @endforeach
 		                    </ul>
 		                </div>
 		                <div class="panel-footer clearfix">
@@ -145,53 +107,27 @@
 		                            <span class="glyphicon glyphicon-chevron-down"></span>
 		                        </button>
 		                        <ul class="dropdown-menu slidedown">
-		                            <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-refresh">
+		                            <li><a href="#"><span class="glyphicon glyphicon-refresh">
 		                            </span>Rafraîchir</a></li>
 		                        </ul>
 		                    </div>
 		                </div>
 		                <div class="panel-body body-panel">
 		                    <ul class="chat">
-		                        <li class="clearfix">
-		                            <div class="chat-body clearfix">
-                                        <div class="col-xs-6 text-left padding-top-strong">
-                                            <strong class="primary-font">Jack Sparrow</strong>
-                                        </div>
-                                        <div class="col-xs-6 text-right">
-                                            <button class="btn btn-warning" id="btn-chat">Consulter le profil</button>
-                                        </div>
-		                            </div>
-		                        </li>
-		                        <li class="clearfix">
-		                            <div class="chat-body clearfix">
-                                        <div class="col-xs-6 text-left padding-top-strong">
-                                            <strong class="primary-font">Elise Poirier</strong>
-                                        </div>
-                                        <div class="col-xs-6 text-right">
-                                            <button class="btn btn-warning" id="btn-chat">Consulter le profil</button>
-                                        </div>
-		                            </div>
-		                        </li>
-		                        <li class="clearfix">
-		                            <div class="chat-body clearfix">
-                                        <div class="col-xs-6 text-left padding-top-strong">
-                                            <strong class="primary-font">Guillaume Quirin</strong>
-                                        </div>
-                                        <div class="col-xs-6 text-right">
-                                            <button class="btn btn-warning" id="btn-chat">Consulter le profil</button>
-                                        </div>
-		                            </div>
-		                        </li>
-		                        <li class="clearfix">
-		                            <div class="chat-body clearfix">
-                                        <div class="col-xs-6 text-left padding-top-strong">
-                                            <strong class="primary-font">Laurie Guibert</strong>
-                                        </div>
-                                        <div class="col-xs-6 text-right">
-                                            <button class="btn btn-warning" id="btn-chat">Consulter le profil</button>
-                                        </div>
-		                            </div>
-		                        </li>
+                                @foreach($users as $user)
+                                    @foreach($user as $u)
+                                        <li class="clearfix">
+                                            <div class="chat-body clearfix">
+                                                <div class="col-xs-6 text-left padding-top-strong">
+                                                    <strong class="primary-font">{{$u->first_name}} {{$u->last_name}}</strong>
+                                                </div>
+                                                <div class="col-xs-6 text-right">
+                                                    <button class="btn btn-warning" id="btn-chat">Consulter le profil</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                @endforeach
 		                    </ul>
 		                </div>
 		        	</div>
@@ -204,7 +140,6 @@
 		<!--Modal ajout utilisateur-->
 		<div id="addUser" class="modal fade" role="dialog">
 			<div class="modal-dialog">
-
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
@@ -212,7 +147,7 @@
 						<h4 class="modal-title">Ajout d'un membre au salon 1</h4>
 					</div>
 					<div class="modal-body">
-						<input type="text" class="form-control" placeholder="Autocomplétion des users en bdd ou invitation par mail ?">
+						<input type="text" name="autocomplete_user" id="autocomplete_user" class="form-control" placeholder="Autocomplétion des users en bdd ou invitation par mail ?">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success" data-dismiss="modal">Valider</button>
@@ -223,4 +158,3 @@
 			</div>
 		</div>
 @endsection
-

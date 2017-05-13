@@ -119,4 +119,21 @@ $(document).ready(function(){
             console.log('Création du cookie : fail');
         });
     });
+
+        $('#autocomplete_user').autocomplete({
+            minLength: 2,
+            source: function (req, add) {
+                $.ajax({
+                    url: '/Chatbox/autocompleteUser',
+                    dataType: 'json',
+                    type: 'POST',
+                    data: req,
+                    success: function (data) {
+                        if (data.response === 'true') {
+                            add(data.message);
+                        }
+                    }
+                });
+            }
+        });
 });

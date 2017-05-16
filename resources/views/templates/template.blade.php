@@ -14,6 +14,9 @@
         {!! HTML::style('font-awesome-4.7.0/css/font-awesome.css') !!}
         {!! HTML::style('DataTables/datatables.min.css') !!}
         {!! HTML::style('bootstrap-datepicker/css/bootstrap-datepicker.min.css') !!}
+        {!! HTML::style('css/jquery-ui.min.css') !!}
+        {!! HTML::style('css/jquery-ui.structure.min.css') !!}
+        {!! HTML::style('css/jquery-ui.theme.min.css') !!}
         <!-- {!! HTML::style('bootstrap-select/dist/css/bootstrap-select.min.css') !!} -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
         {!! HTML::style('css/template.css') !!}
@@ -221,13 +224,14 @@
         <!-- JAVASCRIPT -->
         {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js') !!}
         {!! HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js') !!}
-        {!! HTML::script('js/jquery.countdown.js') !!}
+        {!! HTML::script('js/jquery-ui.min.js') !!}
+        {!! HTML::script('js/jquery.countdown.min.js') !!}
         {!! HTML::script('DataTables/datatables.min.js') !!}
         {!! HTML::script('bootstrap-datepicker/js/bootstrap-datepicker.min.js') !!}
         <!-- {!! HTML::script('bootstrap-select/dist/js/bootstrap-select.mins.js') !!} -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
-        {!! HTML::script('js/template.js') !!}
         {!! HTML::script('js/autocomplete.js') !!}
+        {!! HTML::script('js/template.js') !!}
         @yield('js')
     </body>
 </html>

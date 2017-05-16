@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -156,13 +157,17 @@ class UserController extends Controller
      *
      */
      public function login(Request $request){
+
           $this->validate($request, [
                'email' => 'required',
                'password' => 'required',
           ]);
           $input = $request->all();
           try{
-             var_dump(Auth::attempt(['email' => $input['email'], 'password' => password_hash($input['password'], PASSWORD_DEFAULT)]));  
+               if(Auth::attempt(['email' => $input['email'], 'password' => $input['password']])){
+                    
+               }  
+
           }
           catch(\Exception $e){
                var_dump($e->getMessage());
@@ -239,9 +244,11 @@ class UserController extends Controller
 
           //Récupération de l'utilisateur
           try{
+               var_dump(Input::get('new_pwd'));
                //SOIT TOKEN, SOIT SESSION DE L'UTILISATEUR POUR CHANGEMENT DE MDP
                $user = (Auth::check()) ? Auth::user() : User::where('token', Input::get('token'))->first();
-               $user->password = password_hash(Input::get('new_pwd'), PASSWORD_DEFAULT);
+               $user->password = Hash::make(Input::get('new_pwd'));
+               //$user->password = password_hash(Input::get('new_pwd'), PASSWORD_DEFAULT);
                $user->token ="";
                $user->save();
           }

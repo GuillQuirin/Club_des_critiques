@@ -157,32 +157,43 @@ class UserController extends Controller
      *
      */
      public function login(Request $request){
-
-          $this->validate($request, [
-               'email' => 'required',
-               'password' => 'required',
-          ]);
-          $input = $request->all();
-          try{
-               if(Auth::attempt(['email' => $input['email'], 'password' => $input['password']])){
-                    
-               }  
-
+          
+          if(!Auth::check()){
+               $this->validate($request, [
+                    'email' => 'required',
+                    'password' => 'required',
+               ]);
+               $input = $request->all();
+               try{
+                    if(Auth::attempt([  'email' => $input['email'], 
+                                        'password' => $input['password'],
+                                        'status' => 1])){
+                         
+                         $user = Auth::user();
+                         $request->session()->put('user_id', $user->id);
+                         return '/user/'.$user->id; //Adresse de destination si Auth OK
+                    }
+                    else 
+                         return 2; //Identifiants incorrects  
+               }
+               catch(\Exception $e){
+                    var_dump($e->getMessage());
+                    return 3; //Erreur technique
+                    die;
+               }
           }
-          catch(\Exception $e){
-               var_dump($e->getMessage());
-          }
-          // Authentication passed...
-          //return redirect()->route('user/1');
-          die;
+          return 1; // Déjà connecté
      }
 
      /**
      * Déconnexion
      *
      */
-     public function logout(Request $request){
-         //
+     public function logout(){
+          if(Auth::check()){
+               Auth::logout();
+               return redirect()->route('home');
+          }
      }
 
      /**
@@ -244,11 +255,14 @@ class UserController extends Controller
 
           //Récupération de l'utilisateur
           try{
-               var_dump(Input::get('new_pwd'));
                //SOIT TOKEN, SOIT SESSION DE L'UTILISATEUR POUR CHANGEMENT DE MDP
                $user = (Auth::check()) ? Auth::user() : User::where('token', Input::get('token'))->first();
                $user->password = Hash::make(Input::get('new_pwd'));
-               //$user->password = password_hash(Input::get('new_pwd'), PASSWORD_DEFAULT);
+               
+               //Si l'utilisateur vient juste de créer son compte, alors on l'active une fois le mdp établi
+               if($user->status==0)
+                    $user->status = 1;
+               
                $user->token ="";
                $user->save();
           }

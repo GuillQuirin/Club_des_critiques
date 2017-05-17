@@ -36,6 +36,7 @@ Route::post('register', ['as' => '/', 'uses' => 'UserController@register']);
 //Authentification
 Route::post('login', ['as' => '/', 'uses' => 'UserController@login']);
 Route::post('forgot', ['as' => '/', 'uses' => 'UserController@forgotPwd']);
+Route::get('logout', ['as' => 'logout', 'uses' => 'UserController@logout']);
 //Création-Renouvellement du mot de passe
 Route::get('checkToken/{token}', ['as' => '/checkToken', 'uses' => 'UserController@checkToken']);
 Route::post('checkToken', ['as' => '/checkToken', 'uses' => 'UserController@newPwd']);

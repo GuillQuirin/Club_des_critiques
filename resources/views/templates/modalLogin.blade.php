@@ -9,7 +9,8 @@
             </div>
             <div class="modal-body">
                 <!-- Authentification -->
-                {!! Form::open(['url' => 'login', 'id' => 'formLogin']) !!}
+                {!! Form::open(['url' => '/', 'class' => 'notRedirect', 'id' => 'formLogin']) !!}
+                <p class="url" data-url="login"></p>
                 <div class="form-group">
                     {!! Form::label('emailLogin','Saisissez votre adresse e-mail') !!}
                     {!! Form::email('email','',['id'=>'emailLogin',
@@ -22,17 +23,23 @@
                                                     'class' => 'form-control',
                                                     'required' => 'true']) !!}
                     {!! $errors->first('passwordLogin', '<small class="help-block">:message</small>') !!}
+                    <div class="alert alert-dismissible alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        Vous êtes déjà connectés, merci de rafraichir la page.
+                    </div>
                     <div class="alert alert-dismissible alert-warning" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        L'adresse email n'existe pas.
+                        Les identifiants sont incorrects.
                     </div>
                     <div class="alert alert-dismissible alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        Les identifiants sont incorrects.
+                        Authentification impossible.
                     </div>
                 </div>
                 <div class="row">

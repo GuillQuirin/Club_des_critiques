@@ -79,7 +79,7 @@ $(document).ready(function(){
             .done(function (data) {
                 console.log('Appel du controlleur : ok');
                 console.log(data);
-                i = parseInt(data);
+                i = (parseInt(data)) ? parseInt(data) : data;
             })
             .fail(function (data) {
                 console.log('Appel du controleur : fail');
@@ -87,17 +87,21 @@ $(document).ready(function(){
                 i = 3;
             });
 
-        switch(i){
-            case 1: // OK
-                popUpMessage += '.alert-success';
-                break;
-            case 2: // Problème fonctionnel
-                popUpMessage += '.alert-warning';
-                break;
-            default: // Problème technique
-                popUpMessage += '.alert-danger';
-                break;
+        if(Number.isInteger(i)){
+            switch(i){
+                case 1: // OK
+                    popUpMessage += '.alert-success';
+                    break;
+                case 2: // Problème fonctionnel
+                    popUpMessage += '.alert-warning';
+                    break;
+                default: // Problème technique
+                    popUpMessage += '.alert-danger';
+                    break;
+            }
         }
+        else
+            window.location.replace(i);
         
         form.find('.alert').hide();
         form.find(popUpMessage).fadeIn();

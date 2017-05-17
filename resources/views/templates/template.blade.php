@@ -129,7 +129,17 @@
                             data-toggle="dropdown" 
                             role="button" 
                             aria-haspopup="true" 
-                            aria-expanded="false">Connexion<span class="caret"></span></a>
+                            aria-expanded="false">
+
+                            @if(Auth::guest())
+                                Connexion
+                            @endif
+                            @if(Auth::check())
+                                Mon compte
+                            @endif
+
+                            <span class="caret"></span>
+                        </a>
                         
                         <a  href="#" 
                             class="dropdown-toggle visible-sm-block" 
@@ -154,13 +164,12 @@
                             @endif
                             
                             @if(Auth::check())
-                                <li role="separator" class="divider"></li>
                                 <li>
-                                    <a href="{{ route('show_user', ['id' => 1]) }}">Mon compte</a>
+                                    <a href="{{ route('show_user', ['id' => Auth::user()->id ]) }}">Mon compte</a>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li>
-                                    <a href="">Déconnexion</a>
+                                    <a href="{{ route('logout') }}">Déconnexion</a>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="{{ route('admin') }}">Administration</a></li>

@@ -44,7 +44,7 @@ Route::post('checkToken', ['as' => '/checkToken', 'uses' => 'UserController@newP
 Route::patch('user/{id}', ['as' => 'update_user', 'uses' => 'UserController@updateInfo']);
 Route::post('user/{id}', ['as' => 'update_password_user', 'uses' => 'UserController@updatePassword']);
 //Suppression
-Route::post('deleteAccount', ['as' => '/', 'uses' => 'UserController@deleteAccount']);
+Route::post('deleteAccount', ['as' => 'deleteAccount', 'uses' => 'UserController@deleteAccount']);
 
 /* SALONS */
 Route::get('rooms', ['as' => 'rooms', 'uses' => 'RoomsController@index']);

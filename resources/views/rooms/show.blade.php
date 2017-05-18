@@ -77,7 +77,7 @@
 		                        </span>
 		                            <div class="chat-body clearfix">
 		                                <div class="header">
-		                                    <strong class="primary-font">{{$chat->id_user_sender}}</strong> <small class="pull-right text-muted">
+		                                    <strong class="primary-font">{{$chat->sender->first_name}} {{$chat->sender->last_name}}</strong> <small class="pull-right text-muted">
 		                                        <span class="glyphicon glyphicon-time"></span>{{date("d/m/Y H:i:s", strtotime($chat->date_post))}}</small>
 		                                </div>
 		                                <p>

@@ -124,7 +124,7 @@ $(document).ready(function(){
             minLength: 2,
             source: function (req, add) {
                 $.ajax({
-                    url: '/Chatbox/autocompleteUser',
+                    url: 'autocompleteUser',
                     dataType: 'json',
                     type: 'POST',
                     data: req,

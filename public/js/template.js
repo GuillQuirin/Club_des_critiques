@@ -120,20 +120,47 @@ $(document).ready(function(){
         });
     });
 
-        $('#autocomplete_user').autocomplete({
-            minLength: 2,
-            source: function (req, add) {
-                $.ajax({
-                    url: 'autocompleteUser',
-                    dataType: 'json',
-                    type: 'POST',
-                    data: req,
-                    success: function (data) {
-                        if (data.response === 'true') {
-                            add(data.message);
-                        }
+    $('#autocomplete_user').autocomplete({
+        minLength: 2,
+        source: function (req, add) {
+            $.ajax({
+                url: 'autocompleteUser',
+                dataType: 'json',
+                type: 'POST',
+                data: req,
+                success: function (data) {
+                    if (data.response === 'true') {
+                        add(data.first_name);
                     }
-                });
-            }
-        });
+                }
+            });
+        }
+    });
+
+    $('#send').click(function(e){
+        e.preventDefault(); // on empêche le bouton d'envoyer le formulaire
+
+        var id_user_sender = 1;
+        var message = encodeURIComponent( $('#message').val() );
+
+        if(message != ""){
+            $.ajax({
+                url : "addMessage",
+                type : "POST",
+                data : "id_user_sender=" + id_user_sender + "&message=" + message,
+                success : function(){
+                    /* id_user_sender a remplacer par donnée de la session */
+                    $('#messages').append(
+                        "<li class='left clearfix'><span class='chat-img pull-left'>"
+                        + "<img src='http://placehold.it/50/55C1E7/fff&text=U' alt='User Avatar' class='img-circle' /></span>"
+                        + "<div class='chat-body clearfix'>"
+                        + "<div class='header'>"
+                        + "<strong class='primary-font'>" + id_user_sender + "</strong> <small class='pull-right text-muted'>"
+                        + "<span class='glyphicon glyphicon-time'></span>" + Date.now().toLocaleString() + "</small>"
+                        +"</div><p>" + message + "</p></div></li>"
+                    );
+                }
+            });
+        }
+    });
 });

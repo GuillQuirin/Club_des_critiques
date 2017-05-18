@@ -69,7 +69,7 @@
 		                        </ul>
 		                    </div>
 		                </div>
-		                <div class="panel-body body-panel">
+		                <div class="panel-body body-panel" id="messages">
 		                    <ul class="chat">
                                 @foreach($chatbox as $chat)
 		                        <li class="left clearfix"><span class="chat-img pull-left">
@@ -81,7 +81,7 @@
 		                                        <span class="glyphicon glyphicon-time"></span>{{date("d/m/Y H:i:s", strtotime($chat->date_post))}}</small>
 		                                </div>
 		                                <p>
-		                                    {{$chat->message}}
+		                                    {{$chat->message}}<?php echo date("Y-m-d H:i:s") ?>
 		                                </p>
 		                            </div>
 		                        </li>
@@ -89,9 +89,9 @@
 		                    </ul>
 		                </div>
 		                <div class="panel-footer clearfix">
-		                    <textarea class="form-control" rows="3"></textarea>
+		                    <textarea class="form-control" name="message" id="message" rows="3"></textarea>
 		                    <span class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-xs-12" style="margin-top: 10px">
-		                        <button class="btn btn-warning btn-lg btn-block" id="btn-chat">Envoyer le message</button>
+		                        <button class="btn btn-warning btn-lg btn-block" id="send" name="send">Envoyer le message</button>
 		                    </span>
 		                </div>
 		            </div>
@@ -154,7 +154,6 @@
 						<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
 					</div>
 				</div>
-
 			</div>
 		</div>
 @endsection

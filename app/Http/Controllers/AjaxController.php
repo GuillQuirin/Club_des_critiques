@@ -49,17 +49,4 @@ class AjaxController extends Controller
 
         return Response::json(array_pluck($elements, 'attributes'));
     }
-
-    public function autocompleteUser()
-    {
-        $term = $_GET['term'];
-        $users =  DB::select(DB::raw('select * from user where first_name like '.$term));
-        $array = array();
-
-        while($name = $users->fetch())
-        {
-            array_push($array, $name['first_name']);
-        }
-        echo json_encode($array);
-    }
 }

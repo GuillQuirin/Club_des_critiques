@@ -67,7 +67,8 @@ Route::put('admin/delete-top-element', ['as' => 'delete_top_element', 'uses' => 
 Route::get('admin/sub-categories', ['as' => 'get_sub_categories', 'uses' => 'AjaxController@getSubCategories']);
 Route::get('admin/creators', ['as' => 'get_creators', 'uses' => 'AjaxController@getCreatorForSubCat']);
 Route::get('admin/elements', ['as' => 'get_elements', 'uses' => 'AjaxController@getElementForCreatorAndCategory']);
-Route::post('autocompleteUser', ['as' => '/', 'uses' => 'AjaxController@autocompleteUser'] );
+Route::post('room/autocompleteUser', ['as' => '/', 'uses' => 'RoomsController@autocompleteUser'] );
+Route::post('room/addMessage', ['as' => '/', 'uses' => 'RoomsController@addMessage'] );
 
 
 //Routes classiques directement vers une Vue en particulier

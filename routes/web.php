@@ -31,6 +31,8 @@ Route::get('element/{id}', ['as' => 'show_element', 'uses' => 'ElementController
 Route::get('users', ['as' => 'users', 'uses' => 'UserController@index']);
 //Affichage d'un utilisateur
 Route::get('user/{id}', ['as' => 'show_user', 'uses' => 'UserController@show']);
+//Contact d'un utilisateur
+Route::post('contact', ['as' => 'contact', 'uses' => 'UserController@contact']);
 //Inscription
 Route::post('register', ['as' => '/', 'uses' => 'UserController@register']);
 //Authentification

@@ -176,11 +176,10 @@ class UserController extends Controller
 	{
           $user = Auth::user();
           $oldPicture = $user->picture;
-
+          /*
           $this->validate($request, [
                'first_name' => 'required',
-               'last_name' => 'required',
-          ]);
+          ]);*/
           $input = $request->all();
           $user->fill($input);
           $user->is_contactable = Input::get('is_contactable');

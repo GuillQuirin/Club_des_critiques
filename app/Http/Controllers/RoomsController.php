@@ -9,6 +9,7 @@ use App\Room;
 use App\User;
 use App\UserElement;
 use App\UserRoom;
+use Illuminate\Support\Facades\DB;
 
 class RoomsController extends Controller
 {
@@ -63,7 +64,6 @@ class RoomsController extends Controller
             $users[] = User::where('id', $u->id_user)->get();
         }
         $chatbox = Chatbox::where('id_room', $header->id)->get();
-        //$user_chatbox = User::where('id', $chatbox->id_user_sender);
 		return view('rooms.show')
             ->with(compact('header'))
             ->with(compact('element'))
@@ -119,4 +119,31 @@ class RoomsController extends Controller
 	{
 		# code...
 	}
+
+	public function addMessage()
+    {
+        DB::table('chatbox')->insert(
+            [
+                'id_user_sender' => $_POST['id_user_sender'],
+                'id_room' => 1,
+                'date_post' => date("Y-m-d H:i:s"),
+                'message' => $_POST['message'],
+                'status' => 1,
+                'is_deleted' => 0
+            ]
+        );
+    }
+
+    public function autocompleteUser()
+    {
+        $term = $_GET['term'];
+        $users =  User::where('first_name', 'like', $term);
+        $array = array();
+
+        while($name = $users->fetch())
+        {
+            array_push($array, $name['first_name']);
+        }
+        echo json_encode($array);
+    }
 }

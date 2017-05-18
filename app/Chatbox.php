@@ -35,9 +35,9 @@ class Chatbox extends Model
         $users =  DB::select(DB::raw('select * from user where first_name like '.$term));
         $array = array();
 
-        while($name = $users->fetch()) // on effectue une boucle pour obtenir les données
+        while($name = $users->fetch())
         {
-            array_push($array, $name['first_name']); // et on ajoute celles-ci à notre tableau
+            array_push($array, $name['first_name']);
         }
         echo json_encode($array);
     }

@@ -33,8 +33,7 @@
         <div>
             <h2>Nous contacter</h2>
 
-           {!! Form::open(['url' => '/', 'class' => 'notRedirect', 'id' => 'formContact']) !!}
-            <p class="url" data-url="contact"></p>
+           {!! Form::open(['url' => 'contact', 'class' => 'notRedirect', 'id' => 'formContact']) !!}
             <div class="form-group">
                 {!! Form::label('nameContact','Nom') !!}
                 {!! Form::text('name', null, 

@@ -233,13 +233,10 @@ class UserController extends Controller
           $input = $request->all();
 
           //Récupération de l'utilisateur
-          try{
-               $user = User::where('email', Input::get('email'))->first();
-          }
-          catch(\Exception $e){
-               //var_dump($e->getMessage());
+          $user = User::where('email', Input::get('email'))->first();
+
+          if(!$user)
                return 2;
-          }
 
           //Envoi du mail
           try{

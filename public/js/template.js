@@ -65,7 +65,7 @@ $(document).ready(function(){
         var i=3;
         var popUpMessage =' ';
         var erreur ='';
-        var url = form.find('.url').data('url');
+        var url = form.attr('action');
 
         console.log("URL du controlleur : "+url);
         console.log(form.serialize());
@@ -86,6 +86,7 @@ $(document).ready(function(){
                 console.log(data);
                 i = 3;
             });
+
 
         if(Number.isInteger(i)){
             switch(i){

@@ -8,8 +8,7 @@
                 <h4 class="modal-title" id="myModalRegister">Rejoignez-nous !</h4>
             </div>
 
-            {!! Form::open(['url' => '/', 'class' => 'notRedirect', 'id' => 'formRegister']) !!}
-            <p class="url" data-url="register"></p>
+            {!! Form::open(['url' => 'register', 'class' => 'notRedirect', 'id' => 'formRegister']) !!}
             <div class="modal-body">
                 <div class="form-group">
                     {!! Form::label('emailRegister','Saisissez votre adresse e-mail') !!}

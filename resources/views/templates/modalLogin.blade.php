@@ -9,8 +9,7 @@
             </div>
             <div class="modal-body">
                 <!-- Authentification -->
-                {!! Form::open(['url' => '/', 'class' => 'notRedirect', 'id' => 'formLogin']) !!}
-                <p class="url" data-url="login"></p>
+                {!! Form::open(['url' => 'login', 'class' => 'notRedirect', 'id' => 'formLogin']) !!}
                 <div class="form-group">
                     {!! Form::label('emailLogin','Saisissez votre adresse e-mail') !!}
                     {!! Form::email('email','',['id'=>'emailLogin',
@@ -64,8 +63,7 @@
                         <h4 class="modal-title">Récupération de votre compte</h4>
                     </div>
                     <hr>
-                    {!! Form::open(['url' => '/', 'class' => 'notRedirect', 'id' => 'formBackUp']) !!}
-                    <p class="url" data-url="forgot"></p>
+                    {!! Form::open(['url' => 'forgot', 'class' => 'notRedirect', 'id' => 'formBackUp']) !!}
                     <div class="form-group">
                         {!! Form::label('emailBackUp','Un email vous sera envoyé.') !!}
                         {!! Form::email('email','',['id' => 'emailBackUp',

@@ -9,7 +9,11 @@
 @endsection
 
 @section('title')
+  @if($infos->first_name)
     {{$infos->first_name}}
+  @else 
+    Utilisateur-{{$infos->id}}
+  @endif
 @endsection
 
 @section('content')
@@ -30,7 +34,8 @@
               Membre banni
             @endif
 
-           <br>{{$departements[$infos->location]}}
+            <br>{{$departements}}
+
            </small>
         </h1>
 

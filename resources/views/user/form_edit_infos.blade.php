@@ -42,19 +42,19 @@
         <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
               {!! Form::label('locationInfo','Localisation') !!}
-              {!! Form::select('location',$departements, $infos->location,['id' => 'locationInfo']) !!}
+              {-- Form::select('location',$departements, $infos->location,['id' => 'locationInfo']) --}
               {!! $errors->first('locationInfo', '<small class="help-block">:message</small>') !!}
             </div>
-          </div>
-          <div class="col-md-12">
-              <div class="form-group">
-                  {!! Form::label('descriptionInfo','Description') !!}
-                  {!! Form::textarea('description', $infos->description,[ 'id' => 'descriptionInfo',
-                                                                          'class' => 'form-control', 
-                                                                          'size' => '30x5', ]) !!}
-                  {!! $errors->first('descriptionInfo', '<small class="help-block">:message</small>') !!}
-              </div>
-          </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                {!! Form::label('descriptionInfo','Description') !!}
+                {!! Form::textarea('description', $infos->description,[ 'id' => 'descriptionInfo',
+                                                                        'class' => 'form-control', 
+                                                                        'size' => '30x5', ]) !!}
+                {!! $errors->first('descriptionInfo', '<small class="help-block">:message</small>') !!}
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>

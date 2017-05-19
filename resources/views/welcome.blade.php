@@ -32,34 +32,41 @@
 
         <div>
             <h2>Nous contacter</h2>
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
 
-           {!! Form::open(['url' => '']) !!}
-
+           {!! Form::open(['url' => '/', 'class' => 'notRedirect', 'id' => 'formContact']) !!}
+            <p class="url" data-url="contact"></p>
             <div class="form-group">
-                {!! Form::label('Nom') !!}
+                {!! Form::label('nameContact','Nom') !!}
                 {!! Form::text('name', null, 
-                    array('required', 
+                    array('id' => 'nameContact', 
+                          'required' => 'true', 
                           'class'=>'form-control', 
                           'placeholder'=>'Inscrivez ici vos noms et prénoms')) !!}
             </div>
 
             <div class="form-group">
-                {!! Form::label('Email') !!}
+                {!! Form::label('emailContact','Email') !!}
                 {!! Form::text('email', null, 
-                    array('required', 
+                    array('id' => 'emailContact', 
+                          'required' => 'true', 
                           'class'=>'form-control', 
                           'placeholder'=>'Inscrivez ici votre adresse email')) !!}
             </div>
-
+            
             <div class="form-group">
-                {!! Form::label('Votre message') !!}
+                {!! Form::label('objectContact','Sujet du message') !!}
+                {!! Form::text('object', null, 
+                    array('id' => 'objectContact', 
+                          'required' => 'true', 
+                          'class'=>'form-control', 
+                          'placeholder'=>'Indiquez un objet')) !!}
+            </div>
+  
+            <div class="form-group">
+                {!! Form::label('messageContact','Votre message') !!}
                 {!! Form::textarea('message', null, 
-                    array('required', 
+                    array('id' => 'messageContact', 
+                          'required' => 'true', 
                           'class'=>'form-control', 
                           'placeholder'=>'Rédigez ici votre message')) !!}
             </div>
@@ -67,6 +74,25 @@
             <div class="form-group text-right">
                 {!! Form::submit('Envoyer', 
                   array('class'=>'btn btn-primary')) !!}
+            </div>
+
+            <div class="alert alert-dismissible alert-success" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                Le message d'être envoyé aux administrateurs.
+            </div>
+            <div class="alert alert-dismissible alert-warning" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                Le message n'a pas pu être envoyé.
+            </div>
+            <div class="alert alert-dismissible alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                Vous avez excédé le nombre d'envoi autorisé, merci de patienter un instant.
             </div>
             {!! Form::close() !!}
         </div>

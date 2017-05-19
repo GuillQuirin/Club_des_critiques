@@ -60,7 +60,7 @@ $(document).ready(function(){
     });
 
     //Soumission des formulaires AJAX
-    $('.modal form.notRedirect').submit(function(event){
+    $('form.notRedirect').submit(function(event){
         var form = $(this);
         var i=3;
         var popUpMessage =' ';

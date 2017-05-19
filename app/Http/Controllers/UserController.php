@@ -176,11 +176,10 @@ class UserController extends Controller
 	{
           $user = Auth::user();
           $oldPicture = $user->picture;
-
+          /*
           $this->validate($request, [
                'first_name' => 'required',
-               'last_name' => 'required',
-          ]);
+          ]);*/
           $input = $request->all();
           $user->fill($input);
           $user->is_contactable = Input::get('is_contactable');
@@ -219,10 +218,36 @@ class UserController extends Controller
      * @param Illuminate\Http\Request $request
      * @return view
      */
-	public function contact(Request $request, $id)
+	public function contact(Request $request)
 	{
-		//
-	}
+          if(Auth::check()){ //Contact d'un utilisateur
+     		$this->validate($request, [
+                    'id' => 'required',
+                    'message' => 'required',
+               ]);
+               $input = $request->all();
+               $user = User::findOrFail($id);
+               if($user->is_contactable){
+                    Mail::to($user->email)->send(new Contact(Auth::user(), $input, $user));
+                    return 1;
+               }
+               return 2;
+	     }
+          else{ //Contact aux administrateurs
+             $this->validate($request, [
+                    'id' => 'required',
+                    'name' => 'required',
+                    'email' => 'required',
+                    'object' => 'required',
+                    'message' => 'required',
+               ]);
+               $input = $request->all();
+               Mail::to('clubcritiques@gmail.com')->send(new Contact(Auth::user(), $input, $user));
+               return 1;
+               return 2;  
+          }
+          return 3;
+     }
 
      /**
      * Inscription d'un utilisateur

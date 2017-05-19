@@ -13,7 +13,8 @@
             <div class="form-group">
               {!! Form::label('firstNameUpdate','Prénom') !!}
               {!! Form::text('first_name', $infos->first_name,[ 'id' => 'firstNameUpdate',
-                                                                'class' => 'form-control']) !!}
+                                                                'class' => 'form-control',
+                                                                ]) !!}
               {!! $errors->first('firstNameUpdate', '<small class="help-block">:message</small>') !!}
             </div>
         </div>

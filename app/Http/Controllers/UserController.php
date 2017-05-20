@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Mail\Register;
+use App\Mail\Contact;
 use App\Mail\BackUp;
 use App\User;
 
@@ -117,33 +118,72 @@ class UserController extends Controller
      */
 	public function contact(Request $request)
 	{
-          if(Auth::check()){ //Contact d'un utilisateur
+          if(Auth::check()){
      		$this->validate($request, [
                     'id' => 'required',
                     'message' => 'required',
                ]);
                $input = $request->all();
-               $user = User::findOrFail($id);
+               $user = User::findOrFail($input['id']);
                if($user->is_contactable){
-                    Mail::to($user->email)->send(new Contact(Auth::user(), $input, $user));
+                    $data = [
+                         'sender' => Auth::user()->first_name,
+                         'text' => $input['message'],
+                         'receiver' => $user,
+                    ];
+
+                    Mail::send('emails.contact', $data, function($message) use ($user){
+                         $message->to($user->email);
+                         $message->subject('Un utilisateur vous a contacté');
+                    });
                     return 1;
                }
                return 2;
 	     }
-          else{ //Contact aux administrateurs
-             $this->validate($request, [
-                    'id' => 'required',
+          return 3;
+     }
+
+     /**
+     * Contacter un administrateur
+     *
+     * @param  int  $id
+     * @param Illuminate\Http\Request $request
+     * @return view
+     */
+     public function contactAdmin(Request $request)
+     {
+          try{
+               $this->validate($request, [
                     'name' => 'required',
                     'email' => 'required',
                     'object' => 'required',
                     'message' => 'required',
                ]);
-               $input = $request->all();
-               Mail::to('clubcritiques@gmail.com')->send(new Contact(Auth::user(), $input, $user));
-               return 1;
-               return 2;  
           }
-          return 3;
+          catch(\Exception $e){
+               return 2;
+          }
+          
+          $input = $request->all();
+          
+          try{
+               $data = [
+                    'senderName' => $input['name'],
+                    'senderEmail' => $input['email'],
+                    'text' => $input['message'],
+                    'receiver' => "Administrateur",
+               ];
+
+               Mail::send('emails.contactAdmin', $data, function($message) use($input){
+                    $message->to(env('MAIL_USERNAME'));
+                    $message->subject($input['object']);
+               });
+               return 1;
+          }
+          catch(\Exception $e){
+               //var_dump($e->getMessage());
+               return 3;
+          }
      }
 
      /**
@@ -169,7 +209,16 @@ class UserController extends Controller
           try{
                $token = str_random(60);
                $user->fill(['token' => $token])->save();
-               Mail::to($user->email)->send(new Register($token));
+               
+               $data = [
+                    'token' => $token,
+               ];
+
+               Mail::send('emails.register', $data, function($message) use ($user){
+                    $message->to($user->email);
+                    $message->subject('Bienvenue sur le Club des Critiques');
+               });
+
           }
           catch(\Exception $e){
                var_dump($e->getMessage());
@@ -204,7 +253,7 @@ class UserController extends Controller
                          return 2; //Identifiants incorrects  
                }
                catch(\Exception $e){
-                    var_dump($e->getMessage());
+                    //var_dump($e->getMessage());
                     return 3; //Erreur technique
                }
           }
@@ -243,7 +292,16 @@ class UserController extends Controller
                $token = str_random(60);
                $user->token = $token;
                $user->save();
-               Mail::to($user->email)->send(new BackUp($token));
+               
+               $data = [
+                    'token' => $token,
+               ];
+
+               Mail::send('emails.backUp', $data, function($message) use ($user){
+                    $message->to($user->email);
+                    $message->subject('Récupération de mot de passe.');
+               });
+
           }
           catch(\Exception $e){
                //var_dump($e->getMessage());

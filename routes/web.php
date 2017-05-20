@@ -16,7 +16,7 @@
 
 Route::get('/', ['as' => 'home', 'uses' => 'WelcomeController@index']);
 Route::post('cookie', ['as' => '/', 'uses' => 'WelcomeController@cookie']);
-Route::post('contact', ['as' => 'contact', 'uses' => 'UserController@contact']);
+Route::post('contactAdmin', ['as' => '/', 'uses' => 'UserController@contactAdmin']);
 
 
 /****** CATEGORIES ******/
@@ -41,7 +41,7 @@ Route::get('element/{id}', ['as' => 'show_element', 'uses' => 'ElementController
 	Route::get('user/{id}', ['as' => 'show_user', 'uses' => 'UserController@show']);
 
 	//Contact d'un utilisateur
-	/* Voir Section ACCUEIL */
+	Route::post('contact', ['as' => '/', 'uses' => 'UserController@contact']);
 
 	//Inscription
 	Route::post('register', ['as' => '/', 'uses' => 'UserController@register']);

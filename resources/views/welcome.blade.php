@@ -33,7 +33,7 @@
         <div>
             <h2>Nous contacter</h2>
 
-           {!! Form::open(['url' => 'contact', 'class' => 'notRedirect', 'id' => 'formContact']) !!}
+           {!! Form::open(['url' => 'contactAdmin', 'class' => 'notRedirect', 'id' => 'formContact']) !!}
             <div class="form-group">
                 {!! Form::label('nameContact','Nom') !!}
                 {!! Form::text('name', null, 
@@ -45,7 +45,7 @@
 
             <div class="form-group">
                 {!! Form::label('emailContact','Email') !!}
-                {!! Form::text('email', null, 
+                {!! Form::email('email', null, 
                     array('id' => 'emailContact', 
                           'required' => 'true', 
                           'class'=>'form-control', 
@@ -79,19 +79,20 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                Le message d'être envoyé aux administrateurs.
+                Le message vient d'être envoyé aux administrateurs.
             </div>
             <div class="alert alert-dismissible alert-warning" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                Le message n'a pas pu être envoyé.
+                {{--Vous avez excédé le nombre d'envoi autorisé, merci de patienter un instant.--}}
+                Veuillez remplir tous les champs.
             </div>
             <div class="alert alert-dismissible alert-danger" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                Vous avez excédé le nombre d'envoi autorisé, merci de patienter un instant.
+                Le message n'a pas pu être envoyé.
             </div>
             {!! Form::close() !!}
         </div>

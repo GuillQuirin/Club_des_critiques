@@ -22,7 +22,7 @@ return [
     'alpha_num'            => 'يجب أن يحتوي :attribute على حروفٍ وأرقامٍ فقط',
     'array'                => 'يجب أن يكون الحقل :attribute ًمصفوفة',
     'before'               => 'يجب على الحقل :attribute أن يكون تاريخًا سابقًا للتاريخ :date.',
-    'before_or_equal'      => 'The :attribute must be a date before or equal to :date.',
+    'before_or_equal'      => 'الحقل :attribute يجب أن يكون تاريخا سابقا أو مطابقا للتاريخ :date',
     'between'              => [
         'numeric' => 'يجب أن تكون قيمة :attribute بين :min و :max.',
         'file'    => 'يجب أن يكون حجم الملف :attribute بين :min و :max كيلوبايت.',
@@ -47,6 +47,8 @@ return [
     'in_array'             => 'الحقل :attribute غير موجود في :other.',
     'integer'              => 'يجب أن يكون الحقل :attribute عددًا صحيحًا',
     'ip'                   => 'يجب أن يكون الحقل :attribute عنوان IP ذا بُنية صحيحة',
+    'ipv4'                 => 'The :attribute must be a valid IPv4 address.',
+    'ipv6'                 => 'The :attribute must be a valid IPv6 address.',
     'json'                 => 'يجب أن يكون الحقل :attribute نصا من نوع JSON.',
     'max'                  => [
         'numeric' => 'يجب أن تكون قيمة الحقل :attribute مساوية أو أصغر لـ :max.',
@@ -120,7 +122,7 @@ return [
         'email'                 => 'البريد الالكتروني',
         'first_name'            => 'الاسم',
         'last_name'             => 'اسم العائلة',
-        'password'              => 'كلمة  المرو',
+        'password'              => 'كلمة المرور',
         'password_confirmation' => 'تأكيد كلمة المرور',
         'city'                  => 'المدينة',
         'country'               => 'الدولة',

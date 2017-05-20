@@ -18,7 +18,7 @@ return [
     'after'                => ':attribute moet een datum na :date zijn.',
     'after_or_equal'       => ':attribute moet een datum na of gelijk aan :date zijn.',
     'alpha'                => ':attribute mag alleen letters bevatten.',
-    'alpha_dash'           => ':attribute mag alleen letters, nummers, liggend streepje (_) en streepjes (-) bevatten.',
+    'alpha_dash'           => ':attribute mag alleen letters, nummers, underscores (_) en streepjes (-) bevatten.',
     'alpha_num'            => ':attribute mag alleen letters en nummers bevatten.',
     'array'                => ':attribute moet geselecteerde elementen bevatten.',
     'before'               => ':attribute moet een datum voor :date zijn.',
@@ -47,6 +47,8 @@ return [
     'in_array'             => ':attribute bestaat niet in :other.',
     'integer'              => ':attribute moet een getal zijn.',
     'ip'                   => ':attribute moet een geldig IP-adres zijn.',
+    'ipv4'                 => 'The :attribute must be a valid IPv4 address.',
+    'ipv6'                 => 'The :attribute must be a valid IPv6 address.',
     'json'                 => ':attribute moet een geldige JSON-string zijn.',
     'max'                  => [
         'numeric' => ':attribute mag niet hoger dan :max zijn.',

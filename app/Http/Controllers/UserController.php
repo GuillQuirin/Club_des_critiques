@@ -66,9 +66,19 @@ class UserController extends Controller
 
           $myAccount  = (Auth::check() && Auth::id() == $id);
 
+          //Liste des départements
+          $departments = DB::table('department')
+                                   ->select('code','name')
+                                   ->get();
+
+          $listDepartments = [];
+          foreach ($departments as $key => $dpt)
+               $listDepartments[$dpt->code] = "(".$dpt->code.") ".$dpt->name;
+
+
           //Liste des oeuvres que l'utilisateur souhaite échanger
           $popUp = 'element.show';
-          $listElements = DB::table('user_element')
+          $exchangedElements = DB::table('user_element')
                                    ->leftJoin('user', 'user.id' , '=' , 'user_element.id_user')
                                    ->leftJoin('element', 'element.id', '=', 'user_element.id_element')
                                    ->select( 'element.id', 
@@ -79,21 +89,22 @@ class UserController extends Controller
                                    ->where('user.id', '=', $id)
                                    ->get();
 
-          //Liste des départements
-          $departments = DB::table('department')
-                                   ->select('code','name')
-                                   ->get();
+          //Intégralité des oeuvres que l'utilisateur peut échanger
+          $elements = DB::table('element')
+                              ->leftJoin('category', 'element.id_category', '=', 'category.id')
+                              ->select( 'element.id', 
+                                        'element.name', 
+                                        'element.creator as subName',
+                                        'category.id as category_id',
+                                        'category.name as category_name')                             
+                              ->get();
 
-          $listDepartments = [];
-
-          foreach ($departments as $key => $dpt)
-               $listDepartments[$dpt->code] = $dpt->name;
- 
 		return view('user.show')
                     ->with('infos',$infos[0])
                     ->with('myAccount',$myAccount)
                     ->with('department', $listDepartments)
-                    ->with('grid', $listElements)
+                    ->with('listElements', $elements)
+                    ->with('grid', $exchangedElements)
                     ->with(compact('popUp', $popUp));
 	}
 

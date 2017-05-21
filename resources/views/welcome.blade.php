@@ -25,8 +25,14 @@
         </div>
     
         <hr>
-
-        @include('templates.mosaique')
+        
+        <div>
+          <h2>Les oeuvres à la une</h2>
+          <p>Régulièrement, nous selectionnons plusieurs oeuvres de tout type pour vous.</p>
+          
+          @include('templates.mosaique')
+        
+        </div>
         
         <hr>
 

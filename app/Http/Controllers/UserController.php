@@ -46,16 +46,31 @@ class UserController extends Controller
      */
 	public function show($id)
 	{
-          // Récupère l'utilisateur
-          $infos = User::findOrFail($id);
-          $infos->myAccount  = (Auth::check() && Auth::id() == $id);
-          $departements = 0;
-          //Récupère les oeuvres que l'utilisateur soihaite échanger
-          $popUp = 'element.show';
+          //Liste des infos de l'utilisateur
+          $infos = DB::table('user')
+                              ->leftJoin('department', 'user.location' , '=' , 'department.code')
+                              ->select( 'user.id', 
+                                        'user.first_name', 
+                                        'user.last_name',
+                                        'user.email',
+                                        'user.is_contactable',
+                                        'user.status',
+                                        'user.description',
+                                        'user.picture',
+                                        'department.name as department_name',
+                                        'department.code as department_code',
+                                        'date_created'
+                                        )
+                              ->where('user.id', '=', $id)
+                              ->get();
 
+          $myAccount  = (Auth::check() && Auth::id() == $id);
+
+          //Liste des oeuvres que l'utilisateur souhaite échanger
+          $popUp = 'element.show';
           $listElements = DB::table('user_element')
-                                   ->join('user', 'user.id' , '=' , 'user_element.id_user')
-                                   ->join('element', 'element.id', '=', 'user_element.id_element')
+                                   ->leftJoin('user', 'user.id' , '=' , 'user_element.id_user')
+                                   ->leftJoin('element', 'element.id', '=', 'user_element.id_element')
                                    ->select( 'element.id', 
                                              'element.name', 
                                              'element.creator as subName',
@@ -64,9 +79,20 @@ class UserController extends Controller
                                    ->where('user.id', '=', $id)
                                    ->get();
 
+          //Liste des départements
+          $departments = DB::table('department')
+                                   ->select('code','name')
+                                   ->get();
+
+          $listDepartments = [];
+
+          foreach ($departments as $key => $dpt)
+               $listDepartments[$dpt->code] = $dpt->name;
+ 
 		return view('user.show')
-                    ->with(compact('infos'))
-                    ->with(compact('departements'))
+                    ->with('infos',$infos[0])
+                    ->with('myAccount',$myAccount)
+                    ->with('department', $listDepartments)
                     ->with('grid', $listElements)
                     ->with(compact('popUp', $popUp));
 	}

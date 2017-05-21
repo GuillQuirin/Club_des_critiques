@@ -42,7 +42,7 @@
         <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
               {!! Form::label('locationInfo','Localisation') !!}
-              {-- Form::select('location',$departements, $infos->location,['id' => 'locationInfo']) --}
+              {!! Form::select('location',$department, $infos->department_code,['id' => 'locationInfo']) !!}
               {!! $errors->first('locationInfo', '<small class="help-block">:message</small>') !!}
             </div>
         </div>

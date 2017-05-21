@@ -9,7 +9,7 @@
 @endsection
 
 @section('title')
-  @if($infos->first_name)
+  @if(isset($infos->first_name))
     {{$infos->first_name}}
   @else 
     Utilisateur-{{$infos->id}}
@@ -19,7 +19,7 @@
 @section('content')
     <div class="container">
         <h1 class="text-center col-xs-10 col-xs-offset-1 col-sm-12">
-          @if($infos->first_name)
+          @if(isset($infos->first_name))
             {{$infos->first_name}}
           @else
             Utilisateur-{{$infos->id}}
@@ -34,7 +34,7 @@
               Membre banni
             @endif
 
-            <br>{{$departements}}
+            <p>{{$infos->department_name}} ({{$infos->department_code}})</p>
 
            </small>
         </h1>
@@ -55,7 +55,7 @@
             <!-- --><p class="description valig-center col-xs-12 col-sm-8 col-md-8">{{$infos->description}}</p>
         </div>
         
-        @if($infos->myAccount)
+        @if($myAccount)
           <!-- POP-UP CONFIG COMPTE -->
           <a href="" title="Parametrer mon compte" data-toggle="modal" data-target="#edit">
               <button class="btn editProfile">
@@ -80,7 +80,7 @@
             <div class="col-md-12">
               @if(!$infos->is_contactable)
 
-                @if($infos->myAccount)
+                @if($myAccount)
                   <p>Seuls les administrateurs sont autorisés à communiquer avec vous.</p>
                 @else
                   <p>{{$infos->first_name}} n'est pas joignable actuellement.</p>
@@ -88,11 +88,11 @@
 
               @else
 
-                @if($infos->myAccount)
+                @if($myAccount)
                   <p>Tous les utilisateurs inscrits peuvent vous contacter.</p>
-                @elseif(!$infos->myAccount && Auth::guest())
+                @elseif(!$myAccount && Auth::guest())
                   <p>Vous devez vous authentifier afin de pouvoir contacter cette personne.</p>
-                @elseif(!$infos->myAccount && Auth::check())
+                @elseif(!$myAccount && Auth::check())
                   @include('user/form_contact_user')
                 @endif
              

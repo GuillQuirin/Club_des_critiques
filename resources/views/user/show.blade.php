@@ -33,10 +33,12 @@
             @elseif($infos->status==1)
               Membre banni
             @endif
-
-            <p>{{$infos->department_name}} ({{$infos->department_code}})</p>
-
-           </small>
+          </small>
+            @if(isset($infos->department_code))
+              <small>{{$infos->department_name}} ({{$infos->department_code}})</small>
+            @else
+              <small>Localisation non renseignée</small>
+            @endif
         </h1>
 
         <div class="row">

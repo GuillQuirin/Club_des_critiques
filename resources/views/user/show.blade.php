@@ -70,7 +70,7 @@
         
         <!-- ECHANGES -->
         <h3>Propose d'échanger : </h3>
-        {{-- @include('templates.mosaique') --}}
+        @include('templates.mosaique')
         
         <hr>
         

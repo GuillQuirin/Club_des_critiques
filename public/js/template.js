@@ -46,8 +46,8 @@ $(document).ready(function(){
         var modal = $(this);
 
         modal.find('#picture').attr('src',button.data('picture'));
-        modal.find('#first_text').html(button.data('first_text'));
-        modal.find('#second_text').html(button.data('second_text'));
+        modal.find('#name').html(button.data('name'));
+        modal.find('#subName').html(button.data('subName'));
         modal.find('#description').html(button.data('description'));
         
     });
@@ -111,6 +111,8 @@ $(document).ready(function(){
         return false;
     });
 
+    
+
     //Validation des cookies
     $('#alert_cookies button').click(function(){
         $.ajax({
@@ -124,6 +126,8 @@ $(document).ready(function(){
             console.log('Création du cookie : fail');
         });
     });
+
+
 
     $('#autocomplete_user').autocomplete({
         minLength: 2,
@@ -141,6 +145,8 @@ $(document).ready(function(){
             });
         }
     });
+
+
 
     $('#send').click(function(e){
         e.preventDefault(); // on empêche le bouton d'envoyer le formulaire

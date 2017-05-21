@@ -3,30 +3,30 @@
 @section('css')
      <link rel="stylesheet" type="text/css" href="{{asset('css/welcome.css')}}">  
      <style type="text/css">
-         .jumbotron{background-image: url({{$array['url_background']}});}
+         .jumbotron{background-image: url({{$page['url_background']}});}
      </style>  
 @endsection
 
 @section('title')
-    {{$array['title']}}
+    {{$page['title']}}
 @endsection
 
 @section('content')
     
     <div class="jumbotron">
       <div class="container-fluid">
-        <h1>{{$array['title']}} <br><small>{{$array['slogan']}}</small></h1>
+        <h1>{{$page['title']}} <br><small>{{$page['slogan']}}</small></h1>
       </div>
     </div>
     <div class="container notPadding">       
         <div>
             <h2>Le concept</h2>
-            <p>{{$array['description']}}</p>
+            <p>{{$page['description']}}</p>
         </div>
     
         <hr>
 
-        {{-- @include('templates.mosaique') --}}
+        @include('templates.mosaique')
         
         <hr>
 

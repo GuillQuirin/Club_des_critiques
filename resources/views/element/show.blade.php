@@ -10,8 +10,8 @@
             alt='Photo de profil' 
             id="picture" 
             class="col-xs-6 col-sm-4 col-md-4"><!-- 
-        --><p class="modal-title col-xs-6 col-sm-8 col-md-8" id="first_text"></p>
-		<p class="col-xs-6 col-sm-8 col-md-8" id="second_text"></p>
+        --><p class="modal-title col-xs-6 col-sm-8 col-md-8" id="name"></p>
+		<p class="col-xs-6 col-sm-8 col-md-8" id="subName"></p>
 		<p class="col-xs-6 col-sm-8 col-md-8" id="description"></p>
     </div>
 	

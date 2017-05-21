@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Mail\Register;
@@ -25,12 +26,16 @@ class UserController extends Controller
      public function index()
      {
           // Collection de tous les users
-          // $users = User::all();
-          $array = User::latest('date_created')->get();
-          $array->redirect = 'show_user';
+          $listUsers = DB::table('user')->select( 'id', 
+                                                  'first_name as name', 
+                                                  'status as subName',
+                                                  'description',
+                                                  'picture')->get();
+          $redirection = 'show_user';
 
 		return view('user.index')
-                    ->with(compact('array'));
+               ->with('grid', $listUsers)
+               ->with('redirection', $redirection);
 	}
 
 	/**
@@ -46,20 +51,24 @@ class UserController extends Controller
           $infos->myAccount  = (Auth::check() && Auth::id() == $id);
           $departements = 0;
           //Récupère les oeuvres que l'utilisateur soihaite échanger
-          /*$exchange = [1, 2, 3, 4];
           $popUp = 'element.show';
-          $array->items = [
-                ['id' => 1, 'name' => 'Harry Potter', 'subname' => 'Livre', 'url_img' => '/images/oeuvre.jpg', 'description' => "COUCOU"],
-                ['id' => 2, 'name' => 'Interstellar', 'subname' => 'Film', 'url_img' => '/images/oeuvre1.jpg', 'description' => "COUCOU"],
-                ['id' => 3, 'name' => 'Paris Games Week', 'subname' => 'Exposition', 'url_img' => '/images/oeuvre2.jpg', 'description' => "COUCOU"],
-          ];*/
+
+          $listElements = DB::table('user_element')
+                                   ->join('user', 'user.id' , '=' , 'user_element.id_user')
+                                   ->join('element', 'element.id', '=', 'user_element.id_element')
+                                   ->select( 'element.id', 
+                                             'element.name', 
+                                             'element.creator as subName',
+                                             'element.description',
+                                             'element.url_picture as picture')
+                                   ->where('user.id', '=', $id)
+                                   ->get();
 
 		return view('user.show')
                     ->with(compact('infos'))
-                    ->with(compact('departements'));/*
-                    ->with(compact('exchange'))
-                    ->with(compact('array'))
-                    ->with(compact('popUp'));*/
+                    ->with(compact('departements'))
+                    ->with('grid', $listElements)
+                    ->with(compact('popUp', $popUp));
 	}
 
 

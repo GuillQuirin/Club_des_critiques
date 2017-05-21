@@ -26,7 +26,7 @@ class WelcomeController extends Controller
 		 * get oeuvres à la une
 		 * get contact info
 		 */
-		$array = [
+		$page = [
 			'url_background' => 'images/welcome.jpeg',
 			'title' => "Le club des critiques",
 			'slogan' => "Lisez, rencontrez, partagez",
@@ -36,15 +36,19 @@ class WelcomeController extends Controller
 		];
 
 		$popUp = 'element.show';
-		$array['items'] = [
-            ['id' => 1, 'name' => 'Harry Potter', 'subname' => 'Livre', 'url_img' => '/images/oeuvre.jpg', 'description' => "COUCOU"],
-            ['id' => 2, 'name' => 'Interstellar', 'subname' => 'Film', 'url_img' => '/images/oeuvre1.jpg', 'description' => "COUCOU"],
-            ['id' => 3, 'name' => 'Paris Games Week', 'subname' => 'Exposition', 'url_img' => '/images/oeuvre2.jpg', 'description' => "COUCOU"],
-     	];
+     	
+     	$listElements = DB::table('element')
+     							->select(	'id', 
+ 											'name', 
+ 											'creator as subName',
+ 											'description',
+ 											'url_picture as picture')
+     							->get();
 
 		return view('welcome')
-				->with(compact('array'))
-				->with(compact('popUp'));
+				->with(compact('page'))
+				->with('grid', $listElements)
+				->with('popUp', $popUp);
 	}
 
 

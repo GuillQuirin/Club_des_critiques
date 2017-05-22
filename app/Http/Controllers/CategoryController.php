@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -24,6 +25,23 @@ class CategoryController extends Controller
 	{
 		return view('category.show');
 	}
+
+    /** 
+     * Affiche la liste des catégories des éléments
+     *
+     * @param  int  $id
+     * @return view
+     */
+    public function listCategory()
+    {
+        $listCategory = DB::table('category')
+                            ->select(   'id',
+                                        'name')
+                            //->whereNull('id_parent')
+                            ->get();
+        return json_encode($listCategory);
+    }
+
 
 	/////// ADMINISTRATION //////
 

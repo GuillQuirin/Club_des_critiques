@@ -36,18 +36,19 @@ class WelcomeController extends Controller
 		];
 
 		$popUp = 'element.show';
-     	
      	$listElements = DB::table('element')
      							->select(	'id', 
  											'name', 
  											'creator as subName',
  											'description',
  											'url_picture as picture')
+     							->where('is_new', '=', '1')
      							->get();
 
 		return view('welcome')
 				->with(compact('page'))
 				->with('grid', $listElements)
+				//->with('otherElements', $otherElements)
 				->with('popUp', $popUp);
 	}
 

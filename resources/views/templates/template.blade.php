@@ -63,12 +63,8 @@
                             aria-expanded="false">Oeuvres <span class="caret"></span>
                         </a>
 
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ route('show_category', ['id' => 1]) }}">Livres</a></li>
-                            <li><a href="{{ route('show_category', ['id' => 2]) }}">Films</a></li>
-                            <li><a href="{{ route('show_category', ['id' => 3]) }}">Expositions</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="{{ route('elements') }}">Toutes les oeuvres</a></li>
+                        <ul class="dropdown-menu" id="listCategory" data-route="{{ route('listCategory') }}">
+
                         </ul>
                     </li>
 
@@ -102,7 +98,8 @@
                     <hr class="visible-xs-block">
 
                     <li class="dropdown dropdownCountdown">
-                        <a  id="nextRoomCountdown" 
+                        <a  id="nextRoomCountdown"
+                            data-route="" 
                             data-countdown="2017/07/19"
                             class="dropdown-toggle" 
                             data-toggle="dropdown" 
@@ -114,7 +111,7 @@
                             <p>Prochain salon :</p>
                             <p>Oeuvre</p>
                             <p>Date de lancement:</p>
-                            <a href="{{ route('show_room', ['id' => 1]) }}">Accèdez à la fiche du salon</a>
+                            <a data-redirect="{{route('next_room')}}">Accèdez à la fiche du salon</a>
                         </div>
                     </li>
                     
@@ -241,6 +238,53 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
         {!! HTML::script('js/autocomplete.js') !!}
         {!! HTML::script('js/template.js') !!}
+
+        <script>
+            $(document).ready(function(){
+
+                /* Liste des catégories */
+                $.ajax({
+                    url: $('ul#listCategory').data('route'),
+                    type: 'GET'
+                })
+                .done(function (data) {
+                    var listCategory = JSON.parse(data);
+
+                    var html = "";
+                    $.each(listCategory, function(key, value){
+                        html+='<li><a href="{{ route('list_category') }}/'+value.id+'">'+value.name+'</a></li>';
+                    });
+
+                    $('ul#listCategory').html(html);
+                    $('ul#listCategory').append('<li role="separator" class="divider"></li>');
+                    $('ul#listCategory').append('<li><a href="{{ route('elements') }}">Toutes les oeuvres</a></li>');
+                })
+                .fail(function (data) {
+                    console.log(data);
+                });
+
+                /* Appel du prochain salon à venir 
+                $.ajax({
+                    url: $('a#nextRoomCountdown').data('route'),
+                    type: 'GET'
+                })
+                .done(function (data) {
+                    var nextRoom = JSON.parse(data);
+                    $('#nextRoomCountdown').attr('data-countdown', nextRoom.date);
+                    
+                    $('#nextRoomDetails .room').html(nextRoom.name);
+                    $('#nextRoomDetails .element').html(nextRoom.element);
+                    $('#nextRoomDetails .date').html(nextRoom.date);
+                    $('#nextRoomDetails a').attr('href', this.data('redirect')+nextRoom.id);
+                })
+                .fail(function (data) {
+                    console.log(data);
+                });*/
+
+            });
+        </script>
+
         @yield('js')
+
     </body>
 </html>

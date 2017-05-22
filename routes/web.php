@@ -14,15 +14,27 @@
 
 /****** ACCUEIL ******/
 
-Route::get('/', ['as' => 'home', 'uses' => 'WelcomeController@index']);
-Route::post('cookie', ['as' => '/', 'uses' => 'WelcomeController@cookie']);
-Route::post('contactAdmin', ['as' => '/', 'uses' => 'UserController@contactAdmin']);
+	//Page d'accueil
+	Route::get('/', ['as' => 'home', 'uses' => 'WelcomeController@index']);
+
+	//Validation des cookies en ajax
+	Route::post('cookie', ['as' => '/', 'uses' => 'WelcomeController@cookie']);
+
+	//Envoi d'un mail aux admins en ajax
+	Route::post('contactAdmin', ['as' => '/', 'uses' => 'UserController@contactAdmin']);
 
 
 /****** CATEGORIES ******/
 
-Route::get('categories', ['as' => 'categories', 'uses' => 'CategoryController@index']);
-Route::get('category/{id}', ['as' => 'show_category', 'uses' => 'CategoryController@show']);
+	//Page de toutes les catégories
+	//Route::get('categories', ['as' => 'categories', 'uses' => 'CategoryController@index']);
+
+	//Liste des catégories en ajax
+	Route::get('listCategory', ['as' => 'listCategory', 'uses' => 'CategoryController@listCategory']);
+
+	//Redirections JS vers la fiche d'une catégorie
+	Route::get('category', ['as' => 'list_category', 'uses' => 'ElementController@index']);
+	Route::get('category/{id}', ['as' => 'show_category', 'uses' => 'CategoryController@show']);
 
 
 /****** OEUVRE *******/
@@ -40,13 +52,13 @@ Route::get('element/{id}', ['as' => 'show_element', 'uses' => 'ElementController
 	//Affichage d'un utilisateur
 	Route::get('user/{id}', ['as' => 'show_user', 'uses' => 'UserController@show']);
 
-	//Contact d'un utilisateur
+	//Contact d'un utilisateur en ajax
 	Route::post('contact', ['as' => '/', 'uses' => 'UserController@contact']);
 
-	//Inscription
+	//Inscription en ajax
 	Route::post('register', ['as' => '/', 'uses' => 'UserController@register']);
 
-	//Authentification
+	//Authentification en ajax
 	Route::post('login', ['as' => '/', 'uses' => 'UserController@login']);
 	Route::post('forgot', ['as' => '/', 'uses' => 'UserController@forgotPwd']);
 	Route::get('logout', ['as' => 'logout', 'uses' => 'UserController@logout']);
@@ -65,10 +77,12 @@ Route::get('element/{id}', ['as' => 'show_element', 'uses' => 'ElementController
 
 /****** SALONS ******/
 
+	//DON'T TOUCH : Route::get('next_rooms', ['as' => 'next_rooms', 'uses' => 'RoomsController@index']);
 	Route::get('rooms', ['as' => 'rooms', 'uses' => 'RoomsController@index']);
 	Route::get('rooms/futur_rooms', ['as' => 'futur_rooms', 'uses' => 'RoomsController@showFuturRooms']);
 	Route::get('rooms/my_rooms', ['as' => 'my_rooms', 'uses' => 'RoomsController@showMyRooms']);
 	Route::get('room/{id}', ['as' => 'show_room', 'uses' => 'RoomsController@show']);
+	/*DON'T TOUCH */Route::get('room', ['as' => 'next_room', 'uses' => 'RoomsController@index']);
 	Route::post('room/join/{id}', ['as' => 'join_room', 'uses' => 'RoomsController@join']);
 
 

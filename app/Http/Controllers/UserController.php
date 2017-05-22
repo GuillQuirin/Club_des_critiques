@@ -90,7 +90,7 @@ class UserController extends Controller
                                    ->get();
 
           //Intégralité des oeuvres que l'utilisateur peut échanger
-          $elements = DB::table('element')
+          $listElements = DB::table('element')
                               ->leftJoin('category', 'element.id_category', '=', 'category.id')
                               ->select( 'element.id', 
                                         'element.name', 
@@ -99,11 +99,18 @@ class UserController extends Controller
                                         'category.name as category_name')                             
                               ->get();
 
+          foreach ($listElements as $key => $element) {
+               foreach ($exchangedElements as $key => $exchanged) {
+                    if($element->id == $exchanged->id)
+                         $element->is_exchanged=true;
+               }
+          }
+
 		return view('user.show')
                     ->with('infos',$infos[0])
                     ->with('myAccount',$myAccount)
                     ->with('department', $listDepartments)
-                    ->with('listElements', $elements)
+                    ->with('listElements', $listElements)
                     ->with('grid', $exchangedElements)
                     ->with(compact('popUp', $popUp));
 	}
@@ -118,42 +125,61 @@ class UserController extends Controller
      */
 	public function updateInfo(Request $request, $id)
 	{
-          $user = Auth::user();
-          $oldPicture = $user->picture;
-          /*
-          $this->validate($request, [
-               'first_name' => 'required',
-          ]);*/
-          $input = $request->all();
-          $user->fill($input);
-          $user->is_contactable = Input::get('is_contactable');
+          if(Auth::check() && Auth::id()==$id){
+               $user = Auth::user();
+               $oldPicture = $user->picture;
+               /*
+               $this->validate($request, [
+                    'first_name' => 'required',
+               ]);*/
+               $input = $request->all();
+               $user->fill($input);
+               $user->is_contactable = Input::get('is_contactable');
 
-          //Enregistrement de la nouvelle image uploadée
-          if (Input::file('picture')!==NULL && Input::file('picture')->isValid()){
-               $destinationPath = 'uploads/';
-               $extension = Input::file('picture')->getClientOriginalExtension(); // getting image extension
-               $fileName = rand(11111,99999).'.'.$extension; // renameing image
-               Input::file('picture')->move($destinationPath, $fileName); // uploading file to given path
-               $user->picture = "/uploads/".$fileName;
+               //Enregistrement de la nouvelle image uploadée
+               if (Input::file('picture')!==NULL && Input::file('picture')->isValid()){
+                    $destinationPath = 'uploads/';
+                    $extension = Input::file('picture')->getClientOriginalExtension(); // getting image extension
+                    $fileName = rand(11111,99999).'.'.$extension; // renameing image
+                    Input::file('picture')->move($destinationPath, $fileName); // uploading file to given path
+                    $user->picture = "/uploads/".$fileName;
+               }
+               else 
+                    $user->picture = $oldPicture;               
+
+               $user->save();
+     		return redirect()->route('show_user', ['id' => $id]);
           }
-          else 
-               $user->picture = $oldPicture;               
-
-          $user->save();
-		return $this->show($id);
 	}
 
-	/**
-     * Modification du mot de passe de l'utilisateur
+     /**
+     * Modification des oeuvres échangées par l'utilisateur
      *
-     * @param  int  $id
+     * @param int  $id
      * @param Illuminate\Http\Request $request
      * @return view
      */
-	public function updatePassword(Request $request, $id)
-	{
-		return view('user.show');
-	}
+     public function updateExchange(Request $request, $id)
+     {
+          if(Auth::check() && Auth::id()==$id){
+               $input = $request->all();
+               
+               //Suppression de tous les élèments échangeables de l'utilisateur
+               DB::table('user_element')->where('id_user', '=', $id)->delete();
+
+               if(isset($input['element_checked'])){
+                    $listeNewExchanged = [];
+                    foreach ($input['element_checked'] as $key => $element) {
+                         $listeNewExchanged[] = ['id_user' => $id, 'id_element' => $element];
+                    }
+                    
+                    //Insertion en base des nouveaux élèments selectionnés
+                    DB::table('user_element')->insert($listeNewExchanged);
+               }
+               
+               return redirect()->route('show_user', ['id' => $id]);
+          }
+     }
 
 	/**
      * Contacter un utilisateur

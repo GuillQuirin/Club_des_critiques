@@ -1,5 +1,5 @@
 <div id="exchange" role="tabpanel" class="tab-pane fade">
-  	{!! Form::open(['url' => '/']) !!}
+  	{!! Form::model($listElements, ['method' => 'PATCH','route' => ['update_exchange', $infos->id]]) !!}
   	<div class="modal-body">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
@@ -15,23 +15,24 @@
 
 					<div class="panel panel-default">
 					    <div class="panel-heading" role="tab" id="headingOne">
-					    	<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#category-{{$element->category_id}}" aria-expanded="false" aria-controls="category-{{$element->category_id}}">
+					    	<a 	class="collapsed" role="button" data-toggle="collapse" 
+					    		data-parent="#accordion" href="#category-{{$element->category_id}}" 
+					    		aria-expanded="false" aria-controls="category-{{$element->category_id}}">
 					        	<h4 class="panel-title">
 					        		{{$element->category_name}}
 					        	</h4>
 					        </a>
 					    </div>
-					    <div id="category-{{$element->category_id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+					    <div 	id="category-{{$element->category_id}}" class="panel-collapse collapse" 
+					    		role="tabpanel" aria-labelledby="headingOne">
 					@endif
 
 				    	<div class="panel-body">
 							<label>
 								<input 	type="checkbox" name="element_checked[]" value="{{$element->id}}"
-										@foreach($grid as $exchanged)
-											@if($element->id == $exchanged->id)
-												checked="checked"
-											@endif 
-										@endforeach
+									@if(isset($element->is_exchanged))
+										checked="checked"
+									@endif 
 								>
 								{{$element->name}}
 							</label>

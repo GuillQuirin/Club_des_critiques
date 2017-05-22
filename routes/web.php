@@ -56,8 +56,8 @@ Route::get('element/{id}', ['as' => 'show_element', 'uses' => 'ElementController
 	Route::post('checkToken', ['as' => '/checkToken', 'uses' => 'UserController@newPwd']);
 
 	//Modifications de l'utilisateur
-	Route::patch('user/{id}', ['as' => 'update_user', 'uses' => 'UserController@updateInfo']);
-	Route::post('user/{id}', ['as' => 'update_password_user', 'uses' => 'UserController@updatePassword']);
+	Route::patch('user/{id}/infos', ['as' => 'update_user', 'uses' => 'UserController@updateInfo']);
+	Route::patch('user/{id}/echanges', ['as' => 'update_exchange', 'uses' => 'UserController@updateExchange']);
 
 	//Suppression
 	Route::post('deleteAccount', ['as' => 'deleteAccount', 'uses' => 'UserController@deleteAccount']);

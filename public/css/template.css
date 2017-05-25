@@ -24,7 +24,15 @@ li.dropdownCountdown{
 #nextRoomDetails{
 	width: 100%;
     padding: 20px 10px;
-    background-color: #fdb16e;
+    font-weight: bold;
+    text-align: center;
+    color: #385241;
+}
+
+#nextRoomDetails span{
+    display: block;
+    color: #9e7263;
+    font-weight: normal;
 }
 
 .alert{
@@ -65,7 +73,8 @@ figcaption{
     position: absolute;
     bottom: 0;
     width: 100%;
-    font-size: 1.5em;
+    height: 30%;
+    font-size: 1em;
 	text-align: center;
     background-color: rgba(206, 255, 206, 0.64);
     color: black;

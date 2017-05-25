@@ -54,14 +54,16 @@ class RoomsController extends Controller
      */
     public function getFutureRoom()
     {   $now = new \DateTime();
-        $nextRoom = DB::table('room')->select( 'id', 
-                                                'name', 
-                                                'status',
-                                                'date_start',
-                                                'date_end',
-                                                'date_created')
-                                        ->where('date_start', '>=', $now)
-                                        ->orderBy('date_start', 'asc')
+        $nextRoom = DB::table('room')->join('element','room.id_element', '=', 'element.id')
+                                    ->select(   'room.id', 
+                                                'room.name as nameRoom', 
+                                                'element.name as nameElement', 
+                                                'room.status',
+                                                'room.date_start',
+                                                'room.date_end',
+                                                'room.date_created')
+                                        ->where('room.date_start', '>=', $now)
+                                        ->orderBy('room.date_start', 'asc')
                                         ->offset(0)
                                         ->limit(1)
                                         ->get();

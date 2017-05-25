@@ -108,9 +108,9 @@
                             aria-expanded="false"></a>
 
                         <div id="nextRoomDetails" class="dropdown-menu">
-                            <p>Prochain salon :</p>
-                            <p>Oeuvre</p>
-                            <p>Date de lancement:</p>
+                            <p>Prochain salon : <span class="room"></span></p>
+                            <p>Oeuvre : <span class="element"></span></p>
+                            <p>Date de lancement : <span class="date"></span></p>
                             <a data-redirect="{{route('next_room')}}">Accèdez à la fiche du salon</a>
                         </div>
                     </li>

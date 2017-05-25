@@ -13,10 +13,10 @@ $(document).ready(function(){
                         ("0" + date.getUTCDate()).slice(-2);
 
         $('#nextRoomCountdown').attr('data-countdown', datestring);
-        $('#nextRoomDetails .room').html(nextRoom.name);
-        $('#nextRoomDetails .element').html(nextRoom.element);
+        $('#nextRoomDetails .room').html(nextRoom.nameRoom);
+        $('#nextRoomDetails .element').html(nextRoom.nameElement);
         $('#nextRoomDetails .date').html(nextRoom.date_start);
-        //$('#nextRoomDetails a').attr('href', this.data('redirect')+nextRoom.id);
+        $('#nextRoomDetails a').attr('href', $('#nextRoomDetails a').data('redirect')+'/'+nextRoom.id);
 
         $('[data-countdown]').each(function() {
             var $this = $(this), finalDate = $(this).data('countdown');

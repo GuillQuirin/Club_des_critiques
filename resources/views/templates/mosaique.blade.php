@@ -1,4 +1,4 @@
-<div class='row'>
+<div class='row' id="grid">
     @foreach ($grid as $key => $value)
         <div class='col-xs-6 col-md-3'>
     
@@ -10,7 +10,16 @@
                     data-picture="{{$value->picture}}" 
                     data-name="{{$value->name}}" 
                     data-subName="{{$value->subName}}" 
-                    data-description="{{$value->description}}" 
+                    data-description="{{$value->description}}"
+                    
+                    @if(isset($value->id_category))
+                        data-id_category = {{$value->id_category}}
+                    @endif
+
+                    @if(isset($value->date))
+                        data-date="{{strtotime($value->date)}}"
+                    @endif 
+                    
                     data-toggle="modal" 
                     data-target="#openModal">
             @endif

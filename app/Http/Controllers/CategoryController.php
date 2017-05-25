@@ -23,7 +23,37 @@ class CategoryController extends Controller
      */
 	public function show($id)
 	{
-		return view('category.show');
+        $infoCategory = DB::table('category')
+                            ->select('*')
+                            ->where('id', '=', $id)
+                            ->get();
+
+        $listSubCategory = DB::table('category')
+                            ->select('id',
+                                     'name')
+                            ->where('id_parent', '=', $id)
+                            ->get();
+
+        $listElements = DB::table('element')
+                            ->leftJoin('category', 'element.id_category', '=', 'category.id')
+                            ->select(   'element.id',
+                                        'element.name',
+                                        'element.creator as subName',
+                                        'element.description',
+                                        'element.url_picture as picture',
+                                        'element.id_category',
+                                        'element.date_publication as date')
+                            ->where('element.id_category', '=', $id)
+                            ->orWhere('category.id_parent', '=', $id)
+                            ->orderBy('date_publication', 'desc')
+                            ->get();
+        $popUp = 'element.show';
+
+		return view('category.show')
+                ->with('infoCategory', $infoCategory[0])
+                ->with('listSubCategory', $listSubCategory)
+                ->with('grid', $listElements)
+                ->with(compact('popUp', $popUp));
 	}
 
     /** 
@@ -37,7 +67,7 @@ class CategoryController extends Controller
         $listCategory = DB::table('category')
                             ->select(   'id',
                                         'name')
-                            //->whereNull('id_parent')
+                            ->whereNull('id_parent')
                             ->get();
         return json_encode($listCategory);
     }

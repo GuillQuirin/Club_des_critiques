@@ -174,4 +174,16 @@ $(document).ready(function(){
             });
         }
     });
+
+    //Tri chronologique
+    $("select[name='order']").change(function(){
+        var order = parseInt($(this).val());
+        var list = $('#grid');
+
+        list.find('div').sort(function(a,b){
+            return (order==0) ? ($(a).find('a').attr('data-date') - $(b).find('a').attr('data-date')) : ($(b).find('a').attr('data-date') - $(a).find('a').attr('data-date'));
+        }).appendTo(list);
+
+        console.log(list);
+    });
 });

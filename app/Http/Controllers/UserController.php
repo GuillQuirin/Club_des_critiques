@@ -30,7 +30,10 @@ class UserController extends Controller
                                                   'first_name as name', 
                                                   'status as subName',
                                                   'description',
-                                                  'picture')->get();
+                                                  'date_created as date',
+                                                  'picture')
+                                        ->orderBy('date_created', 'desc')
+                                        ->get();
           $redirection = 'show_user';
 
 		return view('user.index')

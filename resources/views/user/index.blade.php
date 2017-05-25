@@ -24,15 +24,13 @@
         <div class="row">
             <form action="" id="searchUser">
                 <div class="row">
-                    
-                    <select name="dateRegis" 
-                            class="text-center 
-                                    col-xs-8 col-xs-offset-2 
-                                    col-sm-4 col-sm-offset-0
-                                    col-md-4">
-                        <option>Inscription la plus récente</option>
-                        <option>Inscription la plus ancienne</option>
-                    </select>
+                    <div>
+                        <p>Inscription : </p>
+                        <select name="order">
+                            <option value="1" selected>La plus récente</option>
+                            <option value="0">La plus ancienne</option>
+                        </select>
+                    </div>
 
                     <input type="text" name="pnom" placeholder="Prénom" 
                             class="text-center 

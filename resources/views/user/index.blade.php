@@ -1,7 +1,11 @@
 @extends('templates/template')
 
-@section('css')
+{{-- @section('css')
      <link rel="stylesheet" type="text/css" href="{{asset('css/users.css')}}">    
+@endsection --}}
+
+@section('js')
+    <script type="text/javascript" src="{{asset('js/listUsers.js')}}"></script>
 @endsection
 
 @section('title')
@@ -25,7 +29,7 @@
             <form action="" id="searchUser">
                 <div class="row">
                     <div>
-                        {!! Form::select('location', $departments) !!}
+                        {!! Form::select('location', [00=>'Choisissez un département']+$departments) !!}
                     </div>
 
                     <input type="text" name="pnom" placeholder="Prénom" 

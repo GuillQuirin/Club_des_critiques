@@ -12,6 +12,10 @@
                     data-date="{{strtotime($value->date)}}"
                 @endif
                 
+                @if(isset($value->location))
+                    data-location="{{$value->location}}"
+                @endif
+
                 data-toggle="modal" 
                 data-target="#openModal"
                 data-picture="{{$value->picture}}" 

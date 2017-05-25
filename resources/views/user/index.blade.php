@@ -25,11 +25,7 @@
             <form action="" id="searchUser">
                 <div class="row">
                     <div>
-                        <p>Inscription : </p>
-                        <select name="order">
-                            <option value="1" selected>La plus récente</option>
-                            <option value="0">La plus ancienne</option>
-                        </select>
+                        {!! Form::select('location', $departments) !!}
                     </div>
 
                     <input type="text" name="pnom" placeholder="Prénom" 

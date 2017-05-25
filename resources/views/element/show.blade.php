@@ -20,6 +20,11 @@
     <!-- Autres suggestions -->
     <div class="row">
 		Autres suggestions
+        @if(isset($otherElements))
+            @foreach($otherElements as $element)
+
+            @endforeach
+        @endif
     </div>
 </div>
 

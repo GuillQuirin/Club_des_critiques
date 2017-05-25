@@ -36,6 +36,11 @@
                     @endforeach
                 </select>
             </div>
+
+            <div>
+                <p>Rechercher une oeuvre : </p>
+                <input type="text" name="search" placeholder="Saisissez ici le nom de l'oeuvre ou son auteur">
+            </div>
         </div>
 
         <hr>

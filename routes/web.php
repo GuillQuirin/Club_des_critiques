@@ -77,7 +77,7 @@ Route::get('element/{id}', ['as' => 'show_element', 'uses' => 'ElementController
 
 /****** SALONS ******/
 
-	//DON'T TOUCH : Route::get('next_rooms', ['as' => 'next_rooms', 'uses' => 'RoomsController@index']);
+	/*DON'T TOUCH */Route::get('future_room', ['as' => 'future_room', 'uses' => 'RoomsController@getFutureRoom']);
 	Route::get('rooms', ['as' => 'rooms', 'uses' => 'RoomsController@index']);
 	Route::get('rooms/futur_rooms', ['as' => 'futur_rooms', 'uses' => 'RoomsController@showFuturRooms']);
 	Route::get('rooms/my_rooms', ['as' => 'my_rooms', 'uses' => 'RoomsController@showMyRooms']);

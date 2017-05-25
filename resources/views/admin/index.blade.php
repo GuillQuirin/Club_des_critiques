@@ -79,30 +79,28 @@
 		</div> 
     </div>
 
-
-
-
 @endsection
 
 
 @section('js')
-<script type="text/javascript">
-	$(document).ready(function() {
+	<script type="text/javascript">
+		$(document).ready(function() {
 
-		$('#elementManual').show();
-    	$('#elementAutomatic').hide();
+	    $('#elementManual').show();
+	    $('#elementAutomatic').hide();
 
-    	initializedDataTable('elementTable');
-    	initializedDataTable('elementTopTable');
-    	initializedDataTable('categoryTable');
-    	initializedDataTable('roomTable');
-    	initializedDataTable('userTable');
+	    initializedDataTable('elementTable');
+	    initializedDataTable('elementTopTable');
+	    initializedDataTable('categoryTable');
+	    initializedDataTable('roomTable');
+	    initializedDataTable('userTable');
 
-    	$( "#date_start" ).datepicker();
-    	$( "#date_end" ).datepicker();
+	    $( "#date_start" ).datepicker();
+	    $( "#date_end" ).datepicker();
 
 
-// HOME
+	// HOME 
+
 		var selectCat = $('#top_category');
 		var selectSubCat = $('#top_sub_category');
 		var selectCreator = $('#top_creator');
@@ -117,14 +115,14 @@
 			$('#btnShowAddTopElement').show();
 			// $('#collapseAddElementTop').hide();
 		});
-    	
+	    	
 
 		// Sélection de la catégorie => affichage des sous catégories
 		$("#top_category").change(function() {
 	        var categoryId = this.value;
 
 	        if (categoryId.length) {
-	            {{-- Call Ajax Request to get sub categories for the category --}}
+	            // Call Ajax Request to get sub categories for the category 
 	            $.ajax({
 	                data : { categoryId : categoryId },
 	                url: "{{ route('get_sub_categories') }}",
@@ -151,7 +149,7 @@
 	        var subCatId = this.value;
 
 	        if (subCatId.length) {
-	            {{-- Call Ajax Request to get creator for the sub category --}}
+	            // Call Ajax Request to get creator for the sub category
 	            $.ajax({
 	                data : { subCatId : subCatId },
 	                url: "{{ route('get_creators') }}",
@@ -179,7 +177,7 @@
 	        var creator = this.value;
 
 	        if (subCatId.length && creator.length) {
-	            {{-- Call Ajax Request to get element for the creator --}}
+	            // Call Ajax Request to get element for the creator
 	            $.ajax({
 	                data : { subCatId : subCatId, creator : creator },
 	                url: "{{ route('get_elements') }}",
@@ -203,10 +201,9 @@
 
 		// Supprime un élément à la une
 	    $('.delete-top-element').click(function(){
-	    	if (confirm("Voulez vous vraiement supprimer cet oeuvre?")) {
-		    	// tab = $( this ).parent().parent().remove();
+	    	if (confirm("Voulez vous vraiement supprimer cette oeuvre?")) {
 		    	elementId = this.id;
-		    	{{-- Call Ajax Request to delete top element --}}
+		    	// Call Ajax Request to delete top element
 	            $.ajax({
 	                data : { elementId : elementId },
 	                url: "{{ route('delete_top_element') }}",
@@ -218,11 +215,32 @@
 	                	// gestion d'erreur
 	                }
 	            });
-		       }	
+	            tab = $( this ).parent().parent().remove();
+		    }	
 	    });
 
 
-// CATEGORY
+	// CATEGORY
+
+		// Supprime un élément à la une
+	    $('.delete-category').click(function(){
+	    	if (confirm("Voulez vous vraiement supprimer cette catégorie?")) {
+		    	categoryId = this.id;
+		    	// Call Ajax Request to delete category
+	            $.ajax({
+	                data : { categoryId : categoryId },
+	                url: "{{ route('delete_category') }}",
+	                type: 'put',
+	                success: function(data) {
+	                	// Modifier le tableau
+	                },
+	                error : function() {
+	                	// gestion d'erreur
+	                }
+	            });
+	            tab = $( this ).parent().parent().remove();
+		    }	
+	    });
 
 		// Cache le bouton "ajouter une categorie"
 		$('#btnShowAddCategory').click(function() {
@@ -233,107 +251,132 @@
 			$('#btnShowAddCategory').show();
 		});
 
-// ELEMENT
+		$('a.edit-category').on('click', function() {
+		    var myModal = $('#editCategoryModal');
 
-		// Cache le bouton "ajouter un element"
-		$('#btnShowAddElement').click(function() {
-			$('#btnShowAddElement').hide();
-		});
-		// Affiche le bouton "ajouter un element"
-		$('#btnHideAddElement').click(function() {
-			$('#btnShowAddElement').show();
-		});
+		    // now get the values from the table
+		    var id = $(this).closest('tr').find('td.category-id').html();
+		    var name = $(this).closest('tr').find('td.category-name').html();
+		    var parent = $(this).closest('tr').find('td.category-parent')[0].id;
+		    var picture = $(this).closest('tr').find('td.category-picture').html();
+		    
 
-		// Affiche le bon formulaire d'ajout d'oeuvre
-    	$('input[type=radio][name=radioElement]').change(function() {
-	        if (this.value == 'manual') {
-	            $('#elementManual').show();
-    			$('#elementAutomatic').hide();
-	        }
-	        else if (this.value == 'automatic') {
-	            $('#elementAutomatic').show();
-    			$('#elementManual').hide();
-	        }
-	    });
+		    
 
-    	// Affiche les bonnes dates pour le formulaire d'une oeuvre
-    	$('#parent_cat').change(function() {
-	    	if( this.value == 1 || this.value == 2){
-	    		$('#datePublication').show();
-	    		$('#dateStart').hide();
-	    		$('#dateEnd').hide();	
-	    	} else {
-	    		$('#datePublication').hide();
-	    		$('#dateStart').show();
-	    		$('#dateEnd').show();
-	    	}
-	    });
-	    $('#parent_cat_edit').change(function() {
-	    	if( this.value == 1 || this.value == 2){
-	    		$('#datePublicationEdit').show();
-	    		$('#dateStartEdit').hide();
-	    		$('#dateEndEdit').hide();	
-	    	} else {
-	    		$('#datePublicationEdit').hide();
-	    		$('#dateStartEdit').show();
-	    		$('#dateEndEdit').show();
-	    	}
-	    });
+		    // and set them in the modal:
+		    $('#id_category', myModal).val(id);		   
+		    $('.edit-category-name', myModal).val(name);		   
+		    $('.edit-category-picture', myModal).val(picture);
+		    if(parent != 0){
+		    	$('.selectpicker').selectpicker('val', parent);
+		    }
+		    
+		    myModal.modal('toggle');
 
-// ROOM
-
-		// Cache le bouton "ajouter un salon"
-		$('#btnShowAddRoom').click(function() {
-			$('#btnShowAddRoom').hide();
-		});
-		
-		// Affiche le bouton "ajouter un salon"
-		$('#btnHideAddRoom').click(function() {
-			$('#btnShowAddRoom').show();
+		    return false;
 		});
 
+	// ELEMENT
 
-// USER
+			// Cache le bouton "ajouter un element"
+			$('#btnShowAddElement').click(function() {
+				$('#btnShowAddElement').hide();
+			});
+			// Affiche le bouton "ajouter un element"
+			$('#btnHideAddElement').click(function() {
+				$('#btnShowAddElement').show();
+			});
 
-		// Cache le bouton "ajouter un utilisateur"
-		$('#btnShowAddUser').click(function() {
-			$('#btnShowAddUser').hide();
+			// Affiche le bon formulaire d'ajout d'oeuvre
+	    	$('input[type=radio][name=radioElement]').change(function() {
+		        if (this.value == 'manual') {
+		            $('#elementManual').show();
+	    			$('#elementAutomatic').hide();
+		        }
+		        else if (this.value == 'automatic') {
+		            $('#elementAutomatic').show();
+	    			$('#elementManual').hide();
+		        }
+		    });
+
+	    	// Affiche les bonnes dates pour le formulaire d'une oeuvre
+	    	$('#parent_cat').change(function() {
+		    	if( this.value == 1 || this.value == 2){
+		    		$('#datePublication').show();
+		    		$('#dateStart').hide();
+		    		$('#dateEnd').hide();	
+		    	} else {
+		    		$('#datePublication').hide();
+		    		$('#dateStart').show();
+		    		$('#dateEnd').show();
+		    	}
+		    });
+		    $('#parent_cat_edit').change(function() {
+		    	if( this.value == 1 || this.value == 2){
+		    		$('#datePublicationEdit').show();
+		    		$('#dateStartEdit').hide();
+		    		$('#dateEndEdit').hide();	
+		    	} else {
+		    		$('#datePublicationEdit').hide();
+		    		$('#dateStartEdit').show();
+		    		$('#dateEndEdit').show();
+		    	}
+		    });
+
+	// ROOM
+
+			// Cache le bouton "ajouter un salon"
+			$('#btnShowAddRoom').click(function() {
+				$('#btnShowAddRoom').hide();
+			});
+			
+			// Affiche le bouton "ajouter un salon"
+			$('#btnHideAddRoom').click(function() {
+				$('#btnShowAddRoom').show();
+			});
+
+
+	// USER
+
+			// Cache le bouton "ajouter un utilisateur"
+			$('#btnShowAddUser').click(function() {
+				$('#btnShowAddUser').hide();
+			});
+			
+			// Affiche le bouton "ajouter un utilisateur"
+			$('#btnHideAddUser').click(function() {
+				$('#btnShowAddUser').show();
+			});
+
+	// FUNCTIONS
+
+	    function initializedDataTable(id) {
+	            $('#' + id).DataTable({
+	                "language": {
+	                    "sProcessing":     "Traitement en cours...",
+	                    "sSearch":         "Rechercher&nbsp;:",
+	                    "sLengthMenu":     "Afficher _MENU_ éléments",
+	                    "sInfo":           "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+	                    "sInfoEmpty":      "Affichage de l'élément 0 à 0 sur 0 élément",
+	                    "sInfoFiltered":   "(filtré de _MAX_ éléments au total)",
+	                    "sInfoPostFix":    "",
+	                    "sLoadingRecords": "Chargement en cours...",
+	                    "sZeroRecords":    "Aucun élément à afficher",
+	                    "sEmptyTable":     "Aucune donnée disponible dans le tableau",
+	                    "oPaginate": {
+	                        "sFirst":      "Premier",
+	                        "sPrevious":   "Précédent",
+	                        "sNext":       "Suivant",
+	                        "sLast":       "Dernier"
+	                    },
+	                    "oAria": {
+	                        "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+	                    "   sSortDescending": ": activer pour trier la colonne par ordre décroissant"
+	                    }
+	                } 
+	            });
+	        };
 		});
-		
-		// Affiche le bouton "ajouter un utilisateur"
-		$('#btnHideAddUser').click(function() {
-			$('#btnShowAddUser').show();
-		});
-
-
-// FUNCTIONS
-
-        function initializedDataTable(id) {
-        	$('#' + id).DataTable({
-        		"language": {
-	              	"sProcessing":     "Traitement en cours...",
-		          	"sSearch":         "Rechercher&nbsp;:",
-		          	"sLengthMenu":     "Afficher _MENU_ éléments",
-		          	"sInfo":           "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
-		          	"sInfoEmpty":      "Affichage de l'élément 0 à 0 sur 0 élément",
-		          	"sInfoFiltered":   "(filtré de _MAX_ éléments au total)",
-		          	"sInfoPostFix":    "",
-		          	"sLoadingRecords": "Chargement en cours...",
-		          	"sZeroRecords":    "Aucun élément à afficher",
-		          	"sEmptyTable":     "Aucune donnée disponible dans le tableau",
-		          	"oPaginate": {
-		              	"sFirst":      "Premier",
-		              	"sPrevious":   "Précédent",
-		              	"sNext":       "Suivant",
-		              	"sLast":       "Dernier"
-		          	},
-		          	"oAria": {
-	              		"sSortAscending":  ": activer pour trier la colonne par ordre croissant",
-	              	"	sSortDescending": ": activer pour trier la colonne par ordre décroissant"
-          			}
-        		} 
-        	});
-        };
-	});
-</script>
+	</script>
+	<!-- <script src="js/admin/admin-home.js"></script> -->
 @endsection

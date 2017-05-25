@@ -21,10 +21,12 @@ class AdminController extends Controller
     public function index()
     {
         $concept = DB::table('other')->where('name', 'home_concept')->first();
-        $categories = Category::whereNull('id_parent')->get();
-        $topElements = Element::where('is_new', 1)->get();
+        $elements = Element::where('is_deleted', false)->get();        
+        $allCategories = Category::where('is_deleted', false)->get();
+        $categories = Category::whereNull('id_parent')->where('is_deleted', false)->get();
+        $topElements = Element::where('is_new', 1)->where('is_deleted', false)->get();
 
-    	return view('admin.index', compact('concept', 'categories', 'topElements'));
+    	return view('admin.index', compact('concept', 'elements', 'allCategories', 'categories', 'topElements'));
     }
 
     /**
@@ -69,9 +71,75 @@ class AdminController extends Controller
     {
         $elementId = Input::get('elementId');
         $element = Element::find($elementId);
-        // $element->is_new = 0;
+        $element->is_new = 0;
         $element->save();
+    }
+    
+    /**
+     * Ajout d'une catégorie
+     *
+     * @return view
+     */
+    public function addCategory(Request $request)
+    {
+        $category = new Category();
+        $category->name = $request->name;
+        $category->url_picture = $request->url_picture;
+        if ($request->parent_category == 0) {
+            $category->id_parent = NULL;
+        } else {
+            $category->id_parent = $request->parent_category;
+        }
+        
+        $category->save();
 
-        // return Response::json(array_pluck($elements, 'attributes'));
+        return redirect(route('admin'));
+    }
+
+    /**
+     * Modification d'une catégorie
+     *
+     * @return view
+     */
+    public function editCategory(Request $request)
+    {
+        $category = Category::find($request->id);
+        $category->name = $request->name;
+        $category->url_picture = $request->url_picture;
+        if ($request->parent_category == 0) {
+            $category->id_parent = NULL;
+        } else {
+            $category->id_parent = $request->parent_category;
+        }
+        
+        $category->save();
+
+        return redirect(route('admin'));
+    }
+
+    /**
+     * Supprimer une catégorie
+     *
+     * @return view
+     */
+    public function deleteCategory()
+    {
+        $categoryId = Input::get('categoryId');
+        $category = Category::find($categoryId);
+        $category->is_deleted = 1;
+        $category->save();
+    }
+
+    /**
+     * Supprimer une oeuvre
+     *
+     * @return view
+     */
+    public function deleteElement()
+    {
+        $elementId = Input::get('elementId');
+        $element = Element::find($elementId);
+        $element->is_deleted = 1;
+        $element->save();
     }
 }

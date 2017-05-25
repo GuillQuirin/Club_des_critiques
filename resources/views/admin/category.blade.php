@@ -7,7 +7,7 @@
         </p>
         <div class="collapse" id="collapseExample">
           <div class="card card-block">
-            <form>
+            {{ Form::open(['route' => 'add_category', 'method' => 'put', 'class' => 'col-md-12']) }}
                 <div class="form-group">
                     <label for="name" class="col-2 col-form-label">Nom : </label>
                     <div class="col-10">
@@ -15,13 +15,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="parent" class="col-2 col-form-label">Parent : </label>
+                    <label for="parent_category" class="col-2 col-form-label">Parent : </label>
                     <div class="col-10">
-                        <select class="form-control" id="parent" name="parent">
-                            <option value="">Pas de parent</option>
-                            <option value="1">Livre</option>
-                            <option value="2">Film</option>
-                            <option value="3">...</option>
+                        <select id="parent_category" name="parent_category" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required">
+                            <option value="0" selected>Pas de parent</option>
+                            @foreach($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                     </button>   
                     <button type="submit" class="btn btn-success">Ajouter la catégorie</button>
                 </div>
-            </form>
+            {{ Form::close() }}
             <br><br>
           </div>
         </div>
@@ -46,6 +46,7 @@
                 <table id="categoryTable" class="display" cellspacing="0" width="100%">
                     <thead>
                         <tr>
+                            <th><Id</th>
                             <th>Nom</th>
                             <th>Parent</th>
                             <th>Url image</th>
@@ -53,33 +54,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>Livre</th>
-                            <th></th>
-                            <th>petite url</th>
-                            <th>
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                <i class="fa fa-pencil" data-toggle="modal" data-target="#editCategoryModal" aria-hidden="true"></i>
-                            </th>                               
+                        @foreach($allCategories as $category)
+                        <tr>                        
+                            <td class="category-id">{{ $category->id }}</td>
+                            <td class="category-name">{{ $category->name }}</td>
+                            <td class="category-parent" id="@if($category->isSubCategory()){{ $category->parent->id }}@else 0 @endif">
+                                @if($category->isSubCategory())
+                                    {{ $category->parent->name }}
+                                @else
+                                    /
+                                @endif                                
+                            </td>
+                            <td class="category-picture">{{ $category->url_picture }}</td>
+                            <td>
+                                <i class="fa fa-trash delete-category" aria-hidden="true" id="{{ $category->id }}"></i>
+                                <a href="#" class="btn edit-category"><i class="fa fa-pencil"></i></a>
+                            </td>                               
                         </tr>
-                        <tr>
-                            <th>Film</th>
-                            <th></th>
-                            <th>petite url</th>
-                            <th>
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                <i class="fa fa-pencil" data-toggle="modal" data-target="#editCategoryModal" aria-hidden="true"></i>
-                            </th>                               
-                        </tr>
-                        <tr>
-                            <th>Roman policier</th>
-                            <th>Livre</th>
-                            <th>petite url</th>
-                            <th>
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                <i class="fa fa-pencil" data-toggle="modal" data-target="#editCategoryModal" aria-hidden="true"></i>
-                            </th>                               
-                        </tr>
+                        @endforeach
                     </tbody>        
                 </table>
             </div>
@@ -99,29 +91,30 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Modifier la catégorie</h4>
             </div>
-            <form>
+            {{ Form::open(['route' => 'edit_category', 'method' => 'put']) }}
                 <div class="modal-body">
+                        <input type="hidden" name="id" id="id_category">
                         <div class="form-group">
                         <label for="name" class="col-2 col-form-label">Nom : </label>
                         <div class="col-10">
-                            <input class="form-control" type="text" id="name" name="name">
+                            <input class="form-control edit-category-name" type="text" id="name" name="name">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="parent" class="col-2 col-form-label">Parent : </label>
                         <div class="col-10">
-                            <select class="form-control" id="parent" name="parent">
-                                <option value="">Pas de parent</option>
-                                <option value="1">Livre</option>
-                                <option value="2">Film</option>
-                                <option value="3">...</option>
-                            </select>
-                        </div>
+                            <select id="edit_parent_category" name="parent_category" class="form-control selectpicker edit-category-parent"  data-size="7" data-live-search="true" required="required">
+                            <option value="0" selected>Pas de parent</option>
+                            @foreach($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                            @endforeach
+                        </select>
+                        </div>  
                     </div>
                     <div class="form-group">
                         <label for="url_picture" class="col-2 col-form-label">Url de l'image : </label>
                         <div class="col-10">
-                            <input class="form-control" type="text" id="url_picture" name="url_picture">
+                            <input class="form-control edit-category-picture" type="text" id="url_picture" name="url_picture">
                         </div>
                     </div>
                 </div>
@@ -129,7 +122,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">Modifier</button>
                 </div>
-            </form>
+            {{ Form::close() }}
         </div>
     </div>
 </div>

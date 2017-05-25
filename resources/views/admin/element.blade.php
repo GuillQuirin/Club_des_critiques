@@ -111,28 +111,30 @@
         <div class="row">
             <div class="col-md-12">
                 <table id="elementTable" class="display" cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Auteur</th>
-                        <th>Catégorie</th>
-                        <th>Sous catégorie</th>
-                        <th>Action</th>                             
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>Le petit chaperon rouge</th>
-                        <th>Elise Poirier</th>
-                        <th>Livre</th>
-                        <th>Pour les bébé</th>
-                        <th>
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                            <i class="fa fa-pencil" data-toggle="modal" data-target="#editElementModal" aria-hidden="true"></i>
-                        </th>                               
-                    </tr>
-                </tbody>        
-            </table>
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Auteur</th>
+                            <th>Catégorie</th>
+                            <th>Sous catégorie</th>
+                            <th>Action</th>                             
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($elements as $element)
+                            <tr>
+                                <td>{{ $element->name }}</td>
+                                <td>{{ $element->creator }}</td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <i class="fa fa-trash delete-element" aria-hidden="true" id="{{ $element->id }}"></i>
+                                    <i class="fa fa-pencil edit-element" data-toggle="modal" data-target="#editElementModal" aria-hidden="true" id="{{ $element->id }}"></i>
+                                </td>                               
+                            </tr>
+                        @endforeach
+                    </tbody>        
+                </table>
             </div>
         </div>
     </div>

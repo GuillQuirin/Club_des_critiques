@@ -30,16 +30,33 @@ class UserController extends Controller
                                                   'first_name as name', 
                                                   'status as subName',
                                                   'description',
+                                                  'location',
                                                   'date_created as date',
                                                   'picture')
                                         ->orderBy('date_created', 'desc')
                                         ->get();
           $redirection = 'show_user';
 
+          $departments = $this->getDepartments();
+
 		return view('user.index')
                ->with('grid', $listUsers)
+               ->with('departments', $departments)
                ->with('redirection', $redirection);
 	}
+
+     private function getDepartments(){
+          //Liste des departements
+          $departments = DB::table('department')
+                                   ->select('code','name')
+                                   ->get();
+
+          $listDepartments = [];
+          foreach ($departments as $key => $dpt)
+               $listDepartments[$dpt->code] = "(".$dpt->code.") ".$dpt->name;
+
+          return $listDepartments;
+     }
 
 	/**
      * Affiche le profil d'un utilisateur
@@ -69,14 +86,8 @@ class UserController extends Controller
 
           $myAccount  = (Auth::check() && Auth::id() == $id);
 
-          //Liste des départements
-          $departments = DB::table('department')
-                                   ->select('code','name')
-                                   ->get();
 
-          $listDepartments = [];
-          foreach ($departments as $key => $dpt)
-               $listDepartments[$dpt->code] = "(".$dpt->code.") ".$dpt->name;
+          $listDepartments = $this->getDepartments();
 
 
           //Liste des oeuvres que l'utilisateur souhaite échanger

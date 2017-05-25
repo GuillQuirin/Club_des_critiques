@@ -46,6 +46,29 @@ class RoomsController extends Controller
 		return view('rooms.my_rooms');
 	}
 
+    /**
+     * Récupère le prochain salon
+     *
+     * @param  int  $id
+     * @return view
+     */
+    public function getFutureRoom()
+    {   $now = new \DateTime();
+        $nextRoom = DB::table('room')->select( 'id', 
+                                                'name', 
+                                                'status',
+                                                'date_start',
+                                                'date_end',
+                                                'date_created')
+                                        ->where('date_start', '>=', $now)
+                                        ->orderBy('date_start', 'asc')
+                                        ->offset(0)
+                                        ->limit(1)
+                                        ->get();
+
+        return json_encode($nextRoom[0]);
+    }
+
 	/**
      * Affichage de la page d'un salon
      *

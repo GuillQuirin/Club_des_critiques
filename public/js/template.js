@@ -1,12 +1,34 @@
 $(document).ready(function(){
 
-    /* COUNTDOWN */
-    $('[data-countdown]').each(function() {
-      var $this = $(this), finalDate = $(this).data('countdown');
-      $this.countdown(finalDate, function(event) {
-        $this.html(event.strftime('%D jours %H:%M:%S  <span class="caret"></span>'));
-      });
+    /* Countdown du prochain salon à venir */
+    $.ajax({
+        url: $('a#nextRoomCountdown').data('route'),
+        type: 'GET'
+    })
+    .done(function (data) {
+        var nextRoom = JSON.parse(data);
+        var date = new Date(nextRoom.date_start);
+        var datestring = date.getUTCFullYear() + "/" +
+                        ("0" + (date.getUTCMonth()+1)).slice(-2) + "/" +
+                        ("0" + date.getUTCDate()).slice(-2);
+
+        $('#nextRoomCountdown').attr('data-countdown', datestring);
+        $('#nextRoomDetails .room').html(nextRoom.name);
+        $('#nextRoomDetails .element').html(nextRoom.element);
+        $('#nextRoomDetails .date').html(nextRoom.date_start);
+        //$('#nextRoomDetails a').attr('href', this.data('redirect')+nextRoom.id);
+
+        $('[data-countdown]').each(function() {
+            var $this = $(this), finalDate = $(this).data('countdown');
+            $this.countdown(finalDate, function(event) {
+                $this.html(event.strftime('%D jours %H:%M:%S  <span class="caret"></span>'));
+            });
+        });
+    })
+    .fail(function (data) {
+        console.log(data);
     });
+
 
     /* VOLET DEROULANT */
     $("#menu-toggle").click(function(e) {

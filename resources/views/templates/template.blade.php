@@ -99,8 +99,8 @@
 
                     <li class="dropdown dropdownCountdown">
                         <a  id="nextRoomCountdown"
-                            data-route="" 
-                            data-countdown="2017/07/19"
+                            data-route="{{route('future_room')}}" 
+                            data-countdown=""
                             class="dropdown-toggle" 
                             data-toggle="dropdown" 
                             role="button" 
@@ -262,25 +262,6 @@
                 .fail(function (data) {
                     console.log(data);
                 });
-
-                /* Appel du prochain salon à venir 
-                $.ajax({
-                    url: $('a#nextRoomCountdown').data('route'),
-                    type: 'GET'
-                })
-                .done(function (data) {
-                    var nextRoom = JSON.parse(data);
-                    $('#nextRoomCountdown').attr('data-countdown', nextRoom.date);
-                    
-                    $('#nextRoomDetails .room').html(nextRoom.name);
-                    $('#nextRoomDetails .element').html(nextRoom.element);
-                    $('#nextRoomDetails .date').html(nextRoom.date);
-                    $('#nextRoomDetails a').attr('href', this.data('redirect')+nextRoom.id);
-                })
-                .fail(function (data) {
-                    console.log(data);
-                });*/
-
             });
         </script>
 

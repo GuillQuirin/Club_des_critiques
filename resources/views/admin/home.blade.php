@@ -82,15 +82,15 @@
 				</thead>
 				<tbody>
 					@foreach($topElements as $element)
-					<tr>
-						<th>{{ $element->name }}</th>
-						<th>{{ $element->creator }}</th>
-						<th>{{ $element->category->parent->name}}</th>
-						<th>{{ $element->category->name }}</th>
-						<th>
-							<i class="fa fa-trash delete-top-element" aria-hidden="true" id="{{ $element->id }}"></i>
-						</th>            					
-					</tr>
+						<tr>
+							<td>{{ $element->name }}</td>
+							<td>{{ $element->creator }}</td>
+							<td>{{ $element->category->parent->name}}</td>
+							<td>{{ $element->category->name }}</td>
+							<td>
+								<i class="fa fa-trash delete-top-element" aria-hidden="true" id="{{ $element->id }}"></i>
+							</td>            					
+						</tr>
 					@endforeach
 				</tbody>		
 			</table>

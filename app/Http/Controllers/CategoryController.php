@@ -42,6 +42,9 @@ class CategoryController extends Controller
                                         'element.description',
                                         'element.url_picture as picture',
                                         'element.id_category',
+                                        'category.name as name_category',
+                                        'category.id_parent as id_parent',
+                                        'category.id as id_category',
                                         'element.date_publication as date')
                             ->where('element.id_category', '=', $id)
                             ->orWhere('category.id_parent', '=', $id)

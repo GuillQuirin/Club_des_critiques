@@ -37,18 +37,21 @@ class WelcomeController extends Controller
 
 		$popUp = 'element.show';
      	$listElements = DB::table('element')
-     							->select(	'id', 
- 											'name', 
- 											'creator as subName',
- 											'description',
- 											'url_picture as picture')
+     							->leftJoin('category', 'element.id_category', '=', 'category.id')
+     							->select(	'element.id', 
+ 											'element.name', 
+ 											'element.creator as subName',
+ 											'element.description',
+ 											'element.url_picture as picture',
+ 											'category.name as name_category',
+	                                        'category.id_parent as id_parent',
+	                                        'category.id as id_category')
      							->where('is_new', '=', '1')
      							->get();
 
 		return view('welcome')
 				->with(compact('page'))
 				->with('grid', $listElements)
-				//->with('otherElements', $otherElements)
 				->with('popUp', $popUp);
 	}
 

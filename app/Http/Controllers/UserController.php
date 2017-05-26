@@ -95,11 +95,15 @@ class UserController extends Controller
           $exchangedElements = DB::table('user_element')
                                    ->leftJoin('user', 'user.id' , '=' , 'user_element.id_user')
                                    ->leftJoin('element', 'element.id', '=', 'user_element.id_element')
+                                   ->leftJoin('category', 'category.id', '=', 'element.id_category')
                                    ->select( 'element.id', 
                                              'element.name', 
                                              'element.creator as subName',
                                              'element.description',
-                                             'element.url_picture as picture')
+                                             'element.url_picture as picture',
+                                             'category.name as name_category',
+                                             'category.id_parent as id_parent',
+                                             'category.id as id_category')
                                    ->where('user.id', '=', $id)
                                    ->get();
 

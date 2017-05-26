@@ -1,30 +1,28 @@
 <!-- POP UP D'UNE OEUVRE -->
 <div class="modal-header">
-	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <div class="modal-title text-center">
+        <span id="name"></span> de <span id="subName"></span>
+    </div>
 </div>
 
 <div class="modal-body">
 	<!-- Informations de l'élèment -->
     <div class="row">
-    	<img src="/uploads/id.jpg" 
-            alt='Photo de profil' 
+    	<img src="" 
+            alt='image' 
             id="picture" 
             class="col-xs-6 col-sm-4 col-md-4"><!-- 
-        --><p class="modal-title col-xs-6 col-sm-8 col-md-8" id="name"></p>
-		<p class="col-xs-6 col-sm-8 col-md-8" id="subName"></p>
-		<p class="col-xs-6 col-sm-8 col-md-8" id="description"></p>
+        --><p class="col-xs-6 col-sm-8 col-md-8" id="description"></p>
     </div>
 	
 	<hr>
 
-    <!-- Autres suggestions -->
+    <!-- Catégorie -->
     <div class="row">
-		Autres suggestions
-        @if(isset($otherElements))
-            @foreach($otherElements as $element)
-
-            @endforeach
-        @endif
+		<div class="text-center">Vous pouvez retrouver cette oeuvre dans la catégorie 
+            <a id="route_category_parent" data-route="{{route('list_category')}}"><span id="name_category"></span></a>
+        </div>
     </div>
 </div>
 

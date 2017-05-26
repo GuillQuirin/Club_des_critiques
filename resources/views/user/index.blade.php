@@ -5,7 +5,7 @@
 @endsection --}}
 
 @section('js')
-    <script type="text/javascript" src="{{asset('js/listUsers.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/grid.js')}}"></script>
 @endsection
 
 @section('title')
@@ -25,33 +25,21 @@
         
         <hr>
     
-        <div class="row">
-            <form action="" id="searchUser">
-                <div class="row">
-                    <div>
-                        {!! Form::select('location', [00=>'Choisissez un département']+$departments) !!}
-                    </div>
+        <div class="row" id="searchElement">
+            {!! Form::select('location', 
+                            [null=>'Choisissez un département']+$departments, 
+                            null, 
+                            ['class' => 'col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1']) !!}
 
-                    <input type="text" name="pnom" placeholder="Prénom" 
-                            class="text-center 
-                                    col-xs-8 col-xs-offset-2 
-                                    col-sm-4 col-sm-offset-0
-                                    col-md-4">
+            <input type="text" name="name" placeholder="Saisissez un prénom" 
+                    class="text-center 
+                            col-xs-10 col-xs-offset-1 
+                            col-sm-4 col-sm-offset-2
+                            col-md-3 col-md-offset-1">
 
-                    <select name="countRooms" 
-                            class="text-center 
-                                    col-xs-8 col-xs-offset-2 
-                                    col-sm-4 col-sm-offset-0
-                                    col-md-4">
-                        <option>+ de participations aux salons</option>
-                        <option>- de participations aux salons</option>
-                    </select>
-                    
-                    <div class="text-center col-md-12">
-                       <input type="submit" class="btn" value="Rechercher un utilisateur">
-                    </div>
-                </div>
-            </form>
+            <button class="btn  col-xs-10 col-xs-offset-1 
+                                col-sm-4 col-sm-offset-4
+                                col-md-3 col-md-offset-1">Rechercher</button>
         </div>
 
         <hr>

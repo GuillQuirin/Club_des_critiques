@@ -35,6 +35,28 @@ class UserController extends Controller
                                                   'picture')
                                         ->orderBy('date_created', 'desc')
                                         ->get();
+                                        
+          //Renommage des statuts
+          foreach ($listUsers as $user) {
+               switch ($user->subName) {
+                         case '2':
+                              $user->subName="Administrateur";
+                              break;
+               
+                         case '1':
+                              $user->subName="Membre";
+                              break;
+          
+                         case '-1':
+                              $user->subName="Membre banni";
+                              break;
+
+                         default:
+                              $user->subName="Membre";
+                              break;
+                    }     
+          }
+
           $redirection = 'show_user';
 
           $departments = $this->getDepartments();

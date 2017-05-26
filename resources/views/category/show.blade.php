@@ -5,7 +5,7 @@
 @endsection
 
 @section('js')
-    <script type="text/javascript" src="{{asset('js/category.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/grid.js')}}"></script>
 @endsection
 
 @section('title')

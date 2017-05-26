@@ -63,16 +63,24 @@ $(document).ready(function(){
     //   });
     // }
 
+
+    //Affichage des informations dans la modal
     $('#openModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
         var modal = $(this);
 
         modal.find('#picture').attr('src',button.data('picture'));
         modal.find('#name').html(button.data('name'));
-        modal.find('#subName').html(button.data('subName'));
+        modal.find('#subName').html(button.data('subname'));
         modal.find('#description').html(button.data('description'));
-        
+
+        if(button.data('name_category') != undefined){
+            var redirectionCat = $("#route_category_parent"); 
+            modal.find('#route_category_parent').attr("href", redirectionCat.data('route')+"/"+button.data('id_element'));
+            modal.find('#name_category').html(button.data('name_category'));
+        }
     });
+
 
     //Configuration AJAX pour le CSRF
     $.ajaxSetup({

@@ -31,15 +31,19 @@
                             null, 
                             ['class' => 'col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1']) !!}
 
-            <input type="text" name="name" placeholder="Saisissez un prénom" 
+            <input type="text" name="first_name" placeholder="Saisissez un prénom" 
                     class="text-center 
                             col-xs-10 col-xs-offset-1 
                             col-sm-4 col-sm-offset-2
                             col-md-3 col-md-offset-1">
 
-            <button class="btn  col-xs-10 col-xs-offset-1 
+            <button data-route="{{route('bring_users')}}" 
+                    class="btn  col-xs-10 col-xs-offset-1 
                                 col-sm-4 col-sm-offset-4
-                                col-md-3 col-md-offset-1">Rechercher</button>
+                                col-md-3 col-md-offset-1"
+                    @if(isset($redirection))
+                        data-redirect="{{ route($redirection,[ 'id' => NULL ]) }}"
+                    @endif>Rechercher</button>
         </div>
 
         <hr>
@@ -48,11 +52,12 @@
         
         <div class="row text-center">
             <ul class="pagination">
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
+            <?php 
+                for($i=0;$i<count($grid)/12;$i++){
+                    echo ($i==0) ? "<li class='active'>" : "<li>";
+                    echo "<a>".($i+1)."</a></li>";
+                }
+            ?>
             </ul>
         </div>
 

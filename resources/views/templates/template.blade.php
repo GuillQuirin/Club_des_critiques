@@ -239,9 +239,10 @@
         {!! HTML::script('js/autocomplete.js') !!}
         {!! HTML::script('js/template.js') !!}
 
+        @yield('js')
+    
         <script>
             $(document).ready(function(){
-
                 /* Liste des catégories */
                 $.ajax({
                     url: $('ul#listCategory').data('route'),
@@ -262,10 +263,96 @@
                 .fail(function (data) {
                     console.log(data);
                 });
-            });
+
+                /* Filtre des élèments */
+                $('#searchElement button').click(function(event){
+                    event.preventDefault();
+
+                    var url = $(this).data('route');
+                    var redirect = $(this).data('redirect');
+
+                    $('#grid').html("");
+
+                    //Récupération des infos recherchées
+                    var searchInfos = {};
+                    var div = $("#searchElement");
+                    div.find('input, select').each(function(){
+                        var name = $(this).attr('name');
+                        var value = $(this).val();
+                
+                        if(value!="" && value!=undefined)
+                            searchInfos[name]=value;
+                    });
+
+                    //Selection des élèments concordants
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: searchInfos,
+                        async: false
+                    })
+                    .done(function (data) {
+                        console.log(data);
+                        var grid = JSON.parse(data);
+                        var html="";
+                        console.log(grid);
+                        $.each(grid, function(key, value){
+                            html+="<div class='col-xs-6 col-md-3'>";
+                                html+='<a  class="thumbnail"';
+                                    html+= ' data-id="'+value.id+'"' ;
+                                    html+= ' data-picture="'+value.picture+'"'; 
+                                    html+= ' data-name="'+value.name+'"';
+                                    html+= ' data-subName="'+value.subName+'"' ;
+                                    html+= ' data-description="'+value.description+'"';
+
+                                    if(value.id_parent != undefined)
+                                        html+= ' data-id_element ="'+value.id_parent+'"';
+                                    else if(value.id_category != undefined)
+                                        html+= ' data-id_element="'+value.id_category+'"';
+                                    
+                                    if(value.name_category != undefined)
+                                        html+= ' data-name_category="'+value.name_category+'"';
+
+                                    if(value.date != undefined)
+                                        html+= ' data-date="'+strtotime(value.date)+'"';
+                                    
+                                    if(value.location != undefined)
+                                        html+= ' data-location="'+value.location+'"';
+                                    console.log(redirect);
+                                    if(redirect != undefined)
+                                        html+= ' href="'+redirect+'/'+value.id+'"';
+                                    else
+                                        html+= ' href="#" data-toggle="modal" data-target="#openModal"';
+
+                                html+=">";
+                                    html+='<figure style="background-image: url('+value.picture+')">';
+                                        html+='<figcaption>';
+                                            html+='<p class="name">'+value.name+'</p>';
+                                            html+='<p class="subName">'+value.subName+'</p>';
+                                        html+='</figcaption>';
+                                    html+='</figure>';
+                                html+='</a>';
+                            html+='</div>';
+
+                            $('#grid').html(html);
+                        });
+                    })
+                    .fail(function (data) {
+                        console.log(data);
+                    });
+
+
+                    //Mise à jour de la pagination
+                    var html="";
+                    for(var i=0;i<parseInt(grid.length)/12;i++){
+                        html += (i==0) ? "<li class='active'>" : "<li>";
+                        html += "<a>"+(i+1)+"</a></li>";
+                    }
+                    $('ul.pagination').html(html);
+
+                    return false;
+                });
+            });   
         </script>
-
-        @yield('js')
-
     </body>
 </html>

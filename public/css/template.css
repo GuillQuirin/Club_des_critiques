@@ -35,6 +35,10 @@ li.dropdownCountdown{
     font-weight: normal;
 }
 
+#grid div:nth-of-type(n+13){
+    display: none;
+}
+
 .alert{
     display: none;
 }

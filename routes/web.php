@@ -38,9 +38,11 @@
 
 
 /****** OEUVRE *******/
-
-Route::get('elements', ['as' => 'elements', 'uses' => 'ElementController@index']);
-Route::get('element/{id}', ['as' => 'show_element', 'uses' => 'ElementController@show']);
+	
+	//Liste des oeuvres
+	Route::get('elements', ['as' => 'elements', 'uses' => 'ElementController@index']);
+	Route::get('element/{id}', ['as' => 'show_element', 'uses' => 'ElementController@show']);
+	Route::post('category', ['as' => 'bring_elements', 'uses' => 'AjaxController@getElementsBy']);
 
 
 
@@ -48,6 +50,7 @@ Route::get('element/{id}', ['as' => 'show_element', 'uses' => 'ElementController
 
 	//Liste des utilisateurs
 	Route::get('users', ['as' => 'users', 'uses' => 'UserController@index']);
+	Route::post('users', ['as' => 'bring_users', 'uses' => 'AjaxController@getUsersBy']);
 
 	//Affichage d'un utilisateur
 	Route::get('user/{id}', ['as' => 'show_user', 'uses' => 'UserController@show']);

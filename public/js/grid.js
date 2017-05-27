@@ -7,37 +7,22 @@ $(document).ready(function(){
 	});
 
 
-	//Tri des élèments
-	$('#searchElement button').click(function(event){
-		event.preventDefault();
-
-		$('#grid div').each(function(){
-			$(this).hide();
-		});
-
-		//Récupération des infos recherchées
-		var searchInfos = {};
-		var div = $("#searchElement");
-		div.find('input, select').each(function(){
-			var name = $(this).attr('name');
-			var value = $(this).val();
-	
-			if(value!="" && value!=undefined)
-				searchInfos[name]=value;
-		});
-
-		//Selection des élèments concordants
+	//Pagination
+	$('ul.pagination li').click(function(e){
+		e.preventDefault();
+		
+		var currentActive = parseInt($('ul.pagination li.active a').html());
+		var new_page = parseInt($(this).find('a').html());
+		$('ul.pagination li').removeClass('active');
+		$(this).addClass("active");
+		
+		var start_display = (new_page-1)*12;
+		var i=0;
+		console.log(start_display);
 		$.each(mosaique, function(key, value){
 			var element = $("#grid div").find("[data-id='"+value+"']");
-			var show = true;
-			
-			$.each(searchInfos, function(key, value){
-				if($(element).data(key) != value)
-					show=false;
-			});
-
-			if(show)
-				$(element).parent().show();
+			$(element).parent().toggle(i>=start_display && i<start_display+12);
+			i++;
 		});
 		return false;
 	});

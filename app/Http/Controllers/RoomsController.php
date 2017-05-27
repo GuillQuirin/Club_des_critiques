@@ -10,6 +10,7 @@ use App\User;
 use App\UserElement;
 use App\UserRoom;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class RoomsController extends Controller
 {
@@ -21,7 +22,9 @@ class RoomsController extends Controller
      */
     public function index()
     {
-		return view('rooms.index');
+        $rooms = Room::all()->sortByDesc("date_start");;
+        return view('rooms.all_rooms')
+            ->with(compact('rooms'));
 	}
 
 	/**
@@ -32,7 +35,9 @@ class RoomsController extends Controller
      */
 	public function showFuturRooms()
 	{
-		return view('rooms.index');
+        $rooms = Room::where('date_start', '>', date("Y-m-d H:i:s"))->get();
+		return view('rooms.index')
+            ->with(compact('rooms'));
 	}
 
 	/**
@@ -81,8 +86,15 @@ class RoomsController extends Controller
      * @param  int  $id
      * @return view
      */
-	public function join($id)
+	public function join($id_room)
 	{
+        DB::table('user_room')->insert(
+            [
+                'id_user' => Auth::id(),
+                'id_room' => $id_room,
+                'status_user' => 1
+            ]
+        );
 		return view('rooms.index');
 	}
 
@@ -125,13 +137,19 @@ class RoomsController extends Controller
         DB::table('chatbox')->insert(
             [
                 'id_user_sender' => $_POST['id_user_sender'],
-                'id_room' => 1,
+                'id_room' => $_POST['id_room'],
                 'date_post' => date("Y-m-d H:i:s"),
                 'message' => $_POST['message'],
                 'status' => 1,
                 'is_deleted' => 0
             ]
         );
+
+        $user = User::where('id', $_POST['id_user_sender']);
+        $data = array(
+            "user" => $user
+        );
+        echo json_encode($data);
     }
 
     public function autocompleteUser()

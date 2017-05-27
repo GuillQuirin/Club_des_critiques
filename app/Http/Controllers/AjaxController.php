@@ -65,8 +65,13 @@ class AjaxController extends Controller
     {
         $input = $request->all();
         $filter = [];
-        foreach ($input as $key => $value)
-            $filter[] = ["element.".$key, 'like', '%'.$value.'%'];
+        $id_cat="";
+        foreach ($input as $key => $value){
+            if($key!='id_category')
+                $filter[] = ["category.id", 'like', '%'.$value.'%'];
+            else
+                $id_cat = $value;
+        }
 
         $listElements = DB::table('element')
                             ->leftJoin('category', 'element.id_category', '=', 'category.id')
@@ -78,8 +83,12 @@ class AjaxController extends Controller
                                         'element.url_picture as picture',
                                         'category.name as name_category')
                             ->where($filter)
+                            ->where(function($query) use($id_cat){
+                                if($id_cat!="")
+                                    $query->where('category.id', 'like', $id_cat)
+                                      ->orWhere('category.id_parent', 'like',$id_cat);
+                            })
                             ->get();
-
 
         return json_encode($listElements);
     }

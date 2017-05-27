@@ -27,7 +27,7 @@
              --}}
 
             {!! Form::select('id_category', 
-                        [null=>'Liste des catégories de '.$infoCategory->name]+$listSubCategory, 
+                        [$infoCategory->id=>'Liste des catégories de '.$infoCategory->name]+$listSubCategory, 
                         null, 
                         ['class' => 'col-xs-10 col-xs-offset-1 
                                     col-sm-4 col-sm-offset-1 

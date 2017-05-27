@@ -17,30 +17,38 @@
     
         <h1 class="text-center">Liste des {{$infoCategory->name}}s</h1>
         
-        <div class="row">
-            <div>
+        <div class="row" id="searchElement">
+            {{--
                 <p>Date de publication : </p>
                 <select name="order">
                     <option value="1" selected>Plus récent</option>
                     <option value="0">Plus ancien</option>
                 </select>
-            </div>
+             --}}
 
-            <div>
-                <p>Sous-catégorie : </p>
-                <select name="category">
-                    <option value="0" selected>Tous les {{$infoCategory->name}}s</option>
+            {!! Form::select('name_category', 
+                        [null=>'Liste des livres']+$listSubCategory, 
+                        null, 
+                        ['class' => 'col-xs-10 col-xs-offset-1 
+                                    col-sm-4 col-sm-offset-1 
+                                    col-md-3 col-md-offset-1']) !!}
 
-                    @foreach($listSubCategory as $category)
-                        <option value="{{$category->id}}">{{$category->name}}</option>
-                    @endforeach
-                </select>
-            </div>
+            <input type="text" name="name" placeholder="Saisissez le nom de l'oeuvre"
+                    class="text-center 
+                        col-xs-10 col-xs-offset-1 
+                        col-sm-4 col-sm-offset-2
+                        col-md-3 col-md-offset-1">
 
-            <div>
-                <p>Rechercher une oeuvre : </p>
-                <input type="text" name="search" placeholder="Saisissez ici le nom de l'oeuvre ou son auteur">
-            </div>
+            <input type="text" name="subname" placeholder="Saisissez le nom de l'auteur"
+                    class="text-center 
+                        col-xs-10 col-xs-offset-1 
+                        col-sm-4 col-sm-offset-2
+                        col-md-3 col-md-offset-1">
+
+
+            <button class="btn  col-xs-10 col-xs-offset-1 
+                                col-sm-4 col-sm-offset-4
+                                col-md-3 col-md-offset-1">Rechercher</button> 
         </div>
 
         <hr>

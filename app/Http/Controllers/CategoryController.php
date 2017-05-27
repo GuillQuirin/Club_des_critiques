@@ -28,11 +28,15 @@ class CategoryController extends Controller
                             ->where('id', '=', $id)
                             ->get();
 
-        $listSubCategory = DB::table('category')
+        $subCategory = DB::table('category')
                             ->select('id',
                                      'name')
                             ->where('id_parent', '=', $id)
                             ->get();
+
+        $listSubCategory = [];
+          foreach ($subCategory as $key => $category)
+               $listSubCategory[$category->name] = $category->name;
 
         $listElements = DB::table('element')
                             ->leftJoin('category', 'element.id_category', '=', 'category.id')

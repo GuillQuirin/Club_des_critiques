@@ -238,9 +238,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
         {!! HTML::script('js/autocomplete.js') !!}
         {!! HTML::script('js/template.js') !!}
-
         @yield('js')
-    
         <script>
             $(document).ready(function(){
                 /* Liste des catégories */
@@ -345,14 +343,16 @@
                     });
 
 
-                    //Mise à jour de la pagination
+                    //Mise à jour de la pagination et de l'affichage
                     var html="";
-                    for(var i=0;i<parseInt(grid.length)/12;i++){
-                        html += (i==0) ? "<li class='active'>" : "<li>";
+                    for(var i=0;i<parseInt($(grid).find('div').length)/12;i++){
+                        if(i==0)
+                            html += "<li class='active'>";
+                        else
+                            html += "<li>";
                         html += "<a>"+(i+1)+"</a></li>";
                     }
                     $('ul.pagination').html(html);
-
                     return false;
                 });
             });   

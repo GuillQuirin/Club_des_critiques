@@ -8,7 +8,7 @@ $(document).ready(function(){
 
 
 	//Pagination
-	$('ul.pagination li').click(function(e){
+	$('ul.pagination').on("click","li",function(e){
 		e.preventDefault();
 		
 		var currentActive = parseInt($('ul.pagination li.active a').html());

@@ -22,23 +22,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php for ($i = 1; $i <= 15; $i++) { ?>
-                    <tr>
-                        <td>Harry Potter <?php echo $i;?> (J.K Rowling)</td>
-                        <td>Du 01/05/2017 au 01/07/2017</td>
+                @foreach($rooms as $room)
+                    <tr>{{dump($room)}}
+                        <td>{{$room->element->name}} ({{$room->element->creator}})</td>
+                        <td>Du {{date("d/m/Y", strtotime($room->date_start))}} au {{date("d/m/Y", strtotime($room->date_end))}}</td>
                         <td>Salon 1</td>
                         <td><button type="button"
                                     class="btn btn-success"
                                     data-toggle="modal"
                                     data-target="#join"
-                                    data-title="Harry Potter <?php echo $i?>"
+                                    data-id_room="{{$room->id}}"
+                                    data-title="Harry Potter"
                                     data-autor="J.K Rowling"
                                     data-salon="Salon 1">
                                 Rejoindre le salon
                             </button>
                         </td>
                     </tr>
-                    <?php } ?>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -52,8 +53,8 @@
                 </div>
                 <div class="modal-body">
                     <h1 class="text-center text-uppercase col-xs-10 col-sm-12" id="title"></h1>
+                    <input type="hidden" name="room" id="room">
                     <h1 class="text-center text-uppercase col-xs-10 col-sm-12" id="autor"><small></small></h1>
-
                     <div class="text-center" id="div_note">
                         <h3>Donnez une note !</h3>
                         <div class="rating">
@@ -66,7 +67,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Rejoindre</button>
+                    <?php $id_room = \Illuminate\Support\Facades\Input::get('room'); ?>
+                    <a href="{{route('join_room', ['id' => 2 ])}}" type="button" class="btn btn-primary">Rejoindre</a>
                 </div>
             </div>
         </div>
@@ -94,10 +96,12 @@
                 var title = button.data('title')
                 var autor = button.data('autor')
                 var salon = button.data('salon')
+                var id_room = button.data('id_room')
                 var modal = $(this)
                 modal.find('.modal-body #title').text(title + " - " + salon)
                 modal.find('.modal-body #autor small').text(autor)
                 modal.find('.modal-title').text(salon)
+                modal.find('.modal-body #room').val(id_room)
             })
         });
     </script>

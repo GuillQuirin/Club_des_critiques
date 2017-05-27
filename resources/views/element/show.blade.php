@@ -13,7 +13,14 @@
             alt='image' 
             id="picture" 
             class="col-xs-6 col-sm-4 col-md-4"><!-- 
-        --><p class="col-xs-6 col-sm-8 col-md-8" id="description"></p>
+        --><div>
+            <p class="col-xs-6 col-sm-8 col-md-8" id="description"></p>
+            <hr>
+            <div class="col-xs-6 col-sm-8 col-md-8">
+                <p>Vous pouvez acheter ce livre à ces adresses:</p>
+                <div id="buy_element"></div>
+            </div>
+        </div>
     </div>
 	
 	<hr>

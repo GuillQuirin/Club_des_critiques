@@ -292,10 +292,9 @@
                         async: false
                     })
                     .done(function (data) {
-                        console.log(data);
+                        //console.log(data);
                         var grid = JSON.parse(data);
                         var html="";
-                        console.log(grid);
                         $.each(grid, function(key, value){
                             html+="<div class='col-xs-6 col-md-3'>";
                                 html+='<a  class="thumbnail"';
@@ -318,14 +317,18 @@
                                     
                                     if(value.location != undefined)
                                         html+= ' data-location="'+value.location+'"';
-                                    console.log(redirect);
+
                                     if(redirect != undefined)
                                         html+= ' href="'+redirect+'/'+value.id+'"';
                                     else
                                         html+= ' href="#" data-toggle="modal" data-target="#openModal"';
 
                                 html+=">";
-                                    html+='<figure style="background-image: url('+value.picture+')">';
+                                    html+='<figure';
+                                        if(value.picture) 
+                                            html+=' style="background-image: url('+value.picture+')">';
+                                        else
+                                            html+=">";
                                         html+='<figcaption>';
                                             html+='<p class="name">'+value.name+'</p>';
                                             html+='<p class="subName">'+value.subName+'</p>';

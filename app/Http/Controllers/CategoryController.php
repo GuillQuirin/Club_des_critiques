@@ -36,7 +36,7 @@ class CategoryController extends Controller
 
         $listSubCategory = [];
           foreach ($subCategory as $key => $category)
-               $listSubCategory[$category->name] = $category->name;
+               $listSubCategory[$category->id] = $category->name;
 
         $listElements = DB::table('element')
                             ->leftJoin('category', 'element.id_category', '=', 'category.id')

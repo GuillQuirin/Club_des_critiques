@@ -66,14 +66,16 @@ class AjaxController extends Controller
         $input = $request->all();
         $filter = [];
         foreach ($input as $key => $value)
-            $filter[] = [$key, 'like', '%'.$value.'%'];
+            $filter[] = ["element.".$key, 'like', '%'.$value.'%'];
 
         $listElements = DB::table('element')
                             ->leftJoin('category', 'element.id_category', '=', 'category.id')
                             ->select(   'element.id', 
                                         'element.name', 
+                                        'element.description', 
                                         'element.creator as subName',
                                         'element.id_category',
+                                        'element.url_picture as picture',
                                         'category.name as name_category')
                             ->where($filter)
                             ->get();
@@ -91,7 +93,7 @@ class AjaxController extends Controller
         $input = $request->all();
         $filter = [];
         foreach ($input as $key => $value)
-            $filter[] = [$key, 'like', '%'.$value.'%'];
+            $filter[] = ["user.".$key, 'like', '%'.$value.'%'];
 
         $listUsers = DB::table('user')
                         ->select( 'user.id', 

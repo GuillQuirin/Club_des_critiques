@@ -26,8 +26,8 @@
                 </select>
              --}}
 
-            {!! Form::select('name_category', 
-                        [null=>'Liste des livres']+$listSubCategory, 
+            {!! Form::select('id_category', 
+                        [null=>'Liste des catégories de '.$infoCategory->name]+$listSubCategory, 
                         null, 
                         ['class' => 'col-xs-10 col-xs-offset-1 
                                     col-sm-4 col-sm-offset-1 
@@ -39,16 +39,16 @@
                         col-sm-4 col-sm-offset-2
                         col-md-3 col-md-offset-1">
 
-            <input type="text" name="subname" placeholder="Saisissez le nom de l'auteur"
+            <input type="text" name="creator" placeholder="Saisissez le nom de l'auteur"
                     class="text-center 
                         col-xs-10 col-xs-offset-1 
                         col-sm-4 col-sm-offset-2
                         col-md-3 col-md-offset-1">
 
 
-            <button class="btn  col-xs-10 col-xs-offset-1 
-                                col-sm-4 col-sm-offset-4
-                                col-md-3 col-md-offset-1">Rechercher</button> 
+            <button data-route="{{route('bring_elements')}}" class="btn  col-xs-10 col-xs-offset-1 
+                                                                    col-sm-4 col-sm-offset-4
+                                                                    col-md-3 col-md-offset-1">Rechercher</button> 
         </div>
 
         <hr>
@@ -57,12 +57,12 @@
         
         <div class="row text-center">
             <ul class="pagination">
-                <li class="active"><a href="#">1</a></li>
-                
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
+            <?php 
+                for($i=0;$i<count($grid)/12;$i++){
+                    echo ($i==0) ? "<li class='active'>" : "<li>";
+                    echo "<a>".($i+1)."</a></li>";
+                }
+            ?>
             </ul>
         </div>
     </div>

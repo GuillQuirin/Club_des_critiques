@@ -81,7 +81,7 @@
 		                                        <span class="glyphicon glyphicon-time"></span>{{date("d/m/Y H:i:s", strtotime($chat->date_post))}}</small>
 		                                </div>
 		                                <p>
-		                                    {{$chat->message}}<?php echo date("Y-m-d H:i:s") ?>
+		                                    {{$chat->message}}
 		                                </p>
 		                            </div>
 		                        </li>
@@ -122,7 +122,7 @@
                                                     <strong class="primary-font">{{$u->first_name}} {{$u->last_name}}</strong>
                                                 </div>
                                                 <div class="col-xs-6 text-right">
-                                                    <button class="btn btn-warning" id="btn-chat">Consulter le profil</button>
+                                                    <a href="{{ route('show_user', ['id' => $u->id] )}}" class="btn btn-warning" id="btn-chat">Consulter le profil</a>
                                                 </div>
                                             </div>
                                         </li>

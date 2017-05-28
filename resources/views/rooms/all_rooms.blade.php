@@ -1,33 +1,34 @@
 @extends('templates/template')
 
 @section('css')
-     <link rel="stylesheet" type="text/css" href="{{asset('css/rooms.css')}}">    
+    <link rel="stylesheet" type="text/css" href="{{asset('css/rooms.css')}}">
 @endsection
 
 @section('title')
-    Liste des salons à venir
+    Liste de tous les salons
 @endsection
 
 @section('content')
     <div class="container">
         <div class="text-center">
-            <h1>Les salons à venir</h1>
+            <h1>Liste de tous les salons</h1>
             <table id="salons" class="table table-hover table-responsive" cellspacing="0">
                 <thead>
-                    <tr>
-                        <th>Titre (auteur)</th>
-                        <th>Dates du salon</th>
-                        <th>Numéro du salon</th>
-                        <th>Action</th>
-                    </tr>
+                <tr>
+                    <th>Titre (auteur)</th>
+                    <th>Dates du salon</th>
+                    <th>Numéro du salon</th>
+                    <th>Action</th>
+                </tr>
                 </thead>
                 <tbody>
                 @foreach($rooms as $room)
-                    <tr>{{dump($room)}}
+                    <tr>
                         <td>{{$room->element->name}} ({{$room->element->creator}})</td>
                         <td>Du {{date("d/m/Y", strtotime($room->date_start))}} au {{date("d/m/Y", strtotime($room->date_end))}}</td>
                         <td>Salon 1</td>
-                        <td><button type="button"
+                        <td>@if($room->date_start > date("Y-m-d H:i:s"))
+                            <button type="button"
                                     class="btn btn-success"
                                     data-toggle="modal"
                                     data-target="#join"
@@ -37,9 +38,10 @@
                                     data-salon="Salon 1">
                                 Rejoindre le salon
                             </button>
+                            @endif
                         </td>
                     </tr>
-                    @endforeach
+                @endforeach
                 </tbody>
             </table>
         </div>

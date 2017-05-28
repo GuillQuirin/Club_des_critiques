@@ -182,23 +182,36 @@ $(document).ready(function(){
         e.preventDefault(); // on empêche le bouton d'envoyer le formulaire
 
         var id_user_sender = 1;
-        var message = encodeURIComponent( $('#message').val() );
+        var message = $('#message').val();
+
+        var today = new Date();
+        var dd = today.getDate() < 10 ? '0' + today.getDate() : today.getDate();
+        var mm = today.getMonth()+1 < 10 ? '0' + (today.getMonth()+1) : today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        var h = today.getHours();
+        var m = today.getMinutes()< 10 ? '0' + today.getMinutes() : today.getMinutes();
+        var s = today.getSeconds() < 10 ? '0' + today.getSeconds() : today.getSeconds();
+
+        today = dd+'/'+mm+'/'+yyyy+' '+h+':'+m+':'+s;
 
         if(message != ""){
             $.ajax({
                 url : "addMessage",
                 type : "POST",
                 data : "id_user_sender=" + id_user_sender + "&message=" + message,
-                success : function(){
+                success : function(data){
+                    var json = $.parseJSON(data);
+                    console.log(json);
                     /* id_user_sender a remplacer par donnée de la session */
                     $('#messages').append(
-                        "<li class='left clearfix'><span class='chat-img pull-left'>"
+                        "<ul class='chat'>"
+                        + "<li class='left clearfix'><span class='chat-img pull-left'>"
                         + "<img src='http://placehold.it/50/55C1E7/fff&text=U' alt='User Avatar' class='img-circle' /></span>"
                         + "<div class='chat-body clearfix'>"
                         + "<div class='header'>"
-                        + "<strong class='primary-font'>" + id_user_sender + "</strong> <small class='pull-right text-muted'>"
-                        + "<span class='glyphicon glyphicon-time'></span>" + Date.now().toLocaleString() + "</small>"
-                        +"</div><p>" + message + "</p></div></li>"
+                        + "<strong class='primary-font'>" + data.first_name + "</strong> <small class='pull-right text-muted'>"
+                        + "<span class='glyphicon glyphicon-time'></span> " + today + "</small>"
+                        + "</div><p>" + message.replace(/\n/g,"<br>") + "</p></div></li></ul>"
                     );
                 }
             });

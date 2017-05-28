@@ -111,7 +111,11 @@
                             <p>Prochain salon : <span class="room"></span></p>
                             <p>Oeuvre : <span class="element"></span></p>
                             <p>Date de lancement : <span class="date"></span></p>
-                            <a data-redirect="{{route('next_room')}}">Accèdez à la fiche du salon</a>
+                            @if(Auth::check())
+                                <a data-redirect="{{route('next_room')}}">Accèdez à la fiche du salon</a>
+                            @else
+                                <p>Connectez-vous pour accèder à la page du salon</p>
+                            @endif
                         </div>
                     </li>
                     

@@ -98,12 +98,15 @@
 	Route::post('admin/add-category', ['as' => 'add_category', 'uses' => 'AdminController@addCategory']);
 	Route::put('admin/delete-category', ['as' => 'delete_category', 'uses' => 'AdminController@deleteCategory']);
 	Route::put('admin/edit-category', ['as' => 'edit_category', 'uses' => 'AdminController@editCategory']);
+	Route::post('admin/add-element', ['as' => 'add_element', 'uses' => 'AdminController@addElement']);
+	Route::put('admin/delete-element', ['as' => 'delete_element', 'uses' => 'AdminController@deleteElement']);
+	Route::put('admin/edit-element', ['as' => 'edit_element', 'uses' => 'AdminController@editElement']);
 
 	// Ajax
 	Route::get('admin/sub-categories', ['as' => 'get_sub_categories', 'uses' => 'AjaxController@getSubCategories']);
 	Route::get('admin/creators', ['as' => 'get_creators', 'uses' => 'AjaxController@getCreatorForSubCat']);
 	Route::get('admin/elements', ['as' => 'get_elements', 'uses' => 'AjaxController@getElementForCreatorAndCategory']);
-	Route::get('admin/elements', ['as' => 'get_elements', 'uses' => 'AjaxController@getElementForCreatorAndCategory']);
+	Route::get('admin/element', ['as' => 'get_element', 'uses' => 'AjaxController@getElementById']);
 
 Route::post('room/autocompleteUser', ['as' => '/', 'uses' => 'RoomsController@autocompleteUser'] );
 Route::post('room/addMessage', ['as' => '/', 'uses' => 'RoomsController@addMessage'] );

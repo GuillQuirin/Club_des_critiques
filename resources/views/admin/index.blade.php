@@ -101,7 +101,6 @@
 
 	// HOME 
 
-		var selectCat = $('#top_category');
 		var selectSubCat = $('#top_sub_category');
 		var selectCreator = $('#top_creator');
 		var selectElement = $('#top_element');
@@ -222,7 +221,7 @@
 
 	// CATEGORY
 
-		// Supprime un élément à la une
+		// Supprime une catégorie
 	    $('.delete-category').click(function(){
 	    	if (confirm("Voulez vous vraiement supprimer cette catégorie?")) {
 		    	categoryId = this.id;
@@ -278,50 +277,165 @@
 
 	// ELEMENT
 
-			// Cache le bouton "ajouter un element"
-			$('#btnShowAddElement').click(function() {
-				$('#btnShowAddElement').hide();
-			});
-			// Affiche le bouton "ajouter un element"
-			$('#btnHideAddElement').click(function() {
-				$('#btnShowAddElement').show();
-			});
+		// Cache le bouton "ajouter un element"
+		$('#btnShowAddElement').click(function() {
+			$('#btnShowAddElement').hide();
+		});
+		// Affiche le bouton "ajouter un element"
+		$('#btnHideAddElement').click(function() {
+			$('#btnShowAddElement').show();
+		});
 
-			// Affiche le bon formulaire d'ajout d'oeuvre
-	    	$('input[type=radio][name=radioElement]').change(function() {
-		        if (this.value == 'manual') {
-		            $('#elementManual').show();
-	    			$('#elementAutomatic').hide();
-		        }
-		        else if (this.value == 'automatic') {
-		            $('#elementAutomatic').show();
-	    			$('#elementManual').hide();
-		        }
-		    });
+		// Affiche le bon formulaire d'ajout d'oeuvre
+    	$('input[type=radio][name=radioElement]').change(function() {
+	        if (this.value == 'manual') {
+	            $('#elementManual').show();
+    			$('#elementAutomatic').hide();
+	        }
+	        else if (this.value == 'automatic') {
+	            $('#elementAutomatic').show();
+    			$('#elementManual').hide();
+	        }
+	    });
 
-	    	// Affiche les bonnes dates pour le formulaire d'une oeuvre
-	    	$('#parent_cat').change(function() {
-		    	if( this.value == 1 || this.value == 2){
-		    		$('#datePublication').show();
-		    		$('#dateStart').hide();
-		    		$('#dateEnd').hide();	
+    	// Affiche les bonnes dates pour le formulaire d'une oeuvre
+    	$('#element_category').change(function() {
+	    	if( this.value == 1 || this.value == 2){
+	    		$('#datePublication').show();
+	    		$('#dateStart').hide();
+	    		$('#dateEnd').hide();	
+	    	} else {
+	    		$('#datePublication').hide();
+	    		$('#dateStart').show();
+	    		$('#dateEnd').show();
+	    	}
+	    });
+	    $('#edit_element_category').change(function() {
+	    	if( this.value == 1 || this.value == 2){
+	    		$('#datePublicationEdit').show();
+	    		$('#dateStartEdit').hide();
+	    		$('#dateEndEdit').hide();	
+	    	} else {
+	    		$('#datePublicationEdit').hide();
+	    		$('#dateStartEdit').show();
+	    		$('#dateEndEdit').show();
+	    	}
+	    });
+
+    	// Sélection de la catégorie => affichage des sous catégories
+    	var selectElementSubCat = $('#element_sub_category');
+		$("#element_category").change(function() {
+	        var categoryId = this.value;
+
+	        if (categoryId.length) {
+	            // Call Ajax Request to get sub categories for the category 
+	            $.ajax({
+	                data : { categoryId : categoryId },
+	                url: "{{ route('get_sub_categories') }}",
+	                type: 'get',
+	                success: function(data) {
+	                    if (data.length) {
+	                        selectElementSubCat.attr('disabled',false);
+	                        selectElementSubCat.html('<option value="" disabled selected>Choisissez une sous ctégorie</option>');
+	                        jQuery.each(data, function() {
+	                            selectElementSubCat.append(new Option(this.name, this.id));
+	                        });
+	                        selectElementSubCat.selectpicker('refresh');
+	                    } else {
+	                        selectElementSubCat.html('<option value="" disabled selected>Pas de sous catégorie disponible</option>');
+	                        selectElementSubCat.selectpicker('refresh');
+	                    }
+	                }
+	            });
+	        }
+	    });
+
+	    // Supprime un élément
+	    $('.delete-element').click(function(){
+	    	if (confirm("Voulez vous vraiement supprimer cet élément?")) {
+		    	elementId = this.id;
+		    	// Call Ajax Request to delete category
+	            $.ajax({
+	                data : { elementId : elementId },
+	                url: "{{ route('delete_element') }}",
+	                type: 'put',
+	                success: function(data) {
+	                	// Modifier le tableau
+	                },
+	                error : function() {
+	                	// gestion d'erreur
+	                }
+	            });
+	            tab = $( this ).parent().parent().remove();
+		    }	
+	    });
+
+	    // Affiche pup-up de modification d'un élément
+	    $('a.edit-element').on('click', function() {
+		    var myModal = $('#editElementModal');
+
+		    var elementId = $(this).closest('tr').find('td.element-id').html();
+		    var selectEditElementSubCat = $('#edit_element_sub_category');
+		    var selectEditElementCat = $('#edit_element_category');
+		    $.ajax({
+                data : { elementId : elementId },
+                url: "{{ route('get_element') }}",
+                type: 'get',
+                success: function(data) {
+                	$('#id_element').val(data.element.id);	
+                	$('#edit_element_name').val(data.element.name);	
+                	$('#edit_element_creator').val(data.element.creator);
+                	$('#edit_element_url_picture').val(data.element.url_picture);
+                	$('#edit_element_date_publication').val(data.element.date_publication);
+                	$('#edit_element_date_start').val(data.element.date_start);
+                	$('#edit_element_date_end').val(data.element.date_end);
+                	$('#edit_element_description').val(data.element.description);	                	
+                	
+                	selectEditElementCat.selectpicker('val', data.catgory);
+
+                	// Affichage des sous catégories                 	
+		            $.ajax({
+		                data : { categoryId : data.catgory },
+		                url: "{{ route('get_sub_categories') }}",
+		                type: 'get',
+		                success: function(subCategories) {
+		                    if (subCategories.length) {
+		                        selectEditElementSubCat.attr('disabled',false);
+		                        selectEditElementSubCat.html('<option value="" disabled selected>Choisissez une sous catégorie</option>');
+		                        jQuery.each(subCategories, function() {
+		                            selectEditElementSubCat.append(new Option(this.name, this.id));
+		                        });
+		                        selectEditElementSubCat.selectpicker('refresh');
+		                        selectEditElementSubCat.selectpicker('val', data.element.id_category);
+		                    } else {
+		                        selectEditElementSubCat.html('<option value="" disabled selected>Pas de sous catégorie disponible</option>');
+		                        selectEditElementSubCat.selectpicker('refresh');
+		                    }
+		                }
+		            });	            
+		     
+                },
+                error : function() {
+                	// gestion d'erreur
+                }
+            });
+
+		    setTimeout(function(){
+				if( selectEditElementCat.val() == 1 || selectEditElementCat.val() == 2){
+		    		$('#datePublication',myModal).show();
+		    		$('#dateStart', myModal).hide();
+		    		$('#dateEnd', myModal).hide();	
 		    	} else {
-		    		$('#datePublication').hide();
-		    		$('#dateStart').show();
-		    		$('#dateEnd').show();
+		    		$('#datePublication', myModal).hide();
+		    		$('#dateStart', myModal).show();
+		    		$('#dateEnd', myModal).show();
 		    	}
-		    });
-		    $('#parent_cat_edit').change(function() {
-		    	if( this.value == 1 || this.value == 2){
-		    		$('#datePublicationEdit').show();
-		    		$('#dateStartEdit').hide();
-		    		$('#dateEndEdit').hide();	
-		    	} else {
-		    		$('#datePublicationEdit').hide();
-		    		$('#dateStartEdit').show();
-		    		$('#dateEndEdit').show();
-		    	}
-		    });
+	    		myModal.modal('toggle');
+			}, 1000);
+            
+		    return false;
+		});
+
 
 	// ROOM
 

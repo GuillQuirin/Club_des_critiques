@@ -137,4 +137,18 @@ class AjaxController extends Controller
         }
         return json_encode($listUsers);
      }
+
+    /**
+     * Ajax Request : get element by id
+     * @return mixed
+     */
+    public function getElementById()
+    {
+        $elementId = Input::get('elementId');
+
+        $element = Element::find($elementId);
+        $cat = $element->category->parent->id;
+
+        return Response::json(['element' => $element, 'catgory' => $cat]);
+    }     
 }

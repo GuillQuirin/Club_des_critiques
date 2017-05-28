@@ -131,6 +131,58 @@ class AdminController extends Controller
     }
 
     /**
+     * Ajout d'une oeuvre
+     *
+     * @return view
+     */
+    public function addElement(Request $request)
+    {
+        $element = new Element();
+
+        if(isset($request->url_api)){
+            // VIA API
+            $urlApi = $request->url_api;
+        } else {
+            $element->name = $request->name;
+            $element->creator = $request->creator;
+            $element->id_category = $request->sub_category;
+            $element->description = $request->description;
+            if(isset($request->url_picture)){ $element->url_picture = $request->url_picture; }
+            if(isset($request->date_publication)){ $element->date_publication = $request->date_publication; }
+            if(isset($request->date_start)){ $element->date_start = $request->date_start; }
+            if(isset($request->date_end)){ $element->date_end = $request->date_end; }
+            if(isset($request->location)){ $element->location = $request->location; }
+        }
+        
+        $element->save();
+
+        return redirect(route('admin'));
+    }
+
+    /**
+     * Modification d'une oeuvre
+     *
+     * @return view
+     */
+    public function editElement(Request $request)
+    {
+        $element = Element::find($request->id);
+        $element->name = $request->name;
+        $element->creator = $request->creator;
+        $element->id_category = $request->sub_category;
+        $element->description = $request->description;
+        if(isset($request->url_picture)){ $element->url_picture = $request->url_picture; }
+        if(isset($request->date_publication)){ $element->date_publication = $request->date_publication; }
+        if(isset($request->date_start)){ $element->date_start = $request->date_start; }
+        if(isset($request->date_end)){ $element->date_end = $request->date_end; }
+        if(isset($request->location)){ $element->location = $request->location; }
+    
+        $element->save();
+
+        return redirect(route('admin'));
+    }
+
+    /**
      * Supprimer une oeuvre
      *
      * @return view

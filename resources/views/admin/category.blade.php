@@ -104,11 +104,11 @@
                         <label for="parent" class="col-2 col-form-label">Parent : </label>
                         <div class="col-10">
                             <select id="edit_parent_category" name="parent_category" class="form-control selectpicker edit-category-parent"  data-size="7" data-live-search="true" required="required">
-                            <option value="0" selected>Pas de parent</option>
-                            @foreach($categories as $category)
-                                <option value="{{$category->id}}">{{$category->name}}</option>
-                            @endforeach
-                        </select>
+                                <option value="0" selected>Pas de parent</option>
+                                @foreach($categories as $category)
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
+                            </select>
                         </div>  
                     </div>
                     <div class="form-group">

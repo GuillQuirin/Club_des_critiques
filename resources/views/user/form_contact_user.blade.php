@@ -3,7 +3,7 @@
       {!! Form::label('messageContact','Votre message') !!}
       {!! Form::textarea('message', null, 
           array('id' => 'messageContact',
-                'required' => 'true', 
+                'required' => 'required', 
                 'class'=>'form-control',
                 'size' => '30x5', 
                 'placeholder'=>'Rédigez votre message')) !!}

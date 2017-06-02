@@ -5,21 +5,21 @@
             {!! Form::label('pwdUpdate','Mot de passe actuel') !!}
             {!! Form::password('pwd', [ 'id' => 'pwdUpdate', 
                                         'class' => 'form-control', 
-                                        'required' => 'true']) !!}
+                                        'required' => 'required']) !!}
             {!! $errors->first('pwdUpdate', '<small class="help-block">:message</small>') !!}
           </div>
           <div class="form-group">
             {!! Form::label('new_pwdUpdate','Nouveau mot de passe') !!}
             {!! Form::password('new_pwd', [ 'id' => 'new_pwdUpdate',
                                             'class' => 'form-control', 
-                                            'required' => 'true']) !!}
+                                            'required' => 'required']) !!}
             {!! $errors->first('new_pwdUpdate', '<small class="help-block">:message</small>') !!}
           </div>
           <div class="form-group">
             {!! Form::label('new_pwd_confirmUpdate','Confirmation du nouveau mot de passe') !!}
             {!! Form::password('new_pwd_confirm',['id' => 'new_pwd_confirmUpdate',
                                                   'class' => 'form-control', 
-                                                  'required' => 'true']) !!}
+                                                  'required' => 'required']) !!}
             {!! $errors->first('new_pwd_confirmUpdate', '<small class="help-block">:message</small>') !!}
           </div>
     </div>

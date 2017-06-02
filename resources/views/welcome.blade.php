@@ -44,7 +44,7 @@
                 {!! Form::label('nameContact','Nom') !!}
                 {!! Form::text('name', null, 
                     array('id' => 'nameContact', 
-                          'required' => 'true', 
+                          'required' => 'required', 
                           'class'=>'form-control', 
                           'placeholder'=>'Inscrivez ici vos noms et prénoms')) !!}
             </div>
@@ -53,7 +53,7 @@
                 {!! Form::label('emailContact','Email') !!}
                 {!! Form::email('email', null, 
                     array('id' => 'emailContact', 
-                          'required' => 'true', 
+                          'required' => 'required', 
                           'class'=>'form-control', 
                           'placeholder'=>'Inscrivez ici votre adresse email')) !!}
             </div>
@@ -62,7 +62,7 @@
                 {!! Form::label('objectContact','Sujet du message') !!}
                 {!! Form::text('object', null, 
                     array('id' => 'objectContact', 
-                          'required' => 'true', 
+                          'required' => 'required', 
                           'class'=>'form-control', 
                           'placeholder'=>'Indiquez un objet')) !!}
             </div>
@@ -71,7 +71,7 @@
                 {!! Form::label('messageContact','Votre message') !!}
                 {!! Form::textarea('message', null, 
                     array('id' => 'messageContact', 
-                          'required' => 'true', 
+                          'required' => 'required', 
                           'class'=>'form-control', 
                           'placeholder'=>'Rédigez ici votre message')) !!}
             </div>

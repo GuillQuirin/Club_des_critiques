@@ -14,13 +14,13 @@
                     {!! Form::label('emailLogin','Saisissez votre adresse e-mail') !!}
                     {!! Form::email('email','',['id'=>'emailLogin',
                                                 'class' => 'form-control',
-                                                'required' => 'true']) !!}
+                                                'required' => 'required']) !!}
                     {!! $errors->first('emailLogin', '<small class="help-block">:message</small>') !!}
 
                     {!! Form::label('passwordLogin','Saisissez votre mot de passe') !!}
                     {!! Form::password('password',[ 'id' => 'passwordLogin',
                                                     'class' => 'form-control',
-                                                    'required' => 'true']) !!}
+                                                    'required' => 'required']) !!}
                     {!! $errors->first('passwordLogin', '<small class="help-block">:message</small>') !!}
                     <div class="alert alert-dismissible alert-success" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -68,7 +68,7 @@
                         {!! Form::label('emailBackUp','Un email vous sera envoyé.') !!}
                         {!! Form::email('email','',['id' => 'emailBackUp',
                                                     'class' => 'form-control',
-                                                    'required' => 'true']) !!}
+                                                    'required' => 'required']) !!}
                         {!! $errors->first('emailBackUp', '<small class="help-block">:message</small>') !!}
                         <div class="alert alert-dismissible alert-success" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">

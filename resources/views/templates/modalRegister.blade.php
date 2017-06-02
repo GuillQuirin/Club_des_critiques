@@ -12,7 +12,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     {!! Form::label('emailRegister','Saisissez votre adresse e-mail') !!}
-                    {!! Form::email('email','', ['id' => 'emailRegister','class' => 'form-control', 'required' => 'true']) !!}
+                    {!! Form::email('email','', ['id' => 'emailRegister','class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('email', '<small class="help-block">:message</small>') !!}
                     
                     <div class="alert alert-dismissible alert-success" role="alert">

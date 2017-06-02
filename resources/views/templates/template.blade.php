@@ -46,7 +46,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                  <div id="sidebar-wrapper"> 
-                  <ul class="nav navbar-nav" class="sidebar-nav">
+                  <ul class="nav navbar-nav sidebar-nav">
 
                     <li class="visible-xs-block"><a href="{{ route('home') }}"><img class="logo" src="/images/logo.png" alt="logo"></a></li>
                   

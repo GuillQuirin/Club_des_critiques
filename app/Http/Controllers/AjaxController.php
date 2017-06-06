@@ -66,11 +66,15 @@ class AjaxController extends Controller
         $input = $request->all();
         $filter = [];
         $id_cat="";
+        $order="asc";
+
         foreach ($input as $key => $value){
-            if($key!='id_category')
-                $filter[] = ["category.id", 'like', '%'.$value.'%'];
+            if($key=='id_category')
+              $id_cat = $value;
+            elseif($key=='order')
+              $order = ($value=='0') ? 'asc' : 'desc';
             else
-                $id_cat = $value;
+              $filter[] = ["category.id", 'like', '%'.$value.'%'];
         }
 
         $listElements = DB::table('element')
@@ -88,6 +92,7 @@ class AjaxController extends Controller
                                     $query->where('category.id', 'like', $id_cat)
                                       ->orWhere('category.id_parent', 'like',$id_cat);
                             })
+                            ->orderBy('date_publication',$order)
                             ->get();
 
         return json_encode($listElements);

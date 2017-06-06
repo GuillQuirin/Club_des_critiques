@@ -18,37 +18,37 @@
         <h1 class="text-center">Liste des {{$infoCategory->name}}s</h1>
         
         <div class="row" id="searchElement">
-            {{--
-                <p>Date de publication : </p>
-                <select name="order">
-                    <option value="1" selected>Plus récent</option>
-                    <option value="0">Plus ancien</option>
-                </select>
-             --}}
 
             {!! Form::select('id_category', 
-                        [$infoCategory->id=>'Liste des catégories de '.$infoCategory->name]+$listSubCategory, 
+                        [$infoCategory->id=>'Sous-catégories de '.$infoCategory->name.' :']+$listSubCategory, 
                         null, 
-                        ['class' => 'col-xs-10 col-xs-offset-1 
+                        ['class' => 'col-xs-10 col-xs-offset-1 verti_marg
                                     col-sm-4 col-sm-offset-1 
-                                    col-md-3 col-md-offset-1']) !!}
+                                    col-md-4 col-md-offset-1']) !!}
 
-            <input type="text" name="name" placeholder="Saisissez le nom de l'oeuvre"
-                    class="text-center 
+            {!! Form::select('order', 
+                        [null=>'Trier par date', 'Plus récent', 'Plus ancien'], 
+                        null, 
+                        ['class' => 'col-xs-10 col-xs-offset-1 verti_marg
+                                    col-sm-4 col-sm-offset-2 
+                                    col-md-4 col-md-offset-2']) !!}
+
+            <input type="text" name="name" placeholder="Nom d'une oeuvre"
+                    class="text-center verti_marg
+                        col-xs-10 col-xs-offset-1 
+                        col-sm-4 col-sm-offset-1
+                        col-md-4 col-md-offset-1">
+
+            <input type="text" name="creator" placeholder="Nom d'un auteur"
+                    class="text-center verti_marg
                         col-xs-10 col-xs-offset-1 
                         col-sm-4 col-sm-offset-2
-                        col-md-3 col-md-offset-1">
-
-            <input type="text" name="creator" placeholder="Saisissez le nom de l'auteur"
-                    class="text-center 
-                        col-xs-10 col-xs-offset-1 
-                        col-sm-4 col-sm-offset-2
-                        col-md-3 col-md-offset-1">
+                        col-md-4 col-md-offset-2">
 
 
-            <button data-route="{{route('bring_elements')}}" class="btn  col-xs-10 col-xs-offset-1 
+            <button data-route="{{route('bring_elements')}}" class="btn verti_marg col-xs-10 col-xs-offset-1 
                                                                     col-sm-4 col-sm-offset-4
-                                                                    col-md-3 col-md-offset-1">Rechercher</button> 
+                                                                    col-md-4 col-md-offset-4">Rechercher</button> 
         </div>
 
         <hr>

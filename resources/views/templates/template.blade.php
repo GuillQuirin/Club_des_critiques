@@ -64,7 +64,13 @@
                         </a>
 
                         <ul class="dropdown-menu" id="listCategory" data-route="{{ route('listCategory') }}">
-
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{{ route('elements') }}">Toutes les oeuvres</a></li>
+                            
+                            @if(Auth::check())
+                                <li role="separator" class="divider"></li>
+                                <li><a href="" data-toggle="modal" data-target="#submitElement">Proposer une oeuvre</a></li>
+                            @endif
                         </ul>
                     </li>
 
@@ -213,13 +219,12 @@
                 <p>En poursuivant votre navigation sur ce site, vous acceptez l'utilisation de cookies afin d'améliorer son fonctionnement. Pour en savoir plus et paramétrer les cookies, cliquez ici.</p>
             </div>
         @endif
+        <hr>
         <footer class="footer">
 			<div class="container text-center">
 				<span class="text-muted">
-                        <a href="#" class="no-padding-left">Notre concept</a>
-                        <a href="#">Nous contacter</a>
+                        <a href="{{ route('home')}}#contact_us">Nous contacter</a>
                         <a href="/"><img class="logo" src="/images/logo.png" alt="logo"></a>
-                        <a href="{{ route('admin') }}">Administration</a>
                         <a href="#">Copyright</a>
                 </span>
 			</div>
@@ -230,6 +235,9 @@
     
         <!-- MODAL INSCRIPTION -->
         @include('templates.modalRegister')
+
+        <!-- MODAL PROPOSITION OEUVRE -->
+        @include('templates.modalSubmitElement')
 
         <!-- JAVASCRIPT -->
         {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js') !!}
@@ -258,10 +266,8 @@
                         html+='<li><a href="{{ route('list_category') }}/'+value.id+'">'+value.name+'</a></li>';
                     });
 
-                    $('ul#listCategory').html(html);
-                    $('ul#listCategory').append('<li role="separator" class="divider"></li>');
-                    $('ul#listCategory').append('<li><a href="{{ route('elements') }}">Toutes les oeuvres</a></li>');
-                })
+                    $('ul#listCategory').prepend(html);
+                })                      
                 .fail(function (data) {
                     console.log(data);
                 });
@@ -285,7 +291,7 @@
                         if(value!="" && value!=undefined)
                             searchInfos[name]=value;
                     });
-
+                    //console.log(searchInfos);
                     //Selection des élèments concordants
                     $.ajax({
                         url: url,

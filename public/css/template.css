@@ -104,6 +104,7 @@ hr{
 footer a{
     color: #777;
     padding-left:60px;
+    padding-bottom: 30px;
 }
 
 footer a:hover, footer a:active, footer a:focus{
@@ -121,6 +122,11 @@ footer a:hover, footer a:active, footer a:focus{
     padding-right: 75px;
     padding-left: 75px;
     position: relative;
+}
+
+.verti_marg{
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 /* FORMAT XS */

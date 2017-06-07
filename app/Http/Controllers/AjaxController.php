@@ -113,10 +113,10 @@ class AjaxController extends Controller
         $listUsers = DB::table('user')
                         ->select( 'user.id', 
                                   'user.first_name as name',
-                                  'user.status as subName',
+                                  'user.id_status as subName',
                                   'user.description',
                                   'user.picture',
-                                  'user.location')
+                                  'user.id_department')
                         ->where($filter)
                         ->get();
 

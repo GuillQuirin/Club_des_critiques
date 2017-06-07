@@ -11,6 +11,7 @@ use App\UserElement;
 use App\UserRoom;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class RoomsController extends Controller
 {
@@ -36,8 +37,10 @@ class RoomsController extends Controller
 	public function showFuturRooms()
 	{
         $rooms = Room::where('date_start', '>', date("Y-m-d H:i:s"))->get();
+        $user_room = UserRoom::where('id_user', explode(',', Auth::id()))->get();
 		return view('rooms.index')
-            ->with(compact('rooms'));
+            ->with(compact('rooms'))
+            ->with(compact('user_room'));
 	}
 
 	/**
@@ -87,7 +90,7 @@ class RoomsController extends Controller
         $header = Room::findOrFail($id);
         $element = Element::findOrFail($header->id_element);
         $cat = Category::findOrFail($element->id_category);
-        $mark = UserElement::where('id_element', $element->id)->where('id_user', $element->id)->first();
+        $mark = UserElement::where('id_element', $element->id)->where('id_user', Auth::id())->first();
         $global_mark = UserElement::where('id_element', $element->id)->get();
         $user_room = UserRoom::where('id_room', $header->id)->get();
         foreach ($user_room as $u){
@@ -120,7 +123,7 @@ class RoomsController extends Controller
                 'status_user' => 1
             ]
         );
-		return view('rooms.index');
+        return Redirect::route('futur_rooms');
 	}
 
 	/////// ADMINISTRATION //////

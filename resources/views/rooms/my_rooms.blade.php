@@ -16,24 +16,28 @@
                 <thead>
                 <tr>
                     <th>Titre (auteur)</th>
+                    <th>Date de publication</th>
                     <th>Dates du salon</th>
                     <th>Numéro du salon</th>
                     <th>Note attribuée</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php for ($i = 1; $i <= 15; $i++) { ?>
-                <tr>
-                    <td>Harry Potter <?php echo $i;?> (J.K Rowling)</td>
-                    <td>Du 01/05/2017 au 01/07/2017</td>
-                    <td>Salon 1</td>
-                    <td>4,5/5</td>
-                </tr>
-                <?php } ?>
+                @foreach($test as $room)
+                    <tr>
+                        <td>{{$room->name}} ({{$room->creator}})</td>
+                        <td>{{date("d/m/Y i:m:s", strtotime($room->date_publication))}}</td>
+                        <td>Du {{date("d/m/Y", strtotime($room->date_start))}} au {{date("d/m/Y", strtotime($room->date_end))}}</td>
+                        <td>Salon 1</td>
+                        <td></td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
     </div>
+    @foreach($test as $room)
+        {{dump($room)}}@endforeach
 
     <div class="modal fade" id="join" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

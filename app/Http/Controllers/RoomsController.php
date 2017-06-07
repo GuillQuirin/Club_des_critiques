@@ -51,7 +51,20 @@ class RoomsController extends Controller
      */
 	public function showMyRooms()
 	{
-		return view('rooms.my_rooms');
+        $rooms = Room::whereIn('id', function($query){
+            $query->select('id_room')
+                ->from('user_room')
+                ->where('id_user', Auth::id());
+        })->get();
+        $elements = Element::whereIn('id', function($query){
+            $query->select('id_element')
+                ->from('user_element')
+                ->where('id_user', Auth::id());
+        })->get();
+        $test = DB::select('SELECT element.name, element.creator, element.date_publication, user_element.mark, room.name as room_name, room.date_start, room.date_end FROM element, user_element, room WHERE room.id_element = user_element.id_element and user_element.id_user = '.Auth::id().' and room.id_element = element.id');
+		return view('rooms.my_rooms')
+            ->with(compact('rooms'))
+		    ->with(compact('test'));
 	}
 
     /**

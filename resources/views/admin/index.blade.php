@@ -48,19 +48,6 @@
 		  	<div class="panel panel-default">
 		    	<div class="panel-heading">
 		      		<h4 class="panel-title">
-		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-		        		Pages statiques</a>
-		      		</h4>
-		    	</div>
-		    	<div id="collapse3" class="panel-collapse collapse">
-		      		<div class="panel-body">
-
-		      		</div>
-		    	</div>
-		  	</div>
-		  	<div class="panel panel-default">
-		    	<div class="panel-heading">
-		      		<h4 class="panel-title">
 		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
 		        		Salons</a>
 		      		</h4>
@@ -460,6 +447,62 @@
 			// Affiche le bouton "ajouter un utilisateur"
 			$('#btnHideAddUser').click(function() {
 				$('#btnShowAddUser').show();
+			});
+
+			$('a.edit-user').on('click', function() {
+			    var myModal = $('#editUserModal');
+
+			    var userId = $(this).closest('tr').find('td.user-id').html();
+			    var selectEditUserDepartment = $('#edit_user_department');
+			    var selectEditUserStatus = $('#edit_user_status');
+
+			    $.ajax({
+	                data : { userId : userId },
+	                url: "{{ route('get_user') }}",
+	                type: 'get',
+	                success: function(data) {
+	                	console.log(data);
+	                	$('#id_user').val(data.id);
+	                	$('#edit_user_last_name').val(data.last_name);	
+	                	$('#edit_user_first_name').val(data.first_name);
+	                	$('#edit_user_descrition').val(data.description);
+	                	$('#edit_user_picture').val(data.picture);
+	                	// $('#edit_user_department').val(data.user.id_department);
+	                	$('#edit_user_email').val(data.email);	                	
+	                	// $('#edit_user_status').val(data.user.id_status);
+	                	
+	                	selectEditUserDepartment.selectpicker('val', data.id_department);
+	                	selectEditUserStatus.selectpicker('val', data.id_status);
+
+	                	// Affichage des sous catégories                 	
+			            // $.ajax({
+			            //     data : { categoryId : data.catgory },
+			            //     url: "{{ route('get_sub_categories') }}",
+			            //     type: 'get',
+			            //     success: function(subCategories) {
+			            //         if (subCategories.length) {
+			            //             selectEditElementSubCat.attr('disabled',false);
+			            //             selectEditElementSubCat.html('<option value="" disabled selected>Choisissez une sous catégorie</option>');
+			            //             jQuery.each(subCategories, function() {
+			            //                 selectEditElementSubCat.append(new Option(this.name, this.id));
+			            //             });
+			            //             selectEditElementSubCat.selectpicker('refresh');
+			            //             selectEditElementSubCat.selectpicker('val', data.element.id_category);
+			            //         } else {
+			            //             selectEditElementSubCat.html('<option value="" disabled selected>Pas de sous catégorie disponible</option>');
+			            //             selectEditElementSubCat.selectpicker('refresh');
+			            //         }
+			            //     }
+			            // });	
+			            myModal.modal('toggle');            
+			     
+	                },
+	                error : function() {
+	                	// gestion d'erreur
+	                }
+	            });
+
+	            return false;
 			});
 
 	// FUNCTIONS

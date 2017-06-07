@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\User;
+use App\Department;
 
 class ElementController extends Controller
 {
@@ -38,6 +43,31 @@ class ElementController extends Controller
                 ->with('nbElements', 8)
                 ->with(compact('popUp', $popUp));
 	} 
+
+    /**
+     * Enregistrement de la proposition d'ajout d'une oeuvre
+     *
+     * @return view
+     */
+    public function submitProposition(Request $request)
+    {
+        if(Auth::check()){
+            try{
+                $this->validate($request, [
+                   'type' => 'required',
+                   'date' => 'required',
+                   'author' => 'required',
+                   'element' => 'required',
+                ]);
+                $input = $request->all();
+            }
+            catch(\Exception $e){
+                return 2;
+            }
+            
+            return 1;
+        }
+    } 
 
 
 	/** 

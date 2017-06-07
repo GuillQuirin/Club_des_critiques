@@ -130,6 +130,9 @@ $(document).ready(function(){
             switch(i){
                 case 1: // OK
                     popUpMessage += '.alert-success';
+                    
+                    //Suppression des champs pour éviter le spam d'envoi de formulaires
+                    form.find("input[type!='submit'], textarea, select").val('');
                     break;
                 case 2: // Problème fonctionnel
                     popUpMessage += '.alert-warning';

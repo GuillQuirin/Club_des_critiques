@@ -1,53 +1,65 @@
-<div class="modal fade" id="submitElement" tabindex="-1" role="dialog" aria-labelledby="myModalSubmit">
+<div class="modal fade" id="submitElement" tabindex="-1" role="dialog" aria-labelledby="myModalProposition">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalSubmit">Proposer une oeuvre</h4>
+                <h4 class="modal-title" id="myModalProposition">Proposer une oeuvre</h4>
             </div>
             <div class="modal-body">
-                {!! Form::open(['url' => 'login', 'class' => 'notRedirect', 'id' => 'formLogin']) !!}
-                <div class="form-group">
-                    {!! Form::label('emailLogin','Saisissez votre adresse e-mail') !!}
-                    {!! Form::email('email','',['id'=>'emailLogin',
-                                                'class' => 'form-control',
-                                                'required' => 'required']) !!}
-                    {!! $errors->first('emailLogin', '<small class="help-block">:message</small>') !!}
-
-                    {!! Form::label('passwordLogin','Saisissez votre mot de passe') !!}
-                    {!! Form::password('password',[ 'id' => 'passwordLogin',
+                {!! Form::open(['url' => 'proposition_element', 'class' => 'notRedirect', 'id' => 'proposition_element']) !!}
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        {!! Form::label('label_type',"Type d'oeuvre") !!}
+                        {!! Form::text('type','',['id'=>'label_type',
+                                                                'class' => 'form-control',
+                                                                'required' => 'required']) !!}
+                    </div>
+                    
+                    <div class="col-md-6">
+                        {!! Form::label('label_date','Année de publication') !!}
+                        {!! Form::text('date','',['id'=>'label_date',
                                                     'class' => 'form-control',
                                                     'required' => 'required']) !!}
-                    {!! $errors->first('passwordLogin', '<small class="help-block">:message</small>') !!}
+                    </div>
+
+                    <div class="col-md-6">
+                        {!! Form::label('label_author',"Nom de l'auteur") !!}
+                        {!! Form::text('author','',['id'=>'label_author',
+                                                    'class' => 'form-control',
+                                                    'required' => 'required']) !!}
+                    </div>
+                
+                    <div class="col-md-6">
+                        {!! Form::label('label_element',"Nom de l'oeuvre") !!}
+                        {!! Form::text('element','',['id'=>'label_element',
+                                                    'class' => 'form-control',
+                                                    'required' => 'required']) !!}
+                    </div>
+                </div>
                     <div class="alert alert-dismissible alert-success" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        Vous êtes déjà connectés, merci de rafraichir la page.
+                        Votre proposition a été envoyée correctement.
                     </div>
                     <div class="alert alert-dismissible alert-warning" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        Les identifiants sont incorrects.
+                        Les zones de saisies sont incompletes ou erronées.
                     </div>
                     <div class="alert alert-dismissible alert-danger" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        Authentification impossible.
+                        Envoi impossible.
                     </div>
-                </div>
+                
                 <div class="row">
-                    <span class="col-xs-6 col-sm-6 col-md-6 text-left">
-                        <a  class="btn btn-warning" role="button" data-toggle="collapse" 
-                        href="#forgetPwd" aria-expanded="false" aria-controls="forgetPwd">
-                        Mot de passe oublié ?</a>
-                    </span>
-                    <span class="col-xs-6 col-sm-6 col-md-6 text-right">
-                        {!! Form::submit("Se connecter", ['class' => 'btn btn-success']) !!}
+                    <span class="col-xs-6 col-xs-offset-3 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 text-center">
+                        {!! Form::submit("Envoyer la proposition", ['class' => 'btn btn-success']) !!}
                     </span>
                 </div>
                 {!! Form::close() !!}

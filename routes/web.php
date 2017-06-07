@@ -23,6 +23,8 @@
 	//Envoi d'un mail aux admins en ajax
 	Route::post('contactAdmin', ['as' => '/', 'uses' => 'UserController@contactAdmin']);
 
+	//Envoi d'une proposition d'ajout d'oeuvre
+	Route::post('proposition_element', ['as' => '/', 'uses' => 'ElementController@submitProposition']);
 
 /****** CATEGORIES ******/
 

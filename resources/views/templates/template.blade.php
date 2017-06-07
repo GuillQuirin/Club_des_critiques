@@ -162,9 +162,7 @@
                         <ul class="dropdown-menu">
                             @if(Auth::guest())
                                 <li>
-                                    <a href="" data-toggle="modal" data-target="#loginModal">Authentification 
-                                        <span class="badge">42</span>
-                                    </a>
+                                    <a href="" data-toggle="modal" data-target="#loginModal">Authentification</a>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li>

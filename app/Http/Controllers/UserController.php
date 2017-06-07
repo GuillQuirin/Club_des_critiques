@@ -15,6 +15,7 @@ use App\Mail\Register;
 use App\Mail\Contact;
 use App\Mail\BackUp;
 use App\User;
+use App\Department;
 
 class UserController extends Controller
 {

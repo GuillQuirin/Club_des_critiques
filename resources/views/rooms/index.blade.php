@@ -10,15 +10,16 @@
 
 @section('content')
     <div class="container">
-        <div class="text-center">
-            <h1>Les salons à venir</h1>
+            <h1 class="text-center">Les salons à venir @if(Auth::guest())<small>Pour rejoindre un salon à venir, veuillez vous connecter.</small>@endif</h1>
+
             <table id="salons" class="table table-hover table-responsive" cellspacing="0">
                 <thead>
                     <tr>
                         <th>Titre (auteur)</th>
                         <th>Dates du salon</th>
-                        <th>Numéro du salon</th>
-                        <th>Action</th>
+                        @if(Auth::check())
+                            <th>Information</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -26,7 +27,7 @@
                     <tr>
                         <td>{{$room->element->name}} ({{$room->element->creator}})</td>
                         <td>Du {{date("d/m/Y", strtotime($room->date_start))}} au {{date("d/m/Y", strtotime($room->date_end))}}</td>
-                        <td>Salon 1</td>
+                        @if(Auth::check())
                         <td> @if(!($user_room->contains('id_room', $room->id)))
                                 <button type="button"
                                         class="btn btn-success"
@@ -38,9 +39,10 @@
                                     Rejoindre le salon
                                 </button>
                             @else
-                                 <a href="#" type="button" class="btn btn-info">Salon déjà rejoint !</a>
+                                 Salon déjà rejoint !
                             @endif
                         </td>
+                        @endif
                     </tr>
                     <div class="modal fade" id="join" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
@@ -73,7 +75,6 @@
                 </tbody>
             </table>
         </div>
-    </div>
 @endsection
 
 @section('js')

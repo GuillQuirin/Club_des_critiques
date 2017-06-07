@@ -11,14 +11,14 @@
 @section('content')
     <div class="container">
         <div class="text-center">
-            <h1>Liste de tous les salons</h1>
+            <h1>Liste de tous les salons @if(Auth::guest())<small>Pour rejoindre un salon à venir, veuillez vous connecter.</small>@endif</h1>
+
             <table id="salons" class="table table-hover table-responsive" cellspacing="0">
                 <thead>
                 <tr>
                     <th>Titre (auteur)</th>
                     <th>Dates du salon</th>
-                    <th>Numéro du salon</th>
-                    <th>Action</th>
+                    <th>Statut</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -26,18 +26,10 @@
                     <tr>
                         <td>{{$room->element->name}} ({{$room->element->creator}})</td>
                         <td>Du {{date("d/m/Y", strtotime($room->date_start))}} au {{date("d/m/Y", strtotime($room->date_end))}}</td>
-                        <td>Salon 1</td>
                         <td>@if($room->date_start > date("Y-m-d H:i:s"))
-                            <button type="button"
-                                    class="btn btn-success"
-                                    data-toggle="modal"
-                                    data-target="#join"
-                                    data-id_room="{{$room->id}}"
-                                    data-title="Harry Potter"
-                                    data-autor="J.K Rowling"
-                                    data-salon="Salon 1">
-                                Rejoindre le salon
-                            </button>
+                                Salon à venir
+                            @else
+                                Salon terminé
                             @endif
                         </td>
                     </tr>

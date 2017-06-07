@@ -80,7 +80,9 @@
 
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('futur_rooms') }}">Les salons à venir</a></li>
-                            <li><a href="{{ route('my_rooms') }}">Mes salons</a></li>
+                            @if(Auth::check())
+                                <li><a href="{{ route('my_rooms') }}">Mes salons</a></li>
+                            @endif
                             <li role="separator" class="divider"></li>
                             <li><a href="{{ route('rooms') }}">Tous les salons</a></li>
                         </ul>

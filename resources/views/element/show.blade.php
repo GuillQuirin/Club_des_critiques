@@ -27,7 +27,7 @@
 
     <!-- Catégorie -->
     <div class="row">
-		<div class="text-center">Vous pouvez retrouver cette oeuvre dans la catégorie 
+		<div class="text-center col-10 col-md-offset-1">Vous pouvez retrouver cette oeuvre dans la catégorie 
             <a id="route_category_parent" data-route="{{route('list_category')}}"><span id="name_category"></span></a>
         </div>
     </div>

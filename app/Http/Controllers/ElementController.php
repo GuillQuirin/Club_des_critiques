@@ -16,21 +16,27 @@ class ElementController extends Controller
      */
 	public function index()
 	{
-        $categories = [1 => 'Film', 2 => 'Livre', 3 => 'Exposition'];
-        $subCategories = [1 => 'Fiction', 2 => 'Horreur', 3 => 'Humour'];
-
+        $listElements = DB::table('element')
+                            ->leftJoin('category', 'element.id_category', '=', 'category.id')
+                            ->select(   'element.id',
+                                        'element.name',
+                                        'element.creator as subName',
+                                        'element.description',
+                                        'element.url_picture as picture',
+                                        'element.id_category',
+                                        'category.name as name_category',
+                                        'category.id_parent as id_parent',
+                                        'category.id as id_category',
+                                        'element.date_publication as date')
+                            
+                            ->orderBy('date_publication', 'desc')
+                            ->get();
         $popUp = 'element.show';
-        $array['items'] = [
-            ['id' => 1, 'name' => 'Harry Potter', 'subname' => 'Livre', 'url_img' => '/images/oeuvre.jpg', 'description' => "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."],
-            ['id' => 2, 'name' => 'Interstellar', 'subname' => 'Film', 'url_img' => '/images/oeuvre1.jpg', 'description' => "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."],
-            ['id' => 3, 'name' => 'Paris Games Week', 'subname' => 'Exposition', 'url_img' => '/images/oeuvre2.jpg', 'description' => "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."],
-            ];
 
-		return view('element.index')
-                ->with(compact('categories'))
-                ->with(compact('subCategories'))
-                ->with(compact('popUp'))
-                ->with(compact('array'));
+        return view('element.index')
+                ->with('grid', $listElements)
+                ->with('nbElements', 8)
+                ->with(compact('popUp', $popUp));
 	} 
 
 

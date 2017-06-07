@@ -27,35 +27,14 @@ class UserController extends Controller
      public function index()
      {
           // Collection de tous les users
-          $listUsers = DB::table('user')->select( 'id', 
-                                                  'first_name as name', 
-                                                  'id_status as subName',
-                                                  'description',
-                                                  'id_department',
-                                                  'date_created as date',
-                                                  'picture')
-                                        ->orderBy('date_created', 'desc')
-                                        ->get();
+          $listUsers = User::all();
                                         
           //Renommage des statuts
           foreach ($listUsers as $user) {
-               switch ($user->subName) {
-                         case '2':
-                              $user->subName="Administrateur";
-                              break;
-               
-                         case '1':
-                              $user->subName="Membre";
-                              break;
-          
-                         case '-1':
-                              $user->subName="Membre banni";
-                              break;
-
-                         default:
-                              $user->subName="Membre";
-                              break;
-                    }     
+               $user->name = $user->first_name;
+               $user->subName = $user->status->label;
+               $user->date = $user->date_created;
+                   
           }
 
           $redirection = 'show_user';
@@ -72,12 +51,12 @@ class UserController extends Controller
      private function getDepartments(){
           //Liste des departements
           $departments = DB::table('department')
-                                   ->select('code','name')
+                                   ->select('id','code','name')
                                    ->get();
 
           $listDepartments = [];
           foreach ($departments as $key => $dpt)
-               $listDepartments[$dpt->code] = "(".$dpt->code.") ".$dpt->name;
+               $listDepartments[$dpt->id] = "(".$dpt->code.") ".$dpt->name;
 
           return $listDepartments;
      }
@@ -91,7 +70,7 @@ class UserController extends Controller
 	public function show($id)
 	{
           //Liste des infos de l'utilisateur
-          $infos = DB::table('user')
+/*          $infos = DB::table('user')
                               ->leftJoin('department', 'user.id_department' , '=' , 'department.code')
                               ->select( 'user.id', 
                                         'user.first_name', 
@@ -106,7 +85,9 @@ class UserController extends Controller
                                         'date_created'
                                         )
                               ->where('user.id', '=', $id)
-                              ->get();
+                              ->get();*/
+
+          $infos = User::find($id);
 
           $myAccount  = (Auth::check() && Auth::id() == $id);
 
@@ -149,7 +130,7 @@ class UserController extends Controller
           }
 
 		return view('user.show')
-                    ->with('infos',$infos[0])
+                    ->with('infos',$infos)
                     ->with('myAccount',$myAccount)
                     ->with('department', $listDepartments)
                     ->with('listElements', $listElements)

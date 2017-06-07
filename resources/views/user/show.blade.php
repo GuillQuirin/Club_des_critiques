@@ -34,8 +34,8 @@
               Membre banni
             @endif
           </small>
-            @if(isset($infos->department_code))
-              <small>{{$infos->department_name}} ({{$infos->department_code}})</small>
+            @if(isset($infos->department->code))
+              <small>{{$infos->department->name}} ({{$infos->department->code}})</small>
             @else
               <small>Localisation non renseignée</small>
             @endif

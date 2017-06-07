@@ -75,7 +75,7 @@ class AjaxController extends Controller
             elseif($key=='order')
               $order = ($value=='0') ? 'asc' : 'desc';
             else
-              $filter[] = ["category.id", 'like', '%'.$value.'%'];
+              $filter[] = ["element.".$key, 'like', '%'.$value.'%'];
         }
 
         $listElements = DB::table('element')
@@ -91,7 +91,7 @@ class AjaxController extends Controller
                             ->where(function($query) use($id_cat){
                                 if($id_cat!="")
                                     $query->where('category.id', 'like', $id_cat)
-                                      ->orWhere('category.id_parent', 'like',$id_cat);
+                                        ->orWhere('category.id_parent', 'like',$id_cat);
                             })
                             ->orderBy('date_publication',$order)
                             ->get();

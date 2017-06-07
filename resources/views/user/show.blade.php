@@ -26,11 +26,11 @@
           @endif
 
           <small>
-            @if($infos->status==0 || $infos->status==1)
+            @if($infos->id_status==0 || $infos->id_status==1)
               Inscrit depuis le {{date('d/m/Y', strtotime($infos->date_created))}}
-            @elseif($infos->status==1)
+            @elseif($infos->id_status==1)
               Administrateur
-            @elseif($infos->status==1)
+            @elseif($infos->id_status==1)
               Membre banni
             @endif
           </small>

@@ -15,6 +15,7 @@ use App\Mail\Register;
 use App\Mail\Contact;
 use App\Mail\BackUp;
 use App\User;
+use App\Department;
 
 class UserController extends Controller
 {
@@ -28,9 +29,9 @@ class UserController extends Controller
           // Collection de tous les users
           $listUsers = DB::table('user')->select( 'id', 
                                                   'first_name as name', 
-                                                  'status as subName',
+                                                  'id_status as subName',
                                                   'description',
-                                                  'location',
+                                                  'id_department',
                                                   'date_created as date',
                                                   'picture')
                                         ->orderBy('date_created', 'desc')
@@ -91,13 +92,13 @@ class UserController extends Controller
 	{
           //Liste des infos de l'utilisateur
           $infos = DB::table('user')
-                              ->leftJoin('department', 'user.location' , '=' , 'department.code')
+                              ->leftJoin('department', 'user.id_department' , '=' , 'department.code')
                               ->select( 'user.id', 
                                         'user.first_name', 
                                         'user.last_name',
                                         'user.email',
                                         'user.is_contactable',
-                                        'user.status',
+                                        'user.id_status',
                                         'user.description',
                                         'user.picture',
                                         'department.name as department_name',
@@ -315,7 +316,7 @@ class UserController extends Controller
                $user = User::create($input);
           }
           catch(\Exception $e){
-               //var_dump($e->getMessage());
+               var_dump($e->getMessage());
                return 2;
           }
 
@@ -357,7 +358,7 @@ class UserController extends Controller
                try{
                     if(Auth::attempt([  'email' => $input['email'], 
                                         'password' => $input['password'],
-                                        'status' => 1])){
+                                        'id_status' => 1])){
                          
                          $user = Auth::user();
                          $request->session()->put('user_id', $user->id);
@@ -455,8 +456,8 @@ class UserController extends Controller
                $user->password = Hash::make(Input::get('new_pwd'));
                
                //Si l'utilisateur vient juste de créer son compte, alors on l'active une fois le mdp établi
-               if($user->status==0)
-                    $user->status = 1;
+               if($user->id_status==0)
+                    $user->id_status = 1;
                
                $user->token ="";
                $user->save();
@@ -490,7 +491,7 @@ class UserController extends Controller
                          $user->description=NULL;
                          $user->picture=NULL;
                          $user->email=NULL;
-                         $user->status=-2;
+                         $user->id_status=6;
                          $user->password=NULL;
                          $user->token=NULL;
                          $user->remember_token=NULL; //Ne marche pas, je sais pas pourquoi

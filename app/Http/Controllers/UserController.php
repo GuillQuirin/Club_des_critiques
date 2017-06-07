@@ -64,6 +64,7 @@ class UserController extends Controller
 		return view('user.index')
                ->with('grid', $listUsers)
                ->with('departments', $departments)
+               ->with('nbElements', 8)
                ->with('redirection', $redirection);
 	}
 
@@ -152,6 +153,7 @@ class UserController extends Controller
                     ->with('department', $listDepartments)
                     ->with('listElements', $listElements)
                     ->with('grid', $exchangedElements)
+                    ->with('nbElements', 8)
                     ->with(compact('popUp', $popUp));
 	}
 

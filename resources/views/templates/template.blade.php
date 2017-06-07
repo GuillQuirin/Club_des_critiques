@@ -239,6 +239,7 @@
         <!-- MODAL PROPOSITION OEUVRE -->
         @include('templates.modalSubmitElement')
 
+
         <!-- JAVASCRIPT -->
         {!! HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js') !!}
         {!! HTML::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js') !!}
@@ -250,7 +251,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
         {!! HTML::script('js/autocomplete.js') !!}
         {!! HTML::script('js/template.js') !!}
+        
         @yield('js')
+        
         <script>
             $(document).ready(function(){
                 /* Liste des catégories */
@@ -291,7 +294,9 @@
                         if(value!="" && value!=undefined)
                             searchInfos[name]=value;
                     });
+
                     //console.log(searchInfos);
+
                     //Selection des élèments concordants
                     $.ajax({
                         url: url,
@@ -355,16 +360,48 @@
 
                     //Mise à jour de la pagination et de l'affichage
                     var html="";
-                    for(var i=0;i<parseInt($(grid).find('div').length)/12;i++){
-                        if(i==0)
-                            html += "<li class='active'>";
-                        else
-                            html += "<li>";
-                        html += "<a>"+(i+1)+"</a></li>";
-                    }
+                    <?php 
+                        if(isset($nbElements)):
+                    ?>
+                        for(var i=0;i<parseInt($(grid).find('div').length)/<?php echo $nbElements; ?>;i++){
+                            if(i==0)
+                                html += "<li class='active'>";
+                            else
+                                html += "<li>";
+                            html += "<a>"+(i+1)+"</a></li>";
+                        }
+                    <?php endif; ?>
                     $('ul.pagination').html(html);
                     return false;
                 });
+
+                //Enregistrement des infos dans une variable pour manipulation DOM par la suite
+                var mosaique = [];
+                $("#grid div").each(function(){
+                    mosaique.push($(this).find('a').data('id'));
+                });
+
+                <?php if(isset($nbElements)): ?>
+                    //Pagination
+                    $('ul.pagination').on("click","li",function(e){
+                        e.preventDefault();
+                        
+                        var currentActive = parseInt($('ul.pagination li.active a').html());
+                        var new_page = parseInt($(this).find('a').html());
+                        $('ul.pagination li').removeClass('active');
+                        $(this).addClass("active");
+                        
+                        var start_display = (new_page-1)*<?php echo $nbElements; ?>;
+                        var i=0;
+                        console.log(start_display);
+                        $.each(mosaique, function(key, value){
+                            var element = $("#grid div").find("[data-id='"+value+"']");
+                            $(element).parent().toggle(i>=start_display && i<start_display+<?php echo $nbElements; ?>);
+                            i++;
+                        });
+                        return false;
+                    });
+                <?php endif; ?>
             });   
         </script>
     </body>

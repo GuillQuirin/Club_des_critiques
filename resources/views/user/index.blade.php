@@ -4,9 +4,6 @@
      <link rel="stylesheet" type="text/css" href="{{asset('css/users.css')}}">    
 @endsection --}}
 
-@section('js')
-    <script type="text/javascript" src="{{asset('js/grid.js')}}"></script>
-@endsection
 
 @section('title')
     Liste des utilisateurs
@@ -49,17 +46,6 @@
         <hr>
 
         @include('templates.mosaique')
-        
-        <div class="row text-center">
-            <ul class="pagination">
-            <?php 
-                for($i=0;$i<count($grid)/12;$i++){
-                    echo ($i==0) ? "<li class='active'>" : "<li>";
-                    echo "<a>".($i+1)."</a></li>";
-                }
-            ?>
-            </ul>
-        </div>
 
     </div>
 @endsection

@@ -1,3 +1,4 @@
+<!--Mosaique-->
 <div class='row' id="grid">
     @foreach ($grid as $key => $value)
         <div class='col-xs-6 col-md-3'>    
@@ -44,6 +45,24 @@
         </div>
     @endforeach
 </div>
+
+
+<!--Pagination-->
+<div class="row text-center">
+    <ul class="pagination">
+    <?php 
+        /*
+            Pour modifier le nombre d'élements affichés au load de la page 
+                changer template.css : #grid div:nth-of-type(n+9)
+        */
+        for($i=0;$i<count($grid)/$nbElements;$i++){
+            echo ($i==0) ? "<li class='active'>" : "<li>";
+            echo "<a>".($i+1)."</a></li>";
+        }
+    ?>
+    </ul>
+</div>
+
 <!-- MODAL -->
 <div class="modal fade" id="openModal" tabindex="-1" role="dialog" aria-labelledby="openModal">
     <div class="modal-dialog" role="document">

@@ -52,6 +52,7 @@ class WelcomeController extends Controller
 		return view('welcome')
 				->with(compact('page'))
 				->with('grid', $listElements)
+				->with('nbElements', 8)
 				->with('popUp', $popUp);
 	}
 

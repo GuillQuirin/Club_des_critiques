@@ -59,6 +59,7 @@ class CategoryController extends Controller
 		return view('category.show')
                 ->with('infoCategory', $infoCategory[0])
                 ->with('listSubCategory', $listSubCategory)
+                ->with('nbElements', 8)
                 ->with('grid', $listElements)
                 ->with(compact('popUp', $popUp));
 	}

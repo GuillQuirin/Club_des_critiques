@@ -13,6 +13,6 @@ class Department extends Model
      */
     public function user()
     {
-    	return $this->hasMany(UserElement::class, 'location');
+    	return $this->hasMany(UserElement::class, 'id_department');
     }
 }

@@ -89,7 +89,7 @@ class RoomsController extends Controller
                                         ->limit(1)
                                         ->get();
 
-        return json_encode($nextRoom[0]);
+        return (isset($nextRoom[0])) ? json_encode($nextRoom[0]) : NULL;
     }
 
 	/**

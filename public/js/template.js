@@ -6,24 +6,32 @@ $(document).ready(function(){
         type: 'GET'
     })
     .done(function (data) {
-        var nextRoom = JSON.parse(data);
-        var date = new Date(nextRoom.date_start);
-        var datestring = date.getUTCFullYear() + "/" +
-                        ("0" + (date.getUTCMonth()+1)).slice(-2) + "/" +
-                        ("0" + date.getUTCDate()).slice(-2);
+        if(!data){
+            $("#nextRoomCountdown").html('Pas de salon annoncé prochainement');
+            return false;
+        }
+        else{
+            var nextRoom = JSON.parse(data);
+            var date = new Date(nextRoom.date_start);
+            var datestring = date.getUTCFullYear() + "/" +
+                            ("0" + (date.getUTCMonth()+1)).slice(-2) + "/" +
+                            ("0" + date.getUTCDate()).slice(-2);
 
-        $('#nextRoomCountdown').attr('data-countdown', datestring);
-        $('#nextRoomDetails .room').html(nextRoom.nameRoom);
-        $('#nextRoomDetails .element').html(nextRoom.nameElement);
-        $('#nextRoomDetails .date').html(nextRoom.date_start);
-        $('#nextRoomDetails a').attr('href', $('#nextRoomDetails a').data('redirect')+'/'+nextRoom.id);
+            $('#nextRoomCountdown').attr('data-countdown', datestring);
+            $('#nextRoomDetails .room').html(nextRoom.nameRoom);
+            $('#nextRoomDetails .element').html(nextRoom.nameElement);
+            $('#nextRoomDetails .date').html(nextRoom.date_start);
+            $('#nextRoomDetails a').attr('href', $('#nextRoomDetails a')
+                                    .data('redirect')+'/'+nextRoom.id)
+                                    .html('Accèdez à la fiche du salon');
 
-        $('[data-countdown]').each(function() {
-            var $this = $(this), finalDate = $(this).data('countdown');
-            $this.countdown(finalDate, function(event) {
-                $this.html(event.strftime('%D jours %H:%M:%S  <span class="caret"></span>'));
+            $('[data-countdown]').each(function() {
+                var $this = $(this), finalDate = $(this).data('countdown');
+                $this.countdown(finalDate, function(event) {
+                    $this.html(event.strftime('%D jours %H:%M:%S  <span class="caret"></span>'));
+                });
             });
-        });
+        }
     })
     .fail(function (data) {
         console.log(data);

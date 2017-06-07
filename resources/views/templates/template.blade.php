@@ -120,7 +120,7 @@
                             <p>Oeuvre : <span class="element"></span></p>
                             <p>Date de lancement : <span class="date"></span></p>
                             @if(Auth::check())
-                                <a data-redirect="{{route('next_room')}}">Accèdez à la fiche du salon</a>
+                                <a data-redirect="{{route('next_room')}}"></a>
                             @else
                                 <p>Connectez-vous pour accèder à la page du salon</p>
                             @endif

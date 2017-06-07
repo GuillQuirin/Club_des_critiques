@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 
 use DB;
+use App\User;
 use App\Other;
+use App\Status;
 use App\Element;
 use App\Category;
+use App\Department;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
@@ -23,10 +26,13 @@ class AdminController extends Controller
         $concept = DB::table('other')->where('name', 'home_concept')->first();
         $elements = Element::where('is_deleted', false)->get();        
         $allCategories = Category::where('is_deleted', false)->get();
+        $allUsers = User::all();
         $categories = Category::whereNull('id_parent')->where('is_deleted', false)->get();
         $topElements = Element::where('is_new', 1)->where('is_deleted', false)->get();
+        $departments = Department::all();
+        $status = Status::all();
 
-    	return view('admin.index', compact('concept', 'elements', 'allCategories', 'categories', 'topElements'));
+    	return view('admin.index', compact('concept', 'elements', 'allCategories', 'allUsers', 'categories', 'topElements', 'departments', 'status'));
     }
 
     /**
@@ -193,5 +199,48 @@ class AdminController extends Controller
         $element = Element::find($elementId);
         $element->is_deleted = 1;
         $element->save();
+    }
+
+    /**
+     * Ajout d'un utilisateur
+     *
+     * @return view
+     */
+    public function addUser(Request $request)
+    {
+        $user = new User();
+        
+        $user->last_name = $request->last_name;
+        $user->first_name = $request->first_name;
+        $user->id_department = $request->department;
+        $user->email = $request->email;
+        $user->id_status = $request->status;
+        if(isset($request->picture)){ $user->picture = $request->picture; }
+        if(isset($request->description)){ $user->description = $request->description; }
+        
+        $user->save();
+
+        return redirect(route('admin'));
+    }
+
+    /**
+     * Modification d'un utilisateur
+     *
+     * @return view
+     */
+    public function editUser(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->id_department = $request->department;
+        $user->email = $request->email;
+        $user->id_status = $request->status;
+        if(isset($request->picture)){ $user->picture = $request->picture; }
+        if(isset($request->description)){ $user->description = $request->description; }
+    
+        $user->save();
+
+        return redirect(route('admin'));
     }
 }

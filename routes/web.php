@@ -101,12 +101,15 @@
 	Route::post('admin/add-element', ['as' => 'add_element', 'uses' => 'AdminController@addElement']);
 	Route::put('admin/delete-element', ['as' => 'delete_element', 'uses' => 'AdminController@deleteElement']);
 	Route::put('admin/edit-element', ['as' => 'edit_element', 'uses' => 'AdminController@editElement']);
+	Route::post('admin/add-user', ['as' => 'add_user', 'uses' => 'AdminController@addUser']);
+	Route::put('admin/edit-user', ['as' => 'edit_user', 'uses' => 'AdminController@editUser']);	
 
 	// Ajax
 	Route::get('admin/sub-categories', ['as' => 'get_sub_categories', 'uses' => 'AjaxController@getSubCategories']);
 	Route::get('admin/creators', ['as' => 'get_creators', 'uses' => 'AjaxController@getCreatorForSubCat']);
 	Route::get('admin/elements', ['as' => 'get_elements', 'uses' => 'AjaxController@getElementForCreatorAndCategory']);
 	Route::get('admin/element', ['as' => 'get_element', 'uses' => 'AjaxController@getElementById']);
+	Route::get('admin/user', ['as' => 'get_user', 'uses' => 'AjaxController@getUserById']);
 
 Route::post('room/autocompleteUser', ['as' => '/', 'uses' => 'RoomsController@autocompleteUser'] );
 Route::post('room/addMessage', ['as' => '/', 'uses' => 'RoomsController@addMessage'] );

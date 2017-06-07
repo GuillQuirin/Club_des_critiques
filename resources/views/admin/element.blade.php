@@ -154,7 +154,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modifier l'oeuvre</h4>
+                <h4 class="modal-title">Modifier l'oeuvre</h4>
             </div>
             {{ Form::open(['route' => 'edit_element', 'method' => 'put']) }}
                 <div class="modal-body">

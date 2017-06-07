@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Response;
+use App\User;
 use App\Element;
 use App\Category;
 
@@ -155,5 +156,17 @@ class AjaxController extends Controller
         $cat = $element->category->parent->id;
 
         return Response::json(['element' => $element, 'catgory' => $cat]);
-    }     
+    }
+
+    /**
+     * Ajax Request : get user by id
+     * @return mixed
+     */
+    public function getUserById()
+    {
+        $userId = Input::get('userId');
+        $user = User::find($userId);
+
+        return Response::json($user);
+    }    
 }

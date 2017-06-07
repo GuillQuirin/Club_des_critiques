@@ -7,23 +7,23 @@
         </p>
         <div class="collapse" id="collapseAddUser">
             <div class="card card-block">
-                <form>
+                {{ Form::open(['route' => 'add_user', 'method' => 'post', 'class' => 'col-md-12']) }}
                     <div class="form-group">
                         <label for="last_name" class="col-2 col-form-label">Nom : </label>
                         <div class="col-10">
-                            <input class="form-control" type="text" id="last_name" name="last_name">
+                            <input class="form-control" type="text" id="user_last_name" name="last_name" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="first_name" class="col-2 col-form-label">Prénom : </label>
                         <div class="col-10">
-                            <input class="form-control" type="text" id="first_name" name="first_name">
+                            <input class="form-control" type="text" id="user_first_name" name="first_name" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="description" class="col-2 col-form-label">Description : </label>
                         <div class="col-10">
-                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                            <textarea class="form-control" id="user_description" name="description" rows="3"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -35,13 +35,27 @@
                     <div class="form-group">
                         <label for="location" class="col-2 col-form-label">Département : </label>
                         <div class="col-10">
-                            <input class="form-control" type="date" id="location" name="location">
+                            <select id="user_department" name="department" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required" title="Choisir un département">
+                                @foreach($departments as $department)
+                                    <option value="{{$department->id}}">{{$department->code}} {{$department->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="email" class="col-2 col-form-label">Email : </label>
                         <div class="col-10">
-                            <input class="form-control" type="date" id="email" name="email">
+                            <input class="form-control" type="text" id="user_email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="location" class="col-2 col-form-label">Status : </label>
+                        <div class="col-10">
+                            <select id="user_status" name="status" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required" title="Choisir un status"> 
+                                 @foreach($status as $st)
+                                    <option value="{{$st->id}}">{{$st->label}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="pull-right">
@@ -50,7 +64,7 @@
                         </button>
                         <button type="submit" class="btn btn-success">Ajouter un utilisateur</button>
                     </div>
-                </form>
+                {{ Form::close() }}
                 <br><br>
             </div>
         </div>
@@ -59,40 +73,32 @@
                 <table id="userTable" class="display" cellspacing="0" width="100%">
                     <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Nom</th>
                             <th>Prénom</th>
                             <th>Département</th>
-                            <th>Url image</th>
+                            <th>Image</th>
                             <th>Email</th>
                             <th>Statut</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($allUsers as $user)
                         <tr>
-                            <th>Poirier</th>
-                            <th>Elise</th>
-                            <th>Yvelines</th>
-                            <th>url</th>
-                            <th>elise@test.fr</th>
-                            <th>Valide</th>
-                            <th>
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                <i class="fa fa-pencil" data-toggle="modal" data-target="#editUserModal" aria-hidden="true"></i>
-                            </th>                               
-                        </tr>                               
-                        <tr>
-                            <th>Poirier</th>
-                            <th>Elise</th>
-                            <th>Yvelines</th>
-                            <th>url</th>
-                            <th>elise@test.fr</th>
-                            <th>Valide</th>
-                            <th>
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                <i class="fa fa-pencil" data-toggle="modal" data-target="#editUserModal" aria-hidden="true"></i>
-                            </th>
+                            <td class="user-id">{{ $user->id }}</td>
+                            <td>{{ $user->last_name }}</td>
+                            <td>{{ $user->first_name }}</td>
+                            <td>{{ $user->department->name}}</td>
+                            <td>{{ $user->picture }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->status->label }}</td>
+                            <td>
+                                <a href="#" class="btn edit-user"><i class="fa fa-pencil"></i></a>
+                                <!-- ajouter un btn pour bannir ? -->
+                            </td>                               
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -110,58 +116,67 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Modifier l'utilisateur</h4>
+                <h4 class="modal-title">Modifier l'utilisateur</h4>
             </div>
-            <form>
+            {{ Form::open(['route' => 'edit_user', 'method' => 'put']) }}
                 <div class="modal-body">
+                    <input type="hidden" name="id" id="id_user">
                     <div class="form-group">
                         <label for="last_name" class="col-2 col-form-label">Nom : </label>
                         <div class="col-10">
-                            <input class="form-control" type="text" id="last_name" name="last_name">
+                            <input class="form-control" type="text" id="edit_user_last_name" name="last_name" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="first_name" class="col-2 col-form-label">Prénom : </label>
                         <div class="col-10">
-                            <input class="form-control" type="text" id="first_name" name="first_name">
+                            <input class="form-control" type="text" id="edit_user_first_name" name="first_name" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="description" class="col-2 col-form-label">Description : </label>
                         <div class="col-10">
-                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                            <textarea class="form-control" id="edit_user_descrition" name="description" rows="3"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="picture" class="col-2 col-form-label">Url image : </label>
                         <div class="col-10">
-                            <input class="form-control" type="text" id="picture" name="picture">
+                            <input class="form-control" type="text" id="edit_user_picture" name="picture">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="location" class="col-2 col-form-label">Département : </label>
                         <div class="col-10">
-                            <input class="form-control" type="date" id="location" name="location">
+                            <select id="edit_user_department" name="department" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required">
+                                @foreach($departments as $department)
+                                    <option value="{{$department->id}}">{{$department->code}} {{$department->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="email" class="col-2 col-form-label">Email : </label>
                         <div class="col-10">
-                            <input class="form-control" type="date" id="email" name="email">
+                            <input class="form-control" type="email" id="edit_user_email" name="email" required>
                         </div>
                     </div>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" name="is_reported" id="is_reported">
-                            Bannir
-                        </label>
+                    <div class="form-group">
+                        <label for="location" class="col-2 col-form-label">Status : </label>
+                        <div class="col-10">
+                            <select id="edit_user_status" name="status" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required"> 
+                                 @foreach($status as $st)
+                                    <option value="{{$st->id}}">{{$st->label}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">Modifier</button>
                 </div>
-            </form>
+            {{ Form::close() }}
         </div>
     </div>
 </div>

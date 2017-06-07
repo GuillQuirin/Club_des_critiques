@@ -15,16 +15,17 @@ class User extends Authenticatable
     const CREATED_AT = 'date_created';
     const UPDATED_AT = 'date_updated';
 
-    protected $fillable = [
+    public $fillable = [
         'first_name',
         'last_name',
         'description',
         'picture',
-        'location',
+        'id_department',
         'email',
-        'status',
+        'id_status',
         'password',
         'token',
+        'is_contactable',
     ];
  
     public $timestamps = true;
@@ -74,14 +75,31 @@ class User extends Authenticatable
         return $rooms;
     }
 
+    /**
+     * Define one-to-one relation between user and department
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'id_department');
+    }
 
-    public function getEmailAttribute($value){return $value;}
-    public function getTokenAttribute($value){return $value;}
-    public function getPictureAttribute($value){return $value;}
-    public function getIs_contactableAttribute($value){return $value;}
+    /**
+     * Define one-to-one relation between user and status
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'id_status');
+    }
 
-    public function setEmailAttribute($value){$this->attributes['email'] = $value;}
-    public function setTokenAttribute($value){$this->attributes['token'] = $value;}
-    public function setPictureAttribute($value){$this->attributes['picture'] = $value;}
-    public function setIs_contactableAttribute($value){$this->attributes['is_contactable'] = $value;}
+    // public function getEmailAttribute($value){return $value;}
+    // public function getTokenAttribute($value){return $value;}
+    // public function getPictureAttribute($value){return $value;}
+    // public function getIs_contactableAttribute($value){return $value;}
+
+    // public function setEmailAttribute($value){$this->attributes['email'] = $value;}
+    // public function setTokenAttribute($value){$this->attributes['token'] = $value;}
+    // public function setPictureAttribute($value){$this->attributes['picture'] = $value;}
+    // public function setIs_contactableAttribute($value){$this->attributes['is_contactable'] = $value;}
 }

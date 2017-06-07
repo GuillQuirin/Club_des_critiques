@@ -361,7 +361,7 @@ class UserController extends Controller
                          
                          $user = Auth::user();
                          $request->session()->put('user_id', $user->id);
-                         return '/user/'.$user->id; //Adresse de destination si Auth OK
+                         return '/'; //Adresse de destination si Auth OK
                     }
                     else 
                          return 2; //Identifiants incorrects  

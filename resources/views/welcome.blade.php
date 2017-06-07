@@ -36,7 +36,7 @@
         
         <hr>
 
-        <div>
+        <div id="contact_us">
             <h2>Nous contacter</h2>
 
            {!! Form::open(['url' => 'contactAdmin', 'class' => 'notRedirect', 'id' => 'formContact']) !!}

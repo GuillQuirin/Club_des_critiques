@@ -101,44 +101,61 @@ $(document).ready(function(){
     $('form.notRedirect').submit(function(event){
         var form = $(this);
         var i=3;
-        var popUpMessage =' ';
-        var erreur ='';
         var url = form.attr('action');
 
         console.log("URL du controlleur : "+url);
         console.log(form.serialize());
 
+        form.find('input[type="submit"]').parent().prepend('<i class="fa fa-refresh fa-2x fa-spin left" aria-hidden="true"></i>');
+
         $.ajax({
             url: url,
             type: 'POST',
-            data: form.serialize(),
-            async: false
-            })
-            .done(function (data) {
-                console.log('Appel du controlleur : ok');
-                console.log(data);
-                i = (parseInt(data)) ? parseInt(data) : data;
-            })
-            .fail(function (data) {
-                console.log('Appel du controleur : fail');
-                console.log(data);
-                i = 3;
-            });
+            data: form.serialize()
+        })
+        .done(function (data) {
+            console.log('Appel du controlleur : ok');
+            console.log(data);
+
+            i = (parseInt(data)) ? parseInt(data) : data;
+            displayMessage(i, form);
+        })
+        .fail(function (data) {
+            console.log('Appel du controleur : fail');
+            console.log(data);
+
+            i = 3;
+            displayMessage(i, form);
+        });    
+        
+        event.preventDefault();
+        return false;
+    });
 
 
+    function displayMessage(i, form){
+        var popUpMessage =' ';
+        form.find('.fa-refresh').remove();
+ 
         if(Number.isInteger(i)){
             switch(i){
+                
                 case 1: // OK
                     popUpMessage += '.alert-success';
+                    form.find('input[type="submit"]').parent().prepend('<i class="fa fa-check fa-2x left" aria-hidden="true"></i>');
                     
                     //Suppression des champs pour éviter le spam d'envoi de formulaires
                     form.find("input[type!='submit'], textarea, select").val('');
                     break;
+
                 case 2: // Problème fonctionnel
                     popUpMessage += '.alert-warning';
+                    form.find('input[type="submit"]').parent().prepend('<i class="fa fa-exclamation-triangle fa-2x left" aria-hidden="true"></i>');
                     break;
+                
                 default: // Problème technique
                     popUpMessage += '.alert-danger';
+                    form.find('input[type="submit"]').parent().prepend('<i class="fa fa-exclamation-triangle fa-2x left" aria-hidden="true"></i>');
                     break;
             }
         }
@@ -147,12 +164,7 @@ $(document).ready(function(){
         
         form.find('.alert').hide();
         form.find(popUpMessage).fadeIn();
-        
-        event.preventDefault();
-        return false;
-    });
-
-    
+    }
 
     //Validation des cookies
     $('#alert_cookies button').click(function(){

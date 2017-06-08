@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\User;
 use App\Other;
+use App\Footer;
 use App\Status;
 use App\Element;
 use App\Category;
@@ -31,8 +32,9 @@ class AdminController extends Controller
         $topElements = Element::where('is_new', 1)->where('is_deleted', false)->get();
         $departments = Department::all();
         $status = Status::all();
+        $footers = Footer::all();
 
-    	return view('admin.index', compact('concept', 'elements', 'allCategories', 'allUsers', 'categories', 'topElements', 'departments', 'status'));
+    	return view('admin.index', compact('concept', 'elements', 'allCategories', 'allUsers', 'categories', 'topElements', 'departments', 'status', 'footers'));
     }
 
     /**
@@ -240,6 +242,57 @@ class AdminController extends Controller
         if(isset($request->description)){ $user->description = $request->description; }
     
         $user->save();
+
+        return redirect(route('admin'));
+    }
+
+
+    // SUPPRESSION USER
+
+    /**
+     * Ajout d'un lien dans le footer
+     *
+     * @return view
+     */
+    public function addFooter(Request $request)
+    {
+        $footer = new Footer();
+        $footer->label = $request->label;
+        $footer->route = $request->route;
+
+        $footer->save();
+
+        return redirect(route('admin'));
+    }
+
+    /**
+     * Modification d'un lien dans le footer
+     *
+     * @return view
+     */
+    public function editFooter(Request $request)
+    {
+        dd($request);
+        $footer = Footer::find($request->id);
+
+        $footer->label = $request->label;
+        $footer->route = $request->route;
+
+        $footer->save();
+
+        return redirect(route('admin'));
+    }
+
+    /**
+     * Suppression d'un lien dans le footer
+     *
+     * @return view
+     */
+    public function deleteFooter(Request $request)
+    {
+        $footer = Footer::find($request->id);
+        
+        $footer->delete();
 
         return redirect(route('admin'));
     }

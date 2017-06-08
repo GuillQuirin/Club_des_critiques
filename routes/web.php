@@ -102,7 +102,10 @@
 	Route::put('admin/delete-element', ['as' => 'delete_element', 'uses' => 'AdminController@deleteElement']);
 	Route::put('admin/edit-element', ['as' => 'edit_element', 'uses' => 'AdminController@editElement']);
 	Route::post('admin/add-user', ['as' => 'add_user', 'uses' => 'AdminController@addUser']);
-	Route::put('admin/edit-user', ['as' => 'edit_user', 'uses' => 'AdminController@editUser']);	
+	Route::put('admin/edit-user', ['as' => 'edit_user', 'uses' => 'AdminController@editUser']);
+	Route::post('admin/add-footer', ['as' => 'add_footer', 'uses' => 'AdminController@addFooter']);
+	Route::put('admin/edit-footer', ['as' => 'edit_footer', 'uses' => 'AdminController@editFooter']);	
+	Route::put('admin/delete-footer', ['as' => 'delete_footer', 'uses' => 'AdminController@deleteFooter']);
 
 	// Ajax
 	Route::get('admin/sub-categories', ['as' => 'get_sub_categories', 'uses' => 'AjaxController@getSubCategories']);

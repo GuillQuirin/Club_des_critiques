@@ -63,6 +63,15 @@
 		    	</div>
 		    	@include('admin.user')
 		    </div>
+		    <div class="panel panel-default">
+		    	<div class="panel-heading">
+		      		<h4 class="panel-title">
+		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseFooter">
+		        		Footer</a>
+		      		</h4>
+		    	</div>
+		    	@include('admin.footer')
+		    </div>
 		</div> 
     </div>
 
@@ -81,6 +90,7 @@
 	    initializedDataTable('categoryTable');
 	    initializedDataTable('roomTable');
 	    initializedDataTable('userTable');
+	    initializedDataTable('footerTable');
 
 	    $( "#date_start" ).datepicker();
 	    $( "#date_end" ).datepicker();
@@ -246,9 +256,6 @@
 		    var parent = $(this).closest('tr').find('td.category-parent')[0].id;
 		    var picture = $(this).closest('tr').find('td.category-picture').html();
 		    
-
-		    
-
 		    // and set them in the modal:
 		    $('#id_category', myModal).val(id);		   
 		    $('.edit-category-name', myModal).val(name);		   
@@ -467,33 +474,11 @@
 	                	$('#edit_user_first_name').val(data.first_name);
 	                	$('#edit_user_descrition').val(data.description);
 	                	$('#edit_user_picture').val(data.picture);
-	                	// $('#edit_user_department').val(data.user.id_department);
-	                	$('#edit_user_email').val(data.email);	                	
-	                	// $('#edit_user_status').val(data.user.id_status);
+	                	$('#edit_user_email').val(data.email);
 	                	
 	                	selectEditUserDepartment.selectpicker('val', data.id_department);
 	                	selectEditUserStatus.selectpicker('val', data.id_status);
 
-	                	// Affichage des sous catégories                 	
-			            // $.ajax({
-			            //     data : { categoryId : data.catgory },
-			            //     url: "{{ route('get_sub_categories') }}",
-			            //     type: 'get',
-			            //     success: function(subCategories) {
-			            //         if (subCategories.length) {
-			            //             selectEditElementSubCat.attr('disabled',false);
-			            //             selectEditElementSubCat.html('<option value="" disabled selected>Choisissez une sous catégorie</option>');
-			            //             jQuery.each(subCategories, function() {
-			            //                 selectEditElementSubCat.append(new Option(this.name, this.id));
-			            //             });
-			            //             selectEditElementSubCat.selectpicker('refresh');
-			            //             selectEditElementSubCat.selectpicker('val', data.element.id_category);
-			            //         } else {
-			            //             selectEditElementSubCat.html('<option value="" disabled selected>Pas de sous catégorie disponible</option>');
-			            //             selectEditElementSubCat.selectpicker('refresh');
-			            //         }
-			            //     }
-			            // });	
 			            myModal.modal('toggle');            
 			     
 	                },
@@ -504,6 +489,54 @@
 
 	            return false;
 			});
+
+	// FOOTER
+
+		// Cache le bouton "ajouter un lien"
+		$('#btnShowAddFooter').click(function() {
+			$('#btnShowAddFooter').hide();
+		});
+		
+		// Affiche le bouton "ajouter un lien"
+		$('#btnHideAddFooter').click(function() {
+			$('#btnShowAddFooter').show();
+		});
+
+		// Supprime un élément
+	    $('.delete-footer').click(function(){
+	    	if (confirm("Voulez vous vraiement supprimer ce lien?")) {
+		    	footerId = this.id;
+		    	// Call Ajax Request to delete category
+	            $.ajax({
+	                data : { footerId : footerId },
+	                url: "{{ route('delete_footer') }}",
+	                type: 'put',
+	                success: function(data) {
+	                	// Modifier le tableau
+	                },
+	                error : function() {
+	                	// gestion d'erreur
+	                }
+	            });
+	            tab = $( this ).parent().parent().remove();
+		    }	
+	    });
+
+	    $('a.edit-footer').on('click', function() {
+		    var myModal = $('#editFooterModal');
+
+		    var footerId = $(this).closest('tr').find('td.footer-id').html();
+		    var footerLable = $(this).closest('tr').find('td.footer-label').html();
+		    var footerRoute = $(this).closest('tr').find('td.footer-route').html();
+
+		    $('#edit_footer_label').val(footerLable);
+		    $('#edit_footer_route').val(footerRoute);
+
+		    myModal.modal('toggle');
+
+            return false;
+		});
+
 
 	// FUNCTIONS
 

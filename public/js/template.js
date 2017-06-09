@@ -135,8 +135,7 @@ $(document).ready(function(){
 
     function displayMessage(i, form){
         var popUpMessage =' ';
-        form.find('.fa-refresh, .fa-exclamation-triangle').remove();
- 
+        form.find('.fa-refresh, .fa-exclamation-triangle, .fa-check').remove();
         if(Number.isInteger(i)){
             switch(i){
                 

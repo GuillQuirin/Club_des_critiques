@@ -124,6 +124,7 @@
                                                 </div>
                                                 <div class="col-xs-6 text-right">
                                                     <a href="{{ route('show_user', ['id' => $u->id] )}}" class="btn btn-warning" id="btn-chat">Consulter le profil</a>
+                                                    <a href="{{ route('report_user', ['id_reported' => $u->id, 'id_room' => $header->id] )}}" class="btn btn-warning" id="btn-chat">Signaler</a>
                                                 </div>
                                             </div>
                                         </li>

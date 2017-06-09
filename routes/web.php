@@ -89,6 +89,7 @@
 	Route::get('room/{id}', ['as' => 'show_room', 'uses' => 'RoomsController@show']);
 	/*DON'T TOUCH */Route::get('room', ['as' => 'next_room', 'uses' => 'RoomsController@index']);
 	Route::get('room/join/{id}', ['as' => 'join_room', 'uses' => 'RoomsController@join']);
+	Route::post('room/report', ['as' => 'report_user', 'uses' => 'RoomsController@reportUser']);
 
 
 /****** ADMINISTRATION ******/

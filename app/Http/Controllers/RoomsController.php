@@ -12,6 +12,7 @@ use App\UserRoom;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 
 class RoomsController extends Controller
 {
@@ -216,5 +217,29 @@ class RoomsController extends Controller
             }
         }
         echo json_encode($data);
+    }
+
+    public function inviteUser(){
+        $sender = User::where('id', Auth::id())->first();
+        $receiver = User::where('id', $_POST['id']);
+
+        $data = [
+            'sender' => $sender,
+        ];
+        Mail::send('emails.register', $data, function($message) use ($receiver){
+            $message->to($receiver->email);
+            $message->subject('Club des critiques : un ami vous a invité à rejoindre un salon');
+        });
+    }
+
+    public function reportUser(Request $request){
+        var_dump($request->input());
+        $report = DB::table('report')->insert([
+            'id_user_asker' => Auth::id(),
+            'id_user_reported' => $request->id_reported,
+            'id_room' => $request->id_room,
+            'reason' => $request->reason,
+            'is_deleted' => 0
+        ]);
     }
 }

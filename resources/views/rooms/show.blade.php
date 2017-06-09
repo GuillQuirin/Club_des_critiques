@@ -92,9 +92,33 @@
                                                 </div>
                                                 <div class="col-xs-6 text-right">
                                                     <a href="{{ route('show_user', ['id' => $u->id] )}}" class="btn btn-warning" id="btn-chat">Consulter le profil</a>
+                                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#reporting-{{$u->id}}">Signaler</button>
                                                 </div>
                                             </div>
                                         </li>
+                                        <div id="reporting-{{$u->id}}" class="modal fade" role="dialog">
+                                            {{ Form::open(['route' => 'report_user', 'method' => 'post', 'class' => 'col-md-12']) }}
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Signalement de l'utilisateur {{$u->first_name}} {{$u->last_name}}</h4>
+                                                        <input type="hidden" id="id_reported" name="id_reported" value="{{$u->id}}"/>
+                                                        <input type="hidden" id="id_room" name="id_room" value="{{$header->id}}"/>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="reason">Pour quelles raisons souhaitez-vous signaler cette utilisateur ?</label>
+                                                            <textarea class="form-control" rows="5" name="reason" id="reason"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-success">Valider</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{Form::close()}}
+                                        </div>
                                     @endforeach
                                 @endforeach
 		                    </ul>

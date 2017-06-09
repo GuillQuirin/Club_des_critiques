@@ -117,6 +117,8 @@
 	Route::get('admin/elements', ['as' => 'get_elements', 'uses' => 'AjaxController@getElementForCreatorAndCategory']);
 	Route::get('admin/element', ['as' => 'get_element', 'uses' => 'AjaxController@getElementById']);
 	Route::get('admin/user', ['as' => 'get_user', 'uses' => 'AjaxController@getUserById']);
+	Route::get('admin/room', ['as' => 'get_room', 'uses' => 'AjaxController@getRoomById']);
+	Route::get('admin/elements_by_catagory', ['as' => 'get_elements_by_category', 'uses' => 'AjaxController@getElementForCategory']);
 
 Route::post('room/autocompleteUser', ['as' => '/', 'uses' => 'RoomsController@autocompleteUser'] );
 Route::post('room/addMessage', ['as' => '/', 'uses' => 'RoomsController@addMessage'] );

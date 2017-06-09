@@ -118,6 +118,7 @@
 
 Route::post('room/autocompleteUser', ['as' => '/', 'uses' => 'RoomsController@autocompleteUser'] );
 Route::post('room/addMessage', ['as' => '/', 'uses' => 'RoomsController@addMessage'] );
+Route::post('room/getMessage', ['as' => '/', 'uses' => 'RoomsController@getMessage'] );
 
 //Routes classiques directement vers une Vue en particulier
 /* 

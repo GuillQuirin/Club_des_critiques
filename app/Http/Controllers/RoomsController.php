@@ -122,6 +122,21 @@ class RoomsController extends Controller
             ->with(compact('cat'));
 	}
 
+    public function getMessage(){
+        $header = Room::findOrFail($_POST['id_room']);
+        
+        $chatbox = Chatbox::where('id_room', $header->id)->get();
+        foreach ($chatbox as $chat) {
+            $message[$chat->id]['message'] =$chat->message;
+            $message[$chat->id]['date'] =date("d/m/Y H:i:s", strtotime($chat->date_post));
+            $message[$chat->id]['picture'] = User::where('id', $chat->id_user_sender)->first()->picture;
+            $message[$chat->id]['first_name'] = User::where('id', $chat->id_user_sender)->first()->first_name;
+            $message[$chat->id]['last_name'] = User::where('id', $chat->id_user_sender)->first()->last_name;
+        }   
+        echo json_encode($message);
+    }
+
+
 	/**
      * Rejoindre un salon
      *

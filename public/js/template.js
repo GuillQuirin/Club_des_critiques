@@ -205,8 +205,52 @@ $(document).ready(function(){
             .appendTo(ul);
     };
 
+    /*MAJ de la chatbox*/
+    updateChatbox();
 
+    function updateChatbox(){
+        var id_room = $('#room').val();
+        $.ajax({
+            url : "getMessage",
+            type : "POST",
+            data : "id_room=" + id_room
+        })
+        .done(function(data){
+            //console.log(data);
+            var data = JSON.parse(data);
+            var html="";
+            //console.log(data);
+            $.each(data, function(key, value){
+                html+='<li class="left clearfix">';
+                    html+='<span class="chat-img pull-left">';
+                        if(value.picture)
+                            html+='<img src="'+value.picture+'" alt="User Avatar" class="img-circle favicon_user"/>';
+                        else
+                            html+='<img src="/images/user.png" alt="User Avatar" class="img-circle favicon_user"/>';
+                    html+='</span>';
+                    html+='<div class="chat-body clearfix">';
+                        html+='<div class="header">';
+                            html+='<strong class="primary-font">'+value.first_name+' '+value.last_name+'</strong>';
+                            html+='<small class="pull-right text-muted">';
+                                html+='<span class="glyphicon glyphicon-time"></span>';
+                                html+=value.date;
+                            html+='</small>';
+                        html+='</div>';
+                        html+='<p>'+value.message+'</p>';
+                    html+='</div>';
+                html+='</li>';
+                $('ul#chatbox').html(html);
+            });
+        })
+        .fail(function(data){
+            console.log(data);
+        })
+        .always(function() {           // on completion, restart
+           setTimeout(updateChatbox, 2000);  // function refers to itself
+        });
+    }
 
+    /*Envoi d'un message en chatbox*/
     $('#send').click(function(e){
         e.preventDefault(); // on empêche le bouton d'envoyer le formulaire
 
@@ -228,20 +272,10 @@ $(document).ready(function(){
                 url : "addMessage",
                 type : "POST",
                 data : "id_room=" + id_room + "&message=" + message,
-                success : function(data){
-                    var json = JSON.parse(data);
-                    /* id_user_sender a remplacer par donnée de la session */
-                    $('#messages').append(
-                        "<ul class='chat'>"
-                        + "<li class='left clearfix'><span class='chat-img pull-left'>"
-                        + "<img src='http://placehold.it/50/55C1E7/fff&text=U' alt='User Avatar' class='img-circle' /></span>"
-                        + "<div class='chat-body clearfix'>"
-                        + "<div class='header'>"
-                        + "<strong class='primary-font'>" + json.first_name + " " + json.last_name + "</strong> <small class='pull-right text-muted'>"
-                        + "<span class='glyphicon glyphicon-time'></span> " + today + "</small>"
-                        + "</div><p>" + message.replace(/\n/g,"<br>") + "</p></div></li></ul>"
-                    );
-                }
+            })
+            .done(function(data){
+                updateChatbox();
+                $('#message').val('');
             });
         }
     });

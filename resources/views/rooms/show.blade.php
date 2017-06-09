@@ -60,37 +60,10 @@
 		            <div class="panel panel-primary">
 		                <div class="panel-heading">
 		                    <span class="glyphicon glyphicon-comment"></span> Commentaires
-		                    <div class="btn-group pull-right">
-		                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-		                            <span class="glyphicon glyphicon-chevron-down"></span>
-		                        </button>
-		                        <ul class="dropdown-menu slidedown">
-		                            <li><a href="#"><span class="glyphicon glyphicon-refresh">
-		                            </span>Rafraîchir</a></li>
-		                        </ul>
-		                    </div>
 		                </div>
 		                <div class="panel-body body-panel" id="messages">
-		                    <ul class="chat">
-                                @foreach($chatbox as $chat)
-		                        <li class="left clearfix"><span class="chat-img pull-left">
-                                    @if($chat->sender->picture)
-		                                <img src="{{$chat->sender->picture}}" alt="User Avatar" class="img-circle favicon_user"/>
-                                    @else
-                                        <img src="/images/user.png" alt="User Avatar" class="img-circle favicon_user"/>
-                                    @endif
-		                        </span>
-		                            <div class="chat-body clearfix">
-		                                <div class="header">
-		                                    <strong class="primary-font">{{$chat->sender->first_name}} {{$chat->sender->last_name}}</strong> <small class="pull-right text-muted">
-		                                        <span class="glyphicon glyphicon-time"></span>{{date("d/m/Y H:i:s", strtotime($chat->date_post))}}</small>
-		                                </div>
-		                                <p>
-		                                    {{$chat->message}}
-		                                </p>
-		                            </div>
-		                        </li>
-                                @endforeach
+		                    <ul id="chatbox" class="chat">
+                                
 		                    </ul>
 		                </div>
 		                <div class="panel-footer clearfix">
@@ -107,15 +80,6 @@
 		            <div class="panel panel-primary">
 		                <div class="panel-heading">
 		                    <span class="glyphicon glyphicon-user"></span> Membres du salon
-		                    <div class="btn-group pull-right">
-		                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-		                            <span class="glyphicon glyphicon-chevron-down"></span>
-		                        </button>
-		                        <ul class="dropdown-menu slidedown">
-		                            <li><a href="#"><span class="glyphicon glyphicon-refresh">
-		                            </span>Rafraîchir</a></li>
-		                        </ul>
-		                    </div>
 		                </div>
 		                <div class="panel-body body-panel">
 		                    <ul class="chat">

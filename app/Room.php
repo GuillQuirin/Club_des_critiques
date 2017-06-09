@@ -2,6 +2,8 @@
 
 namespace App;
 
+use DB;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
@@ -32,9 +34,9 @@ class Room extends Model
     // Get all users which participate at the room
     public function users()
     {
-        $users = DB::select('select * from user where id = (select id_user from user_room where id_room = ' . $this->id . ');');
+        $users = DB::select('select * from user where id in (select id_user from user_room where id_room = ' . $this->id . ');');
 
-        $users = Element::hydrate($users);
+        $users = User::hydrate($users);
 
         return $users;
     }

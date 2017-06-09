@@ -108,6 +108,8 @@
 	Route::post('admin/add-footer', ['as' => 'add_footer', 'uses' => 'AdminController@addFooter']);
 	Route::put('admin/edit-footer', ['as' => 'edit_footer', 'uses' => 'AdminController@editFooter']);	
 	Route::put('admin/delete-footer', ['as' => 'delete_footer', 'uses' => 'AdminController@deleteFooter']);
+	Route::post('admin/add-room', ['as' => 'add_room', 'uses' => 'AdminController@addRoom']);
+	Route::put('admin/edit-room', ['as' => 'edit_room', 'uses' => 'AdminController@editRoom']);
 
 	// Ajax
 	Route::get('admin/sub-categories', ['as' => 'get_sub_categories', 'uses' => 'AjaxController@getSubCategories']);

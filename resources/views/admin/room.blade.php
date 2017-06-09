@@ -8,46 +8,66 @@
         </p>
         <div class="collapse" id="collapseAddSalon">
             <div class="card card-block">
-                <form>
+                {{ Form::open(['route' => 'add_room', 'method' => 'post', 'class' => 'col-md-12']) }}
                     <div class="form-group">
                         <label for="room_name" class="col-2 col-form-label">Nom : </label>
                         <div class="col-10">
-                            <input class="form-control" type="text" id="room_name" name="room_name">
+                            <input class="form-control" type="text" id="room_name" name="name" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="room_category" class="col-2 col-form-label">Catégorie : </label>
                         <div class="col-10">
-                            <select class="form-control" id="room_category" name="room_category">
-                                <option>Choisir une catégorie</option>
-                                <option value="1">Livre</option>
-                                <option value="2">Film</option>
-                                <option value="3">...</option>
+                            <select id="room_category" name="category" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required" title="Choisir une catégorie">
+                                @foreach($categories as $category)
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="room_sub_category" class="col-2 col-form-label">Sous catégorie : </label>
+                        <div class="col-10">
+                            <select id="room_sub_category" name="sub_category" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required" disabled>
+                                <option value="">Vous devez choisir une catégorie</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="room_creator" class="col-2 col-form-label">Auteur / réalisateur : </label>
+                        <div class="col-10">
+                           <select id="room_creator" name="creator" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required" disabled>
+                                <option value="">Vous devez choisir une sous catégorie</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="room_element" class="col-2 col-form-label">Oeuvre : </label>
                         <div class="col-10">
-                            <select class="form-control" id="room_element" name="room_element">
-                                <option>Choisir une oeuvre</option>
-                                <option value="1">Le petit chaperon rouge</option>
-                                <option value="2">La belle et la bete</option>
-                                <option value="3">Le roi lion</option>
-                                <option value="4">...</option>
+                           <select id="room_element" name="element" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required" disabled>
+                                <option value="">Vous devez choisir un auteur / réalisateur</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="room_date_start" class="col-2 col-form-label">Date début : </label>
                         <div class="col-10">
-                            <input class="form-control" type="text" id="room_date_start" name="room_date_start">
+                            <input class="form-control" type="date" id="room_date_start" name="date_start" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="room_date_end" class="col-2 col-form-label">Date fin : </label>
                         <div class="col-10">
-                            <input class="form-control" type="date" id="room_date_end" name="room_date_end">
+                            <input class="form-control" type="date" id="room_date_end" name="date_end" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="room_date_end" class="col-2 col-form-label">Status : </label>
+                        <div class="col-10">
+                            <select id="room_status" name="status" class="form-control selectpicker" required>
+                                <option value="0">Inactif</option>
+                                <option value="1">Actif</option>
+                            </select>
                         </div>
                     </div>
                     <div class="pull-right">
@@ -56,7 +76,7 @@
                         </button>
                         <button type="submit" class="btn btn-success">Ajouter un salon</button>
                     </div>
-                </form>
+                {{ Form::close() }}
             </div>
         </div>
         <br>
@@ -65,6 +85,7 @@
                 <table id="roomTable" class="display" cellspacing="0" width="100%">
                     <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Nom</th>
                             <th>Oeuvre</th>
                             <th>Date début</th>
@@ -75,30 +96,27 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($rooms as $room)
                         <tr>
-                            <th>Un salon</th>
-                            <th>Petit chaperon rouge</th>
-                            <th>01/05/2017</th>
-                            <th>04/05/2017</th>
-                            <th>17</th>
-                            <th>A venir</th>
-                            <th>
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                <i class="fa fa-pencil" data-toggle="modal" data-target="#editRoomModal" aria-hidden="true"></i>
-                            </th>                               
-                        </tr>                               
-                        <tr>
-                            <th>Un autre salon</th>
-                            <th>Le roi lion</th>
-                            <th>10/04/2017</th>
-                            <th>15/04/2017</th>
-                            <th>9</th>
-                            <th>En cours</th>
-                            <th>
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                <i class="fa fa-pencil" data-toggle="modal" data-target="#editRoomModal" aria-hidden="true"></i>
-                            </th>                               
-                        </tr>   
+                            <td>{{ $room->id }}</td>
+                            <td>{{ $room->name }}</td>
+                            <td>{{ $room->element->name }}</td>
+                            <td>{{ $room->date_start }}</td>
+                            <td>{{ $room->date_end }}</td>
+                            <td>{{ $room->users()->count() }}</td>
+                            <td>
+                                @if($room->status == 0)
+                                    Inactif
+                                @else
+                                    Actif
+                                @endif
+                            </td>
+                            <td>
+                                <a href="#" class="btn edit-room"><i class="fa fa-pencil"></i></a>
+                                <i class="fa fa-trash delete-room" aria-hidden="true" id="{{ $room->id }}"></i>
+                            </td>
+                        </tr>
+                        @endforeach
                     </tbody>        
                 </table>
             </div>

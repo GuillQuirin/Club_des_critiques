@@ -272,7 +272,6 @@ class AdminController extends Controller
      */
     public function editFooter(Request $request)
     {
-        dd($request);
         $footer = Footer::find($request->id);
 
         $footer->label = $request->label;
@@ -288,10 +287,10 @@ class AdminController extends Controller
      *
      * @return view
      */
-    public function deleteFooter(Request $request)
+    public function deleteFooter()
     {
-        $footer = Footer::find($request->id);
-        
+        $footerId = Input::get('footerId');
+        $footer = Footer::find($footerId);
         $footer->delete();
 
         return redirect(route('admin'));

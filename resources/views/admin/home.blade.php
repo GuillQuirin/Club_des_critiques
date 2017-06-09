@@ -11,10 +11,10 @@
 
 	<div class="row">
 		<div class="col-md-12">
-			<h4>A la une : </h4><br>
+			<h4>Oeuvres à la une : </h4><br>
 
 			<p>
-	          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAddElementTop" aria-expanded="false" aria-controls="collapseAddElementTop" id="btnShowAddTopElement">
+	          <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseAddElementTop" aria-expanded="false" aria-controls="collapseAddElementTop" id="btnShowAddTopElement">
 	            Ajouter une oeuvre
 	          </button>
 	        </p>
@@ -66,10 +66,15 @@
 	                    	<button type="submit" class="btn btn-success">Ajouter</button>
 	                    </div>
 	            	{{ Form::close() }}
+	            	<br><br>
 	            </div>
 	            <br>
 	        </div>
+	    </div>
+	</div>
 
+	<div class="row">
+        <div class="col-md-12">
 			<table id="elementTopTable" class="display" cellspacing="0" width="100%">
 				<thead>
 					<tr>

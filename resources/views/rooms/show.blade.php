@@ -13,6 +13,7 @@
             <h1 class="text-center col-xs-10 col-xs-offset-1 col-sm-10 text-uppercase">{{$header->name}}
                 <small>Du {{date("d/m/Y", strtotime($header->date_start))}} au {{date("d/m/Y", strtotime($header->date_end))}}</small>
             </h1>
+			<input type="hidden" value="{{$header->id}}" id="room"/>
             <div class="col-sm-3 col-sm-offset-1">
                 <img src="http://iut.univ-amu.fr/sites/iut.univ-amu.fr/files/departement/1472852001.jpg"
                      class="valig-center col-xs-12 col-sm-12">
@@ -137,6 +138,7 @@
 				</div>
 		    </div>
 		</div>
+		<input type="text" name="autocomplete_user" id="autocomplete_user" class="form-control" placeholder="Autocomplétion des users en bdd ou invitation par mail ?">
 		<!--Modal ajout utilisateur-->
 		<div id="addUser" class="modal fade" role="dialog">
 			<div class="modal-dialog">

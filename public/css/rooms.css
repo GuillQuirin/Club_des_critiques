@@ -137,3 +137,13 @@ tr{
 .panel-border{
     border: 1px solid #D99E7E;
 }
+
+ul.ui-autocomplete li strong{
+    padding: 0 !important;
+}
+
+ul.ui-autocomplete li img{
+    height: 100% !important;
+    padding: 0 !important;
+    width: initial !important;
+}

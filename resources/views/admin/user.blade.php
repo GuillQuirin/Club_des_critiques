@@ -1,7 +1,7 @@
 <div id="collapse5" class="panel-collapse collapse">
     <div class="panel-body">
         <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAddUser" aria-expanded="false" aria-controls="collapseAddUser" id="btnShowAddUser">
+          <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseAddUser" aria-expanded="false" aria-controls="collapseAddUser" id="btnShowAddUser">
             Ajouter un utilisateur
           </button>
         </p>
@@ -65,7 +65,6 @@
                         <button type="submit" class="btn btn-success">Ajouter un utilisateur</button>
                     </div>
                 {{ Form::close() }}
-                <br><br>
             </div>
         </div>
         <div class="row">

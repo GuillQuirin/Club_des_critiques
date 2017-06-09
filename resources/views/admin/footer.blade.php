@@ -1,7 +1,7 @@
 <div id="collapseFooter" class="panel-collapse collapse">
     <div class="panel-body">
         <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAddFooter" aria-expanded="false" aria-controls="collapseAddFooter" id="btnShowAddFooter">
+          <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseAddFooter" aria-expanded="false" aria-controls="collapseAddFooter" id="btnShowAddFooter">
             Ajouter un lien
           </button>
         </p>
@@ -25,10 +25,8 @@
                             Annuel
                         </button>
                         <button type="submit" class="btn btn-success">Ajouter un lien</button>
-                        <br><br>
                     </div>
                 {{ Form::close() }}
-                <br><br>    
             </div>
         </div>
         <div class="row">
@@ -71,7 +69,7 @@
                 <h4 class="modal-title">Modifier le lien</h4>
             </div>            
                 <div class="modal-body">
-                    {{ Form::open(['route' => 'edit_footer', 'method' => 'post', 'class' => 'col-md-12']) }}
+                    {{ Form::open(['route' => 'edit_footer', 'method' => 'put', 'class' => 'col-md-12']) }}
                     <input type="hidden" name="id" id="id_footer">
                         <div class="form-group">
                             <label for="last_name" class="col-2 col-form-label">Libellé : </label>

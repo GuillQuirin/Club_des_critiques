@@ -26,12 +26,10 @@
           @endif
 
           <small>
-            @if($infos->id_status==0 || $infos->id_status==1)
-              Inscrit depuis le {{date('d/m/Y', strtotime($infos->date_created))}}
-            @elseif($infos->id_status==1)
-              Administrateur
-            @elseif($infos->id_status==1)
-              Membre banni
+            @if($infos->status->id == 2)
+              {{ $infos->status->label }} Inscrit depuis le {{date('d/m/Y', strtotime($infos->date_created))}}
+            @else
+             {{ $infos->status->label }}
             @endif
           </small>
             @if(isset($infos->department->code))

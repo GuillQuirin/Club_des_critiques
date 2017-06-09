@@ -109,6 +109,8 @@
 	Route::post('admin/add-footer', ['as' => 'add_footer', 'uses' => 'AdminController@addFooter']);
 	Route::put('admin/edit-footer', ['as' => 'edit_footer', 'uses' => 'AdminController@editFooter']);	
 	Route::put('admin/delete-footer', ['as' => 'delete_footer', 'uses' => 'AdminController@deleteFooter']);
+	Route::post('admin/add-room', ['as' => 'add_room', 'uses' => 'AdminController@addRoom']);
+	Route::put('admin/edit-room', ['as' => 'edit_room', 'uses' => 'AdminController@editRoom']);
 
 	// Ajax
 	Route::get('admin/sub-categories', ['as' => 'get_sub_categories', 'uses' => 'AjaxController@getSubCategories']);
@@ -116,6 +118,8 @@
 	Route::get('admin/elements', ['as' => 'get_elements', 'uses' => 'AjaxController@getElementForCreatorAndCategory']);
 	Route::get('admin/element', ['as' => 'get_element', 'uses' => 'AjaxController@getElementById']);
 	Route::get('admin/user', ['as' => 'get_user', 'uses' => 'AjaxController@getUserById']);
+	Route::get('admin/room', ['as' => 'get_room', 'uses' => 'AjaxController@getRoomById']);
+	Route::get('admin/elements_by_catagory', ['as' => 'get_elements_by_category', 'uses' => 'AjaxController@getElementForCategory']);
 
 Route::post('room/autocompleteUser', ['as' => '/', 'uses' => 'RoomsController@autocompleteUser'] );
 Route::post('room/addMessage', ['as' => '/', 'uses' => 'RoomsController@addMessage'] );

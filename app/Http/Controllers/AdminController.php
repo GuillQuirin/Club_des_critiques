@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\User;
+use App\Room;
 use App\Other;
 use App\Footer;
 use App\Status;
@@ -33,8 +34,9 @@ class AdminController extends Controller
         $departments = Department::all();
         $status = Status::all();
         $footers = Footer::all();
+        $rooms = Room::all();
 
-    	return view('admin.index', compact('concept', 'elements', 'allCategories', 'allUsers', 'categories', 'topElements', 'departments', 'status', 'footers'));
+    	return view('admin.index', compact('concept', 'elements', 'allCategories', 'allUsers', 'categories', 'topElements', 'departments', 'status', 'footers', 'rooms'));
     }
 
     /**
@@ -272,7 +274,6 @@ class AdminController extends Controller
      */
     public function editFooter(Request $request)
     {
-        dd($request);
         $footer = Footer::find($request->id);
 
         $footer->label = $request->label;
@@ -288,11 +289,50 @@ class AdminController extends Controller
      *
      * @return view
      */
-    public function deleteFooter(Request $request)
+    public function deleteFooter()
     {
-        $footer = Footer::find($request->id);
-        
+        $footerId = Input::get('footerId');
+        $footer = Footer::find($footerId);
         $footer->delete();
+
+        return redirect(route('admin'));
+    }
+
+    /**
+     * Ajout d'un salon
+     *
+     * @return view
+     */
+    public function addRoom(Request $request)
+    {
+        $room = new Room();
+        $room->name = $request->name;
+        $room->date_start = $request->date_start;
+        $room->date_end = $request->date_end;
+        $room->status = $request->status;
+        $room->id_element = $request->element;
+
+        $room->save();
+
+        return redirect(route('admin'));
+    }
+
+    /**
+     * Modification d'un salon
+     *
+     * @return view
+     */
+    public function editRoom(Request $request)
+    {
+        $room = Room::find($request->id);
+
+        $room->name = $request->name;
+        $room->date_start = $request->date_start;
+        $room->date_end = $request->date_end;
+        $room->status = $request->status;
+        $room->id_element = $request->element;
+
+        $room->save();
 
         return redirect(route('admin'));
     }

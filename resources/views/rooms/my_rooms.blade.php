@@ -12,6 +12,7 @@
     <div class="container">
         <div class="text-center">
             <h1>Mes salons</h1>
+            @if($test)
             <table id="salons" class="table table-hover table-responsive" cellspacing="0">
                 <thead>
                 <tr>
@@ -34,6 +35,9 @@
                 @endforeach
                 </tbody>
             </table>
+            @else
+                Vous n'avez encore participé à aucun salon !
+            @endif
         </div>
     </div>
     @foreach($test as $room)

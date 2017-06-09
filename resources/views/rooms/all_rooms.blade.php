@@ -12,7 +12,7 @@
     <div class="container">
         <div class="text-center">
             <h1>Liste de tous les salons @if(Auth::guest())<small>Pour rejoindre un salon à venir, veuillez vous connecter.</small>@endif</h1>
-
+            @if($rooms)
             <table id="salons" class="table table-hover table-responsive" cellspacing="0">
                 <thead>
                 <tr>
@@ -36,6 +36,9 @@
                 @endforeach
                 </tbody>
             </table>
+            @else
+                Il n'y a pas de salons existants. Revenez plus tard !
+            @endif
         </div>
     </div>
 

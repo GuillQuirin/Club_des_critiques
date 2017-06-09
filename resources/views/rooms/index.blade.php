@@ -11,7 +11,7 @@
 @section('content')
     <div class="container">
             <h1 class="text-center">Les salons à venir @if(Auth::guest())<small>Pour rejoindre un salon à venir, veuillez vous connecter.</small>@endif</h1>
-
+            @if(count($rooms))
             <table id="salons" class="table table-hover table-responsive" cellspacing="0">
                 <thead>
                     <tr>
@@ -51,8 +51,7 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
                                 <div class="modal-body">
-                                    <h1 class="text-center text-uppercase col-xs-10 col-sm-12" id="title"></h1>
-                                    <h1 class="text-center text-uppercase col-xs-10 col-sm-12" id="autor"><small></small></h1>
+                                    <h1 class="text-center text-uppercase col-xs-10 col-sm-12">{{$room->element->name}}<small>({{$room->element->creator}})</small></h1>
                                     <div class="text-center" id="div_note">
                                         <h3>Donnez une note !</h3>
                                         <div class="rating">
@@ -70,10 +69,12 @@
                             </div>
                         </div>
                     </div>
-
                     @endforeach
                 </tbody>
             </table>
+            @else
+                <p class="text-center">Il n'y a aucun salon à venir. Revenez plus tard !</p>
+            @endif
         </div>
 @endsection
 

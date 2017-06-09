@@ -19,6 +19,6 @@ i{
 	color: #245580;
 }
 
-#elementTopTable_wrapper, #elementTable_wrapper, #userTable_wrapper, #categoryTable_wrapper, #roomTable_wrapper{
+#elementTopTable_wrapper, #elementTable_wrapper, #userTable_wrapper, #categoryTable_wrapper, #roomTable_wrapper, #footerTopTable_wrapper{
 	margin-top: 30px !important;
 }

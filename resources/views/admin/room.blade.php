@@ -2,7 +2,7 @@
 <div id="collapse4" class="panel-collapse collapse">                     
     <div class="panel-body">                
         <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseAddSalon" aria-expanded="false" aria-controls="collapseAddSalon" id="btnShowAddRoom">
+          <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseAddSalon" aria-expanded="false" aria-controls="collapseAddSalon" id="btnShowAddRoom">
             Ajouter un salon
           </button>
         </p>
@@ -57,7 +57,6 @@
                         <button type="submit" class="btn btn-success">Ajouter un salon</button>
                     </div>
                 </form>
-                <br><br>
             </div>
         </div>
         <br>

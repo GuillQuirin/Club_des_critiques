@@ -529,6 +529,7 @@
 		    var footerLable = $(this).closest('tr').find('td.footer-label').html();
 		    var footerRoute = $(this).closest('tr').find('td.footer-route').html();
 
+		    $('#id_footer').val(footerId);
 		    $('#edit_footer_label').val(footerLable);
 		    $('#edit_footer_route').val(footerRoute);
 

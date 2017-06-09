@@ -14,11 +14,11 @@
                 <small>Du {{date("d/m/Y", strtotime($header->date_start))}} au {{date("d/m/Y", strtotime($header->date_end))}}</small>
             </h1>
 			<input type="hidden" value="{{$header->id}}" id="room"/>
-            <div class="col-sm-3 col-sm-offset-1">
+            <div class="col-sm-3 col-sm-offset-1 col-xs-5 col-xs-offset-3">
                 <img src="http://iut.univ-amu.fr/sites/iut.univ-amu.fr/files/departement/1472852001.jpg"
                      class="valig-center col-xs-12 col-sm-12">
             </div>
-            <div class="col-sm-7">
+            <div class="col-sm-7 col-sm-offset-0 col-xs-10 col-xs-offset-1 verti_marg">
                 <div class="panel-group">
                     <div class="panel panel-color panel-border">
                         <div class="panel-heading">

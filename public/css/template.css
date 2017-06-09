@@ -56,6 +56,10 @@ li.dropdownCountdown{
     width: 75%;
 }
 
+.left{
+    float: left;
+}
+
 small{
     display: block;
     margin: 5px;

@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Status extends Model
+class Footer extends Model
 {
-    protected $table = 'status';
-
+    protected $table = 'footer';
+    
     public $timestamps = false;
 }

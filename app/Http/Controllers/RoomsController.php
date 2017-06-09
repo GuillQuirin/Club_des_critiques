@@ -177,7 +177,7 @@ class RoomsController extends Controller
     {
         DB::table('chatbox')->insert(
             [
-                'id_user_sender' => $_POST['id_user_sender'],
+                'id_user_sender' => Auth::id(),
                 'id_room' => $_POST['id_room'],
                 'date_post' => date("Y-m-d H:i:s"),
                 'message' => $_POST['message'],
@@ -186,7 +186,7 @@ class RoomsController extends Controller
             ]
         );
 
-        $user = User::where('id', $_POST['id_user_sender']);
+        $user = User::where('id', Auth::id());
         $data = array(
             "user" => $user
         );
@@ -195,7 +195,7 @@ class RoomsController extends Controller
 
     public function autocompleteUser()
     {
-        $term = $_GET['term'];
+        /*$term = $_GET['term'];
         $users =  User::where('first_name', 'like', $term);
         $array = array();
 
@@ -203,6 +203,18 @@ class RoomsController extends Controller
         {
             array_push($array, $name['first_name']);
         }
-        echo json_encode($array);
+        echo json_encode($array);*/
+
+        $keyword = $_POST['term'];
+        $data['response'] = 'false';
+        $users =  User::where('first_name', 'like', '%'.$keyword.'%');
+        $data['message'] = array(); //Create array
+        if($users) {
+            $data['response'] = 'true';
+            foreach ($users as $user) {
+                $data['message'][] = array('label' => $user->first_name, 'value' => $user->first_name);
+            }
+        }
+        echo json_encode($data);
     }
 }

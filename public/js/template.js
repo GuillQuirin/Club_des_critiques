@@ -170,7 +170,7 @@ $(document).ready(function(){
 
 
 
-    $('#autocomplete_user').autocomplete({
+    /*$('#autocomplete_user').autocomplete({
         minLength: 2,
         source: function (req, add) {
             $.ajax({
@@ -185,14 +185,39 @@ $(document).ready(function(){
                 }
             });
         }
+    });*/
+
+    $('#autocomplete_user').autocomplete({
+        minLength: 2,
+        source: function (req, add) {
+            $.ajax({
+                url: 'autocompleteUser',
+                dataType: 'json',
+                type: 'POST',
+                data: req
+            })
+                .done(function (data) {
+                    if (data.response === 'true') {
+                        console.log(data)
+                        add(data.message);
+                    }
+                });
+        }
     });
+
+    $.ui.autocomplete.prototype._renderItem = function (ul, item) {
+        item.label = item.label.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + $.ui.autocomplete.escapeRegex(this.term) + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
+        return $("<li></li>")
+            .data("item.autocomplete", item)
+            .append(item.label)
+            .appendTo(ul);
+    };
 
 
 
     $('#send').click(function(e){
         e.preventDefault(); // on empêche le bouton d'envoyer le formulaire
 
-        var id_user_sender = 1;
         var message = $('#message').val();
 
         var today = new Date();
@@ -202,6 +227,7 @@ $(document).ready(function(){
         var h = today.getHours();
         var m = today.getMinutes()< 10 ? '0' + today.getMinutes() : today.getMinutes();
         var s = today.getSeconds() < 10 ? '0' + today.getSeconds() : today.getSeconds();
+        var id_room = $('#room').val();
 
         today = dd+'/'+mm+'/'+yyyy+' '+h+':'+m+':'+s;
 
@@ -209,10 +235,11 @@ $(document).ready(function(){
             $.ajax({
                 url : "addMessage",
                 type : "POST",
-                data : "id_user_sender=" + id_user_sender + "&message=" + message,
+                data : "id_room=" + id_room + "&message=" + message,
                 success : function(data){
                     var json = $.parseJSON(data);
                     console.log(json);
+                    console.log(data);
                     /* id_user_sender a remplacer par donnée de la session */
                     $('#messages').append(
                         "<ul class='chat'>"
@@ -220,7 +247,7 @@ $(document).ready(function(){
                         + "<img src='http://placehold.it/50/55C1E7/fff&text=U' alt='User Avatar' class='img-circle' /></span>"
                         + "<div class='chat-body clearfix'>"
                         + "<div class='header'>"
-                        + "<strong class='primary-font'>" + data.first_name + "</strong> <small class='pull-right text-muted'>"
+                        + "<strong class='primary-font'>" + json.first_name + "</strong> <small class='pull-right text-muted'>"
                         + "<span class='glyphicon glyphicon-time'></span> " + today + "</small>"
                         + "</div><p>" + message.replace(/\n/g,"<br>") + "</p></div></li></ul>"
                     );

@@ -12,6 +12,7 @@ use App\UserRoom;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Mail;
 
 class RoomsController extends Controller
 {
@@ -186,35 +187,43 @@ class RoomsController extends Controller
             ]
         );
 
-        $user = User::where('id', Auth::id());
-        $data = array(
-            "user" => $user
-        );
-        echo json_encode($data);
+        $user = User::where('id', Auth::id())->first();
+        echo json_encode($user);
     }
 
     public function autocompleteUser()
     {
-        /*$term = $_GET['term'];
-        $users =  User::where('first_name', 'like', $term);
-        $array = array();
-
-        while($name = $users->fetch())
-        {
-            array_push($array, $name['first_name']);
-        }
-        echo json_encode($array);*/
-
         $keyword = $_POST['term'];
         $data['response'] = 'false';
-        $users =  User::where('first_name', 'like', '%'.$keyword.'%');
+        $users =  User::where('first_name', 'like', '%'.$keyword.'%')->get();
         $data['message'] = array(); //Create array
         if($users) {
             $data['response'] = 'true';
             foreach ($users as $user) {
-                $data['message'][] = array('label' => $user->first_name, 'value' => $user->first_name);
+                if($user->picture){
+                    $data['message'][] = array(
+                        'label' => "<img src=".$user->picture." class='img-circle' style='width:40px;height:30px'/> ". $user->first_name . ' ' . $user->last_name,
+                        'value' => $user->first_name .' '. $user->last_name,
+                        'class' => 'form-control',
+                        'id' => $user->id);
+                }else {
+                    $data['message'][] = array('label' => "<img src='/images/user.png' class='img-circle' style='width:40px;height:30px'/> " . $user->first_name . ' ' . $user->last_name, 'value' => $user->first_name . ' ' . $user->last_name, 'class' => 'form-control');
+                }
             }
         }
         echo json_encode($data);
+    }
+
+    public function inviteUser(){
+        $sender = User::where('id', Auth::id())->first();
+        $receiver = User::where('id', $_POST['id']);
+
+        $data = [
+            'sender' => $sender,
+        ];
+        Mail::send('emails.register', $data, function($message) use ($receiver){
+            $message->to($receiver->email);
+            $message->subject('Club des critiques : un ami vous a invité à rejoindre un salon');
+        });
     }
 }

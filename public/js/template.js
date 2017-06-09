@@ -135,14 +135,13 @@ $(document).ready(function(){
 
     function displayMessage(i, form){
         var popUpMessage =' ';
-        form.find('.fa-refresh, .fa-exclamation-triangle').remove();
- 
+        form.find('.fa-refresh, .fa-exclamation-triangle, .fa-check').remove();
         if(Number.isInteger(i)){
             switch(i){
                 
                 case 1: // OK
                     popUpMessage += '.alert-success';
-                    form.find('input[type="submit"]').parent().prepend('<i class="fa fa-check fa-2x left" aria-hidden="true"></i>');
+                    form.find('input[type="submit"]').parent().prepend('<i class="fa fa-check fa-2x float-left" aria-hidden="true"></i>');
                     
                     //Suppression des champs pour éviter le spam d'envoi de formulaires
                     form.find("input[type!='submit'], textarea, select").val('');
@@ -150,12 +149,12 @@ $(document).ready(function(){
 
                 case 2: // Problème fonctionnel
                     popUpMessage += '.alert-warning';
-                    form.find('input[type="submit"]').parent().prepend('<i class="fa fa-exclamation-triangle fa-2x left" aria-hidden="true"></i>');
+                    form.find('input[type="submit"]').parent().prepend('<i class="fa fa-exclamation-triangle fa-2x float-left" aria-hidden="true"></i>');
                     break;
                 
                 default: // Problème technique
                     popUpMessage += '.alert-danger';
-                    form.find('input[type="submit"]').parent().prepend('<i class="fa fa-exclamation-triangle fa-2x left" aria-hidden="true"></i>');
+                    form.find('input[type="submit"]').parent().prepend('<i class="fa fa-exclamation-triangle fa-2x float-left" aria-hidden="true"></i>');
                     break;
             }
         }
@@ -180,25 +179,6 @@ $(document).ready(function(){
         });
     });
 
-
-
-    /*$('#autocomplete_user').autocomplete({
-        minLength: 2,
-        source: function (req, add) {
-            $.ajax({
-                url: 'autocompleteUser',
-                dataType: 'json',
-                type: 'POST',
-                data: req,
-                success: function (data) {
-                    if (data.response === 'true') {
-                        add(data.first_name);
-                    }
-                }
-            });
-        }
-    });*/
-
     $('#autocomplete_user').autocomplete({
         minLength: 2,
         source: function (req, add) {
@@ -219,7 +199,7 @@ $(document).ready(function(){
 
     $.ui.autocomplete.prototype._renderItem = function (ul, item) {
         item.label = item.label.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + $.ui.autocomplete.escapeRegex(this.term) + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
-        return $("<li></li>")
+        return $("<li class='form-control'></li>")
             .data("item.autocomplete", item)
             .append(item.label)
             .appendTo(ul);
@@ -249,9 +229,7 @@ $(document).ready(function(){
                 type : "POST",
                 data : "id_room=" + id_room + "&message=" + message,
                 success : function(data){
-                    var json = $.parseJSON(data);
-                    console.log(json);
-                    console.log(data);
+                    var json = JSON.parse(data);
                     /* id_user_sender a remplacer par donnée de la session */
                     $('#messages').append(
                         "<ul class='chat'>"
@@ -259,7 +237,7 @@ $(document).ready(function(){
                         + "<img src='http://placehold.it/50/55C1E7/fff&text=U' alt='User Avatar' class='img-circle' /></span>"
                         + "<div class='chat-body clearfix'>"
                         + "<div class='header'>"
-                        + "<strong class='primary-font'>" + json.first_name + "</strong> <small class='pull-right text-muted'>"
+                        + "<strong class='primary-font'>" + json.first_name + " " + json.last_name + "</strong> <small class='pull-right text-muted'>"
                         + "<span class='glyphicon glyphicon-time'></span> " + today + "</small>"
                         + "</div><p>" + message.replace(/\n/g,"<br>") + "</p></div></li></ul>"
                     );

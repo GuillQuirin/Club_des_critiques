@@ -14,11 +14,11 @@
                 <small>Du {{date("d/m/Y", strtotime($header->date_start))}} au {{date("d/m/Y", strtotime($header->date_end))}}</small>
             </h1>
 			<input type="hidden" value="{{$header->id}}" id="room"/>
-            <div class="col-sm-3 col-sm-offset-1">
+            <div class="col-sm-3 col-sm-offset-1 col-xs-5 col-xs-offset-3">
                 <img src="http://iut.univ-amu.fr/sites/iut.univ-amu.fr/files/departement/1472852001.jpg"
                      class="valig-center col-xs-12 col-sm-12">
             </div>
-            <div class="col-sm-7">
+            <div class="col-sm-7 col-sm-offset-0 col-xs-10 col-xs-offset-1 verti_marg">
                 <div class="panel-group">
                     <div class="panel panel-color panel-border">
                         <div class="panel-heading">
@@ -74,7 +74,11 @@
 		                    <ul class="chat">
                                 @foreach($chatbox as $chat)
 		                        <li class="left clearfix"><span class="chat-img pull-left">
-		                            <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                                    @if($chat->sender->picture)
+		                                <img src="{{$chat->sender->picture}}" alt="User Avatar" class="img-circle favicon_user"/>
+                                    @else
+                                        <img src="/images/user.png" alt="User Avatar" class="img-circle favicon_user"/>
+                                    @endif
 		                        </span>
 		                            <div class="chat-body clearfix">
 		                                <div class="header">
@@ -132,13 +136,16 @@
 		                    </ul>
 		                </div>
 		        	</div>
-					<div class="col-md-12 text-center">
-                        <a href="#" class="btn btn-warning btn-lg" role="button" data-toggle="modal" data-target="#addUser">Ajouter un contact <span class="glyphicon glyphicon-plus"></span></a>
+					<h2 class="text-center">Invitez vos amis à rejoindre ce salon !</h2>
+                    <div class="input-group input-group-lg">
+                        <input type="text" name="autocomplete_user" id="autocomplete_user" class="form-control" placeholder="Saisissez le prénom de votre ami ?">
+                        <span class="input-group-btn">
+                        <button class="btn btn-success" type="button">Inviter !</button>
+                        </span>
                     </div>
-				</div>
+                </div>
 		    </div>
 		</div>
-		<input type="text" name="autocomplete_user" id="autocomplete_user" class="form-control" placeholder="Autocomplétion des users en bdd ou invitation par mail ?">
 		<!--Modal ajout utilisateur-->
 		<div id="addUser" class="modal fade" role="dialog">
 			<div class="modal-dialog">
@@ -149,7 +156,7 @@
 						<h4 class="modal-title">Ajout d'un membre au salon 1</h4>
 					</div>
 					<div class="modal-body">
-						<input type="text" name="autocomplete_user" id="autocomplete_user" class="form-control" placeholder="Autocomplétion des users en bdd ou invitation par mail ?">
+
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success" data-dismiss="modal">Valider</button>

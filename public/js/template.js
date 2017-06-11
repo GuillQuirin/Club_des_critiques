@@ -153,8 +153,13 @@ $(document).ready(function(){
                     form.find('input[type="submit"]').parent().prepend('<i class="fa fa-exclamation-triangle fa-2x float-left" aria-hidden="true"></i>');
                     break;
                 
-                default: // Problème technique
+                case 3: // Problème technique
                     popUpMessage += '.alert-danger';
+                    form.find('input[type="submit"]').parent().prepend('<i class="fa fa-exclamation-triangle fa-2x float-left" aria-hidden="true"></i>');
+                    break;
+
+                case 4: // Login : compte non-actif
+                    popUpMessage += '.alert-danger-login';
                     form.find('input[type="submit"]').parent().prepend('<i class="fa fa-exclamation-triangle fa-2x float-left" aria-hidden="true"></i>');
                     break;
             }

@@ -320,10 +320,15 @@ class UserController extends Controller
                $input = $request->all();
                try{
                     if(Auth::attempt([  'email' => $input['email'], 
-                                        'password' => $input['password'],
-                                        'id_status' => 1])){
-                         
+                                        'password' => $input['password']])){
+
                          $user = Auth::user();
+                         $blackList = [1,5];
+
+                         if(in_array($user->id_status, $blackList)){
+                              Auth::logout();
+                              return 4;
+                         }
                          $request->session()->put('user_id', $user->id);
                          return '/'; //Adresse de destination si Auth OK
                     }

@@ -37,7 +37,10 @@ class AjaxController extends Controller
     {
         $subCatId = Input::get('subCatId');
 
-        $creators =  DB::select(DB::raw('SELECT creator FROM element WHERE id_category = ' . $subCatId . ' GROUP BY creator'));
+        $creators =  DB::select(DB::raw('SELECT creator 
+                                            FROM element 
+                                            WHERE id_category = ' . $subCatId . ' 
+                                            GROUP BY creator'));
 
         return Response::json($creators);
     }
@@ -110,35 +113,12 @@ class AjaxController extends Controller
         foreach ($input as $key => $value)
             $filter[] = ["user.".$key, 'like', '%'.$value.'%'];
 
-        $listUsers = DB::table('user')
-                        ->select( 'user.id', 
-                                  'user.first_name as name',
-                                  'user.id_status as subName',
-                                  'user.description',
-                                  'user.picture',
-                                  'user.id_department')
-                        ->where($filter)
-                        ->get();
+        $listUsers = User::where($filter)->get();
 
-        //Renommage des statuts
+        //Renommage avec des alias
         foreach ($listUsers as $user) {
-            switch ($user->subName) {
-                    case '2':
-                        $user->subName="Administrateur";
-                        break;
-           
-                    case '1':
-                        $user->subName="Membre";
-                        break;
-
-                    case '-1':
-                        $user->subName="Membre banni";
-                        break;
-
-                    default:
-                        $user->subName="Membre";
-                        break;
-            }
+            $user->name = $user->first_name;
+            $user->subName = $user->status->label;
             $user->redirection = 'show_user';     
         }
         return json_encode($listUsers);
@@ -155,7 +135,7 @@ class AjaxController extends Controller
         $element = Element::find($elementId);
         $cat = $element->category->parent->id;
 
-        return Response::json(['element' => $element, 'catgory' => $cat]);
+        return Response::json(['element' => $element, 'category' => $cat]);
     }
 
     /**

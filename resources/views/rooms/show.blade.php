@@ -4,6 +4,10 @@
      <link rel="stylesheet" type="text/css" href="{{asset('css/rooms.css')}}">
 @endsection
 
+@section('js')
+    <script type="text/javascript" src="{{asset('js/room.js')}}"></script>
+@endsection
+
 @section('title')
     Salon - Titre du livre
 @endsection

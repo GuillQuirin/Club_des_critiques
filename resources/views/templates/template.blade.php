@@ -328,8 +328,8 @@
                                     if(value.date != undefined)
                                         html+= ' data-date="'+strtotime(value.date)+'"';
                                     
-                                    if(value.location != undefined)
-                                        html+= ' data-location="'+value.location+'"';
+                                    if(value.id_department != undefined)
+                                        html+= ' data-id_department="'+value.id_department+'"';
 
                                     if(redirect != undefined)
                                         html+= ' href="'+redirect+'/'+value.id+'"';

@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+    $("#messages").scrollTop($("#messages").prop('scrollHeight'));
+
     /* Countdown du prochain salon à venir */
     $.ajax({
         url: $('a#nextRoomCountdown').data('route'),
@@ -194,6 +196,9 @@ $(document).ready(function(){
                         add(data.message);
                     }
                 });
+        },
+        select: function (event, ui) {
+            $("#id_user").val(ui.item.id); // save selected id to hidden input
         }
     });
 
@@ -204,8 +209,6 @@ $(document).ready(function(){
             .append(item.label)
             .appendTo(ul);
     };
-
-
 
     $('#send').click(function(e){
         e.preventDefault(); // on empêche le bouton d'envoyer le formulaire

@@ -28,7 +28,7 @@
                         <td>{{$room->element->name}} ({{$room->element->creator}})</td>
                         <td>Du {{date("d/m/Y", strtotime($room->date_start))}} au {{date("d/m/Y", strtotime($room->date_end))}}</td>
                         @if(Auth::check())
-                        <td> @if(!($user_room->contains('id_room', $room->id)))
+                        <td> @if(!($user_element->contains('id_element', $room->element->id)))
                                 <button type="button"
                                         class="btn btn-success"
                                         data-toggle="modal"
@@ -50,6 +50,7 @@
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
+                                {{ Form::open(['route' => 'join_room', 'method' => 'post', 'class' => 'col-md-12']) }}
                                 <div class="modal-body">
                                     <h1 class="text-center text-uppercase col-xs-10 col-sm-12">{{$room->element->name}}<small>({{$room->element->creator}})</small></h1>
                                     <div class="text-center" id="div_note">
@@ -62,10 +63,14 @@
                                             <a href="#1" title="Donner 1 étoile">☆</a>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="element" value="{{$room->element->id}}"/>
+                                    <input type="hidden" id="note" name="note"/>
                                 </div>
-                                <div class="modal-footer">
-                                    <a href="{{route('join_room', ['id' => $room->id])}}" type="button" class="btn btn-primary">Rejoindre</a>
+                                <div class="modal-footer text-center">
+                                    <button type="submit" class="btn btn-success btn-lg">Rejoindre</button>
+                                    <!--<a href="{{route('join_room', ['id' => $room->id])}}" type="button" class="btn btn-primary">Rejoindre</a>-->
                                 </div>
+                                {{Form::close()}}
                             </div>
                         </div>
                     </div>
@@ -103,6 +108,13 @@
                 modal.find('.modal-body #title').text(title + " - " + salon)
                 modal.find('.modal-body #autor small').text(autor)
                 modal.find('.modal-title').text(salon)
+            })
+
+            $('.rating').children('a').each(function(){
+                $(this).click(function(){
+                    //alert(this.getAttribute("href"));
+                    document.getElementById('note').value = this.getAttribute("href").substring(1);
+                })
             })
         });
     </script>

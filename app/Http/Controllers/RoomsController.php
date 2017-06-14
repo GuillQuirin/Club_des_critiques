@@ -41,9 +41,11 @@ class RoomsController extends Controller
 	{
         $rooms = Room::where('date_start', '>', date("Y-m-d H:i:s"))->get();
         $user_room = UserRoom::where('id_user', explode(',', Auth::id()))->get();
+        $user_element = UserElement::where('id_user', Auth::id())->get();
 		return view('rooms.index')
             ->with(compact('rooms'))
-            ->with(compact('user_room'));
+            ->with(compact('user_room'))
+            ->with(compact('user_element'));
 	}
 
 	/**
@@ -158,6 +160,26 @@ class RoomsController extends Controller
         );
         return Redirect::route('futur_rooms');
 	}
+
+    /**
+     * Rejoindre un salon
+     *
+     * @param  int  $id
+     * @return view
+     */
+    public function joinBis(Request $request)
+    {
+        DB::table('user_element')->insert(
+            [
+                'id_user' => Auth::id(),
+                'id_element' => $request->element,
+                'mark' => $request->note,
+                'is_exchangeable' => 0,
+                'is_deleted' => 0
+            ]
+        );
+        return Redirect::route('futur_rooms');
+    }
 
 	/////// ADMINISTRATION //////
 

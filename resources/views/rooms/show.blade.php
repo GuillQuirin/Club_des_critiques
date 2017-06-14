@@ -22,29 +22,28 @@
                 <div class="panel-group">
                     <div class="panel panel-color panel-border">
                         <div class="panel-heading">
-							<span class="glyphicon glyphicon-info-sign"></span> Informations
+							<span class="glyphicon glyphicon-info-sign"></span> <h4 class="d-inline">Informations</h4>
                         </div>
                         <div class="panel-body">
                             <div class="col-sm-6">
-                                <p>Type d'oeuvre : {{ $cat->name }}</p>
-                                <p>Titre : {{$element->name}}</p>
-                                <p>Auteur : {{$element->creator}}</p>
-                                <p>Date de parution : {{date("d/m/Y", strtotime($element->date_publication))}}</p>
+                                <p><strong>Titre : </strong>{{$element->name}}</p>
+                                <p><strong>Auteur : </strong>{{$element->creator}}</p>
+                                <p><strong>Type d'oeuvre :</strong> {{ $cat->name }}</p>
+                                <p><strong>Date de parution : </strong>{{date("d/m/Y", strtotime($element->date_publication))}}</p>
                             </div>
                             <div class="col-sm-6">
-                                <p>Votre note : {{$mark->mark}}</p>
+                                <strong>Votre note : </strong><h1 class="d-inline">{{$mark->mark}}</h1>/4 <br>
 								<?php $sum = 0;?>
 								@foreach ($global_mark as $marks)
-									{{ $marks->mark }}
-									{{ $sum = $sum + $marks->mark }}
+									<?php $sum = $sum + $marks->mark ?>
 								@endforeach
-                                <p>Note globale des lecteurs : {{$sum/($global_mark->count())}}</p>
+                                 <strong>Note globale des lecteurs : </strong><h1 class="d-inline">{{$sum/($global_mark->count())}}</h1>/4
                             </div>
                         </div>
                     </div>
                     <div class="panel panel-color panel-border">
                         <div class="panel-heading">
-							<span class="glyphicon glyphicon-book"></span> Synopsis
+                            <span class="glyphicon glyphicon-book"></span> <h4 class="d-inline">Synopsis</h4>
                         </div>
                         <div class="panel-body">
 							{{$element->description}}
@@ -59,7 +58,7 @@
 	        	<div class="col-xs-12 col-md-12">
 		            <div class="panel panel-primary">
 		                <div class="panel-heading">
-		                    <span class="glyphicon glyphicon-comment"></span> Commentaires
+                            <span class="glyphicon glyphicon-comment"></span> <h4 class="d-inline">Commentaires</h4>
 		                </div>
 		                <div class="panel-body body-panel" id="messages">
 		                    <ul id="chatbox" class="chat">
@@ -79,7 +78,7 @@
         		<div class="col-xs-12 col-sm-12">
 		            <div class="panel panel-primary">
 		                <div class="panel-heading">
-		                    <span class="glyphicon glyphicon-user"></span> Membres du salon
+                            <span class="glyphicon glyphicon-user"></span><h4 class="d-inline"> Membres du salon</h4>
 		                </div>
 		                <div class="panel-body body-panel">
 		                    <ul class="chat">

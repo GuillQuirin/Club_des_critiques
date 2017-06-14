@@ -94,22 +94,38 @@ tr{
     background-color: #70BEB1;
 }
 
+/*
+ * Rating styles
+ */
 .rating {
-    direction: rtl;
+    width: 226px;
+    margin-left: 150px;
+    font-size: 45px;
+    overflow:hidden;
 }
-
-
-.rating a {
+.rating input {
+    float: right;
+    opacity: 0;
+    position: absolute;
+}
+.rating a,
+.rating label {
+    float:right;
     color: #aaa;
     text-decoration: none;
-    font-size: 3em;
+    -webkit-transition: color .4s;
+    -moz-transition: color .4s;
+    -o-transition: color .4s;
     transition: color .4s;
 }
+.rating label:hover ~ label,
+.rating input:focus ~ label,
+.rating label:hover,
 .rating a:hover,
-.rating a:focus,
 .rating a:hover ~ a,
-.rating a:focus ~ a {
-    color: #D99E7E;
+.rating a:focus,
+.rating a:focus ~ a		{
+    color: orange;
     cursor: pointer;
 }
 
@@ -146,4 +162,8 @@ ul.ui-autocomplete li img{
     height: 100% !important;
     padding: 0 !important;
     width: initial !important;
+}
+
+.d-inline{
+    display: inline;
 }

@@ -88,10 +88,10 @@
 	Route::get('rooms/my_rooms', ['as' => 'my_rooms', 'uses' => 'RoomsController@showMyRooms']);
 	Route::get('room/{id}', ['as' => 'show_room', 'uses' => 'RoomsController@show']);
 	/*DON'T TOUCH */Route::get('room', ['as' => 'next_room', 'uses' => 'RoomsController@index']);
-	Route::get('room/join/{id}', ['as' => 'join_room', 'uses' => 'RoomsController@join']);
+	Route::post('room/join/', ['as' => 'join_room', 'uses' => 'RoomsController@joinBis']);
 	Route::post('room/report', ['as' => 'report_user', 'uses' => 'RoomsController@reportUser']);
 	Route::post('room/invite', ['as' => 'invite_user', 'uses' => 'RoomsController@inviteUser']);
-    Route::get('join_room/{token}', ['as' => 'join_room', 'uses' => 'RoomController@checkToken']);
+    //Route::get('join_room/{token}', ['as' => 'join_room', 'uses' => 'RoomController@checkToken']);
 
 
 /****** ADMINISTRATION ******/

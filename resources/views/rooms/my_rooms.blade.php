@@ -30,7 +30,7 @@
                         <td>{{date("d/m/Y i:m:s", strtotime($room->date_publication))}}</td>
                         <td>Du {{date("d/m/Y", strtotime($room->date_start))}} au {{date("d/m/Y", strtotime($room->date_end))}}</td>
                         <td>Salon 1</td>
-                        <td></td>
+                        <td>{{$room->mark}}</td>
                     </tr>
                 @endforeach
                 </tbody>

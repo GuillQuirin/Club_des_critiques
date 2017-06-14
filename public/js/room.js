@@ -62,6 +62,7 @@ $(document).ready(function(){
                 html+='</li>';
                 $('ul#chatbox').html(html);
             });
+            $("#messages").scrollTop($("#messages").prop('scrollHeight'));
         })
         .fail(function(data){
             console.log(data);

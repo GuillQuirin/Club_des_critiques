@@ -1,7 +1,5 @@
 $(document).ready(function(){
 
-    $("#messages").scrollTop($("#messages").prop('scrollHeight'));
-
     /* Countdown du prochain salon à venir */
     $.ajax({
         url: $('a#nextRoomCountdown').data('route'),

@@ -90,6 +90,8 @@
 	/*DON'T TOUCH */Route::get('room', ['as' => 'next_room', 'uses' => 'RoomsController@index']);
 	Route::get('room/join/{id}', ['as' => 'join_room', 'uses' => 'RoomsController@join']);
 	Route::post('room/report', ['as' => 'report_user', 'uses' => 'RoomsController@reportUser']);
+	Route::post('room/invite', ['as' => 'invite_user', 'uses' => 'RoomsController@inviteUser']);
+    Route::get('join_room/{token}', ['as' => 'join_room', 'uses' => 'RoomController@checkToken']);
 
 
 /****** ADMINISTRATION ******/

@@ -122,6 +122,10 @@ footer a:hover, footer a:active, footer a:focus{
     padding-left:0px;
 }
 
+.padding-top-25{
+    padding-top: 25px;
+}
+
 /* CSS appliqué pour l'ensemble des container hormis l'accueil*/
 .container:not(.notPadding){
     padding-right: 75px;

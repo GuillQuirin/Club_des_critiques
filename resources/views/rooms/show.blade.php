@@ -85,14 +85,17 @@
 		                    <ul class="chat">
                                 @foreach($users as $user)
                                     @foreach($user as $u)
+                                        @if($u->id !== Auth::id())
                                         <li class="clearfix">
                                             <div class="chat-body clearfix">
                                                 <div class="col-xs-6 text-left padding-top-strong">
                                                     <strong class="primary-font">{{$u->first_name}} {{$u->last_name}}</strong>
                                                 </div>
                                                 <div class="col-xs-6 text-right">
+                                                    @if(!($user_reported->contains('id_user_reported', $u->id)))
+                                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#reporting-{{$u->id}}"> <span class="glyphicon glyphicon-alert" aria-hidden="true"></span></button>
+                                                    @endif
                                                     <a href="{{ route('show_user', ['id' => $u->id] )}}" class="btn btn-warning" id="btn-chat">Consulter le profil</a>
-                                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#reporting-{{$u->id}}">Signaler</button>
                                                 </div>
                                             </div>
                                         </li>
@@ -119,18 +122,23 @@
                                             </div>
                                             {{Form::close()}}
                                         </div>
+                                        @endif
                                     @endforeach
                                 @endforeach
 		                    </ul>
 		                </div>
 		        	</div>
-					<h2 class="text-center">Invitez vos amis à rejoindre ce salon !</h2>
+					<h2 class="text-center padding-top-25">Invitez vos amis à rejoindre ce salon !</h2>
+                    {{ Form::open(['route' => 'invite_user', 'method' => 'post', 'class' => 'col-md-12']) }}
                     <div class="input-group input-group-lg">
                         <input type="text" name="autocomplete_user" id="autocomplete_user" class="form-control" placeholder="Saisissez le prénom de votre ami ?">
+                        <input type="hidden" name="id_user" id="id_user"/>
+                        <input type="hidden" name="id_room" id="id_room" value="{{$header->id}}"/>
                         <span class="input-group-btn">
-                        <button class="btn btn-success" type="button">Inviter !</button>
+                        <button class="btn btn-success" type="submit">Inviter !</button>
                         </span>
                     </div>
+                    {{Form::close()}}
                 </div>
 		    </div>
 		</div>

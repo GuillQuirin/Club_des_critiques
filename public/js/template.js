@@ -13,14 +13,20 @@ $(document).ready(function(){
         else{
             var nextRoom = JSON.parse(data);
             var date = new Date(nextRoom.date_start);
-            var datestring = date.getUTCFullYear() + "/" +
+            
+            var datecountdown = date.getUTCFullYear() + "/" +
                             ("0" + (date.getUTCMonth()+1)).slice(-2) + "/" +
                             ("0" + date.getUTCDate()).slice(-2);
 
-            $('#nextRoomCountdown').attr('data-countdown', datestring);
+            var datestring = "le " + ("0" + date.getUTCDate()).slice(-2)+ "/" +
+                            ("0" + (date.getUTCMonth()+1)).slice(-2) + "/" +
+                            date.getUTCFullYear();
+
+
+            $('#nextRoomCountdown').attr('data-countdown', datecountdown);
             $('#nextRoomDetails .room').html(nextRoom.nameRoom);
             $('#nextRoomDetails .element').html(nextRoom.nameElement);
-            $('#nextRoomDetails .date').html(nextRoom.date_start);
+            $('#nextRoomDetails .date').html(datestring);
             $('#nextRoomDetails a').attr('href', $('#nextRoomDetails a')
                                     .data('redirect')+'/'+nextRoom.id)
                                     .html('Accèdez à la fiche du salon');

@@ -23,7 +23,7 @@
         <hr>
     
         <div class="row" id="searchElement">
-            {!! Form::select('location', 
+            {!! Form::select('id_department', 
                             [null=>'Choisissez un département']+$departments, 
                             null, 
                             ['class' => 'col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1']) !!}

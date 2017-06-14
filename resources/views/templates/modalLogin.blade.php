@@ -40,6 +40,12 @@
                         </button>
                         Authentification impossible.
                     </div>
+                    <div class="alert alert-dismissible alert-danger-login alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        Votre compte n'est pas activé : vous devez avoir reçu un lien de confirmation par mail, ou vous avez été banni.
+                    </div>
                 </div>
                 <div class="row">
                     <span class="col-xs-6 col-sm-6 col-md-6 text-left">

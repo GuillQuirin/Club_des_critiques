@@ -34,7 +34,6 @@ class UserController extends Controller
                $user->name = $user->first_name;
                $user->subName = $user->status->label;
                $user->date = $user->date_created;
-                   
           }
 
           $redirection = 'show_user';
@@ -70,23 +69,6 @@ class UserController extends Controller
 	public function show($id)
 	{
           //Liste des infos de l'utilisateur
-/*          $infos = DB::table('user')
-                              ->leftJoin('department', 'user.id_department' , '=' , 'department.code')
-                              ->select( 'user.id', 
-                                        'user.first_name', 
-                                        'user.last_name',
-                                        'user.email',
-                                        'user.is_contactable',
-                                        'user.id_status',
-                                        'user.description',
-                                        'user.picture',
-                                        'department.name as department_name',
-                                        'department.code as department_code',
-                                        'date_created'
-                                        )
-                              ->where('user.id', '=', $id)
-                              ->get();*/
-
           $infos = User::find($id);
 
           $myAccount  = (Auth::check() && Auth::id() == $id);
@@ -338,10 +320,15 @@ class UserController extends Controller
                $input = $request->all();
                try{
                     if(Auth::attempt([  'email' => $input['email'], 
-                                        'password' => $input['password'],
-                                        'id_status' => 1])){
-                         
+                                        'password' => $input['password']])){
+
                          $user = Auth::user();
+                         $blackList = [1,5];
+
+                         if(in_array($user->id_status, $blackList)){
+                              Auth::logout();
+                              return 4;
+                         }
                          $request->session()->put('user_id', $user->id);
                          return '/'; //Adresse de destination si Auth OK
                     }

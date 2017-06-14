@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Chatbox;
 use App\Element;
+use App\Report;
 use App\Room;
 use App\User;
 use App\UserElement;
@@ -111,6 +112,7 @@ class RoomsController extends Controller
         foreach ($user_room as $u){
             $users[] = User::where('id', $u->id_user)->get();
         }
+        $user_reported = Report::where('id_user_asker', Auth::id())->where('id_room', $id)->get();
         $chatbox = Chatbox::where('id_room', $header->id)->get();
 		return view('rooms.show')
             ->with(compact('header'))
@@ -120,7 +122,8 @@ class RoomsController extends Controller
             ->with(compact('user_room'))
             ->with(compact('users'))
             ->with(compact('chatbox'))
-            ->with(compact('cat'));
+            ->with(compact('cat'))
+            ->with(compact('user_reported'));
 	}
 
 	/**
@@ -208,21 +211,27 @@ class RoomsController extends Controller
                         'class' => 'form-control',
                         'id' => $user->id);
                 }else {
-                    $data['message'][] = array('label' => "<img src='/images/user.png' class='img-circle' style='width:40px;height:30px'/> " . $user->first_name . ' ' . $user->last_name, 'value' => $user->first_name . ' ' . $user->last_name, 'class' => 'form-control');
+                    $data['message'][] = array(
+                        'label' => "<img src='/images/user.png' class='img-circle' style='width:40px;height:30px'/> " . $user->first_name . ' ' . $user->last_name,
+                        'value' => $user->first_name . ' ' . $user->last_name,
+                        'class' => 'form-control',
+                        'id' => $user->id);
                 }
             }
         }
         echo json_encode($data);
     }
 
-    public function inviteUser(){
+    public function inviteUser(Request $request){
         $sender = User::where('id', Auth::id())->first();
-        $receiver = User::where('id', $_POST['id']);
-
+        $receiver = User::where('id', $request->id_user )->first();
+        $room = Room::where('id', $request->id_room)->first();
         $data = [
             'sender' => $sender,
+            'receiver' => $receiver,
+            'room' => $room
         ];
-        Mail::send('emails.register', $data, function($message) use ($receiver){
+        Mail::send('emails.invite', $data, function($message) use ($receiver){
             $message->to($receiver->email);
             $message->subject('Club des critiques : un ami vous a invité à rejoindre un salon');
         });

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use Carbon\Carbon;
 use DB;
 use App\User;
 use App\Room;
@@ -325,7 +325,7 @@ class AdminController extends Controller
     public function editRoom(Request $request)
     {
         $room = Room::find($request->id);
-
+        
         $room->name = $request->name;
         $room->date_start = $request->date_start;
         $room->date_end = $request->date_end;

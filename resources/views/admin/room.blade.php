@@ -34,18 +34,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="room_creator" class="col-2 col-form-label">Auteur / réalisateur : </label>
-                        <div class="col-10">
-                           <select id="room_creator" name="creator" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required" disabled>
-                                <option value="">Vous devez choisir une sous catégorie</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label for="room_element" class="col-2 col-form-label">Oeuvre : </label>
                         <div class="col-10">
                            <select id="room_element" name="element" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required" disabled>
-                                <option value="">Vous devez choisir un auteur / réalisateur</option>
+                                <option value="">Vous devez choisir une sous catégorie</option>
                             </select>
                         </div>
                     </div>
@@ -98,7 +90,7 @@
                     <tbody>
                         @foreach($rooms as $room)
                         <tr>
-                            <td>{{ $room->id }}</td>
+                            <td class="room-id">{{ $room->id }}</td>
                             <td>{{ $room->name }}</td>
                             <td>{{ $room->element->name }}</td>
                             <td>{{ $room->date_start }}</td>
@@ -133,48 +125,59 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Modifier le salon</h4>
-            </div>
-            <form>
+            </div>            
                 <div class="modal-body">
+                    {{ Form::open(['route' => 'edit_room', 'method' => 'put', 'class' => 'col-md-12']) }}
+                    <input type="hidden" name="id" id="id_room">
                     <div class="form-group">
-                        <label for="room_name_edit" class="col-2 col-form-label">Nom : </label>
+                        <label for="edit_room_name" class="col-2 col-form-label">Nom : </label>
                         <div class="col-10">
-                            <input class="form-control" type="text" id="room_name_edit" name="room_name_edit">
+                            <input class="form-control" type="text" id="edit_room_name" name="name" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="room_category_edit" class="col-2 col-form-label">Catégorie : </label>
+                        <label for="edit_room_category" class="col-2 col-form-label">Catégorie : </label>
                         <div class="col-10">
-                            <select class="form-control" id="room_category_edit" name="room_category_edit">
-                                <option>Choisir une catégorie</option>
-                                <option value="1">Livre</option>
-                                <option value="2">Film</option>
-                                <option value="3">...</option>
+                            <select id="edit_room_category" name="category" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required" title="Choisir une catégorie">
+                                @foreach($categories as $category)
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="room_element_edit" class="col-2 col-form-label">Oeuvre : </label>
+                        <label for="edit_room_sub_category" class="col-2 col-form-label">Sous catégorie : </label>
                         <div class="col-10">
-                            <select class="form-control" id="room_element_edit" name="room_element_edit">
-                                <option>Choisir une oeuvre</option>
-                                <option value="">Le petit haperon rouge</option>
-                                <option value="1">La belle et la bete</option>
-                                <option value="2">Le roi lion</option>
-                                <option value="3">...</option>
+                            <select id="edit_room_sub_category" name="sub_category" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required">
                             </select>
                         </div>
                     </div>
-                        <div class="form-group">
-                            <label for="room_date_start_edit" class="col-2 col-form-label">Date début : </label>
-                            <div class="col-10">
-                                <input class="form-control" type="text" id="room_date_start_edit" name="room_date_start_edit">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="room_date_end_edit" class="col-2 col-form-label">Date fin : </label>
+                    <div class="form-group">
+                        <label for="edit_room_element" class="col-2 col-form-label">Oeuvre : </label>
                         <div class="col-10">
-                            <input class="form-control" type="date" id="room_date_end_edit" name="room_date_end_edit">
+                           <select id="edit_room_element" name="element" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_room_date_start" class="col-2 col-form-label">Date début : </label>
+                        <div class="col-10">
+                            <input type='text' class="form-control" id='edit_room_date_start' name="date_start" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_room_date_end" class="col-2 col-form-label">Date fin : </label>
+                        <div class="col-10">
+                            <input type='text' class="form-control" id='edit_room_date_end' name="date_end" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_room_status" class="col-2 col-form-label">Status : </label>
+                        <div class="col-10">
+                            <select id="edit_room_status" name="status" class="form-control selectpicker" required>
+                                <option value="0">Inactif</option>
+                                <option value="1">Actif</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -182,7 +185,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">Modifier</button>
                 </div>
-            </form>
+            {{ Form::close() }}
         </div>
     </div>
 </div>

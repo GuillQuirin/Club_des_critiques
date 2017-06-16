@@ -79,6 +79,8 @@
 
 
 @section('js')
+	<script type="text/javascript" src="moment/min/moment.min.js"></script>
+	<script type="text/javascript" src="bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 
@@ -444,7 +446,6 @@
 		});
 
 		var selectRoomSubCat = $('#room_sub_category');
-		var selectRoomCreator = $('#room_creator');
 		var selectRoomElement = $('#room_element');
 
 		// Sélection de la catégorie => affichage des sous catégories
@@ -480,40 +481,11 @@
 
 	        if (subCatId.length) {
 	            // Call Ajax Request to get creator for the sub category
-	            $.ajax({
-	                data : { subCatId : subCatId },
-	                url: "{{ route('get_creators') }}",
+	             $.ajax({
+	                data : { subCatId : subCatId},
+	                url: "{{ route('get_elements_by_category') }}",
 	                type: 'get',
 	                success: function(data) {
-	                    if (data.length) {
-	                        selectRoomCreator.attr('disabled',false);
-	                        selectRoomCreator.html('<option value="" disabled selected>Choisissez un auteur / réalisateur </option>');
-	                        jQuery.each(data, function() {
-	                            selectRoomCreator.append(new Option(this.creator, this.creator));
-	                        });
-	                        selectRoomCreator.selectpicker('refresh');
-	                    } else {
-	                        selectRoomCreator.html('<option value="" disabled selected>Pas d\'auteur / réalisateur disopnible pour cette catégorie</option>');
-	                        selectRoomCreator.selectpicker('refresh');
-	                    }
-	                }
-	            });
-	        }
-	    });
-
-		// Sélection de l'auteur => affichage des oeuvres
-		selectRoomCreator.change(function() {
-	        var subCatId = selectRoomSubCat.val();
-	        var creator = this.value;
-
-	        if (subCatId.length && creator.length) {
-	            // Call Ajax Request to get element for the creator
-	            $.ajax({
-	                data : { subCatId : subCatId, creator : creator },
-	                url: "{{ route('get_elements') }}",
-	                type: 'get',
-	                success: function(data) {
-	                	console.log(data);
 	                    if (data.length) {
 	                        selectRoomElement.attr('disabled',false);
 	                        selectRoomElement.html('<option value="" disabled selected>Choisissez une oeuvre </option>');
@@ -522,7 +494,7 @@
 	                        });
 	                        selectRoomElement.selectpicker('refresh');
 	                    } else {
-	                        selectRoomElement.html('<option value="" disabled selected>Pas d\'oeuvre disopnible pour cet  auteur / réalisateur</option>');
+	                        selectRoomElement.html('<option value="" disabled selected>Pas d\'oeuvre disopnible pour cette sous catégorie</option>');
 	                        selectRoomElement.selectpicker('refresh');
 	                    }
 	                }
@@ -531,6 +503,88 @@
 	    });
 
 
+		$('a.edit-room').on('click', function() {
+			    var myModal = $('#editRoomModal');
+
+			    var roomId = $(this).closest('tr').find('td.room-id').html();
+			    var selectEditRoomSubCat = $('#edit_room_sub_category');
+			    var selectEditRoomElement = $('#edit_room_element');
+
+			    $.ajax({
+	                data : { roomId : roomId },
+	                url: "{{ route('get_room') }}",
+	                type: 'get',
+	                success: function(data) {
+
+	                	$('#edit_room_date_start').datetimepicker({
+	                		format: 'YYYY-MM-DD HH:mm:ss',
+	                		defaultDate: data.room.date_start
+	                	});
+
+	                	$('#edit_room_date_end').datetimepicker({
+	                		minDate: $('#edit_room_date_start').val(),
+	                		format: 'YYYY-MM-DD HH:mm:ss',
+	                		defaultDate: data.room.date_end
+	                	});
+	                	
+	                	$('#id_room').val(data.room.id);
+	                	$('#edit_room_name').val(data.room.name);
+	                	
+	                	$('#edit_room_category').selectpicker('val', data.catgory);
+
+	                	// Affichage des sous catégories                 	
+			            $.ajax({
+			                data : { categoryId : data.catgory },
+			                url: "{{ route('get_sub_categories') }}",
+			                type: 'get',
+			                success: function(subCategories) {
+			                    if (subCategories.length) {
+			                        selectEditRoomSubCat.attr('disabled',false);
+			                        selectEditRoomSubCat.html('<option value="" disabled selected>Choisissez une sous catégorie</option>');
+			                        jQuery.each(subCategories, function() {
+			                            selectEditRoomSubCat.append(new Option(this.name, this.id));
+			                        });
+			                        selectEditRoomSubCat.selectpicker('refresh');
+			                        selectEditRoomSubCat.selectpicker('val', data.subCat);
+			                    } else {
+			                        selectEditRoomSubCat.html('<option value="" disabled selected>Pas de sous catégorie disponible</option>');
+			                        selectEditRoomSubCat.selectpicker('refresh');
+			                    }
+			                }
+			            });
+
+			            // Affichage des éléments
+			            $.ajax({
+			                data : { subCatId : data.subCat},
+	                		url: "{{ route('get_elements_by_category') }}",
+			                type: 'get',
+			                success: function(element) {
+			                    if (element.length) {
+			                        selectEditRoomElement.attr('disabled',false);
+			                        selectEditRoomElement.html('<option value="" disabled selected>Choisissez une sous catégorie</option>');
+			                        jQuery.each(element, function() {
+			                            selectEditRoomElement.append(new Option(this.name, this.id));
+			                        });
+			                        selectEditRoomElement.selectpicker('refresh');
+			                        selectEditRoomElement.selectpicker('val', data.room.id_element);
+			                    } else {
+			                        selectEditRoomElement.html('<option value="" disabled selected>Pas d\'oeuvre disponible</option>');
+			                        selectEditRoomElement.selectpicker('refresh');
+			                    }
+			                }
+			            });
+
+	                	$('#edit_room_element').selectpicker('val', data.room.id_element);
+
+			            myModal.modal('toggle');
+	                },
+	                error : function() {
+	                	// gestion d'erreur
+	                }
+	            });
+
+	            return false;
+			});
 
 
 	// USER

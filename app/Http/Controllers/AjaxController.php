@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Response;
 use App\User;
+use App\Room;
 use App\Element;
 use App\Category;
 
@@ -55,6 +56,19 @@ class AjaxController extends Controller
         $creator = Input::get('creator');
 
         $elements =  Element::where('creator', $creator)->where('id_category', $subCatId)->get();
+
+        return Response::json(array_pluck($elements, 'attributes'));
+    }
+
+    /**
+     * Ajax Request : get all elements for a given sub category
+     * @return mixed
+     */
+    public function getElementForCategory()
+    {
+        $subCatId = Input::get('subCatId');
+
+        $elements =  Element::where('id_category', $subCatId)->get();
 
         return Response::json(array_pluck($elements, 'attributes'));
     }
@@ -148,5 +162,19 @@ class AjaxController extends Controller
         $user = User::find($userId);
 
         return Response::json($user);
-    }    
+    }
+    /**
+     * Ajax Request : get room by id
+     * @return mixed
+     */
+    public function getRoomById()
+    {
+        $roomId = Input::get('roomId');
+        $room = Room::find($roomId);
+        $subCat = $room->element->category->id;
+        $cat = $room->element->category->parent->id;
+
+        return Response::json(['room' => $room, 'subCat' => $subCat, 'catgory' => $cat]);
+
+    }
 }

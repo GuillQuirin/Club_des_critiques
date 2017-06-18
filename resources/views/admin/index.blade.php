@@ -448,6 +448,17 @@
 		var selectRoomSubCat = $('#room_sub_category');
 		var selectRoomElement = $('#room_element');
 
+		$('#room_date_start').datetimepicker({
+			format: 'YYYY-MM-DD HH:mm:ss',
+			defaultDate: new Date()
+		});
+
+		$('#room_date_end').datetimepicker({
+			format: 'YYYY-MM-DD HH:mm:ss',
+			minDate: $('#room_date_start').val(),
+			defaultDate: new Date()
+		});
+
 		// Sélection de la catégorie => affichage des sous catégories
 		$("#room_category").change(function() {
 	        var categoryId = this.value;

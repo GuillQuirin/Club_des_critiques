@@ -44,13 +44,13 @@
                     <div class="form-group">
                         <label for="room_date_start" class="col-2 col-form-label">Date début : </label>
                         <div class="col-10">
-                            <input class="form-control" type="date" id="room_date_start" name="date_start" required>
+                            <input type='text' class="form-control" id='room_date_start' name="date_start" required />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="room_date_end" class="col-2 col-form-label">Date fin : </label>
                         <div class="col-10">
-                            <input class="form-control" type="date" id="room_date_end" name="date_end" required>
+                            <input type='text' class="form-control" id='room_date_end' name="date_end" required />
                         </div>
                     </div>
                     <div class="form-group">

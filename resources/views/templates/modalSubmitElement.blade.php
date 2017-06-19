@@ -12,28 +12,21 @@
                 <div class="row form-group">
                     <div class="col-md-6">
                         {!! Form::label('label_type',"Type d'oeuvre") !!}
-                        {!! Form::text('type','',['id'=>'label_type',
+                        {!! Form::text('category','',['id'=>'label_type',
                                                                 'class' => 'form-control',
                                                                 'required' => 'required']) !!}
-                    </div>
-                    
-                    <div class="col-md-6">
-                        {!! Form::label('label_date','Année de publication') !!}
-                        {!! Form::text('date','',['id'=>'label_date',
-                                                    'class' => 'form-control',
-                                                    'required' => 'required']) !!}
                     </div>
 
                     <div class="col-md-6">
                         {!! Form::label('label_author',"Nom de l'auteur") !!}
-                        {!! Form::text('author','',['id'=>'label_author',
+                        {!! Form::text('creator','',['id'=>'label_author',
                                                     'class' => 'form-control',
                                                     'required' => 'required']) !!}
                     </div>
                 
                     <div class="col-md-6">
                         {!! Form::label('label_element',"Nom de l'oeuvre") !!}
-                        {!! Form::text('element','',['id'=>'label_element',
+                        {!! Form::text('name','',['id'=>'label_element',
                                                     'class' => 'form-control',
                                                     'required' => 'required']) !!}
                     </div>

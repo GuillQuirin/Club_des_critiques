@@ -54,14 +54,17 @@ class ElementController extends Controller
         if(Auth::check()){
             try{
                 $this->validate($request, [
-                   'type' => 'required',
-                   'date' => 'required',
-                   'author' => 'required',
-                   'element' => 'required',
+                   'category' => 'required',
+                   'creator' => 'required',
+                   'name' => 'required',
                 ]);
                 $input = $request->all();
+                $input['id_user'] = Auth::id();
+
+                DB::table('element_suggest')->insert($input);
             }
             catch(\Exception $e){
+                //var_dump($e->getMessage());
                 return 2;
             }
             

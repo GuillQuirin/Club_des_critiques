@@ -59,11 +59,13 @@ class ElementController extends Controller
                    'name' => 'required',
                 ]);
                 $input = $request->all();
+                unset($input['_token']);
                 $input['id_user'] = Auth::id();
 
                 DB::table('element_suggest')->insert($input);
             }
             catch(\Exception $e){
+                //var_dump($input);
                 //var_dump($e->getMessage());
                 return 2;
             }

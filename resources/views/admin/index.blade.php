@@ -91,8 +91,9 @@
 	    initializedDataTable('elementTopTable');
 	    initializedDataTable('categoryTable');
 	    initializedDataTable('roomTable');
-	    initializedDataTable('userTable');
+	    initializedDataTable('userTable');banTable
 	    initializedDataTable('footerTable');
+	    initializedDataTable('banTable');
 
 	    $( "#date_start" ).datepicker();
 	    $( "#date_end" ).datepicker();
@@ -513,7 +514,49 @@
 	        }
 	    });
 
+		// Affiche la liste des utilisateurs du salon
+	    $('i.show-user-room').on('click', function() {
+	    	var myModal = $('#userRoomModal');
+	    	var roomId = $(this).closest('tr').find('td.room-id').html();
+	    	$('#roomId').val(roomId);
 
+	    	$.ajax({
+                data : { roomId : roomId },
+                url: "{{ route('get_users') }}",
+                type: 'get',
+                success: function(data) {
+                	jQuery.each(data, function() {
+                        $('#listUsersRoom').append('<li class="list-group-item">' + this.first_name + ' ' + this.last_name +'<span class="badge"><i class="fa fa-ban" id="' + this.id +'" aria-hidden="true"></i></span></li>');
+                    });
+					myModal.modal('toggle');
+                },
+                error : function() {
+                	// gestion d'erreur
+                }
+            });
+	    });
+
+	    // Bannir un utilisateur du salon
+	    $('i.fa-ban').on('click', function() {
+	    	var userId = this.id;
+	    	var roomId = $('#roomId').val();
+
+	    	if (confirm("Voulez vous vraiement banir cet utilisateur du salon ?")) {
+		    	$.ajax({
+	                data : { roomId : roomId, userId : userId },
+	                url: "{{ route('ban_user_from_room') }}",
+	                type: 'get',
+	                success: function(data) {
+	                	
+	                },
+	                error : function() {
+	                	// gestion d'erreur
+	                }
+	            });
+		    }
+		});	    
+
+	    // Affiche la pop up de modification d'un salon
 		$('a.edit-room').on('click', function() {
 			    var myModal = $('#editRoomModal');
 

@@ -7,6 +7,7 @@ use DB;
 use App\User;
 use App\Room;
 use App\Other;
+use App\Report;
 use App\Footer;
 use App\Status;
 use App\Element;
@@ -35,8 +36,9 @@ class AdminController extends Controller
         $status = Status::all();
         $footers = Footer::all();
         $rooms = Room::all();
+        $bans = Report::where('is_deleted', false)->get();
 
-    	return view('admin.index', compact('concept', 'elements', 'allCategories', 'allUsers', 'categories', 'topElements', 'departments', 'status', 'footers', 'rooms'));
+    	return view('admin.index', compact('concept', 'elements', 'allCategories', 'allUsers', 'categories', 'topElements', 'departments', 'status', 'footers', 'rooms', 'bans'));
     }
 
     /**

@@ -177,4 +177,32 @@ class AjaxController extends Controller
         return Response::json(['room' => $room, 'subCat' => $subCat, 'catgory' => $cat]);
 
     }
+
+    /**
+     * Ajax Request : get users for a room
+     * @return mixed
+     */
+    public function getUsersForRoom()
+    {
+        $roomId = Input::get('roomId');
+        $room = Room::find($roomId);
+        $users = $room->users();
+
+        return Response::json($users);
+
+    }
+
+    /**
+     * Ajax Request : ban a user from a room
+     * @return mixed
+     */
+    public function banUserFromRoom()
+    {
+        $roomId = Input::get('roomId');
+        $userid = Input::get('userid');
+
+        // A FAIRE
+
+        return Response::json($users);
+    }
 }

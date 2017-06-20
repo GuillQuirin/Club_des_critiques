@@ -105,18 +105,34 @@
                             </td>
                             <td>
                                 <a href="#" class="btn edit-room"><i class="fa fa-pencil"></i></a>
-                                <i class="fa fa-trash delete-room" aria-hidden="true" id="{{ $room->id }}"></i>
+                                <i class="fa fa-users show-user-room" aria-hidden="true" id="{{ $room->id }}"></i>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>        
                 </table>
             </div>
-        </div>
+        </div>       
     </div>
 </div>
 
 
+<!-- MODAL LISTE USER -->
+<div class="modal fade" id="userRoomModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Liste des utilisateurs</h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="roomId">
+                <ul class="list-group" id="listUsersRoom">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- MODAL MODIFICATION -->
 <div class="modal fade" id="editRoomModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

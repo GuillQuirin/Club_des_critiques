@@ -7,6 +7,7 @@ use App\User;
 use App\Room;
 use App\Element;
 use App\Category;
+use App\UserRoom;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -189,7 +190,6 @@ class AjaxController extends Controller
         $users = $room->users();
 
         return Response::json($users);
-
     }
 
     /**
@@ -199,10 +199,12 @@ class AjaxController extends Controller
     public function banUserFromRoom()
     {
         $roomId = Input::get('roomId');
-        $userid = Input::get('userid');
+        $userid = Input::get('userId');
 
-        // A FAIRE
+        $user_room = UserRoom::where('id_user', $userid)->where('id_room', $roomId)->first();
+        $user_room->status_user = 0;
+        $user_room->save();
 
-        return Response::json($users);
+        return Response::json($user_room);;
     }
 }

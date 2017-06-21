@@ -91,7 +91,7 @@
 	    initializedDataTable('elementTopTable');
 	    initializedDataTable('categoryTable');
 	    initializedDataTable('roomTable');
-	    initializedDataTable('userTable');banTable
+	    initializedDataTable('userTable');
 	    initializedDataTable('footerTable');
 	    initializedDataTable('banTable');
 
@@ -522,39 +522,50 @@
 
 	    	$.ajax({
                 data : { roomId : roomId },
-                url: "{{ route('get_users') }}",
+                url: "{{ route('get_users_for_room') }}",
                 type: 'get',
                 success: function(data) {
                 	jQuery.each(data, function() {
-                        $('#listUsersRoom').append('<li class="list-group-item">' + this.first_name + ' ' + this.last_name +'<span class="badge"><i class="fa fa-ban" id="' + this.id +'" aria-hidden="true"></i></span></li>');
+                		if(this.status_user == 1){
+							var status = "Membre";                			
+                		} else if(this.status_user == 2){
+							var status = "Administrateur";
+                		}else{
+                			var status = "Bannis";
+                		}
+                        $('#listUsersRoom').append('<li class="list-group-item">' + this.first_name + ' ' + this.last_name + ' - ' + status +'<span class="badge"><i class="fa fa-ban" id="' + this.id +'" aria-hidden="true"></i></span></li>');
                     });
 					myModal.modal('toggle');
+
+					// Bannir un utilisateur du salon
+				    $('i.fa-ban').on('click', function() {
+				    	console.log('ok');
+				    	var userId = this.id;
+				    	var roomId = $('#roomId').val();
+
+				    	if (confirm("Voulez vous vraiement banir cet utilisateur du salon ?")) {
+					    	$.ajax({
+				                data : { roomId : roomId, userId : userId },
+				                url: "{{ route('ban_user_from_room') }}",
+				                type: 'get',
+				                success: function(data) {
+				                	alert('L\'utilisateur a bien été bannis.');
+				                },
+				                error : function() {
+				                	// gestion d'erreur
+				                }
+				            });
+					    }
+					});	 
                 },
                 error : function() {
                 	// gestion d'erreur
                 }
-            });
+            });   
 	    });
-
-	    // Bannir un utilisateur du salon
-	    $('i.fa-ban').on('click', function() {
-	    	var userId = this.id;
-	    	var roomId = $('#roomId').val();
-
-	    	if (confirm("Voulez vous vraiement banir cet utilisateur du salon ?")) {
-		    	$.ajax({
-	                data : { roomId : roomId, userId : userId },
-	                url: "{{ route('ban_user_from_room') }}",
-	                type: 'get',
-	                success: function(data) {
-	                	
-	                },
-	                error : function() {
-	                	// gestion d'erreur
-	                }
-	            });
-		    }
-		});	    
+	    $("#userRoomModal").on("hidden.bs.modal", function () {
+		    $('#listUsersRoom').empty();
+		});
 
 	    // Affiche la pop up de modification d'un salon
 		$('a.edit-room').on('click', function() {

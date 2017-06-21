@@ -34,7 +34,12 @@ class Room extends Model
     // Get all users which participate at the room
     public function users()
     {
-        $users = DB::select('select * from user where id in (select id_user from user_room where id_room = ' . $this->id . ');');
+        $users = DB::select('
+            SELECT DISTINCT user.*, user_room.status_user 
+            FROM user, user_room 
+            WHERE user.id in (SELECT id_user FROM user_room WHERE id_room = ' . $this->id . ') 
+            AND user.id = user_room.id_user;
+        ');
 
         $users = User::hydrate($users);
 

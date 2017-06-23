@@ -108,6 +108,8 @@
 	Route::put('admin/edit-element', ['as' => 'edit_element', 'uses' => 'AdminController@editElement']);
 	Route::post('admin/add-user', ['as' => 'add_user', 'uses' => 'AdminController@addUser']);
 	Route::put('admin/edit-user', ['as' => 'edit_user', 'uses' => 'AdminController@editUser']);
+	Route::put('admin/delete-user', ['as' => 'delete_user', 'uses' => 'AdminController@deleteUser']);
+	Route::put('admin/ban-user', ['as' => 'ban_user', 'uses' => 'AdminController@banUser']);
 	Route::post('admin/add-footer', ['as' => 'add_footer', 'uses' => 'AdminController@addFooter']);
 	Route::put('admin/edit-footer', ['as' => 'edit_footer', 'uses' => 'AdminController@editFooter']);	
 	Route::put('admin/delete-footer', ['as' => 'delete_footer', 'uses' => 'AdminController@deleteFooter']);

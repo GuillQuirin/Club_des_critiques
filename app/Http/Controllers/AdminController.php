@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
+use Response;
 use DB;
 use App\User;
 use App\Room;
@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Input;
 class AdminController extends Controller
 {
 	/**
-     * Affiche la page d'administration
+     * Show admin page
      *
      * @return view
      */
@@ -42,7 +42,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Modification du concept du site
+     * Edit concept
      *
      * @return view
      */
@@ -61,7 +61,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Ajout d'un élémente à la une (en page d'accueil)
+     * Add top element (home page)
      *
      * @return view
      */
@@ -75,7 +75,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Supprimer un élémente à la une (en page d'accueil)
+     Delete top element (home page)
      *
      * @return view
      */
@@ -88,7 +88,7 @@ class AdminController extends Controller
     }
     
     /**
-     * Ajout d'une catégorie
+     * Add category
      *
      * @return view
      */
@@ -109,7 +109,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Modification d'une catégorie
+     * Edit category
      *
      * @return view
      */
@@ -130,7 +130,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Supprimer une catégorie
+     * Delete category
      *
      * @return view
      */
@@ -143,7 +143,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Ajout d'une oeuvre
+     * Add element
      *
      * @return view
      */
@@ -172,7 +172,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Modification d'une oeuvre
+     * Edit element
      *
      * @return view
      */
@@ -195,7 +195,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Supprimer une oeuvre
+     * Delete element
      *
      * @return view
      */
@@ -208,7 +208,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Ajout d'un utilisateur
+     * Add user
      *
      * @return view
      */
@@ -230,7 +230,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Modification d'un utilisateur
+     * Edit user
      *
      * @return view
      */
@@ -250,11 +250,41 @@ class AdminController extends Controller
         return redirect(route('admin'));
     }
 
+    /**
+     * Ban user from website
+     *
+     * @return view
+     */
+    public function banUser(Request $request)
+    {
+        $userId = Input::get('userId');
+        $user = User::find($userId);
 
-    // SUPPRESSION USER
+        $user->id_status = 5;
+        $user->save();
+
+        return Response::json($user);
+    }
 
     /**
-     * Ajout d'un lien dans le footer
+     * Delete user
+     *
+     * @return view
+     */
+    public function deleteUser(Request $request)
+    {
+        $userId = Input::get('userId');
+        $user = User::find($userId);
+
+        $user->id_status = 6;
+        $user->is_deleted = 1;
+        $user->save();
+
+        return Response::json($user);
+    }
+
+    /**
+     * Add footer link
      *
      * @return view
      */
@@ -270,7 +300,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Modification d'un lien dans le footer
+     * Edit footer link
      *
      * @return view
      */
@@ -287,7 +317,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Suppression d'un lien dans le footer
+     * Delete footer link
      *
      * @return view
      */
@@ -301,7 +331,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Ajout d'un salon
+     * Add room
      *
      * @return view
      */
@@ -320,7 +350,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Modification d'un salon
+     * MEdit room
      *
      * @return view
      */

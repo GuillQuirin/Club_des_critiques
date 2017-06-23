@@ -132,8 +132,8 @@
                                 <td>{{ $element->category['parent']['name'] }}</td>
                                 <td>{{ $element->category['name'] }}</td>
                                 <td>
-                                    <i class="fa fa-trash delete-element" aria-hidden="true" id="{{ $element->id }}"></i>
                                     <a href="#" class="btn edit-element"><i class="fa fa-pencil"></i></a>
+                                    <i class="fa fa-trash delete-element" aria-hidden="true" id="{{ $element->id }}"></i>                                    
                                 </td>                               
                             </tr>
                         @endforeach

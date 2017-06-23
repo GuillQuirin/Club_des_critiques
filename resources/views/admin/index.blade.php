@@ -54,15 +54,6 @@
 		    	</div>
 		    	@include('admin.room')
 		  	</div>
-		  	<div class="panel panel-default">
-		    	<div class="panel-heading">
-		      		<h4 class="panel-title">
-		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
-		        		Membres</a>
-		      		</h4>
-		    	</div>
-		    	@include('admin.user')
-		    </div>
 		    <div class="panel panel-default">
 		    	<div class="panel-heading">
 		      		<h4 class="panel-title">
@@ -71,6 +62,15 @@
 		      		</h4>
 		    	</div>
 		    	@include('admin.room_ban')
+		    </div>
+		  	<div class="panel panel-default">
+		    	<div class="panel-heading">
+		      		<h4 class="panel-title">
+		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+		        		Membres</a>
+		      		</h4>
+		    	</div>
+		    	@include('admin.user')
 		    </div>
 		    <div class="panel panel-default">
 		    	<div class="panel-heading">
@@ -548,7 +548,6 @@
 
 					// Bannir un utilisateur du salon
 				    $('i.fa-ban').on('click', function() {
-				    	console.log('ok');
 				    	var userId = this.id;
 				    	var roomId = $('#roomId').val();
 
@@ -663,49 +662,87 @@
 
 	// USER
 
-			// Cache le bouton "ajouter un utilisateur"
-			$('#btnShowAddUser').click(function() {
-				$('#btnShowAddUser').hide();
-			});
-			
-			// Affiche le bouton "ajouter un utilisateur"
-			$('#btnHideAddUser').click(function() {
-				$('#btnShowAddUser').show();
-			});
+		// Cache le bouton "ajouter un utilisateur"
+		$('#btnShowAddUser').click(function() {
+			$('#btnShowAddUser').hide();
+		});
+		
+		// Affiche le bouton "ajouter un utilisateur"
+		$('#btnHideAddUser').click(function() {
+			$('#btnShowAddUser').show();
+		});
 
-			$('a.edit-user').on('click', function() {
-			    var myModal = $('#editUserModal');
+		// Affiche la pop up de modification
+		$('a.edit-user').on('click', function() {
+		    var myModal = $('#editUserModal');
 
-			    var userId = $(this).closest('tr').find('td.user-id').html();
-			    var selectEditUserDepartment = $('#edit_user_department');
-			    var selectEditUserStatus = $('#edit_user_status');
+		    var userId = $(this).closest('tr').find('td.user-id').html();
+		    var selectEditUserDepartment = $('#edit_user_department');
+		    var selectEditUserStatus = $('#edit_user_status');
 
-			    $.ajax({
+		    $.ajax({
+                data : { userId : userId },
+                url: "{{ route('get_user') }}",
+                type: 'get',
+                success: function(data) {
+                	$('#id_user').val(data.id);
+                	$('#edit_user_last_name').val(data.last_name);	
+                	$('#edit_user_first_name').val(data.first_name);
+                	$('#edit_user_descrition').val(data.description);
+                	$('#edit_user_picture').val(data.picture);
+                	$('#edit_user_email').val(data.email);
+                	
+                	selectEditUserDepartment.selectpicker('val', data.id_department);
+                	selectEditUserStatus.selectpicker('val', data.id_status);
+
+		            myModal.modal('toggle');            
+		     
+                },
+                error : function() {
+                	// gestion d'erreur
+                }
+            });
+            return false;
+		});
+
+		// Ban user
+	    $('i.ban-user').click(function(){
+	    	if (confirm("Voulez vous vraiement bannir cet utilisateur du site ?")) {
+		    	userId = this.id;
+		    	tdStatus = $(this).closest('tr').find('td.user-status');
+	            $.ajax({
 	                data : { userId : userId },
-	                url: "{{ route('get_user') }}",
-	                type: 'get',
+	                url: "{{ route('ban_user') }}",
+	                type: 'put',
 	                success: function(data) {
-	                	console.log(data);
-	                	$('#id_user').val(data.id);
-	                	$('#edit_user_last_name').val(data.last_name);	
-	                	$('#edit_user_first_name').val(data.first_name);
-	                	$('#edit_user_descrition').val(data.description);
-	                	$('#edit_user_picture').val(data.picture);
-	                	$('#edit_user_email').val(data.email);
-	                	
-	                	selectEditUserDepartment.selectpicker('val', data.id_department);
-	                	selectEditUserStatus.selectpicker('val', data.id_status);
+	                	tdStatus.html('Banni'); 
+	                },
+	                error : function() {
+	                	// gestion d'erreur
+	                }
+	            });    
+		    }	
+	    });
 
-			            myModal.modal('toggle');            
-			     
+	    // Delete user
+	    $('i.delete-user').click(function(){
+	    	if (confirm("Voulez vous vraiement supprimer ce compte utilisateur ?")) {
+		    	userId = this.id;
+		    	tdStatus = $(this).closest('tr').find('td.user-status');
+
+	            $.ajax({
+	                data : { userId : userId },
+	                url: "{{ route('delete_user') }}",
+	                type: 'put',
+	                success: function(data) {
+	               		tdStatus.html('Compte supprimé');	                	
 	                },
 	                error : function() {
 	                	// gestion d'erreur
 	                }
 	            });
-
-	            return false;
-			});
+		    }	
+	    });
 
 	// FOOTER
 

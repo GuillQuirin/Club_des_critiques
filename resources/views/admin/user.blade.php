@@ -88,13 +88,18 @@
                             <td class="user-id">{{ $user->id }}</td>
                             <td>{{ $user->last_name }}</td>
                             <td>{{ $user->first_name }}</td>
-                            <td>{{ $user->department->name}}</td>
+                            <td>{{ $user->department->name }}</td>
                             <td>{{ $user->picture }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->status->label }}</td>
+                            <td class="user-status">{{ $user->status->label }}</td>
                             <td>
                                 <a href="#" class="btn edit-user"><i class="fa fa-pencil"></i></a>
-                                <!-- ajouter un btn pour bannir ? -->
+                                @if($user->id_status != 5)
+                                    <i class="fa fa-ban ban-user" aria-hidden="true" id="{{ $user->id }}"></i> 
+                                @endif
+                                @if($user->status->id_status != 6)
+                                    <i class="fa fa-trash delete-user" aria-hidden="true" id="{{ $user->id }}" style="padding: 6px 12px;"></i>
+                                @endif
                             </td>                               
                         </tr>
                         @endforeach
@@ -104,9 +109,6 @@
         </div>
     </div>
 </div>
-
-
-
 
 
 <!-- MODAL MODIFICATION UTILISATEUR-->

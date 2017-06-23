@@ -67,8 +67,8 @@
                             </td>
                             <td class="category-picture">{{ $category->url_picture }}</td>
                             <td>
-                                <i class="fa fa-trash delete-category" aria-hidden="true" id="{{ $category->id }}"></i>
                                 <a href="#" class="btn edit-category"><i class="fa fa-pencil"></i></a>
+                                <i class="fa fa-trash delete-category" aria-hidden="true" id="{{ $category->id }}"></i>
                             </td>                               
                         </tr>
                         @endforeach

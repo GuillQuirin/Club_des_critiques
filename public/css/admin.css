@@ -15,7 +15,7 @@ i{
 	color: #d9534f;
 }
 
-.fa-pencil{
+.fa-pencil, .fa-users{
 	color: #245580;
 }
 
@@ -25,4 +25,8 @@ i{
 
 #banTable_wrapper, #elementTopTable_wrapper, #elementTable_wrapper, #userTable_wrapper, #categoryTable_wrapper, #roomTable_wrapper, #footerTopTable_wrapper{
 	margin-top: 30px !important;
+}
+
+.refuse-ban-user-room{
+	padding: 6px 12px;
 }

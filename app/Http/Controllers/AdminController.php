@@ -36,9 +36,9 @@ class AdminController extends Controller
         $status = Status::all();
         $footers = Footer::all();
         $rooms = Room::all();
-        $bans = Report::where('is_deleted', false)->get();
+        $reports = Report::all();
 
-    	return view('admin.index', compact('concept', 'elements', 'allCategories', 'allUsers', 'categories', 'topElements', 'departments', 'status', 'footers', 'rooms', 'bans'));
+    	return view('admin.index', compact('concept', 'elements', 'allCategories', 'allUsers', 'categories', 'topElements', 'departments', 'status', 'footers', 'rooms', 'reports'));
     }
 
     /**

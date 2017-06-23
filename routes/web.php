@@ -123,7 +123,9 @@
 	Route::get('admin/room', ['as' => 'get_room', 'uses' => 'AjaxController@getRoomById']);
 	Route::get('admin/elements_by_catagory', ['as' => 'get_elements_by_category', 'uses' => 'AjaxController@getElementForCategory']);
 	Route::get('admin/room-users', ['as' => 'get_users_for_room', 'uses' => 'AjaxController@getUsersForRoom']);
-	Route::get('admin/ban-user-room', ['as' => 'ban_user_from_room', 'uses' => 'AjaxController@banUserFromRoom']);
+	Route::put('admin/ban-user-from-room', ['as' => 'ban_user_from_room', 'uses' => 'AjaxController@banUserFromRoom']);
+	Route::put('admin/ban-user-room', ['as' => 'ban_user_room', 'uses' => 'AjaxController@banUserRoom']);
+	Route::put('admin/refuse-ban-user-room', ['as' => 'refuse_ban_user_room', 'uses' => 'AjaxController@refuseBanUserRoom']);
 
 Route::post('room/autocompleteUser', ['as' => '/', 'uses' => 'RoomsController@autocompleteUser']);
 Route::post('room/addMessage', ['as' => '/', 'uses' => 'RoomsController@addMessage'] );

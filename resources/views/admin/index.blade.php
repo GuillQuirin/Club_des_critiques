@@ -66,6 +66,15 @@
 		    <div class="panel panel-default">
 		    	<div class="panel-heading">
 		      		<h4 class="panel-title">
+		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseBanRoom">
+		        		Demande de ban en salon</a>
+		      		</h4>
+		    	</div>
+		    	@include('admin.room_ban')
+		    </div>
+		    <div class="panel panel-default">
+		    	<div class="panel-heading">
+		      		<h4 class="panel-title">
 		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseFooter">
 		        		Footer</a>
 		      		</h4>
@@ -547,7 +556,7 @@
 					    	$.ajax({
 				                data : { roomId : roomId, userId : userId },
 				                url: "{{ route('ban_user_from_room') }}",
-				                type: 'get',
+				                type: 'put',
 				                success: function(data) {
 				                	alert('L\'utilisateur a bien été bannis.');
 				                },
@@ -746,6 +755,47 @@
             return false;
 		});
 
+	// REPORT ROOM
+
+		$('i.valide-ban-user-room').on('click', function() {
+		    if (confirm("Voulez vous vraiement bannir cet utilisateur du salon?")) {
+		    	var reportId = this.id;
+
+		    	// Call Ajax Request to delete category
+	            $.ajax({
+	                data : { reportId : reportId },
+	                url: "{{ route('ban_user_room') }}",
+	                type: 'put',
+	                success: function(data) {
+	                	$('#report-status').html('<p class="text-success">Bannissement validé</p>');
+	                },
+	                error : function() {
+	                	// gestion d'erreur
+	                }
+	            });
+		    }
+            return false;
+		});
+
+		$('i.refuse-ban-user-room').on('click', function() {
+		    if (confirm("Voulez vous vraiement refuser de bannir cet utilisateur du salon?")) {
+		    	var reportId = this.id;
+
+		    	// Call Ajax Request to delete category
+	            $.ajax({
+	                data : { reportId : reportId },
+	                url: "{{ route('refuse_ban_user_room') }}",
+	                type: 'put',
+	                success: function(data) {
+	                	$('#report-status').html('<p class="text-danger">Bannissement refusé</p>');
+	                },
+	                error : function() {
+	                	// gestion d'erreur
+	                }
+	            });
+		    }
+            return false;
+		});
 
 	// FUNCTIONS
 

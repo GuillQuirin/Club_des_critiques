@@ -8,6 +8,7 @@ use App\Room;
 use App\Element;
 use App\Category;
 use App\UserRoom;
+use App\Report;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -206,5 +207,39 @@ class AjaxController extends Controller
         $user_room->save();
 
         return Response::json($user_room);;
+    }
+
+    /**
+     * Ajax Request : ban a user from a room
+     * @return mixed
+     */
+    public function banUserRoom()
+    {
+        $reportId = Input::get('reportId');
+
+        $report = Report::find($reportId);
+        $report->status = 1;
+        $report->save();
+        
+        $user_room = UserRoom::where('id_user', $report->id_user_reported)->where('id_room', $report->id_room)->first();
+        $user_room->status_user = 0;
+        $user_room->save();
+
+        return Response::json($user_room);
+    }
+
+    /**
+     * Ajax Request : refuse to ban a user from a room
+     * @return mixed
+     */
+    public function refuseBanUserRoo()
+    {
+        $reportId = Input::get('reportId');
+
+        $report = Report::find($reportId);
+        $report->status = 2;
+        $report->save();
+
+        return Response::json($user_room);
     }
 }

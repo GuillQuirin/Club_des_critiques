@@ -1,4 +1,4 @@
-<div id="collapse5" class="panel-collapse collapse">
+<div id="collapseUser" class="panel-collapse collapse">
     <div class="panel-body">
         <p>
           <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseAddUser" aria-expanded="false" aria-controls="collapseAddUser" id="btnShowAddUser">

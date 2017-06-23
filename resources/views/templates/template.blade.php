@@ -17,6 +17,7 @@
         {!! HTML::style('css/jquery-ui.min.css') !!}
         {!! HTML::style('css/jquery-ui.structure.min.css') !!}
         {!! HTML::style('css/jquery-ui.theme.min.css') !!}
+        {!! HTML::style('css/sweetalert.css') !!}
         <!-- {!! HTML::style('bootstrap-select/dist/css/bootstrap-select.min.css') !!} -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
         {!! HTML::style('css/template.css') !!}
@@ -251,6 +252,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
         {!! HTML::script('js/autocomplete.js') !!}
         {!! HTML::script('js/template.js') !!}
+        {!! HTML::script('js/sweetalert.min.js') !!}
         
         @yield('js')
         

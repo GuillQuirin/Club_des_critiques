@@ -7,7 +7,7 @@
         </p>
         <div class="collapse" id="collapseExample">
           <div class="card card-block">
-            {{ Form::open(['route' => 'add_category', 'method' => 'put', 'class' => 'col-md-12']) }}
+            {{ Form::open(['route' => 'add_category', 'method' => 'post', 'class' => 'col-md-12']) }}
                 <div class="form-group">
                     <label for="name" class="col-2 col-form-label">Nom : </label>
                     <div class="col-10">

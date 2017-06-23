@@ -17,10 +17,9 @@
     <div class="container notPadding"> 
    		<div class="panel-group" id="accordion">
 		  	<div class="panel panel-default">
-		    	<div class="panel-heading">
+		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseHome">
 		      		<h4 class="panel-title">
-		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseHome">
-		        		Page d'accueil</a>
+		        		Page d'accueil
 		      		</h4>
 		    	</div>
 		    	<div id="collapseHome" class="panel-collapse collapse in">
@@ -28,16 +27,15 @@
 		    	</div>
 		  	</div>
 		  	<div class="panel panel-default">
-		    	<div class="panel-heading">
+		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseCategory">
 		     		<h4 class="panel-title">
-		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseCategory">
-		        		Catégories</a>
+		        		Catégories
 		      		</h4>
 		    	</div>
 		    	@include('admin.category')
 		  	</div>
 		  	<div class="panel panel-default">
-		    	<div class="panel-heading">
+		    	<div class="panel-heading" data-toggle="collapse" href="#collapseElement">
 		     		<h4 class="panel-title">
 		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseElement">
 		        		Oeuvres</a>
@@ -46,16 +44,16 @@
 		    	@include('admin.element')
 		  	</div>
 		  	<div class="panel panel-default">
-		    	<div class="panel-heading">
+		    	<div class="panel-heading" data-toggle="collapse" href="#collapseRoom">
 		      		<h4 class="panel-title">
-		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseRoom">
 		        		Salons</a>
 		      		</h4>
 		    	</div>
 		    	@include('admin.room')
 		  	</div>
 		    <div class="panel panel-default">
-		    	<div class="panel-heading">
+		    	<div class="panel-heading" data-toggle="collapse" href="#collapseBanRoom">
 		      		<h4 class="panel-title">
 		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseBanRoom">
 		        		Demande de ban en salon</a>
@@ -64,16 +62,16 @@
 		    	@include('admin.room_ban')
 		    </div>
 		  	<div class="panel panel-default">
-		    	<div class="panel-heading">
+		    	<div class="panel-heading" data-toggle="collapse" href="#collapseUser">
 		      		<h4 class="panel-title">
-		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseUser">
 		        		Membres</a>
 		      		</h4>
 		    	</div>
 		    	@include('admin.user')
 		    </div>
 		    <div class="panel panel-default">
-		    	<div class="panel-heading">
+		    	<div class="panel-heading" data-toggle="collapse" href="#collapseFooter">
 		      		<h4 class="panel-title">
 		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseFooter">
 		        		Footer</a>
@@ -91,7 +89,7 @@
 	<script type="text/javascript" src="moment/min/moment.min.js"></script>
 	<script type="text/javascript" src="bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function() {
+	$(document).ready(function() {
 
 	    $('#elementManual').show();
 	    $('#elementAutomatic').hide();
@@ -208,46 +206,70 @@
 	    });
 
 		// Supprime un élément à la une
-	    $('.delete-top-element').click(function(){
-	    	if (confirm("Voulez vous vraiement supprimer cette oeuvre?")) {
-		    	elementId = this.id;
-		    	// Call Ajax Request to delete top element
-	            $.ajax({
-	                data : { elementId : elementId },
-	                url: "{{ route('delete_top_element') }}",
-	                type: 'put',
-	                success: function(data) {
-	                	// Modifier le tableau
-	                },
-	                error : function() {
-	                	// gestion d'erreur
-	                }
-	            });
-	            tab = $( this ).parent().parent().remove();
-		    }	
+    	$('#elementTopTable').on('click', '.delete-top-element', function(){
+    		elementId = this.id;
+			tab = $( this ).parent().parent();
+
+    		swal(
+    			{
+				  	title: "Voulez vous vraiement supprimer cette oeuvre?",
+					type: "warning",
+					showCancelButton: true,
+				  	confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Supprimer",
+					cancelButtonText: "Annuler",
+					closeOnConfirm: false
+				},
+				function(isConfirm){
+					if(isConfirm){
+						$.ajax({
+			                data : { elementId : elementId },
+			                url: "{{ route('delete_top_element') }}",
+			                type: 'put'
+			            }).done(function(){
+			            	tab.remove();
+			            	swal("Supprimé!", "L'oeuvre a bien été supprimée.", "success");
+			            }).fail(function(){
+			            	swal("Erreur!", "L'oeuvre n'a pas été supprimée.", "error");
+			            });
+					}				  
+				}
+			);	
 	    });
 
 
 	// CATEGORY
 
-		// Supprime une catégorie
-	    $('.delete-category').click(function(){
-	    	if (confirm("Voulez vous vraiement supprimer cette catégorie?")) {
-		    	categoryId = this.id;
-		    	// Call Ajax Request to delete category
-	            $.ajax({
-	                data : { categoryId : categoryId },
-	                url: "{{ route('delete_category') }}",
-	                type: 'put',
-	                success: function(data) {
-	                	// Modifier le tableau
-	                },
-	                error : function() {
-	                	// gestion d'erreur
-	                }
-	            });
-	            tab = $( this ).parent().parent().remove();
-		    }	
+		// Delete category
+    	$('#categoryTable').on('click', '.delete-category', function(){
+    		categoryId = this.id;
+    		tab = $( this ).parent().parent();
+    		swal(
+    			{
+				  	title: "Voulez vous vraiement supprimer cette catégorie?",
+					type: "warning",
+					showCancelButton: true,
+				  	confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Supprimer",
+					cancelButtonText: "Annuler",
+					closeOnConfirm: false
+				},
+				function(isConfirm){
+					if(isConfirm){
+						$.ajax({
+			                data : { categoryId : categoryId },
+			                url: "{{ route('delete_category') }}",
+			                type: 'put',
+			            }).done(function(){
+			            	tab.remove();
+			            	swal("Supprimé!", "La catégorie a bien été supprimée.", "success");
+			            }).fail(function(){
+			            	swal("Erreur!", "La catégorie n'a pas été supprimée.", "error");
+			            });
+					}				  
+				}
+			);
+	    	
 	    });
 
 		// Cache le bouton "ajouter une categorie"
@@ -259,7 +281,8 @@
 			$('#btnShowAddCategory').show();
 		});
 
-		$('a.edit-category').on('click', function() {
+		// Show pop up to edit category
+		$('#categoryTable').on('click', 'a.edit-category', function(){
 		    var myModal = $('#editCategoryModal');
 
 		    // now get the values from the table
@@ -356,28 +379,39 @@
 	        }
 	    });
 
-	    // Supprime un élément
-	    $('.delete-element').click(function(){
-	    	if (confirm("Voulez vous vraiement supprimer cet élément?")) {
-		    	elementId = this.id;
-		    	// Call Ajax Request to delete category
-	            $.ajax({
-	                data : { elementId : elementId },
-	                url: "{{ route('delete_element') }}",
-	                type: 'put',
-	                success: function(data) {
-	                	// Modifier le tableau
-	                },
-	                error : function() {
-	                	// gestion d'erreur
-	                }
-	            });
-	            tab = $( this ).parent().parent().remove();
-		    }	
+	    // Delete element
+    	$('#elementTable').on('click', '.delete-element', function(){
+    		elementId = this.id;
+    		tab = $( this ).parent().parent();
+    		swal(
+    			{
+				  	title: "Voulez vous vraiement supprimer cet oeuvre ?",
+					type: "warning",
+					showCancelButton: true,
+				  	confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Supprimer",
+					cancelButtonText: "Annuler",
+					closeOnConfirm: false
+				},
+				function(isConfirm){
+					if(isConfirm){
+						$.ajax({
+			                data : { elementId : elementId },
+			                url: "{{ route('delete_element') }}",
+			                type: 'put',
+			            }).done(function(){
+			            	tab.remove();
+			            	swal("Supprimé!", "L'oeuvre a bien été supprimée.", "success");
+			            }).fail(function(){
+			            	swal("Erreur!", "L'oeuvre n'a pas été supprimée.", "error");
+			            });
+					}				  
+				}
+			);
 	    });
 
-	    // Affiche pup-up de modification d'un élément
-	    $('a.edit-element').on('click', function() {
+	    // Sow pop up to edit element
+	    $('#elementTable').on('click', 'a.edit-element', function(){
 		    var myModal = $('#editElementModal');
 
 		    var elementId = $(this).closest('tr').find('td.element-id').html();
@@ -524,7 +558,7 @@
 	    });
 
 		// Affiche la liste des utilisateurs du salon
-	    $('i.show-user-room').on('click', function() {
+    	$('#roomTable').on('click', 'i.show-user-room', function(){
 	    	var myModal = $('#userRoomModal');
 	    	var roomId = $(this).closest('tr').find('td.room-id').html();
 	    	$('#roomId').val(roomId);
@@ -542,7 +576,7 @@
                 		}else{
                 			var status = "Bannis";
                 		}
-                        $('#listUsersRoom').append('<li class="list-group-item">' + this.first_name + ' ' + this.last_name + ' - ' + status +'<span class="badge"><i class="fa fa-ban" id="' + this.id +'" aria-hidden="true"></i></span></li>');
+                        $('#listUsersRoom').append('<li class="list-group-item">' + this.first_name + ' ' + this.last_name + ' - ' + status +'<span class=""><i class="fa fa-ban" id="' + this.id +'" aria-hidden="true"></i></span></li>');
                     });
 					myModal.modal('toggle');
 
@@ -551,19 +585,31 @@
 				    	var userId = this.id;
 				    	var roomId = $('#roomId').val();
 
-				    	if (confirm("Voulez vous vraiement banir cet utilisateur du salon ?")) {
-					    	$.ajax({
-				                data : { roomId : roomId, userId : userId },
-				                url: "{{ route('ban_user_from_room') }}",
-				                type: 'put',
-				                success: function(data) {
-				                	alert('L\'utilisateur a bien été bannis.');
-				                },
-				                error : function() {
-				                	// gestion d'erreur
-				                }
-				            });
-					    }
+				    	swal(
+			    			{
+							  	title: "Voulez vous vraiement banir cet utilisateur du salon ?",
+								type: "warning",
+								showCancelButton: true,
+							  	confirmButtonColor: "#DD6B55",
+								confirmButtonText: "Supprimer",
+								cancelButtonText: "Annuler",
+								closeOnConfirm: false
+							},
+							function(isConfirm){
+								if(isConfirm){
+									$.ajax({
+						                data : { roomId : roomId, userId : userId },
+						                url: "{{ route('ban_user_from_room') }}",
+						                type: 'put',
+						            }).done(function(){
+						            	tdStatus.html('Banni');
+						            	swal("Supprimé!", "L'utilisateur a bien été banni du salon.", "success");
+						            }).fail(function(){
+						            	swal("Erreur!", "L'utilisateur n'a pas été bani du salon.", "error");
+						            });
+								}				  
+							}
+						);
 					});	 
                 },
                 error : function() {
@@ -576,7 +622,7 @@
 		});
 
 	    // Affiche la pop up de modification d'un salon
-		$('a.edit-room').on('click', function() {
+		$('#roomTable').on('click', 'a.edit-room', function(){
 			    var myModal = $('#editRoomModal');
 
 			    var roomId = $(this).closest('tr').find('td.room-id').html();
@@ -673,7 +719,7 @@
 		});
 
 		// Affiche la pop up de modification
-		$('a.edit-user').on('click', function() {
+		$('#userTable').on('click', 'a.edit-user', function(){
 		    var myModal = $('#editUserModal');
 
 		    var userId = $(this).closest('tr').find('td.user-id').html();
@@ -706,42 +752,65 @@
 		});
 
 		// Ban user
-	    $('i.ban-user').click(function(){
-	    	if (confirm("Voulez vous vraiement bannir cet utilisateur du site ?")) {
-		    	userId = this.id;
-		    	tdStatus = $(this).closest('tr').find('td.user-status');
-	            $.ajax({
-	                data : { userId : userId },
-	                url: "{{ route('ban_user') }}",
-	                type: 'put',
-	                success: function(data) {
-	                	tdStatus.html('Banni'); 
-	                },
-	                error : function() {
-	                	// gestion d'erreur
-	                }
-	            });    
-		    }	
+	    $('#userTable').on('click', 'i.ban-user', function(){
+	    	userId = this.id;
+	    	tdStatus = $(this).closest('tr').find('td.user-status');
+	    	swal(
+    			{
+				  	title: "Voulez vous vraiement bannir cet utilisateur du site ?",
+					type: "warning",
+					showCancelButton: true,
+				  	confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Supprimer",
+					cancelButtonText: "Annuler",
+					closeOnConfirm: false
+				},
+				function(isConfirm){
+					if(isConfirm){
+						$.ajax({
+			                data : { userId : userId },
+	                		url: "{{ route('ban_user') }}",
+			                type: 'put',
+			            }).done(function(){
+			            	tdStatus.html('Banni');
+			            	swal("Supprimé!", "L'utilisateur a bien été banni du site.", "success");
+			            }).fail(function(){
+			            	swal("Erreur!", "L'utilisateur n'a pas été bani du site.", "error");
+			            });
+					}				  
+				}
+			);
 	    });
 
 	    // Delete user
-	    $('i.delete-user').click(function(){
-	    	if (confirm("Voulez vous vraiement supprimer ce compte utilisateur ?")) {
-		    	userId = this.id;
-		    	tdStatus = $(this).closest('tr').find('td.user-status');
-
-	            $.ajax({
-	                data : { userId : userId },
-	                url: "{{ route('delete_user') }}",
-	                type: 'put',
-	                success: function(data) {
-	               		tdStatus.html('Compte supprimé');	                	
-	                },
-	                error : function() {
-	                	// gestion d'erreur
-	                }
-	            });
-		    }	
+	    $('#userTable').on('click', 'i.delete-user', function(){
+	    	userId = this.id;
+		    tdStatus = $(this).closest('tr').find('td.user-status');
+	    	swal(
+    			{
+				  	title: "Voulez vous vraiement supprimer ce compte utilisateur ?",
+					type: "warning",
+					showCancelButton: true,
+				  	confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Supprimer",
+					cancelButtonText: "Annuler",
+					closeOnConfirm: false
+				},
+				function(isConfirm){
+					if(isConfirm){
+						$.ajax({
+			                data : { userId : userId },
+			                url: "{{ route('delete_user') }}",
+			                type: 'put',
+			            }).done(function(){
+			            	tdStatus.html('Compte supprimé');
+			            	swal("Supprimé!", "L'utilisateur a bien été supprimé.", "success");
+			            }).fail(function(){
+			            	swal("Erreur!", "L'utilisateur n'a pas été supprimé.", "error");
+			            });
+					}				  
+				}
+			);
 	    });
 
 	// FOOTER
@@ -757,26 +826,38 @@
 		});
 
 		// Supprime un élément
-	    $('.delete-footer').click(function(){
-	    	if (confirm("Voulez vous vraiement supprimer ce lien?")) {
-		    	footerId = this.id;
-		    	// Call Ajax Request to delete category
-	            $.ajax({
-	                data : { footerId : footerId },
-	                url: "{{ route('delete_footer') }}",
-	                type: 'put',
-	                success: function(data) {
-	                	// Modifier le tableau
-	                },
-	                error : function() {
-	                	// gestion d'erreur
-	                }
-	            });
-	            tab = $( this ).parent().parent().remove();
-		    }	
+    	$('#footerTable').on('click', '.delete-footer', function(){
+    		footerId = this.id;
+    		tab = $( this ).parent().parent();
+    		swal(
+    			{
+				  	title: "Voulez vous vraiement supprimer ce lien ?",
+					type: "warning",
+					showCancelButton: true,
+				  	confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Supprimer",
+					cancelButtonText: "Annuler",
+					closeOnConfirm: false
+				},
+				function(isConfirm){
+					if(isConfirm){
+						$.ajax({
+			                data : { footerId : footerId },
+			                url: "{{ route('delete_footer') }}",
+			                type: 'put',
+			            }).done(function(){
+			            	tab.remove();
+			            	swal("Supprimé!", "Le lien a bien été supprimée.", "success");
+			            }).fail(function(){
+			            	swal("Erreur!", "Le lien n'a pas été supprimée.", "error");
+			            });
+					}				  
+				}
+			);
 	    });
 
-	    $('a.edit-footer').on('click', function() {
+	    // Show pop up to edit footer link
+	    $('#footerTable').on('click', 'a.edit-footer', function(){
 		    var myModal = $('#editFooterModal');
 
 		    var footerId = $(this).closest('tr').find('td.footer-id').html();
@@ -794,75 +875,96 @@
 
 	// REPORT ROOM
 
-		$('i.valide-ban-user-room').on('click', function() {
-		    if (confirm("Voulez vous vraiement bannir cet utilisateur du salon?")) {
-		    	var reportId = this.id;
-
-		    	// Call Ajax Request to delete category
-	            $.ajax({
-	                data : { reportId : reportId },
-	                url: "{{ route('ban_user_room') }}",
-	                type: 'put',
-	                success: function(data) {
-	                	$('#report-status').html('<p class="text-success">Bannissement validé</p>');
-	                },
-	                error : function() {
-	                	// gestion d'erreur
-	                }
-	            });
-		    }
+		// Valide ban user
+		$('#banTable').on('click', 'i.valide-ban-user-room', function(){
+			var reportId = this.id;
+			swal(
+    			{
+				  	title: "Voulez vous vraiement bannir cet utilisateur du salon ?",
+					type: "warning",
+					showCancelButton: true,
+				  	confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Supprimer",
+					cancelButtonText: "Annuler",
+					closeOnConfirm: false
+				},
+				function(isConfirm){
+					if(isConfirm){
+						$.ajax({
+			                data : { reportId : reportId },
+			                url: "{{ route('ban_user_room') }}",
+			                type: 'put',
+			            }).done(function(){
+			            	$('#report-status').html('<p class="text-success">Bannissement validé</p>');
+			            	swal("Supprimé!", "L'utilisateur a bien été banni du salon.", "success");
+			            }).fail(function(){
+			            	swal("Erreur!", "L'utilisateur n'a pas été banni du salon.", "error");
+			            });
+					}				  
+				}
+			);
             return false;
 		});
 
-		$('i.refuse-ban-user-room').on('click', function() {
-		    if (confirm("Voulez vous vraiement refuser de bannir cet utilisateur du salon?")) {
-		    	var reportId = this.id;
-
-		    	// Call Ajax Request to delete category
-	            $.ajax({
-	                data : { reportId : reportId },
-	                url: "{{ route('refuse_ban_user_room') }}",
-	                type: 'put',
-	                success: function(data) {
-	                	$('#report-status').html('<p class="text-danger">Bannissement refusé</p>');
-	                },
-	                error : function() {
-	                	// gestion d'erreur
-	                }
-	            });
-		    }
+		// Refuse ban user
+		$('#banTable').on('click', 'i.refuse-ban-user-room', function(){
+			var reportId = this.id;
+			swal(
+    			{
+				  	title: "Voulez vous vraiement bannir cet utilisateur du salon ?",
+					type: "warning",
+					showCancelButton: true,
+				  	confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Supprimer",
+					cancelButtonText: "Annuler",
+					closeOnConfirm: false
+				},
+				function(isConfirm){
+					if(isConfirm){
+						$.ajax({
+			                data : { reportId : reportId },
+			                url: "{{ route('refuse_ban_user_room') }}",
+			                type: 'put',
+			            }).done(function(){
+			            	$('#report-status').html('<p class="text-danger">Bannissement refusé</p>');
+			            	swal("Supprimé!", "La bannissement de l'utilisateur a été refusé.", "success");
+			            }).fail(function(){
+			            	swal("Erreur!", "Erreur lors du refus de bannissement de l'utilisateur", "error");
+			            });
+					}				  
+				}
+			);
             return false;
 		});
 
 	// FUNCTIONS
 
 	    function initializedDataTable(id) {
-	            $('#' + id).DataTable({
-	                "language": {
-	                    "sProcessing":     "Traitement en cours...",
-	                    "sSearch":         "Rechercher&nbsp;:",
-	                    "sLengthMenu":     "Afficher _MENU_ éléments",
-	                    "sInfo":           "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
-	                    "sInfoEmpty":      "Affichage de l'élément 0 à 0 sur 0 élément",
-	                    "sInfoFiltered":   "(filtré de _MAX_ éléments au total)",
-	                    "sInfoPostFix":    "",
-	                    "sLoadingRecords": "Chargement en cours...",
-	                    "sZeroRecords":    "Aucun élément à afficher",
-	                    "sEmptyTable":     "Aucune donnée disponible dans le tableau",
-	                    "oPaginate": {
-	                        "sFirst":      "Premier",
-	                        "sPrevious":   "Précédent",
-	                        "sNext":       "Suivant",
-	                        "sLast":       "Dernier"
-	                    },
-	                    "oAria": {
-	                        "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
-	                    "   sSortDescending": ": activer pour trier la colonne par ordre décroissant"
-	                    }
-	                } 
-	            });
-	        };
-		});
+            $('#' + id).DataTable({
+                "language": {
+                    "sProcessing":     "Traitement en cours...",
+                    "sSearch":         "Rechercher&nbsp;:",
+                    "sLengthMenu":     "Afficher _MENU_ éléments",
+                    "sInfo":           "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+                    "sInfoEmpty":      "Affichage de l'élément 0 à 0 sur 0 élément",
+                    "sInfoFiltered":   "(filtré de _MAX_ éléments au total)",
+                    "sInfoPostFix":    "",
+                    "sLoadingRecords": "Chargement en cours...",
+                    "sZeroRecords":    "Aucun élément à afficher",
+                    "sEmptyTable":     "Aucune donnée disponible dans le tableau",
+                    "oPaginate": {
+                        "sFirst":      "Premier",
+                        "sPrevious":   "Précédent",
+                        "sNext":       "Suivant",
+                        "sLast":       "Dernier"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+                    "   sSortDescending": ": activer pour trier la colonne par ordre décroissant"
+                    }
+                } 
+            });
+        };
+	});
 	</script>
-	<!-- <script src="js/admin/admin-home.js"></script> -->
 @endsection

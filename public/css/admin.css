@@ -30,3 +30,7 @@ i{
 .refuse-ban-user-room{
 	padding: 6px 12px;
 }
+
+.panel-heading{
+	cursor: pointer;
+}

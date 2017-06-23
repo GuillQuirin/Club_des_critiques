@@ -23,7 +23,7 @@ i{
 	color: #3e8f3e;
 }
 
-#banTable_wrapper, #elementTopTable_wrapper, #elementTable_wrapper, #userTable_wrapper, #categoryTable_wrapper, #roomTable_wrapper, #footerTopTable_wrapper{
+#elementSuggestTable_wrapper, #banTable_wrapper, #elementTopTable_wrapper, #elementTable_wrapper, #userTable_wrapper, #categoryTable_wrapper, #roomTable_wrapper, #footerTopTable_wrapper{
 	margin-top: 30px !important;
 }
 

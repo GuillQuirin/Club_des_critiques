@@ -18,9 +18,7 @@
    		<div class="panel-group" id="accordion">
 		  	<div class="panel panel-default">
 		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseHome">
-		      		<h4 class="panel-title">
-		        		Page d'accueil
-		      		</h4>
+		      		<h4 class="panel-title">Page d'accueil</h4>
 		    	</div>
 		    	<div id="collapseHome" class="panel-collapse collapse in">
 		      		@include('admin.home')
@@ -28,56 +26,46 @@
 		  	</div>
 		  	<div class="panel panel-default">
 		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseCategory">
-		     		<h4 class="panel-title">
-		        		Catégories
-		      		</h4>
+		     		<h4 class="panel-title">Catégories</h4>
 		    	</div>
 		    	@include('admin.category')
 		  	</div>
 		  	<div class="panel panel-default">
 		    	<div class="panel-heading" data-toggle="collapse" href="#collapseElement">
-		     		<h4 class="panel-title">
-		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseElement">
-		        		Oeuvres</a>
-		      		</h4>
+		     		<h4 class="panel-title">Oeuvres</h4>
 		    	</div>
 		    	@include('admin.element')
 		  	</div>
 		  	<div class="panel panel-default">
 		    	<div class="panel-heading" data-toggle="collapse" href="#collapseRoom">
-		      		<h4 class="panel-title">
-		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseRoom">
-		        		Salons</a>
-		      		</h4>
+		      		<h4 class="panel-title">Salons</h4>
 		    	</div>
 		    	@include('admin.room')
 		  	</div>
 		    <div class="panel panel-default">
 		    	<div class="panel-heading" data-toggle="collapse" href="#collapseBanRoom">
-		      		<h4 class="panel-title">
-		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseBanRoom">
-		        		Demande de ban en salon</a>
-		      		</h4>
+		      		<h4 class="panel-title">Demande de ban en salon</h4>
 		    	</div>
 		    	@include('admin.room_ban')
 		    </div>
 		  	<div class="panel panel-default">
 		    	<div class="panel-heading" data-toggle="collapse" href="#collapseUser">
-		      		<h4 class="panel-title">
-		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseUser">
-		        		Membres</a>
-		      		</h4>
+		      		<h4 class="panel-title">Membres</h4>
 		    	</div>
 		    	@include('admin.user')
 		    </div>
+		    
 		    <div class="panel panel-default">
 		    	<div class="panel-heading" data-toggle="collapse" href="#collapseFooter">
-		      		<h4 class="panel-title">
-		        		<a data-toggle="collapse" data-parent="#accordion" href="#collapseFooter">
-		        		Footer</a>
-		      		</h4>
+		      		<h4 class="panel-title">Footer</h4>
 		    	</div>
 		    	@include('admin.footer')
+		    </div>
+		    <div class="panel panel-default">
+		    	<div class="panel-heading" data-toggle="collapse" href="#collapseElementSuggest">
+		      		<h4 class="panel-title">Proposition d'oeuvre</h4>
+		    	</div>
+		    	@include('admin.element_suggest')
 		    </div>
 		</div> 
     </div>
@@ -101,6 +89,7 @@
 	    initializedDataTable('userTable');
 	    initializedDataTable('footerTable');
 	    initializedDataTable('banTable');
+	    initializedDataTable('elementSuggestTable');
 
 	    $( "#date_start" ).datepicker();
 	    $( "#date_end" ).datepicker();

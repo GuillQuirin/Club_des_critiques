@@ -68,28 +68,27 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Modifier le lien</h4>
             </div>            
-                <div class="modal-body">
-                    {{ Form::open(['route' => 'edit_footer', 'method' => 'put', 'class' => 'col-md-12']) }}
-                    <input type="hidden" name="id" id="id_footer">
-                        <div class="form-group">
-                            <label for="last_name" class="col-2 col-form-label">Libellé : </label>
-                            <div class="col-10">
-                                <input class="form-control" type="text" id="edit_footer_label" name="label" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="last_name" class="col-2 col-form-label">Route : </label>
-                            <div class="col-10">
-                                <input class="form-control" type="text" id="edit_footer_route" name="route">
-                            </div>
-                        </div>
+            <div class="modal-body">
+                {{ Form::open(['route' => 'edit_footer', 'method' => 'put', 'class' => 'col-md-12']) }}
+                <input type="hidden" name="id" id="id_footer">
+                <div class="form-group">
+                    <label for="last_name" class="col-2 col-form-label">Libellé : </label>
+                    <div class="col-10">
+                        <input class="form-control" type="text" id="edit_footer_label" name="label" required>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Modifier</button>
+                </div>
+                <div class="form-group">
+                    <label for="last_name" class="col-2 col-form-label">Route : </label>
+                    <div class="col-10">
+                        <input class="form-control" type="text" id="edit_footer_route" name="route">
                     </div>
-                {{ Form::close() }}
+                </div>
+            </div>  
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Modifier</button>
             </div>
+            {{ Form::close() }}
         </div>
     </div>
 </div>

@@ -13,6 +13,7 @@ use App\Status;
 use App\Element;
 use App\Category;
 use App\Department;
+use App\ElementSuggest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
@@ -37,8 +38,9 @@ class AdminController extends Controller
         $footers = Footer::all();
         $rooms = Room::all();
         $reports = Report::all();
+        $elementSuggests = ElementSuggest::all();
 
-    	return view('admin.index', compact('concept', 'elements', 'allCategories', 'allUsers', 'categories', 'topElements', 'departments', 'status', 'footers', 'rooms', 'reports'));
+    	return view('admin.index', compact('concept', 'elements', 'allCategories', 'allUsers', 'categories', 'topElements', 'departments', 'status', 'footers', 'rooms', 'reports', 'elementSuggests'));
     }
 
     /**

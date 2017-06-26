@@ -8,6 +8,7 @@ use App\Room;
 use App\Element;
 use App\Category;
 use App\UserRoom;
+use App\ElementSuggest;
 use App\Report;
 
 use Illuminate\Http\Request;
@@ -241,5 +242,35 @@ class AjaxController extends Controller
         $report->save();
 
         return Response::json($user_room);
+    }
+
+    /**
+     * Ajax Request : validate an element suggestion
+     * @return mixed
+     */
+    public function valideElementSuggest()
+    {
+        $elementSuggestId = Input::get('elementSuggestId');
+
+        $elementSuggest = ElementSuggest::find($elementSuggestId);
+        $elementSuggest->status = 1;
+        $elementSuggest->save();
+
+        return Response::json($elementSuggest);
+    }
+
+     /**
+     * Ajax Request : refuse an element suggestion
+     * @return mixed
+     */
+    public function refuseElementSuggest()
+    {
+        $elementSuggestId = Input::get('elementSuggestId');
+
+        $elementSuggest = ElementSuggest::find($elementSuggestId);
+        $elementSuggest->status = 2;
+        $elementSuggest->save();
+
+        return Response::json($elementSuggest);
     }
 }

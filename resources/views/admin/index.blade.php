@@ -201,7 +201,7 @@
 
     		swal(
     			{
-				  	title: "Voulez vous vraiement supprimer cette oeuvre?",
+				  	title: "Voulez vous vraiment supprimer cette oeuvre?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
@@ -235,7 +235,7 @@
     		tab = $( this ).parent().parent();
     		swal(
     			{
-				  	title: "Voulez vous vraiement supprimer cette catégorie?",
+				  	title: "Voulez vous vraiment supprimer cette catégorie?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
@@ -374,7 +374,7 @@
     		tab = $( this ).parent().parent();
     		swal(
     			{
-				  	title: "Voulez vous vraiement supprimer cet oeuvre ?",
+				  	title: "Voulez vous vraiment supprimer cet oeuvre ?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
@@ -585,7 +585,7 @@
 
 				    	swal(
 			    			{
-							  	title: "Voulez vous vraiement banir cet utilisateur du salon ?",
+							  	title: "Voulez vous vraiment bannir cet utilisateur du salon ?",
 								type: "warning",
 								showCancelButton: true,
 							  	confirmButtonColor: "#DD6B55",
@@ -603,7 +603,7 @@
 						            	tdStatus.html('Banni');
 						            	swal("Supprimé!", "L'utilisateur a bien été banni du salon.", "success");
 						            }).fail(function(){
-						            	swal("Erreur!", "L'utilisateur n'a pas été bani du salon.", "error");
+						            	swal("Erreur!", "L'utilisateur n'a pas été banni du salon.", "error");
 						            });
 								}				  
 							}
@@ -761,7 +761,7 @@
 	    	tdStatus = $(this).closest('tr').find('td.user-status');
 	    	swal(
     			{
-				  	title: "Voulez vous vraiement bannir cet utilisateur du site ?",
+				  	title: "Voulez vous vraiment bannir cet utilisateur du site ?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
@@ -779,7 +779,7 @@
 			            	tdStatus.html('Banni');
 			            	swal("Supprimé!", "L'utilisateur a bien été banni du site.", "success");
 			            }).fail(function(){
-			            	swal("Erreur!", "L'utilisateur n'a pas été bani du site.", "error");
+			            	swal("Erreur!", "L'utilisateur n'a pas été banni du site.", "error");
 			            });
 					}				  
 				}
@@ -792,7 +792,7 @@
 		    tdStatus = $(this).closest('tr').find('td.user-status');
 	    	swal(
     			{
-				  	title: "Voulez vous vraiement supprimer ce compte utilisateur ?",
+				  	title: "Voulez vous vraiment supprimer ce compte utilisateur ?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
@@ -835,7 +835,7 @@
     		tab = $( this ).parent().parent();
     		swal(
     			{
-				  	title: "Voulez vous vraiement supprimer ce lien ?",
+				  	title: "Voulez vous vraiment supprimer ce lien ?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
@@ -884,11 +884,11 @@
 			var reportId = this.id;
 			swal(
     			{
-				  	title: "Voulez vous vraiement bannir cet utilisateur du salon ?",
+				  	title: "Voulez vous vraiment bannir cet utilisateur du salon ?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
-					confirmButtonText: "Supprimer",
+					confirmButtonText: "Bannir",
 					cancelButtonText: "Annuler",
 					closeOnConfirm: false
 				},
@@ -915,7 +915,7 @@
 			var reportId = this.id;
 			swal(
     			{
-				  	title: "Voulez vous vraiement bannir cet utilisateur du salon ?",
+				  	title: "Voulez vous vraiment refuser de bannir cet utilisateur du salon ?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
@@ -934,6 +934,70 @@
 			            	swal("Supprimé!", "La bannissement de l'utilisateur a été refusé.", "success");
 			            }).fail(function(){
 			            	swal("Erreur!", "Erreur lors du refus de bannissement de l'utilisateur", "error");
+			            });
+					}				  
+				}
+			);
+            return false;
+		});
+
+	// ELEMENT SUGGEST
+
+		// Validate element suggest
+		$('#elementSuggestTable').on('click', 'i.valide-element-suggest', function(){
+			var elementSuggestId = this.id;
+			swal(
+    			{
+				  	title: "Voulez vous vraiment valider cette oeuvre ?",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonText: "Valider",
+					cancelButtonText: "Annuler",
+					closeOnConfirm: false
+				},
+				function(isConfirm){
+					if(isConfirm){
+						$.ajax({
+			                data : { elementSuggestId : elementSuggestId },
+			                url: "{{ route('valide_element_suggest') }}",
+			                type: 'put',
+			            }).done(function(){
+			            	$('.element-suggest-status').html('<p class="text-success">Validé</p>');
+			            	swal("Validé!", "Vous devez maintenant l'ajouter dans les oeuvres.", "success");
+			            }).fail(function(){
+			            	swal("Erreur!", "L'oeuvre n'a pas été validée.", "error");
+			            });
+					}				  
+				}
+			);
+            return false;
+		});
+
+		// Refuse element suggest
+		$('#elementSuggestTable').on('click', 'i.refuse-element-suggest', function(){
+			var elementSuggestId = this.id;
+			swal(
+    			{
+				  	title: "Voulez vous vraiment refuser cette oeuvre ?",
+					type: "warning",
+					showCancelButton: true,
+				  	confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Refuser",
+					cancelButtonText: "Annuler",
+					closeOnConfirm: false
+				},
+				function(isConfirm){
+					if(isConfirm){
+						$.ajax({
+			                data : { elementSuggestId : elementSuggestId },
+			                url: "{{ route('refuse_element_suggest') }}",
+			                type: 'put',
+			            }).done(function(){
+			            	console.log('ok');
+			            	$('.element-suggest-status').html('<p class="text-danger">Refusé</p>');
+			            	swal("Validé!", "L'oeuvre a été refusée.", "success");
+			            }).fail(function(){
+			            	swal("Erreur!", "L'oeuvre n'a pas été refusée.", "error");
 			            });
 					}				  
 				}

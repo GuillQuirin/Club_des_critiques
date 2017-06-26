@@ -251,8 +251,8 @@
         <!-- {!! HTML::script('bootstrap-select/dist/js/bootstrap-select.mins.js') !!} -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
         {!! HTML::script('js/autocomplete.js') !!}
-        {!! HTML::script('js/template.js') !!}
         {!! HTML::script('js/sweetalert.min.js') !!}
+        {!! HTML::script('js/template.js') !!}
         
         @yield('js')
         

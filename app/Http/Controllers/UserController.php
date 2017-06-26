@@ -27,7 +27,7 @@ class UserController extends Controller
      public function index()
      {
           // Collection de tous les users
-          $listUsers = User::all();
+          $listUsers = User::whereNotIn('id_status', [5,6])->get();
                                         
           //Renommage des statuts
           foreach ($listUsers as $user) {

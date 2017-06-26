@@ -138,6 +138,10 @@ footer a:hover, footer a:active, footer a:focus{
     margin-bottom: 10px;
 }
 
+ul.pagination a:hover{
+    cursor: pointer;
+}
+
 /* FORMAT XS */
 @media(max-width:768px){
 

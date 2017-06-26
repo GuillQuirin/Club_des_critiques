@@ -176,7 +176,7 @@ class AjaxController extends Controller
         $subCat = $room->element->category->id;
         $cat = $room->element->category->parent->id;
 
-        return Response::json(['room' => $room, 'subCat' => $subCat, 'catgory' => $cat]);
+        return Response::json(['room' => $room, 'subCat' => $subCat, 'category' => $cat]);
 
     }
 

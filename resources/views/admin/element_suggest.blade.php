@@ -22,7 +22,15 @@
                                 <td>{{ $elementSuggest->name }}</td>
                                 <td>{{ $elementSuggest->creator }}</td>
                                 <td>{{ $elementSuggest->category }}</td>
-                                <td>{{ $elementSuggest->status }}</td>
+                                <td>
+                                    @if( $elementSuggest->status == 0 )
+                                        En attente
+                                    @elseif( $elementSuggest->status == 1 )
+                                        Validé
+                                    @else
+                                        Refusé
+                                    @endif
+                                </td>
                                 <td>
                                     <i class="fa fa-trash valide-element-suggest" aria-hidden="true" id="{{ $elementSuggest->id }}"></i>
                                     <i class="fa fa-trash refuse-element-suggest" aria-hidden="true" id="{{ $elementSuggest->id }}"></i>                                    

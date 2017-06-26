@@ -31,38 +31,38 @@
 		    	@include('admin.category')
 		  	</div>
 		  	<div class="panel panel-default">
-		    	<div class="panel-heading" data-toggle="collapse" href="#collapseElement">
+		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseElement">
 		     		<h4 class="panel-title">Oeuvres</h4>
 		    	</div>
 		    	@include('admin.element')
 		  	</div>
 		  	<div class="panel panel-default">
-		    	<div class="panel-heading" data-toggle="collapse" href="#collapseRoom">
+		    	<div class="panel-heading"  data-parent="#accordion" data-toggle="collapse" href="#collapseRoom">
 		      		<h4 class="panel-title">Salons</h4>
 		    	</div>
 		    	@include('admin.room')
 		  	</div>
 		    <div class="panel panel-default">
-		    	<div class="panel-heading" data-toggle="collapse" href="#collapseBanRoom">
+		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseBanRoom">
 		      		<h4 class="panel-title">Demande de ban en salon</h4>
 		    	</div>
 		    	@include('admin.room_ban')
 		    </div>
 		  	<div class="panel panel-default">
-		    	<div class="panel-heading" data-toggle="collapse" href="#collapseUser">
+		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseUser">
 		      		<h4 class="panel-title">Membres</h4>
 		    	</div>
 		    	@include('admin.user')
 		    </div>
 		    
 		    <div class="panel panel-default">
-		    	<div class="panel-heading" data-toggle="collapse" href="#collapseFooter">
+		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseFooter">
 		      		<h4 class="panel-title">Footer</h4>
 		    	</div>
 		    	@include('admin.footer')
 		    </div>
 		    <div class="panel panel-default">
-		    	<div class="panel-heading" data-toggle="collapse" href="#collapseElementSuggest">
+		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseElementSuggest">
 		      		<h4 class="panel-title">Proposition d'oeuvre</h4>
 		    	</div>
 		    	@include('admin.element_suggest')
@@ -406,11 +406,14 @@
 		    var elementId = $(this).closest('tr').find('td.element-id').html();
 		    var selectEditElementSubCat = $('#edit_element_sub_category');
 		    var selectEditElementCat = $('#edit_element_category');
+		    console.log(selectEditElementCat.val());
+
 		    $.ajax({
                 data : { elementId : elementId },
                 url: "{{ route('get_element') }}",
                 type: 'get',
                 success: function(data) {
+                	console.log(data);
                 	$('#id_element').val(data.element.id);	
                 	$('#edit_element_name').val(data.element.name);	
                 	$('#edit_element_creator').val(data.element.creator);
@@ -420,11 +423,11 @@
                 	$('#edit_element_date_end').val(data.element.date_end);
                 	$('#edit_element_description').val(data.element.description);	                	
                 	
-                	selectEditElementCat.selectpicker('val', data.catgory);
+                	selectEditElementCat.selectpicker('val', data.category);
 
                 	// Affichage des sous catégories                 	
 		            $.ajax({
-		                data : { categoryId : data.catgory },
+		                data : { categoryId : data.category },
 		                url: "{{ route('get_sub_categories') }}",
 		                type: 'get',
 		                success: function(subCategories) {
@@ -489,7 +492,13 @@
 		$('#room_date_end').datetimepicker({
 			format: 'YYYY-MM-DD HH:mm:ss',
 			minDate: $('#room_date_start').val(),
-			defaultDate: new Date()
+			defaultDate: $('#room_date_start').val()
+		});
+
+		$('#room_date_start').on('dp.change', function (e) {
+		    if ($('#room_date_end').length > 0) {
+		        $('#room_date_end').data("DateTimePicker").minDate(e.date)
+		    }
 		});
 
 		// Sélection de la catégorie => affichage des sous catégories
@@ -623,6 +632,7 @@
 	                url: "{{ route('get_room') }}",
 	                type: 'get',
 	                success: function(data) {
+	                	console.log(data.room.date_start);
 
 	                	$('#edit_room_date_start').datetimepicker({
 	                		format: 'YYYY-MM-DD HH:mm:ss',
@@ -630,19 +640,24 @@
 	                	});
 
 	                	$('#edit_room_date_end').datetimepicker({
-	                		minDate: $('#edit_room_date_start').val(),
 	                		format: 'YYYY-MM-DD HH:mm:ss',
 	                		defaultDate: data.room.date_end
 	                	});
+
+	                	$('#edit_room_date_start').on('dp.change', function (e) {
+						    if ($('#edit_room_date_end').length > 0) {
+						        $('#edit_room_date_end').data("DateTimePicker").minDate(e.date)
+						    }
+						});
 	                	
 	                	$('#id_room').val(data.room.id);
 	                	$('#edit_room_name').val(data.room.name);
 	                	
-	                	$('#edit_room_category').selectpicker('val', data.catgory);
+	                	$('#edit_room_category').selectpicker('val', data.category);
 
 	                	// Affichage des sous catégories                 	
 			            $.ajax({
-			                data : { categoryId : data.catgory },
+			                data : { categoryId : data.category },
 			                url: "{{ route('get_sub_categories') }}",
 			                type: 'get',
 			                success: function(subCategories) {

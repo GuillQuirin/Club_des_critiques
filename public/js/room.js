@@ -41,27 +41,29 @@ $(document).ready(function(){
             var data = JSON.parse(data);
             var html="";
             //console.log(data);
-            $.each(data, function(key, value){
-                html+='<li class="left clearfix">';
-                    html+='<span class="chat-img pull-left">';
-                        if(value.picture)
-                            html+='<img src="'+value.picture+'" alt="User Avatar" class="img-circle favicon_user"/>';
-                        else
-                            html+='<img src="/images/user.png" alt="User Avatar" class="img-circle favicon_user"/>';
-                    html+='</span>';
-                    html+='<div class="chat-body clearfix">';
-                        html+='<div class="header">';
-                            html+='<strong class="primary-font">'+value.first_name+' '+value.last_name+'</strong>';
-                            html+='<small class="pull-right text-muted">';
-                                html+='<span class="glyphicon glyphicon-time"></span>';
-                                html+=value.date;
-                            html+='</small>';
+            if(data){
+                $.each(data, function(key, value){
+                    html+='<li class="left clearfix">';
+                        html+='<span class="chat-img pull-left">';
+                            if(value.picture)
+                                html+='<img src="'+value.picture+'" alt="User Avatar" class="img-circle favicon_user"/>';
+                            else
+                                html+='<img src="/images/user.png" alt="User Avatar" class="img-circle favicon_user"/>';
+                        html+='</span>';
+                        html+='<div class="chat-body clearfix">';
+                            html+='<div class="header">';
+                                html+='<strong class="primary-font">'+value.first_name+' '+value.last_name+'</strong>';
+                                html+='<small class="pull-right text-muted">';
+                                    html+='<span class="glyphicon glyphicon-time"></span>';
+                                    html+=value.date;
+                                html+='</small>';
+                            html+='</div>';
+                            html+='<p>'+value.message.replace("\n", '<br />')+'</p>';
                         html+='</div>';
-                        html+='<p>'+value.message+'</p>';
-                    html+='</div>';
-                html+='</li>';
-                $('ul#chatbox').html(html);
-            });
+                    html+='</li>';
+                    $('ul#chatbox').html(html);
+                });
+            }
             $("#messages").scrollTop($("#messages").prop('scrollHeight'));
         })
         .fail(function(data){
@@ -77,7 +79,6 @@ $(document).ready(function(){
         e.preventDefault(); // on empêche le bouton d'envoyer le formulaire
 
         var message = $('#message').val();
-
         var today = new Date();
         var dd = today.getDate() < 10 ? '0' + today.getDate() : today.getDate();
         var mm = today.getMonth()+1 < 10 ? '0' + (today.getMonth()+1) : today.getMonth()+1; //January is 0!

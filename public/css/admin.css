@@ -34,3 +34,7 @@ i{
 .panel-heading{
 	cursor: pointer;
 }
+
+p{
+	margin: 0 0 0px !important;
+}

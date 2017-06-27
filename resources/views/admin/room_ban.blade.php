@@ -11,7 +11,7 @@
                             <th>Room</th>
                             <th>Motif</th>
                             <th>Date</th>
-                            <th>Action</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>

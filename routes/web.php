@@ -101,7 +101,7 @@ Route::group(['middleware' => 'App\Http\Middleware\UserMiddleware'], function()
 Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 {
 	Route::get('admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
-	Route::put('admin/edit-concept', ['as' => 'edit_concept', 'uses' => 'AdminController@editConcept']);	
+	Route::put('admin/edit-home', ['as' => 'edit_home', 'uses' => 'AdminController@editHome']);	
 	Route::put('admin/add-top-element', ['as' => 'add_top_element', 'uses' => 'AdminController@addTopElement']);
 	Route::put('admin/delete-top-element', ['as' => 'delete_top_element', 'uses' => 'AdminController@deleteTopElement']);
 	Route::post('admin/add-category', ['as' => 'add_category', 'uses' => 'AdminController@addCategory']);

@@ -29,14 +29,16 @@ class CategoryController extends Controller
                             ->get();
 
         $subCategory = DB::table('category')
-                            ->select('id',
-                                     'name')
-                            ->where('id_parent', '=', $id)
+                            ->leftJoin('element','element.id_category','=','category.id')
+                            ->selectRaw('category.id, category.name, count(element.id) as nbElement')
+                            ->where('category.id_parent', '=', $id)
+                            ->groupBy('category.id')
+                            ->groupBy('category.name')
                             ->get();
-
+                            //var_dump($subCategory);die;
         $listSubCategory = [];
           foreach ($subCategory as $key => $category)
-               $listSubCategory[$category->id] = $category->name;
+               $listSubCategory[$category->id] = $category->name."(".$category->nbElement.")";
 
         $listElements = DB::table('element')
                             ->leftJoin('category', 'element.id_category', '=', 'category.id')

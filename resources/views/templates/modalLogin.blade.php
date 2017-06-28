@@ -61,9 +61,6 @@
 
                 <!-- Récupération de mot de passe -->
                 <div class="collapse" id="forgetPwd">
-                    <button type="button" class="close" data-dismiss="collapse" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                     <hr>
                     <div class="text-center">
                         <h4 class="modal-title">Récupération de votre compte</h4>

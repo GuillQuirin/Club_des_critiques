@@ -179,8 +179,10 @@
                                 <li>
                                     <a href="{{ route('logout') }}">Déconnexion</a>
                                 </li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="{{ route('admin') }}">Administration</a></li>
+                                @if(Auth::user()->id_status==3)
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="{{ route('admin') }}">Administration</a></li>
+                                @endif
                             @endif
                         </ul>
                     </li>

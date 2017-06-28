@@ -323,7 +323,12 @@ class UserController extends Controller
                                         'password' => $input['password']])){
 
                          $user = Auth::user();
-                         $blackList = [1,5];
+                         $blackList = [1,5,6]; 
+                         /*
+                         *En attente
+                         *Banni
+                         *Supprimé
+                         */
 
                          if(in_array($user->id_status, $blackList)){
                               Auth::logout();

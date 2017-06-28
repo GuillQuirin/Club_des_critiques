@@ -21,7 +21,7 @@
     <div class="container notPadding">       
         <div>
             <h2>Le concept</h2>
-            <p>{{$page['description']}}</p>
+            <p>{{$concept->value}}</p>
         </div>
     
         <hr>

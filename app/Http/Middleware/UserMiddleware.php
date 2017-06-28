@@ -15,9 +15,9 @@ class UserMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()->id_status != 2 || $request->user()->id_status != 3 || $request->user()->id_status != 4)
+        if ($request->user() === null || $request->user()->id_status != 2 || $request->user()->id_status != 3 || $request->user()->id_status != 4)
         {
-            return redirect('home');
+            return redirect()->route('home');
         }
 
         return $next($request);

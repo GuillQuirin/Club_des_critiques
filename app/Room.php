@@ -35,10 +35,9 @@ class Room extends Model
     public function users()
     {
         $users = DB::select('
-            SELECT DISTINCT user.*, user_room.status_user 
-            FROM user, user_room 
-            WHERE user.id in (SELECT id_user FROM user_room WHERE id_room = ' . $this->id . ') 
-            AND user.id = user_room.id_user;
+            SELECT user.*
+            FROM user
+            WHERE user.id in (SELECT id_user FROM user_room WHERE id_room = ' . $this->id . ');
         ');
 
         $users = User::hydrate($users);

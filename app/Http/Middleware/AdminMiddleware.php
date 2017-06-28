@@ -15,9 +15,9 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()->id_status != 3)
+        if ($request->user() === null || ($request->user()->id_status != 3))
         {
-            return redirect('home');
+            return redirect()->route('home');
         }
 
         return $next($request);

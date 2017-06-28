@@ -47,20 +47,9 @@
 	Route::post('category', ['as' => 'bring_elements', 'uses' => 'AjaxController@getElementsBy']);
 
 
-Route::group(['middleware' => 'App\Http\Middleware\UserMiddleware'], function()
-{
+
 	
 /****** UTILISATEUR ******/
-
-	//Liste des utilisateurs
-	Route::get('users', ['as' => 'users', 'uses' => 'UserController@index']);
-	Route::post('users', ['as' => 'bring_users', 'uses' => 'AjaxController@getUsersBy']);
-
-	//Affichage d'un utilisateur
-	Route::get('user/{id}', ['as' => 'show_user', 'uses' => 'UserController@show']);
-
-	//Contact d'un utilisateur en ajax
-	Route::post('contact', ['as' => '/', 'uses' => 'UserController@contact']);
 
 	//Inscription en ajax
 	Route::post('register', ['as' => '/', 'uses' => 'UserController@register']);
@@ -73,6 +62,18 @@ Route::group(['middleware' => 'App\Http\Middleware\UserMiddleware'], function()
 	//Création-Renouvellement du mot de passe
 	Route::get('checkToken/{token}', ['as' => '/checkToken', 'uses' => 'UserController@checkToken']);
 	Route::post('checkToken', ['as' => '/checkToken', 'uses' => 'UserController@newPwd']);
+
+Route::group(['middleware' => 'App\Http\Middleware\UserMiddleware'], function()
+{
+	//Liste des utilisateurs
+	Route::get('users', ['as' => 'users', 'uses' => 'UserController@index']);
+	Route::post('users', ['as' => 'bring_users', 'uses' => 'AjaxController@getUsersBy']);
+
+	//Affichage d'un utilisateur
+	Route::get('user/{id}', ['as' => 'show_user', 'uses' => 'UserController@show']);
+
+	//Contact d'un utilisateur en ajax
+	Route::post('contact', ['as' => '/', 'uses' => 'UserController@contact']);
 
 	//Modifications de l'utilisateur
 	Route::patch('user/{id}/infos', ['as' => 'update_user', 'uses' => 'UserController@updateInfo']);

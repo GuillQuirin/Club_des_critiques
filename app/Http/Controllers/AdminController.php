@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Response;
 use DB;
+use Session;
 use App\User;
 use App\Room;
 use App\Other;
@@ -28,6 +29,7 @@ class AdminController extends Controller
     public function index()
     {
         $concept = DB::table('other')->where('name', 'home_concept')->first();
+        $slogan = DB::table('other')->where('name', 'home_slogan')->first();
         $elements = Element::where('is_deleted', false)->get();        
         $allCategories = Category::where('is_deleted', false)->get();
         $allUsers = User::all();
@@ -40,7 +42,7 @@ class AdminController extends Controller
         $reports = Report::all();
         $elementSuggests = ElementSuggest::all();
 
-    	return view('admin.index', compact('concept', 'elements', 'allCategories', 'allUsers', 'categories', 'topElements', 'departments', 'status', 'footers', 'rooms', 'reports', 'elementSuggests'));
+    	return view('admin.index', compact('concept', 'slogan', 'elements', 'allCategories', 'allUsers', 'categories', 'topElements', 'departments', 'status', 'footers', 'rooms', 'reports', 'elementSuggests'));
     }
 
     /**
@@ -48,16 +50,20 @@ class AdminController extends Controller
      *
      * @return view
      */
-    public function editConcept(Request $request)
+    public function editHome(Request $request)
     {
-        $line = Other::where('name', 'home_concept')->first();
-        $line->value = $request->home_concept;
-        $line->save();
+        $concept = Other::where('name', 'home_concept')->first();
+        $concept->value = $request->home_concept;
+        $concept->save();
 
-        $response = array(
-            'status' => 'success',
-            'msg' => 'Setting created successfully',
-        );
+        $slogan = Other::where('name', 'home_slogan')->first();
+        $slogan->value = $request->home_slogan;
+        $slogan->save();
+
+        if (Input::file('image')->isValid()) {
+            Input::file('image')->move('images', 'welcome.jpeg'); 
+            Session::flash('success', 'Upload successfully'); 
+        }
 
         return redirect(route('admin'));
     }

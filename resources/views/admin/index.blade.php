@@ -2,6 +2,7 @@
 
 @section('css')
      <link rel="stylesheet" type="text/css" href="{{asset('css/admin.css')}}">    
+     <link rel="stylesheet" type="text/css" href="{{asset('css/fileinput.min.css')}}">    
 @endsection
 
 @section('title')
@@ -76,6 +77,10 @@
 @section('js')
 	<script type="text/javascript" src="moment/min/moment.min.js"></script>
 	<script type="text/javascript" src="bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
+	<script type="text/javascript" src="js/fileinput.min.js"></script>
+	<script type="text/javascript" src="js/piexif.min.js"></script>
+	<script type="text/javascript" src="js/purify.min.js"></script>
+	<script type="text/javascript" src="js/sortable.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 

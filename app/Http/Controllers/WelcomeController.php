@@ -21,8 +21,8 @@ class WelcomeController extends Controller
 {
     public function index()
 	{
-		//$concept = DB::table('other')->where('name', 'home_concept')->first();
 		$concept = Other::where('name', 'home_concept')->first();
+		$slogan = Other::where('name', 'home_slogan')->first();
 		/**
 		 * get concept
 		 * get oeuvres à la une
@@ -50,6 +50,7 @@ class WelcomeController extends Controller
 
 		return view('welcome')
 				->with('concept', $concept)
+				->with('slogan', $slogan)
 				->with(compact('page'))
 				->with('grid', $listElements)
 				->with('nbElements', 8)

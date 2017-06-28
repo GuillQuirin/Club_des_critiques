@@ -47,7 +47,9 @@
 	Route::post('category', ['as' => 'bring_elements', 'uses' => 'AjaxController@getElementsBy']);
 
 
-
+Route::group(['middleware' => 'App\Http\Middleware\UserMiddleware'], function()
+{
+	
 /****** UTILISATEUR ******/
 
 	//Liste des utilisateurs
@@ -92,10 +94,12 @@
 	Route::post('room/report', ['as' => 'report_user', 'uses' => 'RoomsController@reportUser']);
 	Route::post('room/invite', ['as' => 'invite_user', 'uses' => 'RoomsController@inviteUser']);
     //Route::get('join_room/{token}', ['as' => 'join_room', 'uses' => 'RoomController@checkToken']);
-
+});
 
 /****** ADMINISTRATION ******/
 
+Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
+{
 	Route::get('admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
 	Route::put('admin/edit-concept', ['as' => 'edit_concept', 'uses' => 'AdminController@editConcept']);	
 	Route::put('admin/add-top-element', ['as' => 'add_top_element', 'uses' => 'AdminController@addTopElement']);
@@ -130,6 +134,7 @@
 	Route::put('admin/refuse-ban-user-room', ['as' => 'refuse_ban_user_room', 'uses' => 'AjaxController@refuseBanUserRoom']);
 	Route::put('admin/valide-element-suggest', ['as' => 'valide_element_suggest', 'uses' => 'AjaxController@valideElementSuggest']);
 	Route::put('admin/refuse-element-suggest', ['as' => 'refuse_element_suggest', 'uses' => 'AjaxController@refuseElementSuggest']);
+});
 
 Route::post('room/autocompleteUser', ['as' => '/', 'uses' => 'RoomsController@autocompleteUser']);
 Route::post('room/addMessage', ['as' => '/', 'uses' => 'RoomsController@addMessage'] );

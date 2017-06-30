@@ -131,7 +131,11 @@ class RoomsController extends Controller
     public function getMessage(){
         $header = Room::findOrFail($_POST['id_room']);
         
-        $chatbox = Chatbox::where('id_room', $header->id)->get();
+        $chatbox = DB::table('chatbox')->where([
+            ['id_room', '=', $header->id],
+            ['date_post', '>=', $_POST['timestamp']]
+        ])->get();
+        //var_dump($chatbox);
         $message = [];
         foreach ($chatbox as $chat) {
             $message[$chat->id]['message'] =$chat->message;

@@ -39,7 +39,7 @@
                                 <strong>Votre note : </strong><h1 class="d-inline">{{$mark->mark}}</h1>/4 <br>
 								<?php $sum = 0;?>
 								@foreach ($global_mark as $marks)
-									<?php $sum = $sum + $marks->mark ?>
+									<?php $sum = $sum + $marks->mark; ?>
 								@endforeach
                                  <strong>Note globale des lecteurs : </strong><h1 class="d-inline">{{$sum/($global_mark->count())}}</h1>/4
                             </div>
@@ -66,7 +66,27 @@
 		                </div>
 		                <div class="panel-body body-panel" id="messages">
 		                    <ul id="chatbox" class="chat">
-                                
+                                @foreach($chatbox as $value)
+                                    <li class="left clearfix">
+                                        <span class="chat-img pull-left">
+                                        @if($value->picture)
+                                            <img src="{{$value->picture}}'" alt="User Avatar" class="img-circle favicon_user"/>
+                                        @else
+                                            <img src="/images/user.png" alt="User Avatar" class="img-circle favicon_user"/>
+                                        @endif
+                                        </span>
+                                        <div class="chat-body clearfix">
+                                            <div class="header">
+                                                <strong class="primary-font">{{$value->first_name}} {{$value->last_name}}</strong>
+                                                <small class="pull-right text-muted">
+                                                    <span class="glyphicon glyphicon-time"></span>
+                                                        {{$value->date}}
+                                                </small>
+                                            </div>
+                                            <p><?php echo str_replace("\n", "<br>", $value->message); ?></p>
+                                        </div>
+                                    </li>
+                                @endforeach
 		                    </ul>
 		                </div>
 		                <div class="panel-footer clearfix">

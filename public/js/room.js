@@ -27,16 +27,20 @@ $(document).ready(function(){
     };
 
     /*MAJ de la chatbox*/
+    var timestamp = Math.round(+new Date() / 1000);
+    //console.log(timestamp);
     updateChatbox();
 
     function updateChatbox(){
         var id_room = $('#room').val();
+        //console.log(timestamp);
         $.ajax({
             url : "getMessage",
             type : "POST",
-            data : "id_room=" + id_room
+            data : {id_room : id_room, timestamp : timestamp}
         })
         .done(function(data){
+            timestamp = Math.round(+new Date() / 1000);
             //console.log(data);
             var data = JSON.parse(data);
             var html="";
@@ -61,7 +65,7 @@ $(document).ready(function(){
                             html+='<p>'+value.message.replace("\n", '<br />')+'</p>';
                         html+='</div>';
                     html+='</li>';
-                    $('ul#chatbox').html(html);
+                    $('ul#chatbox').append(html);
                 });
             }
             $("#messages").scrollTop($("#messages").prop('scrollHeight'));

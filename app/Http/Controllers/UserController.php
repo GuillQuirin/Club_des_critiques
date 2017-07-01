@@ -31,7 +31,9 @@ class UserController extends Controller
                                         
           //Renommage des statuts
           foreach ($listUsers as $user) {
-               $user->name = $user->first_name;
+               $user->name = (isset($user->first_name) && isset($user->last_name)) ? $user->first_name." ".$user->last_name[0]."."
+                                                                                     : "Utilisateur-".$user->id;
+               $user->picture = (isset($user->picture)) ? $user->picture : '/images/user.png';
                $user->subName = $user->status->label;
                $user->date = $user->date_created;
           }
@@ -70,6 +72,7 @@ class UserController extends Controller
 	{
           //Liste des infos de l'utilisateur
           $infos = User::find($id);
+          $infos->picture = ($infos->picture) ? $infos->picture : "/images/user.png";
 
           $myAccount  = (Auth::check() && Auth::id() == $id);
 
@@ -429,8 +432,8 @@ class UserController extends Controller
                $user->password = Hash::make(Input::get('new_pwd'));
                
                //Si l'utilisateur vient juste de créer son compte, alors on l'active une fois le mdp établi
-               if($user->id_status==0)
-                    $user->id_status = 1;
+               if($user->id_status<=1)
+                    $user->id_status = 2;
                
                $user->token ="";
                $user->save();

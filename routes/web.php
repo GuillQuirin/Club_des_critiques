@@ -63,8 +63,8 @@
 	Route::get('checkToken/{token}', ['as' => '/checkToken', 'uses' => 'UserController@checkToken']);
 	Route::post('checkToken', ['as' => '/checkToken', 'uses' => 'UserController@newPwd']);
 
-Route::group(['middleware' => 'App\Http\Middleware\UserMiddleware'], function()
-{
+// Route::group(['middleware' => 'App\Http\Middleware\UserMiddleware'], function()
+// {
 	//Liste des utilisateurs
 	Route::get('users', ['as' => 'users', 'uses' => 'UserController@index']);
 	Route::post('users', ['as' => 'bring_users', 'uses' => 'AjaxController@getUsersBy']);
@@ -95,7 +95,7 @@ Route::group(['middleware' => 'App\Http\Middleware\UserMiddleware'], function()
 	Route::post('room/report', ['as' => 'report_user', 'uses' => 'RoomsController@reportUser']);
 	Route::post('room/invite', ['as' => 'invite_user', 'uses' => 'RoomsController@inviteUser']);
     //Route::get('join_room/{token}', ['as' => 'join_room', 'uses' => 'RoomController@checkToken']);
-});
+// });
 
 /****** ADMINISTRATION ******/
 

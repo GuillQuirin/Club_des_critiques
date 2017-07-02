@@ -229,6 +229,7 @@ class AdminController extends Controller
         $user->id_department = $request->department;
         $user->email = $request->email;
         $user->id_status = $request->status;
+        $user->picture = '/images/user.png'; 
         if(isset($request->picture)){ $user->picture = $request->picture; }
         if(isset($request->description)){ $user->description = $request->description; }
         

@@ -19,8 +19,8 @@
 @section('content')
     <div class="container">
         <h1 class="text-center col-xs-10 col-xs-offset-1 col-sm-12">
-          @if(isset($infos->first_name))
-            {{$infos->first_name}}
+          @if(isset($infos->first_name) && isset($infos->last_name))
+            {{$infos->first_name}} <?php echo $infos->last_name[0]; ?>.
           @else
             Utilisateur-{{$infos->id}}
           @endif
@@ -41,18 +41,12 @@
 
         <div class="row">
             <!-- Aucun espace entre l'image et la description afin que le vertical-align soit pris en compte -->
-            @if($infos->picture)
-              <img src="{{$infos->picture}}" 
-                alt='Photo de profil' 
-                id="profilPicture" 
-                class="valig-center col-xs-12 col-sm-4 col-md-4">
-            @else 
-              <img src="/images/user.png" 
-                alt='Photo de profil' 
-                id="profilPicture" 
-                class="valig-center col-xs-12 col-sm-4 col-md-4">
-            @endif
-            <!-- --><p class="description valig-center col-xs-12 col-sm-8 col-md-8">{{$infos->description}}</p>
+            <img
+              alt='Photo de profil' 
+              id="profilPicture" 
+              class="valig-center col-xs-12 col-sm-4 col-md-4"
+              src="{{$infos->picture}}"        
+            ><!-- --><p class="description valig-center col-xs-12 col-sm-8 col-md-8">{{$infos->description}}</p>
         </div>
         
         @if($myAccount)

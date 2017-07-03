@@ -180,8 +180,10 @@
                                 <li>
                                     <a href="{{ route('logout') }}">Déconnexion</a>
                                 </li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="{{ route('admin') }}">Administration</a></li>
+                                @if(Auth::user()->id_status==3)
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="{{ route('admin') }}">Administration</a></li>
+                                @endif
                             @endif
                         </ul>
                     </li>
@@ -252,8 +254,8 @@
         <!-- {!! HTML::script('bootstrap-select/dist/js/bootstrap-select.mins.js') !!} -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
         {!! HTML::script('js/autocomplete.js') !!}
-        {!! HTML::script('js/template.js') !!}
         {!! HTML::script('js/sweetalert.min.js') !!}
+        {!! HTML::script('js/template.js') !!}
         
         @yield('js')
         

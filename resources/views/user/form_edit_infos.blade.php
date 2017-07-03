@@ -3,25 +3,28 @@
     <div class="modal-body row">
          <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-              {!! Form::label('firstNameUpdate','Prénom') !!}
+              {!! Form::label('firstNameUpdate','Prénom *') !!}
               {!! Form::text('first_name', $infos->first_name,[ 'id' => 'firstNameUpdate',
                                                                 'class' => 'form-control',
-                                                                ]) !!}
+                                                                'required' => 'required']) !!}
               {!! $errors->first('firstNameUpdate', '<small class="help-block">:message</small>') !!}
             </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-              {!! Form::label('lastNameUpdate','Nom') !!}
+              {!! Form::label('lastNameUpdate','Nom *') !!}
               {!! Form::text('last_name', $infos->last_name,[ 'id' => 'lastNameUpdate',
-                                                              'class' => 'form-control']) !!}
+                                                              'class' => 'form-control',
+                                                              'required' => 'required']) !!}
               {!! $errors->first('lastNameUpdate', '<small class="help-block">:message</small>') !!}
             </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
-              {!! Form::label('emailUpdate','Adresse email') !!}
-              {!! Form::email('email', $infos->email, ['id'=>'emailUpdate','class' => 'form-control']) !!}
+              {!! Form::label('emailUpdate','Adresse email *') !!}
+              {!! Form::email('email', $infos->email, ['id'=>'emailUpdate',
+                                                        'class' => 'form-control',
+                                                        'required' => 'required']) !!}
               {!! $errors->first('emailUpdate', '<small class="help-block">:message</small>') !!}
             </div>
         </div>

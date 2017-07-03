@@ -2,6 +2,7 @@
 
 @section('css')
      <link rel="stylesheet" type="text/css" href="{{asset('css/admin.css')}}">    
+     <link rel="stylesheet" type="text/css" href="{{asset('css/fileinput.min.css')}}">    
 @endsection
 
 @section('title')
@@ -31,38 +32,38 @@
 		    	@include('admin.category')
 		  	</div>
 		  	<div class="panel panel-default">
-		    	<div class="panel-heading" data-toggle="collapse" href="#collapseElement">
+		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseElement">
 		     		<h4 class="panel-title">Oeuvres</h4>
 		    	</div>
 		    	@include('admin.element')
 		  	</div>
 		  	<div class="panel panel-default">
-		    	<div class="panel-heading" data-toggle="collapse" href="#collapseRoom">
+		    	<div class="panel-heading"  data-parent="#accordion" data-toggle="collapse" href="#collapseRoom">
 		      		<h4 class="panel-title">Salons</h4>
 		    	</div>
 		    	@include('admin.room')
 		  	</div>
 		    <div class="panel panel-default">
-		    	<div class="panel-heading" data-toggle="collapse" href="#collapseBanRoom">
+		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseBanRoom">
 		      		<h4 class="panel-title">Demande de ban en salon</h4>
 		    	</div>
 		    	@include('admin.room_ban')
 		    </div>
 		  	<div class="panel panel-default">
-		    	<div class="panel-heading" data-toggle="collapse" href="#collapseUser">
+		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseUser">
 		      		<h4 class="panel-title">Membres</h4>
 		    	</div>
 		    	@include('admin.user')
 		    </div>
 		    
 		    <div class="panel panel-default">
-		    	<div class="panel-heading" data-toggle="collapse" href="#collapseFooter">
+		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseFooter">
 		      		<h4 class="panel-title">Footer</h4>
 		    	</div>
 		    	@include('admin.footer')
 		    </div>
 		    <div class="panel panel-default">
-		    	<div class="panel-heading" data-toggle="collapse" href="#collapseElementSuggest">
+		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseElementSuggest">
 		      		<h4 class="panel-title">Proposition d'oeuvre</h4>
 		    	</div>
 		    	@include('admin.element_suggest')
@@ -76,6 +77,10 @@
 @section('js')
 	<script type="text/javascript" src="moment/min/moment.min.js"></script>
 	<script type="text/javascript" src="bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
+	<script type="text/javascript" src="js/fileinput.min.js"></script>
+	<script type="text/javascript" src="js/piexif.min.js"></script>
+	<script type="text/javascript" src="js/purify.min.js"></script>
+	<script type="text/javascript" src="js/sortable.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 
@@ -201,7 +206,7 @@
 
     		swal(
     			{
-				  	title: "Voulez vous vraiement supprimer cette oeuvre?",
+				  	title: "Voulez vous vraiment supprimer cette oeuvre?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
@@ -235,7 +240,7 @@
     		tab = $( this ).parent().parent();
     		swal(
     			{
-				  	title: "Voulez vous vraiement supprimer cette catégorie?",
+				  	title: "Voulez vous vraiment supprimer cette catégorie?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
@@ -374,7 +379,7 @@
     		tab = $( this ).parent().parent();
     		swal(
     			{
-				  	title: "Voulez vous vraiement supprimer cet oeuvre ?",
+				  	title: "Voulez vous vraiment supprimer cet oeuvre ?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
@@ -406,11 +411,14 @@
 		    var elementId = $(this).closest('tr').find('td.element-id').html();
 		    var selectEditElementSubCat = $('#edit_element_sub_category');
 		    var selectEditElementCat = $('#edit_element_category');
+		    console.log(selectEditElementCat.val());
+
 		    $.ajax({
                 data : { elementId : elementId },
                 url: "{{ route('get_element') }}",
                 type: 'get',
                 success: function(data) {
+                	console.log(data);
                 	$('#id_element').val(data.element.id);	
                 	$('#edit_element_name').val(data.element.name);	
                 	$('#edit_element_creator').val(data.element.creator);
@@ -420,11 +428,11 @@
                 	$('#edit_element_date_end').val(data.element.date_end);
                 	$('#edit_element_description').val(data.element.description);	                	
                 	
-                	selectEditElementCat.selectpicker('val', data.catgory);
+                	selectEditElementCat.selectpicker('val', data.category);
 
                 	// Affichage des sous catégories                 	
 		            $.ajax({
-		                data : { categoryId : data.catgory },
+		                data : { categoryId : data.category },
 		                url: "{{ route('get_sub_categories') }}",
 		                type: 'get',
 		                success: function(subCategories) {
@@ -489,7 +497,13 @@
 		$('#room_date_end').datetimepicker({
 			format: 'YYYY-MM-DD HH:mm:ss',
 			minDate: $('#room_date_start').val(),
-			defaultDate: new Date()
+			defaultDate: $('#room_date_start').val()
+		});
+
+		$('#room_date_start').on('dp.change', function (e) {
+		    if ($('#room_date_end').length > 0) {
+		        $('#room_date_end').data("DateTimePicker").minDate(e.date)
+		    }
 		});
 
 		// Sélection de la catégorie => affichage des sous catégories
@@ -576,7 +590,7 @@
 
 				    	swal(
 			    			{
-							  	title: "Voulez vous vraiement banir cet utilisateur du salon ?",
+							  	title: "Voulez vous vraiment bannir cet utilisateur du salon ?",
 								type: "warning",
 								showCancelButton: true,
 							  	confirmButtonColor: "#DD6B55",
@@ -594,7 +608,7 @@
 						            	tdStatus.html('Banni');
 						            	swal("Supprimé!", "L'utilisateur a bien été banni du salon.", "success");
 						            }).fail(function(){
-						            	swal("Erreur!", "L'utilisateur n'a pas été bani du salon.", "error");
+						            	swal("Erreur!", "L'utilisateur n'a pas été banni du salon.", "error");
 						            });
 								}				  
 							}
@@ -623,6 +637,7 @@
 	                url: "{{ route('get_room') }}",
 	                type: 'get',
 	                success: function(data) {
+	                	console.log(data.room.date_start);
 
 	                	$('#edit_room_date_start').datetimepicker({
 	                		format: 'YYYY-MM-DD HH:mm:ss',
@@ -630,19 +645,24 @@
 	                	});
 
 	                	$('#edit_room_date_end').datetimepicker({
-	                		minDate: $('#edit_room_date_start').val(),
 	                		format: 'YYYY-MM-DD HH:mm:ss',
 	                		defaultDate: data.room.date_end
 	                	});
+
+	                	$('#edit_room_date_start').on('dp.change', function (e) {
+						    if ($('#edit_room_date_end').length > 0) {
+						        $('#edit_room_date_end').data("DateTimePicker").minDate(e.date)
+						    }
+						});
 	                	
 	                	$('#id_room').val(data.room.id);
 	                	$('#edit_room_name').val(data.room.name);
 	                	
-	                	$('#edit_room_category').selectpicker('val', data.catgory);
+	                	$('#edit_room_category').selectpicker('val', data.category);
 
 	                	// Affichage des sous catégories                 	
 			            $.ajax({
-			                data : { categoryId : data.catgory },
+			                data : { categoryId : data.category },
 			                url: "{{ route('get_sub_categories') }}",
 			                type: 'get',
 			                success: function(subCategories) {
@@ -746,7 +766,7 @@
 	    	tdStatus = $(this).closest('tr').find('td.user-status');
 	    	swal(
     			{
-				  	title: "Voulez vous vraiement bannir cet utilisateur du site ?",
+				  	title: "Voulez vous vraiment bannir cet utilisateur du site ?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
@@ -764,7 +784,7 @@
 			            	tdStatus.html('Banni');
 			            	swal("Supprimé!", "L'utilisateur a bien été banni du site.", "success");
 			            }).fail(function(){
-			            	swal("Erreur!", "L'utilisateur n'a pas été bani du site.", "error");
+			            	swal("Erreur!", "L'utilisateur n'a pas été banni du site.", "error");
 			            });
 					}				  
 				}
@@ -777,7 +797,7 @@
 		    tdStatus = $(this).closest('tr').find('td.user-status');
 	    	swal(
     			{
-				  	title: "Voulez vous vraiement supprimer ce compte utilisateur ?",
+				  	title: "Voulez vous vraiment supprimer ce compte utilisateur ?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
@@ -820,7 +840,7 @@
     		tab = $( this ).parent().parent();
     		swal(
     			{
-				  	title: "Voulez vous vraiement supprimer ce lien ?",
+				  	title: "Voulez vous vraiment supprimer ce lien ?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
@@ -869,11 +889,11 @@
 			var reportId = this.id;
 			swal(
     			{
-				  	title: "Voulez vous vraiement bannir cet utilisateur du salon ?",
+				  	title: "Voulez vous vraiment bannir cet utilisateur du salon ?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
-					confirmButtonText: "Supprimer",
+					confirmButtonText: "Bannir",
 					cancelButtonText: "Annuler",
 					closeOnConfirm: false
 				},
@@ -900,7 +920,7 @@
 			var reportId = this.id;
 			swal(
     			{
-				  	title: "Voulez vous vraiement bannir cet utilisateur du salon ?",
+				  	title: "Voulez vous vraiment refuser de bannir cet utilisateur du salon ?",
 					type: "warning",
 					showCancelButton: true,
 				  	confirmButtonColor: "#DD6B55",
@@ -919,6 +939,70 @@
 			            	swal("Supprimé!", "La bannissement de l'utilisateur a été refusé.", "success");
 			            }).fail(function(){
 			            	swal("Erreur!", "Erreur lors du refus de bannissement de l'utilisateur", "error");
+			            });
+					}				  
+				}
+			);
+            return false;
+		});
+
+	// ELEMENT SUGGEST
+
+		// Validate element suggest
+		$('#elementSuggestTable').on('click', 'i.valide-element-suggest', function(){
+			var elementSuggestId = this.id;
+			swal(
+    			{
+				  	title: "Voulez vous vraiment valider cette oeuvre ?",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonText: "Valider",
+					cancelButtonText: "Annuler",
+					closeOnConfirm: false
+				},
+				function(isConfirm){
+					if(isConfirm){
+						$.ajax({
+			                data : { elementSuggestId : elementSuggestId },
+			                url: "{{ route('valide_element_suggest') }}",
+			                type: 'put',
+			            }).done(function(){
+			            	$('.element-suggest-status').html('<p class="text-success">Validé</p>');
+			            	swal("Validé!", "Vous devez maintenant l'ajouter dans les oeuvres.", "success");
+			            }).fail(function(){
+			            	swal("Erreur!", "L'oeuvre n'a pas été validée.", "error");
+			            });
+					}				  
+				}
+			);
+            return false;
+		});
+
+		// Refuse element suggest
+		$('#elementSuggestTable').on('click', 'i.refuse-element-suggest', function(){
+			var elementSuggestId = this.id;
+			swal(
+    			{
+				  	title: "Voulez vous vraiment refuser cette oeuvre ?",
+					type: "warning",
+					showCancelButton: true,
+				  	confirmButtonColor: "#DD6B55",
+					confirmButtonText: "Refuser",
+					cancelButtonText: "Annuler",
+					closeOnConfirm: false
+				},
+				function(isConfirm){
+					if(isConfirm){
+						$.ajax({
+			                data : { elementSuggestId : elementSuggestId },
+			                url: "{{ route('refuse_element_suggest') }}",
+			                type: 'put',
+			            }).done(function(){
+			            	console.log('ok');
+			            	$('.element-suggest-status').html('<p class="text-danger">Refusé</p>');
+			            	swal("Validé!", "L'oeuvre a été refusée.", "success");
+			            }).fail(function(){
+			            	swal("Erreur!", "L'oeuvre n'a pas été refusée.", "error");
 			            });
 					}				  
 				}

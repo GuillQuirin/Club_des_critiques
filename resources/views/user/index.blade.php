@@ -14,10 +14,10 @@
         <h1 class="text-center">Notre communauté</h1>
 
         <div class="row">
-            <p class="description text-center col-md-12">
+            {{-- <p class="description text-center col-md-12">
                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                 tempor incididunt ut labore et dolore magna aliqua.
-            </p>
+            </p> --}}
         </div>
         
         <hr>

@@ -48,17 +48,8 @@
 
 
 
+	
 /****** UTILISATEUR ******/
-
-	//Liste des utilisateurs
-	Route::get('users', ['as' => 'users', 'uses' => 'UserController@index']);
-	Route::post('users', ['as' => 'bring_users', 'uses' => 'AjaxController@getUsersBy']);
-
-	//Affichage d'un utilisateur
-	Route::get('user/{id}', ['as' => 'show_user', 'uses' => 'UserController@show']);
-
-	//Contact d'un utilisateur en ajax
-	Route::post('contact', ['as' => '/', 'uses' => 'UserController@contact']);
 
 	//Inscription en ajax
 	Route::post('register', ['as' => '/', 'uses' => 'UserController@register']);
@@ -71,6 +62,18 @@
 	//Création-Renouvellement du mot de passe
 	Route::get('checkToken/{token}', ['as' => '/checkToken', 'uses' => 'UserController@checkToken']);
 	Route::post('checkToken', ['as' => '/checkToken', 'uses' => 'UserController@newPwd']);
+
+// Route::group(['middleware' => 'App\Http\Middleware\UserMiddleware'], function()
+// {
+	//Liste des utilisateurs
+	Route::get('users', ['as' => 'users', 'uses' => 'UserController@index']);
+	Route::post('users', ['as' => 'bring_users', 'uses' => 'AjaxController@getUsersBy']);
+
+	//Affichage d'un utilisateur
+	Route::get('user/{id}', ['as' => 'show_user', 'uses' => 'UserController@show']);
+
+	//Contact d'un utilisateur en ajax
+	Route::post('contact', ['as' => '/', 'uses' => 'UserController@contact']);
 
 	//Modifications de l'utilisateur
 	Route::patch('user/{id}/infos', ['as' => 'update_user', 'uses' => 'UserController@updateInfo']);
@@ -94,12 +97,14 @@
 	Route::post('room/invite', ['as' => 'invite_user', 'uses' => 'RoomsController@inviteUser']);
 	//Route::get('room/dispatch/', ['as' => 'dispatch_user', 'uses' => 'RoomsController@dispatchUser']);
     //Route::get('join_room/{token}', ['as' => 'join_room', 'uses' => 'RoomController@checkToken']);
-
+// });
 
 /****** ADMINISTRATION ******/
 
+Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
+{
 	Route::get('admin', ['as' => 'admin', 'uses' => 'AdminController@index']);
-	Route::put('admin/edit-concept', ['as' => 'edit_concept', 'uses' => 'AdminController@editConcept']);	
+	Route::put('admin/edit-home', ['as' => 'edit_home', 'uses' => 'AdminController@editHome']);	
 	Route::put('admin/add-top-element', ['as' => 'add_top_element', 'uses' => 'AdminController@addTopElement']);
 	Route::put('admin/delete-top-element', ['as' => 'delete_top_element', 'uses' => 'AdminController@deleteTopElement']);
 	Route::post('admin/add-category', ['as' => 'add_category', 'uses' => 'AdminController@addCategory']);
@@ -130,6 +135,9 @@
 	Route::put('admin/ban-user-from-room', ['as' => 'ban_user_from_room', 'uses' => 'AjaxController@banUserFromRoom']);
 	Route::put('admin/ban-user-room', ['as' => 'ban_user_room', 'uses' => 'AjaxController@banUserRoom']);
 	Route::put('admin/refuse-ban-user-room', ['as' => 'refuse_ban_user_room', 'uses' => 'AjaxController@refuseBanUserRoom']);
+	Route::put('admin/valide-element-suggest', ['as' => 'valide_element_suggest', 'uses' => 'AjaxController@valideElementSuggest']);
+	Route::put('admin/refuse-element-suggest', ['as' => 'refuse_element_suggest', 'uses' => 'AjaxController@refuseElementSuggest']);
+});
 
 Route::post('room/autocompleteUser', ['as' => '/', 'uses' => 'RoomsController@autocompleteUser']);
 Route::post('room/addMessage', ['as' => '/', 'uses' => 'RoomsController@addMessage'] );

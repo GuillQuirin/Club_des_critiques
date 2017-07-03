@@ -44,7 +44,7 @@
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        Votre compte n'est pas activé : vous devez avoir reçu un lien de confirmation par mail, ou vous avez été banni.
+                        Votre compte n'est pas accessible : vous devez avoir reçu un lien de confirmation par mail, ou vous avez été banni.
                     </div>
                 </div>
                 <div class="row">
@@ -61,9 +61,6 @@
 
                 <!-- Récupération de mot de passe -->
                 <div class="collapse" id="forgetPwd">
-                    <button type="button" class="close" data-dismiss="collapse" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                     <hr>
                     <div class="text-center">
                         <h4 class="modal-title">Récupération de votre compte</h4>

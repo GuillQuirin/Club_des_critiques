@@ -1,9 +1,18 @@
 <div class="panel-body">
 	<div class="row">
-		{{ Form::open(['route' => 'edit_concept', 'method' => 'put', 'class' => 'col-md-12']) }}
+		{{ Form::open(['route' => 'edit_home', 'method' => 'put', 'files'=>true, 'class' => 'col-md-12']) }}
 			<div class="form-group">
 	    		<h4>Le concept : </h4>
 		    	<textarea class="form-control" name="home_concept" id="home_concept" rows="3">{{$concept->value}}</textarea>
+			</div>
+			<div class="form-group">
+	    		<h4>Le slogan : </h4>
+		    	<input type="text" value="{{$slogan->value}}" class="form-control" name="home_slogan" id="home_slogan">
+			</div>
+			<div class="form-group">
+				<label class="control-label">Select File</label>
+				<!-- <input id="home_image" type="file" name="home_image" class="file"> -->
+				{!! Form::file('image') !!}
 			</div>
 			<button type="submit" class="btn btn-success pull-right" id="editConcept">Modifier</button>
 		{{ Form::close() }}

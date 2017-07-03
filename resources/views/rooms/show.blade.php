@@ -72,18 +72,39 @@
                     </div>
                     <div class="panel-body body-panel" id="messages">
                         <ul id="chatbox" class="chat">
-
+                            @foreach($chatbox as $value)
+                                <li class="left clearfix">
+                                        <span class="chat-img pull-left">
+                                            <img src="{{$value['picture']}}" alt="User Avatar"
+                                                 class="img-circle favicon_user"/>
+                                        </span>
+                                    <div class="chat-body clearfix">
+                                        <div class="header">
+                                            <strong class="primary-font">
+                                                {{$value['first_name']}}{{$value['last_name']}}
+                                            </strong>
+                                            <small class="pull-right text-muted">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                                {{$value['date']}}
+                                            </small>
+                                        </div>
+                                        <p><?php echo str_replace("\n", "<br>", $value['message']); ?></p>
+                                    </div>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                     <div class="panel-footer clearfix">
                         @if($user_blocked->contains('id_user', Auth::id()))
-                        <textarea class="form-control" name="message" id="message" rows="3"></textarea>
-                        <span class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-xs-12"
-                              style="margin-top: 10px">
+                            <textarea class="form-control" name="message" id="message" rows="3" disabled>
+                                Vous avez été bloqué sur ce salon. Vous ne pouvez plus envoyer de message.
+                            </textarea>
+                        @else
+                            <textarea class="form-control" name="message" id="message" rows="3"></textarea>
+                            <span class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-xs-12"
+                                  style="margin-top: 10px">
 		                        <button class="btn btn-warning btn-lg btn-block" id="send" name="send">Envoyer le message</button>
 		                    </span>
-                        @else
-                            <textarea class="form-control" name="message" id="message" rows="3" disabled>Vous avez été bloqué sur ce salon. Vous ne pouvez plus envoyer de message.</textarea>
                         @endif
                     </div>
                 </div>
@@ -170,15 +191,18 @@
                                                         <button type="button" class="close" data-dismiss="modal">
                                                             &times;
                                                         </button>
-                                                        <h4 class="modal-title">Bloquer l'utilisateur {{$u->first_name}} {{$u->last_name}} </h4>
+                                                        <h4 class="modal-title">Bloquer
+                                                            l'utilisateur {{$u->first_name}} {{$u->last_name}} </h4>
                                                         <input type="hidden" id="id_blocked" name="id_blocked"
                                                                value="{{$u->id}}"/>
                                                         <input type="hidden" id="id_room" name="id_room"
                                                                value="{{$header->id}}"/>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p>Êtes-vous certain de vouloir bloquer cet utilisateur pour ce salon ?</p>
-                                                        <p>Ce dernier aura toujours accès au salon mais ne pourra plus communiquer dans le chat.</p>
+                                                        <p>Êtes-vous certain de vouloir bloquer cet utilisateur pour ce
+                                                            salon ?</p>
+                                                        <p>Ce dernier aura toujours accès au salon mais ne pourra plus
+                                                            communiquer dans le chat.</p>
                                                         <p>Un email lui sera envoyé afin de le prévénir.</p>
                                                     </div>
                                                     <div class="modal-footer">

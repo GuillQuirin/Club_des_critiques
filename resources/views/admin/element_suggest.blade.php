@@ -10,23 +10,27 @@
                             <th>Nom</th>
                             <th>Auteur</th>
                             <th>Catégorie</th>
-                            <th>Status</th>
-                            <th>Action</th>                             
+                            <th>Status</th>                          
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($elementSuggests as $elementSuggest)
                             <tr>
-                                <td class="element-id">{{ $elementSuggest->id }}</td>
+                                <td>{{ $elementSuggest->id }}</td>
                                 <td>{{ $elementSuggest->user->first_name }} {{ $elementSuggest->user->last_name }} ({{ $elementSuggest->id_user }})</td>
                                 <td>{{ $elementSuggest->name }}</td>
                                 <td>{{ $elementSuggest->creator }}</td>
                                 <td>{{ $elementSuggest->category }}</td>
-                                <td>{{ $elementSuggest->status }}</td>
-                                <td>
-                                    <i class="fa fa-trash valide-element-suggest" aria-hidden="true" id="{{ $elementSuggest->id }}"></i>
-                                    <i class="fa fa-trash refuse-element-suggest" aria-hidden="true" id="{{ $elementSuggest->id }}"></i>                                    
-                                </td>                               
+                                <td class="element-suggest-status">
+                                    @if($elementSuggest->status == 0)
+                                        <i class="fa fa-check valide-element-suggest" aria-hidden="true" id="{{ $elementSuggest->id }}"></i>
+                                        <i class="fa fa-trash refuse-element-suggest" aria-hidden="true" id="{{ $elementSuggest->id }}" style="padding: 6px 12px;"></i>
+                                    @elseif($elementSuggest->status == 1)
+                                        <p class="text-success">Validé</p>
+                                    @else
+                                        <p class="text-danger">Refusé</p>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>        

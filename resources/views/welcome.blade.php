@@ -15,13 +15,13 @@
     
     <div class="jumbotron">
       <div class="container-fluid">
-        <h1>{{$page['title']}} <br><small>{{$page['slogan']}}</small></h1>
+        <h1>{{$page['title']}} <br><small>{{$slogan->value}}</small></h1>
       </div>
     </div>
     <div class="container notPadding">       
         <div>
             <h2>Le concept</h2>
-            <p>{{$page['description']}}</p>
+            <p>{{$concept->value}}</p>
         </div>
     
         <hr>

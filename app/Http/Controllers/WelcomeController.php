@@ -15,12 +15,14 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Mail\Register;
 use App\User;
+use App\Other;
 
 class WelcomeController extends Controller
 {
     public function index()
 	{
-
+		$concept = Other::where('name', 'home_concept')->first();
+		$slogan = Other::where('name', 'home_slogan')->first();
 		/**
 		 * get concept
 		 * get oeuvres à la une
@@ -29,10 +31,7 @@ class WelcomeController extends Controller
 		$page = [
 			'url_background' => 'images/welcome.jpeg',
 			'title' => "Le club des critiques",
-			'slogan' => "Lisez, rencontrez, partagez",
-			'description' => "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+			'slogan' => "Lisez, rencontrez, partagez"
 		];
 
 		$popUp = 'element.show';
@@ -50,6 +49,8 @@ class WelcomeController extends Controller
      							->get();
 
 		return view('welcome')
+				->with('concept', $concept)
+				->with('slogan', $slogan)
 				->with(compact('page'))
 				->with('grid', $listElements)
 				->with('nbElements', 8)

@@ -27,11 +27,13 @@ class UserController extends Controller
      public function index()
      {
           // Collection de tous les users
-          $listUsers = User::all();
+          $listUsers = User::whereNotIn('id_status', [5,6])->get();
                                         
           //Renommage des statuts
           foreach ($listUsers as $user) {
-               $user->name = $user->first_name;
+               $user->name = (isset($user->first_name) && isset($user->last_name)) ? $user->first_name." ".$user->last_name[0]."."
+                                                                                     : "Utilisateur-".$user->id;
+               $user->picture = (isset($user->picture)) ? $user->picture : '/images/user.png';
                $user->subName = $user->status->label;
                $user->date = $user->date_created;
           }
@@ -70,6 +72,7 @@ class UserController extends Controller
 	{
           //Liste des infos de l'utilisateur
           $infos = User::find($id);
+          $infos->picture = ($infos->picture) ? $infos->picture : "/images/user.png";
 
           $myAccount  = (Auth::check() && Auth::id() == $id);
 
@@ -323,7 +326,12 @@ class UserController extends Controller
                                         'password' => $input['password']])){
 
                          $user = Auth::user();
-                         $blackList = [1,5];
+                         $blackList = [1,5,6]; 
+                         /*
+                         *En attente
+                         *Banni
+                         *Supprimé
+                         */
 
                          if(in_array($user->id_status, $blackList)){
                               Auth::logout();
@@ -421,20 +429,43 @@ class UserController extends Controller
           try{
                //SOIT TOKEN, SOIT SESSION DE L'UTILISATEUR POUR CHANGEMENT DE MDP
                $user = (Auth::check()) ? Auth::user() : User::where('token', Input::get('token'))->first();
-               $user->password = Hash::make(Input::get('new_pwd'));
-               
+               $ok = false;           
+
+               if(isset($input['new_pwd']) && trim($input['new_pwd'])!="" && trim($input['new_pwd_confirm'])!="" 
+                    && trim($input['new_pwd'])==trim($input['new_pwd_confirm'])
+               ){
+                    //Activation - Récupération de compte
+                    if(isset($input['token']) && trim($input['token'])!="") 
+                         $ok = true;
+
+                    //MaJ du mot de passe en temps réel
+                    else if(isset($input['pwd']) && trim($input['pwd'])!=""){
+                         if(Hash::check($input['pwd'], $user->password))
+                              $ok = true;
+                         else
+                              return 2;
+                    }
+               }
+               else
+                    return 3;             
+
+               if($ok)
+                    $user->password = Hash::make(Input::get('new_pwd'));
+
                //Si l'utilisateur vient juste de créer son compte, alors on l'active une fois le mdp établi
-               if($user->id_status==0)
-                    $user->id_status = 1;
+               if($user->id_status<=1)
+                    $user->id_status = 2;
                
                $user->token ="";
                $user->save();
           }
           catch(\Exception $e){
-               var_dump($e->getMessage());
-               return back()->withInput();
+               //var_dump($e->getMessage());
+               //return back()->withInput();
+               return 3;
           }
-          return (Auth::check()) ? redirect('user/'.$user->id) : redirect('/');
+
+          return (Auth::check()) ? '' : '/';
      }
 
      /**

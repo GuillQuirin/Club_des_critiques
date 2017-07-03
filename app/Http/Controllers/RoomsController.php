@@ -66,6 +66,7 @@ class RoomsController extends Controller
                 ->from('user_element')
                 ->where('id_user', Auth::id());
         })->get();
+
         $test = DB::select('SELECT element.name as element_name, 
                             element.creator, 
                             element.date_publication,
@@ -81,6 +82,7 @@ class RoomsController extends Controller
                             WHERE room.id_element = user_element.id_element 
                             and user_element.id_user = '.Auth::id().' 
                             and room.id_element = element.id');
+
 		return view('rooms.my_rooms')
             ->with(compact('rooms'))
 		    ->with(compact('test'));
@@ -118,7 +120,7 @@ class RoomsController extends Controller
      * @return view
      */
 	public function show($id)
-	{
+    {
         $header = Room::findOrFail($id);
         $element = Element::findOrFail($header->id_element);
         $cat = Category::findOrFail($element->id_category);
@@ -126,12 +128,28 @@ class RoomsController extends Controller
         $global_mark = UserElement::where('id_element', $element->id)->get();
         $user_room = UserRoom::where('id_room', $header->id)->get();
         $user_blocked = UserRoom::where('id_room', $header->id)->where('status_user', 2)->get();
-        foreach ($user_room as $u){
+
+        foreach ($user_room as $u) {
             $users[] = User::where('id', $u->id_user)->get();
         }
+
         $user_reported = Report::where('id_user_asker', Auth::id())->where('id_room', $id)->get();
-        $chatbox = Chatbox::where('id_room', $header->id)->get();
-		return view('rooms.show')
+        //$chatbox = Chatbox::where('id_room', $header->id)->get();
+		
+        $chatboxDB = DB::table('chatbox')->where('id_room', '=', $header->id)->get();
+        $chatbox = [];
+        foreach ($chatboxDB as $chat) {
+            $chatbox[$chat->id]['message'] =$chat->message;
+            $chatbox[$chat->id]['date'] =date("d/m/Y H:i:s", strtotime($chat->date_post));
+
+            $user = User::where('id', $chat->id_user_sender)->first();
+            $chatbox[$chat->id]['id_user_sender'] = $chat->id_user_sender;
+            $chatbox[$chat->id]['picture'] = (isset($user->picture)) ? $user->picture : "/images/user.png";
+            $chatbox[$chat->id]['first_name'] = (isset($user->first_name)) ? $user->first_name : 'Utilisateur-';
+            $chatbox[$chat->id]['last_name'] = (isset($user->last_name)) ? $user->last_name[0]."." : $user->id;
+        }
+
+        return view('rooms.show')
             ->with(compact('header'))
             ->with(compact('element'))
             ->with(compact('mark'))
@@ -147,15 +165,26 @@ class RoomsController extends Controller
     public function getMessage(){
         $header = Room::findOrFail($_POST['id_room']);
         
-        $chatbox = Chatbox::where('id_room', $header->id)->get();
+        $chatbox = DB::table('chatbox')->where([
+            ['id_room', '=', $header->id],
+            ['date_post', '<=', $_POST['timestamp']]
+        ])->get();
+        //var_dump($chatbox);
+        $message = [];
         foreach ($chatbox as $chat) {
             $message[$chat->id]['message'] =$chat->message;
             $message[$chat->id]['date'] =date("d/m/Y H:i:s", strtotime($chat->date_post));
             $message[$chat->id]['picture'] = User::where('id', $chat->id_user_sender)->first()->picture;
-            $message[$chat->id]['first_name'] = User::where('id', $chat->id_user_sender)->first()->first_name;
-            $message[$chat->id]['last_name'] = User::where('id', $chat->id_user_sender)->first()->last_name;
-        }   
-        echo json_encode($message);
+            if(User::where('id', $chat->id_user_sender)->first()->first_name){
+                $message[$chat->id]['first_name'] = User::where('id', $chat->id_user_sender)->first()->first_name;
+                $message[$chat->id]['last_name'] = User::where('id', $chat->id_user_sender)->first()->last_name;
+            }
+            else{
+                $message[$chat->id]['first_name'] = 'Utilisateur-';
+                $message[$chat->id]['last_name'] = User::where('id', $chat->id_user_sender)->first()->id;  
+            }
+        }
+        echo json_encode($message);   
     }
 
 
@@ -257,19 +286,15 @@ class RoomsController extends Controller
         if($users) {
             $data['response'] = 'true';
             foreach ($users as $user) {
-                if($user->picture){
-                    $data['message'][] = array(
-                        'label' => "<img src=".$user->picture." class='img-circle' style='width:40px;height:30px'/> ". $user->first_name . ' ' . $user->last_name,
-                        'value' => $user->first_name .' '. $user->last_name,
-                        'class' => 'form-control',
-                        'id' => $user->id);
-                }else {
-                    $data['message'][] = array(
-                        'label' => "<img src='/images/user.png' class='img-circle' style='width:40px;height:30px'/> " . $user->first_name . ' ' . $user->last_name,
-                        'value' => $user->first_name . ' ' . $user->last_name,
-                        'class' => 'form-control',
-                        'id' => $user->id);
-                }
+                $picture = ($user->picture) ? $user->picture : '/images/user.png';
+                $name = (isset($user->first_name) && isset($user->last_name)) ? $user->first_name.' '.$user->last_name[0]."."
+                                                                               : "Utilisateur-".$user->id; 
+                $data['message'][] = array(
+                    'label' => "<img src='".$picture."' class='img-circle' style='width:40px;height:30px'/>".$name,
+                    'value' => $name,
+                    'class' => 'form-control',
+                    'id' => $user->id
+                );
             }
         }
         echo json_encode($data);

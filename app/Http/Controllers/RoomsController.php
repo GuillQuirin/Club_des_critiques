@@ -39,7 +39,7 @@ class RoomsController extends Controller
      */
 	public function showFuturRooms()
 	{
-        $rooms = Room::where('date_start', '>', date("Y-m-d H:i:s"))->get();
+        $rooms = Room::where('date_start', '>', date("Y-m-d H:i:s"))->where('status', 2)->get();
         $user_room = UserRoom::where('id_user', explode(',', Auth::id()))->get();
         $user_element = UserElement::where('id_user', Auth::id())->get();
 		return view('rooms.index')
@@ -66,7 +66,21 @@ class RoomsController extends Controller
                 ->from('user_element')
                 ->where('id_user', Auth::id());
         })->get();
-        $test = DB::select('SELECT element.name, element.creator, element.date_publication, user_element.mark, room.name as room_name, room.date_start, room.date_end FROM element, user_element, room WHERE room.id_element = user_element.id_element and user_element.id_user = '.Auth::id().' and room.id_element = element.id');
+        $test = DB::select('SELECT element.name as element_name, 
+                            element.creator, 
+                            element.date_publication,
+                            element.url_picture,
+                            user_element.mark, 
+                            room.name as room_name, 
+                            room.date_start, 
+                            room.date_end,
+                            room.status,
+                            room.number as number, 
+                            room.id as id_room 
+                            FROM element, user_element, room 
+                            WHERE room.id_element = user_element.id_element 
+                            and user_element.id_user = '.Auth::id().' 
+                            and room.id_element = element.id');
 		return view('rooms.my_rooms')
             ->with(compact('rooms'))
 		    ->with(compact('test'));
@@ -111,6 +125,7 @@ class RoomsController extends Controller
         $mark = UserElement::where('id_element', $element->id)->where('id_user', Auth::id())->first();
         $global_mark = UserElement::where('id_element', $element->id)->get();
         $user_room = UserRoom::where('id_room', $header->id)->get();
+        $user_blocked = UserRoom::where('id_room', $header->id)->where('status_user', 2)->get();
         foreach ($user_room as $u){
             $users[] = User::where('id', $u->id_user)->get();
         }
@@ -125,6 +140,7 @@ class RoomsController extends Controller
             ->with(compact('users'))
             ->with(compact('chatbox'))
             ->with(compact('cat'))
+            ->with(compact('user_blocked'))
             ->with(compact('user_reported'));
 	}
 
@@ -275,13 +291,135 @@ class RoomsController extends Controller
     }
 
     public function reportUser(Request $request){
-        var_dump($request->input());
-        $report = DB::table('report')->insert([
+        DB::table('report')->insert([
             'id_user_asker' => Auth::id(),
             'id_user_reported' => $request->id_reported,
             'id_room' => $request->id_room,
             'reason' => $request->reason,
             'is_deleted' => 0
         ]);
+        return Redirect::route('show_room', ['id' => $request->id_room]);
+    }
+
+    public function blockUser(Request $request){
+        DB::table('user_room')
+            ->where([['id_user', '=', $request->id_blocked],
+            ['id_room', '=', $request->id_room]])
+            ->update([
+                'block_date' => date("Y-m-d H:i:s"),
+                'block_by' => Auth::id(),
+                'status_user' => 2
+            ]);
+        return Redirect::route('show_room', ['id' => $request->id_room]);
+    }
+
+    public function dispatchUser(){
+        $id = 3;
+        $user_element = UserElement::where('id_element', $id)->get();
+        $room = Room::where('id_element', $id)->first();
+        $nb_one = $nb_two = $nb_three = $nb_four = $nb_user = 0;
+        //Calcul du nombre de notes différentes attribuées à l'élément
+        foreach($user_element as $u){
+            $nb_user ++;
+            switch ($u->mark){
+                case 1 : $nb_one ++; break;
+                case 2 : $nb_two ++; break;
+                case 3 : $nb_three ++; break;
+                case 4 : $nb_four ++; break;
+            }
+        }
+
+        echo "Nombre de participants : " . $nb_user . "<br>";
+        echo "Note 1/4 : " . $nb_one . "<br>";
+        echo "Note 2/4 : " . $nb_two . "<br>";
+        echo "Note 3/4 : " . $nb_three . "<br>";
+        echo "Note 4/4 : " . $nb_four . "<br>";
+
+        //Détermine le nombre de salons nécessaires
+        if($nb_user > 20){
+            $nb_room = round(($nb_user / 20),0) + 1;
+        }else{
+            $nb_room = 1;
+        }
+
+        echo "Nombre de salon nécessaire : " . $nb_room . "<br>";
+
+        //Détermine le nombre de users par salon
+        $nb_user_room = round($nb_user / $nb_room, 0);
+
+        //Détermine le nombre de notes par salon
+        $nb_one_room = round($nb_one / $nb_room, 0);
+
+        $nb_two_room = round($nb_two / $nb_room, 0);
+        $nb_three_room = round($nb_three / $nb_room, 0);
+        $nb_four_room = round($nb_four / $nb_room, 0);
+
+        if($nb_room > 1) {
+            $user_room = UserRoom::where('id_room', $room->id)->get();
+            $user_with_four = UserElement::where('id_element', $id)->where('mark', 4)->whereNotIn('id_user', $user_room)->take($nb_four_room)->get();
+            foreach($user_with_four as $uwf){
+                DB::table('user_room')->insert([
+                    'id_user' => $uwf->id_user,
+                    'id_room' => $room->id,
+                    'status_user' => 1
+                ]);
+            }
+            for ($i = 1; $i <= $nb_room-1; $i++) {
+                echo $room['name'] . ' - Salon ' . ($i + 1) . "<br>";
+                $id_room = DB::table('room')->insert([
+                    'name' => $room->name,
+                    'number' => $i+2,
+                    'date_start' => $room->date_start,
+                    'date_end' => $room->date_end,
+                    'status' => 1,
+                    'id_element' => $id
+                ])->lastInsertId();
+                $user_room = UserRoom::where('id_room', $id_room)->get();
+                if ($nb_four_room != 0) {
+                    $user_with_four = UserElement::where('id_element', $id)->where('mark', 4)->whereNotIn('id_user', $user_room)->take($nb_four_room)->get();
+                    foreach ($user_with_four as $u) {
+                        echo "User note 4 : " . $u->id_user . "<br>";
+                    }
+                }
+            }
+
+            
+            //Affecte les users aux rooms
+            if ($nb_one_room != 0) {
+                $user_with_one = UserElement::where('id_element', $id)->where('mark', 1)->get();
+                foreach ($user_with_one as $u) {
+                    echo "User note 1 : " . $u->id_user. "<br>";
+                }
+            }
+
+            if ($nb_two_room != 0) {
+                $user_with_two = UserElement::where('id_element', $id)->where('mark', 2)->get();
+                foreach ($user_with_two as $u) {
+                    echo "User note 2 : " . $u->id_user. "<br>";
+                }
+            }
+
+            if ($nb_three_room != 0) {
+                $user_with_three = UserElement::where('id_element', $id)->where('mark', 3)->get();
+                foreach ($user_with_three as $u) {
+                    echo "User note 3 : " . $u->id_user. "<br>";
+                }
+            }
+
+            /*DB::table('user_room')->insert([
+               'id_user' => ,
+               'id_room' => ,
+               'status' => 1
+            ]);*/
+
+        }else{
+            foreach ($user_element as $ue){
+                DB::table('user_room')->insert([
+                    'id_user' => $ue->id_user,
+                    'id_room' => $room->id,
+                    'status_user' => 1
+                ]);
+            }
+        }
     }
 }

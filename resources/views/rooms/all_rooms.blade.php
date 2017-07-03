@@ -28,6 +28,8 @@
                         <td>Du {{date("d/m/Y", strtotime($room->date_start))}} au {{date("d/m/Y", strtotime($room->date_end))}}</td>
                         <td>@if($room->date_start > date("Y-m-d H:i:s"))
                                 Salon à venir
+                            @elseif(($room->date_start <= date("Y-m-d H:i:s")) && ($room->date_end >= date("Y-m-d H:i:s")))
+                                Salon en cours
                             @else
                                 Salon terminé
                             @endif
@@ -55,7 +57,6 @@
                     <div class="text-center" id="div_note">
                         <h3>Donnez une note !</h3>
                         <div class="rating">
-                            <a href="#5" title="Donner 5 étoiles">☆</a>
                             <a href="#4" title="Donner 4 étoiles">☆</a>
                             <a href="#3" title="Donner 3 étoiles">☆</a>
                             <a href="#2" title="Donner 2 étoiles">☆</a>

@@ -20,3 +20,11 @@
     right: 70px;
     top: 20px;
 }
+
+#searchElement .form-control{
+    width:auto;
+}
+
+#searchElement button{
+    background-color: rgba(206, 255, 206, 0.64);
+}

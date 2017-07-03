@@ -1,8 +1,8 @@
 @extends('templates/template')
 
-{{-- @section('css')
-     <link rel="stylesheet" type="text/css" href="{{asset('css/users.css')}}">    
-@endsection --}}
+@section('css')
+     <link rel="stylesheet" type="text/css" href="{{asset('css/user.css')}}">
+@endsection
 
 
 @section('title')
@@ -26,13 +26,14 @@
             {!! Form::select('id_department', 
                             [null=>'Choisissez un département']+$departments, 
                             null, 
-                            ['class' => 'col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1']) !!}
+                            ['class' => 'col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-1 form-control']) !!}
 
             <input type="text" name="first_name" placeholder="Saisissez un prénom" 
                     class="text-center 
                             col-xs-10 col-xs-offset-1 
                             col-sm-4 col-sm-offset-2
-                            col-md-3 col-md-offset-1">
+                            col-md-3 col-md-offset-1
+                            form-control">
 
             <button data-route="{{route('bring_users')}}" 
                     class="btn  col-xs-10 col-xs-offset-1 

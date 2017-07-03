@@ -19,10 +19,12 @@
                 au {{date("d/m/Y", strtotime($header->date_end))}}</small>
         </h1>
         @if((Auth::check()) && (Auth::user()->id_status == 7 || Auth::user()->id_status == 3))
-            <button type="button" class="btn btn-default btn-lg" style="margin-top:40px; margin-left: -40px;"
+            <button type="button"
+                    id="update-room"
+                    class="btn btn-default btn-lg"
                     data-toggle="modal"
-                    data-target="#updateRoom">
-                Modifier le salon <span class="glyphicon glyphicon-cog" style="color:#70BEB1" aria-hidden="true"></span>
+                    data-target="#updateRoom"> Modifier le salon
+                 <span class="glyphicon glyphicon-cog" id="glyph_update-room" aria-hidden="true"></span>
             </button>
         @endif
         <input type="hidden" value="{{$header->id}}" id="room"/>
@@ -296,10 +298,15 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Valider</button>
+                    {{Form::close()}}
+                    {{ Form::open(['route' => 'interrupt_room', 'method' => 'post', 'class' => 'col-md-12 auto-width']) }}
+                        <input type="hidden" id="id_room" name="id_room"
+                           value="{{$header->id}}"/>
+                        <button type="submit" class="btn btn-danger">Interrompre le salon</button>
+                    {{Form::close()}}
                     <button type="button" data-dismiss="modal" class="btn btn-default">Annuler</button>
                 </div>
             </div>
         </div>
-        {{Form::close()}}
     </div>
 @endsection

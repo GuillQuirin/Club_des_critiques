@@ -94,16 +94,20 @@
 	Route::get('rooms', ['as' => 'rooms', 'uses' => 'RoomsController@index']);
 	Route::get('rooms/futur_rooms', ['as' => 'futur_rooms', 'uses' => 'RoomsController@showFuturRooms']);
 	Route::get('rooms/my_rooms', ['as' => 'my_rooms', 'uses' => 'RoomsController@showMyRooms']);
-	Route::get('room/{id}', ['as' => 'show_room', 'uses' => 'RoomsController@show']);
 	/*DON'T TOUCH */Route::get('room', ['as' => 'next_room', 'uses' => 'RoomsController@index']);
 	Route::post('room/join/', ['as' => 'join_room', 'uses' => 'RoomsController@joinBis']);
+
+    Route::get('room/{id}', ['as' => 'show_room', 'uses' => 'RoomsController@show'])->middleware('App\Http\Middleware\RoomMiddleware');
 	Route::post('room/report', ['as' => 'report_user', 'uses' => 'RoomsController@reportUser']);
     Route::post('room/block', ['as' => 'block_user', 'uses' => 'RoomsController@blockUser']);
 	Route::post('room/invite', ['as' => 'invite_user', 'uses' => 'RoomsController@inviteUser']);
     Route::post('room/update_room', ['as' => 'update_room', 'uses' => 'RoomsController@updateRoom']);
+    Route::post('room/interrupt_room', ['as' => 'interrupt_room', 'uses' => 'RoomsController@interruptRoom']);
+    Route::post('room/autocompleteUser', ['as' => '/', 'uses' => 'RoomsController@autocompleteUser']);
+    Route::post('room/addMessage', ['as' => '/', 'uses' => 'RoomsController@addMessage'] );
+    Route::post('room/getMessage', ['as' => '/', 'uses' => 'RoomsController@getMessage'] );
 	//Route::get('room/dispatch/', ['as' => 'dispatch_user', 'uses' => 'RoomsController@dispatchUser']);
     //Route::get('join_room/{token}', ['as' => 'join_room', 'uses' => 'RoomController@checkToken']);
-// });
 
 /****** ADMINISTRATION ******/
 
@@ -144,10 +148,6 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 	Route::put('admin/valide-element-suggest', ['as' => 'valide_element_suggest', 'uses' => 'AjaxController@valideElementSuggest']);
 	Route::put('admin/refuse-element-suggest', ['as' => 'refuse_element_suggest', 'uses' => 'AjaxController@refuseElementSuggest']);
 });
-
-Route::post('room/autocompleteUser', ['as' => '/', 'uses' => 'RoomsController@autocompleteUser']);
-Route::post('room/addMessage', ['as' => '/', 'uses' => 'RoomsController@addMessage'] );
-Route::post('room/getMessage', ['as' => '/', 'uses' => 'RoomsController@getMessage'] );
 
 //Routes classiques directement vers une Vue en particulier
 /* 

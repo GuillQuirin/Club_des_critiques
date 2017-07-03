@@ -464,4 +464,14 @@ class RoomsController extends Controller
             ]);
         return Redirect::route('show_room', ['id' => $request->id_room]);
     }
+
+    public function interruptRoom(Request $request){
+        DB::table('room')
+            ->where('id', '=', $request->id_room)
+            ->update([
+                'status' => 3,
+                'date_end' => date("Y-m-d H:i:s")
+            ]);
+        return Redirect::route('rooms');
+    }
 }

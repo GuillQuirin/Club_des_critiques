@@ -8,6 +8,7 @@ $(document).ready(function(){
     .done(function (data) {
         if(!data){
             $("#nextRoomCountdown").html('Pas de salon annoncé prochainement');
+            $("#nextRoomCountdown").attr('class', 'disabled');
             return false;
         }
         else{
@@ -20,7 +21,8 @@ $(document).ready(function(){
 
             var datestring = "le " + ("0" + date.getUTCDate()).slice(-2)+ "/" +
                             ("0" + (date.getUTCMonth()+1)).slice(-2) + "/" +
-                            date.getUTCFullYear();
+                            date.getUTCFullYear() +
+                            " " + ("0" + date.getUTCHours()).slice(-2) + ":" + date.getUTCMinutes() + ":" + date.getSeconds();
 
 
             $('#nextRoomCountdown').attr('data-countdown', datecountdown);

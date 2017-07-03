@@ -77,7 +77,12 @@
 
 	//Modifications de l'utilisateur
 	Route::patch('user/{id}/infos', ['as' => 'update_user', 'uses' => 'UserController@updateInfo']);
-	Route::patch('user/{id}/echanges', ['as' => 'update_exchange', 'uses' => 'UserController@updateExchange']);
+	
+	//Recherche d'oeuvres pour échange
+	Route::post('user/autocompleteExchange', ['as' => '/', 'uses' => 'UserController@autocompleteExchange']);
+	Route::post('user/loadExchange', ['as' => '/', 'uses' => 'UserController@loadExchange']);
+	Route::post('user/deleteExchange', ['as' => '/', 'uses' => 'UserController@deleteExchange']);
+	Route::post('user/add_exchange', ['as' => 'add_exchange', 'uses' => 'UserController@addExchange']);
 
 	//Suppression
 	Route::post('deleteAccount', ['as' => 'deleteAccount', 'uses' => 'UserController@deleteAccount']);

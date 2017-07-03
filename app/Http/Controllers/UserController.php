@@ -16,6 +16,8 @@ use App\Mail\Contact;
 use App\Mail\BackUp;
 use App\User;
 use App\Department;
+use App\Element;
+use App\UserElement;
 
 class UserController extends Controller
 {
@@ -97,28 +99,10 @@ class UserController extends Controller
                                    ->where('user.id', '=', $id)
                                    ->get();
 
-          //Intégralité des oeuvres que l'utilisateur peut échanger
-          $listElements = DB::table('element')
-                              ->leftJoin('category', 'element.id_category', '=', 'category.id')
-                              ->select( 'element.id', 
-                                        'element.name', 
-                                        'element.creator as subName',
-                                        'category.id as category_id',
-                                        'category.name as category_name')                             
-                              ->get();
-
-          foreach ($listElements as $key => $element) {
-               foreach ($exchangedElements as $key => $exchanged) {
-                    if($element->id == $exchanged->id)
-                         $element->is_exchanged=true;
-               }
-          }
-
 		return view('user.show')
                     ->with('infos',$infos)
                     ->with('myAccount',$myAccount)
                     ->with('department', $listDepartments)
-                    ->with('listElements', $listElements)
                     ->with('grid', $exchangedElements)
                     ->with('nbElements', 8)
                     ->with(compact('popUp', $popUp));
@@ -160,35 +144,6 @@ class UserController extends Controller
      		return redirect()->route('show_user', ['id' => $id]);
           }
 	}
-
-     /**
-     * Modification des oeuvres échangées par l'utilisateur
-     *
-     * @param int  $id
-     * @param Illuminate\Http\Request $request
-     * @return view
-     */
-     public function updateExchange(Request $request, $id)
-     {
-          if(Auth::check() && Auth::id()==$id){
-               $input = $request->all();
-               
-               //Suppression de tous les élèments échangeables de l'utilisateur
-               DB::table('user_element')->where('id_user', '=', $id)->delete();
-
-               if(isset($input['element_checked'])){
-                    $listeNewExchanged = [];
-                    foreach ($input['element_checked'] as $key => $element) {
-                         $listeNewExchanged[] = ['id_user' => $id, 'id_element' => $element];
-                    }
-                    
-                    //Insertion en base des nouveaux élèments selectionnés
-                    DB::table('user_element')->insert($listeNewExchanged);
-               }
-               
-               return redirect()->route('show_user', ['id' => $id]);
-          }
-     }
 
 	/**
      * Contacter un utilisateur
@@ -302,7 +257,7 @@ class UserController extends Controller
 
           }
           catch(\Exception $e){
-               var_dump($e->getMessage());
+               //var_dump($e->getMessage());
                return 3;
           }
 
@@ -505,11 +460,114 @@ class UserController extends Controller
                     }
                }
                catch(\Exception $e){
-                    var_dump($e->getMessage());
-                    die;
+                    //var_dump($e->getMessage());
                }
 
                return redirect()->route('home');
+          }
+     }
+
+     //Autocomplétion de la recherche d'une oeuvre
+     public function autocompleteExchange()
+     {
+          $keyword = $_POST['term'];
+          $data['response'] = 'false';
+          $elements =  DB::select(DB::raw('SELECT e.name as elementName, e.id as idElement, 
+                                                  c.name as categoryName, cp.name as categoryPName
+                                             FROM element e
+                                             LEFT OUTER JOIN category c ON c.id = e.id_category
+                                             LEFT OUTER JOIN category cp ON c.id_parent = cp.id
+                                             WHERE e.is_deleted = 0
+                                                  AND e.id NOT IN (SELECT id_element 
+                                                                 FROM user_element 
+                                                                 WHERE id_user='.Auth::id().' 
+                                                                      AND is_deleted=0)
+                                                  AND e.name like "%'.$keyword.'%"
+                                             GROUP BY cp.name, c.name, e.name, e.id
+                                             ORDER BY cp.name, c.name, e.name, e.id'));
+          
+          $data['message'] = array(); //Create array
+          if($elements) {
+               $data['response'] = 'true';
+               foreach ($elements as $element) {                    
+                    $data['message'][] = array(
+                         'label' => $element->elementName,
+                         'value' => $element->elementName,
+                         'class' => 'form-control',
+                         'id' => $element->idElement
+                     );
+            }
+        }
+        echo json_encode($data);
+     }
+
+     //Ajout d'une oeuvre échangeable
+     public function addExchange(Request $request)
+     {
+          try{
+               if(Auth::check()){
+                    $input = $request->all();
+                    var_dump($input);
+                    
+                    $element = DB::table('element')
+                                   ->where('name', '=', $input['autocomplete_element'])
+                                   ->first();
+
+                    if($element){
+                         $exchange = [
+                              'id_element' => $element->id,
+                              'id_user' => Auth::id()
+                         ];
+                         /* ELISE */
+                         $exchange = UserElement::firstOrNew($exchange);
+                         $exchange->is_exchangeable = 1;
+                         $exchange->save();
+                         /* ----- */
+                    }
+               }
+          }
+          catch(\Exception $e){
+               var_dump($e->getMessage());
+               return 3;
+          }
+     }
+
+     //Affichage des oeuvres déjà échangeables
+     public function loadExchange(){
+          if(Auth::check()){
+               try{
+                    $elements =  DB::select(DB::raw('SELECT e.name as elementName, e.id as idElement, 
+                                                            c.name as categoryName, cp.name as categoryPName
+                                                       FROM element e
+                                                       LEFT OUTER JOIN category c ON c.id = e.id_category
+                                                       LEFT OUTER JOIN category cp ON c.id_parent = cp.id
+                                                       WHERE e.is_deleted = 0
+                                                            AND e.id IN (SELECT id_element 
+                                                                           FROM user_element 
+                                                                           WHERE id_user='.Auth::id().' 
+                                                                                AND is_deleted=0)
+                                                       GROUP BY cp.name, c.name, e.name, e.id
+                                                       ORDER BY cp.name, c.name, e.name, e.id'));
+                    echo json_encode($elements);
+               }
+               catch(\Exception $e){
+                    //var_dump($e->getMessage());
+               }
+          }
+     }
+
+     //Retrait d'une oeuvre échangeable
+     public function deleteExchange(){
+          if(Auth::check()){
+               $element = htmlspecialchars(addslashes($_POST['idElement']));
+               try{
+                    $elements =  DB::select(DB::raw('UPDATE user_element SET is_deleted=1 
+                                                                 WHERE id_element = '.$element.'
+                                                                      AND id_user = '.Auth::id().' '));
+               }
+               catch(\Exception $e){
+                    //var_dump($e->getMessage());
+               }
           }
      }
 

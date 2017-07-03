@@ -28,3 +28,28 @@
 #searchElement button{
     background-color: rgba(206, 255, 206, 0.64);
 }
+
+#exchange{
+    min-height: 250px;
+}
+
+ul.ui-widget-content{
+    z-index: 1051;
+}
+
+ul.ui-widget-content .ui-menu-item-wrapper{
+    padding: 0;
+}
+
+ul.ui-widget-content img.ui-menu-item-wrapper{
+    margin: 0 5px;
+}
+
+img.ui-menu-item-wrapper{
+    max-height: 100%;
+    max-width: 15%;
+}
+
+ul#listExchanged{
+    margin-top: 50px;
+}

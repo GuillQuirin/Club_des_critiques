@@ -16,21 +16,28 @@
             <table id="salons" class="table table-hover table-responsive" cellspacing="0">
                 <thead>
                 <tr>
+                    <th>Nom du salon</th>
                     <th>Titre (auteur)</th>
                     <th>Date de publication</th>
                     <th>Dates du salon</th>
                     <th>Numéro du salon</th>
                     <th>Note attribuée</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($test as $room)
                     <tr>
-                        <td>{{$room->name}} ({{$room->creator}})</td>
+                        <td>{{$room->room_name}}</td>
+                        <td>{{$room->element_name}} ({{$room->creator}})</td>
                         <td>{{date("d/m/Y i:m:s", strtotime($room->date_publication))}}</td>
                         <td>Du {{date("d/m/Y", strtotime($room->date_start))}} au {{date("d/m/Y", strtotime($room->date_end))}}</td>
-                        <td>Salon 1</td>
+                        <td>{{$room->number}}</td>
                         <td>{{$room->mark}}</td>
+                        <td>@if($room->status == 1)
+                                <a class="btn" href="{{route('show_room', [ 'id' => $room->id_room ])}}">Accéder au salon</a>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -40,8 +47,6 @@
             @endif
         </div>
     </div>
-    @foreach($test as $room)
-        {{dump($room)}}@endforeach
 
     <div class="modal fade" id="join" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

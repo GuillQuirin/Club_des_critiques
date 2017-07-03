@@ -15,7 +15,7 @@
             <table id="salons" class="table table-hover table-responsive" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Titre (auteur)</th>
+                        <th>Titre (Auteur)</th>
                         <th>Dates du salon</th>
                         @if(Auth::check())
                             <th>Information</th>

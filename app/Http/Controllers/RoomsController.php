@@ -61,27 +61,27 @@ class RoomsController extends Controller
                 ->from('user_room')
                 ->where('id_user', Auth::id());
         })->get();
-        $elements = Element::whereIn('id', function($query){
-            $query->select('id_element')
-                ->from('user_element')
-                ->where('id_user', Auth::id());
-        })->get();
 
         $test = DB::select('SELECT element.name as element_name, 
                             element.creator, 
                             element.date_publication,
                             element.url_picture,
+                            category.name as category,
                             user_element.mark, 
                             room.name as room_name, 
                             room.date_start, 
                             room.date_end,
                             room.status,
                             room.number as number, 
-                            room.id as id_room 
-                            FROM element, user_element, room 
+                            room.id as id_room,
+                            user_room.status_user
+                            FROM element, user_element, room, user_room, category
                             WHERE room.id_element = user_element.id_element 
+                            and element.id_category = category.id
                             and user_element.id_user = '.Auth::id().' 
-                            and room.id_element = element.id');
+                            and room.id_element = element.id
+                            and room.id = user_room.id_room
+                            and user_room.id_user = user_element.id_user');
 
 		return view('rooms.my_rooms')
             ->with(compact('rooms'))
@@ -446,5 +446,22 @@ class RoomsController extends Controller
                 ]);
             }
         }
+    }
+
+    public function updateRoom(Request $request){
+        DB::table('room')
+            ->where('id', '=', $request->id_room)
+            ->update([
+                'name' => $request->room_name,
+                'date_end' => $request->end_date
+            ]);
+        DB::table('element')
+            ->where('id', '=', $request->id_element)
+            ->update([
+                'name' => $request->element_name,
+                'creator' => $request->autor_name,
+                'description' => $request->synopsis
+            ]);
+        return Redirect::route('show_room', ['id' => $request->id_room]);
     }
 }

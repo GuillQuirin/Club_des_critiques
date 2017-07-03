@@ -14,14 +14,21 @@
 
 @section('content')
     <div class="row">
-        <h1 class="text-center col-xs-10 col-xs-offset-1 col-sm-10 text-uppercase">{{$header->name}}
+        <h1 class="text-center col-xs-8 col-xs-offset-2 text-uppercase">{{$header->name}}
             <small>Du {{date("d/m/Y", strtotime($header->date_start))}}
                 au {{date("d/m/Y", strtotime($header->date_end))}}</small>
         </h1>
+        @if((Auth::check()) && (Auth::user()->id_status == 7 || Auth::user()->id_status == 3))
+            <button type="button" class="btn btn-default btn-lg" style="margin-top:40px; margin-left: -40px;"
+                    data-toggle="modal"
+                    data-target="#updateRoom">
+                Modifier le salon <span class="glyphicon glyphicon-cog" style="color:#70BEB1" aria-hidden="true"></span>
+            </button>
+        @endif
         <input type="hidden" value="{{$header->id}}" id="room"/>
         <div class="col-sm-3 col-sm-offset-1 col-xs-5 col-xs-offset-3">
             <img src="{{$element->url_picture}}"
-                 class="valig-center col-xs-12 col-sm-12 img-rounded">
+                 class="valig-center col-xs-10 img-rounded">
         </div>
         <div class="col-sm-7 col-sm-offset-0 col-xs-10 col-xs-offset-1 verti_marg" style="font-size:16px;">
             <div class="panel-group">
@@ -31,13 +38,14 @@
                     </div>
                     <div class="panel-body">
                         <div class="col-sm-6">
-                            <p><strong>Titre : </strong>{{$element->name}}</p>
+                            <p><strong>Oeuvre : </strong>{{$element->name}}</p>
                             <p><strong>Auteur : </strong>{{$element->creator}}</p>
-                            <p><strong>Type d'oeuvre :</strong> {{ $cat->name }}</p>
+                            <p><strong>Type d'oeuvre :</strong> {{ $cat->parent->name }}</p>
                             <p><strong>Date de parution
                                     : </strong>{{date("d/m/Y", strtotime($element->date_publication))}}</p>
                         </div>
                         <div class="col-sm-6">
+                            <p><strong>Catégorie : </strong>{{$cat->name}}</p>
                             <strong>Votre note : </strong>
                             <h1 class="d-inline">{{$mark->mark}}</h1>/4 <br>
                             <?php $sum = 0;?>
@@ -120,7 +128,7 @@
                         <ul class="chat">
                             @foreach($users as $user)
                                 @foreach($user as $u)
-                                    @if($u->id !== Auth::id())
+                                    @if(($u->id !== Auth::id()) && (!$user_blocked->contains('id_user', $u->id)))
                                         <li class="clearfix">
                                             <div class="chat-body clearfix">
                                                 <div class="col-xs-6 text-left padding-top-strong">
@@ -235,5 +243,63 @@
                 {{Form::close()}}
             </div>
         </div>
+    </div>
+    <!-- Modal update salon -->
+    <div id="updateRoom" class="modal fade" role="dialog">
+        {{ Form::open(['route' => 'update_room', 'method' => 'post', 'class' => 'col-md-12']) }}
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">Modification des informations concernant le salon </h4>
+                    <input type="hidden" id="id_room" name="id_room"
+                           value="{{$header->id}}"/>
+                    <input type="hidden" id="id_element" name="id_element"
+                           value="{{$element->id}}"/>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="room_name">Nom du salon</label>
+                        <input type="text"
+                               class="form-control"
+                               name="room_name"
+                               value="{{$header->name}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="element_name">Titre de l'oeuvre</label>
+                        <input type="text"
+                               class="form-control"
+                               name="element_name"
+                               value="{{$element->name}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="autor_name">Nom de l'auteur</label>
+                        <input type="text"
+                               class="form-control"
+                               name="autor_name"
+                               value="{{$element->creator}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="end_date">Date de fin</label>
+                        <input type="date"
+                               class="form-control"
+                               name="end_date"
+                               value="{{date("Y-m-d", strtotime($header->date_end))}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="synopsis">Synopsis</label>
+                        <textarea class="form-control" rows="8"
+                                  name="synopsis">{{$element->description}}</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Valider</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Annuler</button>
+                </div>
+            </div>
+        </div>
+        {{Form::close()}}
     </div>
 @endsection

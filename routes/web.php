@@ -95,6 +95,7 @@
 	Route::post('room/report', ['as' => 'report_user', 'uses' => 'RoomsController@reportUser']);
     Route::post('room/block', ['as' => 'block_user', 'uses' => 'RoomsController@blockUser']);
 	Route::post('room/invite', ['as' => 'invite_user', 'uses' => 'RoomsController@inviteUser']);
+    Route::post('room/update_room', ['as' => 'update_room', 'uses' => 'RoomsController@updateRoom']);
 	//Route::get('room/dispatch/', ['as' => 'dispatch_user', 'uses' => 'RoomsController@dispatchUser']);
     //Route::get('join_room/{token}', ['as' => 'join_room', 'uses' => 'RoomController@checkToken']);
 // });

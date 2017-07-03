@@ -17,7 +17,8 @@
                 <thead>
                 <tr>
                     <th>Nom du salon</th>
-                    <th>Titre (auteur)</th>
+                    <th>Titre (Auteur)</th>
+                    <th>Catégorie</th>
                     <th>Date de publication</th>
                     <th>Dates du salon</th>
                     <th>Numéro du salon</th>
@@ -30,11 +31,12 @@
                     <tr>
                         <td>{{$room->room_name}}</td>
                         <td>{{$room->element_name}} ({{$room->creator}})</td>
+                        <td>{{$room->category}}</td>
                         <td>{{date("d/m/Y i:m:s", strtotime($room->date_publication))}}</td>
                         <td>Du {{date("d/m/Y", strtotime($room->date_start))}} au {{date("d/m/Y", strtotime($room->date_end))}}</td>
                         <td>{{$room->number}}</td>
                         <td>{{$room->mark}}</td>
-                        <td>@if($room->status == 1)
+                        <td>@if($room->status_user != 0)
                                 <a class="btn" href="{{route('show_room', [ 'id' => $room->id_room ])}}">Accéder au salon</a>
                             @endif
                         </td>
@@ -61,7 +63,6 @@
                     <div class="text-center" id="div_note">
                         <h3>Donnez une note !</h3>
                         <div class="rating">
-                            <a href="#5" title="Donner 5 étoiles">☆</a>
                             <a href="#4" title="Donner 4 étoiles">☆</a>
                             <a href="#3" title="Donner 3 étoiles">☆</a>
                             <a href="#2" title="Donner 2 étoiles">☆</a>

@@ -167,3 +167,7 @@ ul.ui-autocomplete li img{
 .d-inline{
     display: inline;
 }
+
+.chat .glyphicon {
+    margin-right: 0px;
+}

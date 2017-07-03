@@ -171,3 +171,17 @@ ul.ui-autocomplete li img{
 .chat .glyphicon {
     margin-right: 0px;
 }
+
+#update-room{
+    margin-top:40px;
+    margin-left: -40px;
+}
+
+#glyph_update-room{
+    color:#70BEB1;
+    top:3px
+}
+
+.auto-width{
+    width:auto;
+}

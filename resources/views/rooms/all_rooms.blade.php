@@ -26,10 +26,12 @@
                     <tr>
                         <td>{{$room->element->name}} ({{$room->element->creator}})</td>
                         <td>Du {{date("d/m/Y", strtotime($room->date_start))}} au {{date("d/m/Y", strtotime($room->date_end))}}</td>
-                        <td>@if($room->date_start > date("Y-m-d H:i:s"))
+                        <td>@if($room->status === 2)
                                 Salon à venir
-                            @elseif(($room->date_start <= date("Y-m-d H:i:s")) && ($room->date_end >= date("Y-m-d H:i:s")))
+                            @elseif(($room->status === 1))
                                 Salon en cours
+                            @elseif(($room->status === 3))
+                                Salon interrompu
                             @else
                                 Salon terminé
                             @endif

@@ -78,6 +78,7 @@ class CategoryController extends Controller
                             ->select(   'id',
                                         'name')
                             ->whereNull('id_parent')
+                            ->where('is_deleted', 0)
                             ->get();
         return json_encode($listCategory);
     }

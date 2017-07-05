@@ -31,7 +31,6 @@ class WelcomeController extends Controller
 		$page = [
 			'url_background' => 'images/welcome.jpeg',
 			'title' => "Le club des critiques",
-			'slogan' => "Lisez, rencontrez, partagez"
 		];
 
 		$popUp = 'element.show';

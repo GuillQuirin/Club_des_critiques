@@ -17,8 +17,7 @@
             <p class="col-xs-6 col-sm-8 col-md-8" id="description"></p>
             <hr>
             <div class="col-xs-6 col-sm-8 col-md-8">
-                <p>Vous pouvez acheter ce livre à ces adresses:</p>
-                <div id="buy_element"></div>
+                <p>Vous pouvez acheter ce livre à <a id="link">cette adresse</a></p>
             </div>
         </div>
     </div>

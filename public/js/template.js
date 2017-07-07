@@ -62,10 +62,18 @@ $(document).ready(function(){
         modal.find('#subName').html(button.data('subname'));
         modal.find('#description').html(button.data('description'));
 
+        // ELEMENT : url shop
         if(button.data('name_category') != undefined){
             var redirectionCat = $("#route_category_parent"); 
             modal.find('#route_category_parent').attr("href", redirectionCat.data('route')+"/"+button.data('id_element'));
             modal.find('#name_category').html(button.data('name_category'));
+        }
+
+        // ELEMENT : url category
+        $('#link').parent().addClass('hide');
+        if(button.data('link') != undefined){
+            $('#link').parent().removeClass('hide');
+            modal.find('#link').attr("href", button.data('link'));
         }
     });
 

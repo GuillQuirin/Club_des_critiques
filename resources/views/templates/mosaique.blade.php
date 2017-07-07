@@ -10,13 +10,13 @@
                 data-description="{{$value->description}}"         
 
                 @if(isset($value->id_parent))
-                    data-id_element = {{$value->id_parent}}
+                    data-id_element = "{{$value->id_parent}}"
                 @elseif(isset($value->id_category))
-                    data-id_element = {{$value->id_category}}
+                    data-id_element = "{{$value->id_category}}"
                 @endif
                 
                 @if(isset($value->name_category))
-                    data-name_category = {{$value->name_category}}
+                    data-name_category = "{{$value->name_category}}"
                 @endif
 
                 @if(isset($value->date))
@@ -25,6 +25,10 @@
                 
                 @if(isset($value->location))
                     data-location="{{$value->location}}"
+                @endif
+    
+                @if(isset($value->link))
+                    data-link="{{$value->link}}"
                 @endif
 
                 @if(isset($redirection))

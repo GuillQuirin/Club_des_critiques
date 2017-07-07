@@ -28,6 +28,7 @@ class ElementController extends Controller
                                         'element.creator as subName',
                                         'element.description',
                                         'element.url_picture as picture',
+                                        'element.url_api as link',
                                         'element.id_category',
                                         'category.name as name_category',
                                         'category.id_parent as id_parent',

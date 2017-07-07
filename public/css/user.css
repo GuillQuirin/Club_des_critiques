@@ -1,7 +1,7 @@
 
 #profilPicture{
 	max-width: 100%;
-    width: auto;
+    /*width: auto;*/
     max-height: 250px;
 }
 
@@ -10,7 +10,7 @@
 }
 
 .valig-center{
-    float: none;
+    /*float: none;*/
     display: inline-block;
     vertical-align: middle;
 }

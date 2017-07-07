@@ -7,6 +7,10 @@
         </p>
         <div class="collapse" id="collapseAddElement">
           <div class="card card-block">
+            <button class="btn btn-success open_modal_api" 
+                    data-toggle="modal" 
+                    data-target="#apiModal">Rechercher un livre avec Google
+            </button> 
             {{ Form::open(['route' => 'add_element', 'method' => 'post', 'class' => 'col-md-12']) }}
                 <fieldset class="form-group">
                     <div class="form-check">
@@ -15,22 +19,22 @@
                         Création manuelle
                       </label>
                     </div>
-                    <div class="form-check">
+                    {{-- <div class="form-check">
                     <label class="form-check-label">
                         <input type="radio" class="form-check-input" id="radioElementAutomatic" name="radioElement" value="automatic">
                         Création automatique
                       </label>
-                    </div>                    
+                    </div>  --}}                  
                 </fieldset>
 
-                <div id="elementAutomatic">
+               {{--  <div id="elementAutomatic">
                     <div class="form-group">
                         <label for="url_api" class="col-2 col-form-label">Url du produit : </label>
                         <div class="col-10">
                             <input class="form-control" type="text" id="url_api" name="url_api">
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <div id="elementManual">
                     <div class="form-group">
@@ -41,7 +45,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="creator" class="col-2 col-form-label">Aueur / réalisateur : </label>
+                        <label for="creator" class="col-2 col-form-label">Auteur / réalisateur : </label>
                         <div class="col-10">
                             <input class="form-control" type="text" id="creator" name="creator" required>
                         </div>
@@ -68,6 +72,13 @@
                         <label for="url_picture" class="col-2 col-form-label">Url de l'image : </label>
                         <div class="col-10">
                             <input class="form-control" type="text" id="element_url_picture" name="url_picture">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="url_shop" class="col-2 col-form-label">Url de la boutique : </label>
+                        <div class="col-10">
+                            <input class="form-control" type="text" id="element_url_shop" name="url_api">
                         </div>
                     </div>
 
@@ -144,7 +155,32 @@
     </div>
 </div>
 
-
+<!-- MODAL API GOOGLE -->
+<div class="modal fade" id="apiModal" tabindex="-1" role="dialog" aria-labelledby="myModalApi">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLogin">Importer les informations d'un livre avec Google Books</h4>
+            </div>
+            <div class="modal-body">
+                <form action="getApi" method="POST" id="getApi">
+                  <input type="text" name="intitle" placeholder="Titre">
+                  <input type="text" name="inauthor" placeholder="Auteur">
+                  <input type="number" name="isbn" placeholder="ISBN">
+                  <input type="submit" class="btn btn-success" value="Rechercher">
+                </form>
+                <div id="listApi">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -193,6 +229,13 @@
                         <label for="url_picture" class="col-2 col-form-label">Url de l'image : </label>
                         <div class="col-10">
                             <input class="form-control" type="text" id="edit_element_url_picture" name="url_picture">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="url_shop" class="col-2 col-form-label">Url de la boutique : </label>
+                        <div class="col-10">
+                            <input class="form-control" type="text" id="element_url_shop" name="url_api">
                         </div>
                     </div>
 

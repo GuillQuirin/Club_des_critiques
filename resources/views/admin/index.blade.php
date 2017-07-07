@@ -130,13 +130,13 @@
 	                success: function(data) {
 	                    if (data.length) {
 	                        selectSubCat.attr('disabled',false);
-	                        selectSubCat.html('<option value="" disabled selected>Choisissez une sous ctégorie</option>');
+	                        selectSubCat.html('<option value="" disabled selected>Choisissez une sous-catégorie</option>');
 	                        jQuery.each(data, function() {
 	                            selectSubCat.append(new Option(this.name, this.id));
 	                        });
 	                        selectSubCat.selectpicker('refresh');
 	                    } else {
-	                        selectSubCat.html('<option value="" disabled selected>Pas de sous catégorie disponible</option>');
+	                        selectSubCat.html('<option value="" disabled selected>Pas de sous-catégorie disponible</option>');
 	                        selectSubCat.selectpicker('refresh');
 	                    }
 	                }
@@ -359,13 +359,13 @@
 	                success: function(data) {
 	                    if (data.length) {
 	                        selectElementSubCat.attr('disabled',false);
-	                        selectElementSubCat.html('<option value="" disabled selected>Choisissez une sous ctégorie</option>');
+	                        selectElementSubCat.html('<option value="" disabled selected>Choisissez une sous-catégorie</option>');
 	                        jQuery.each(data, function() {
 	                            selectElementSubCat.append(new Option(this.name, this.id));
 	                        });
 	                        selectElementSubCat.selectpicker('refresh');
 	                    } else {
-	                        selectElementSubCat.html('<option value="" disabled selected>Pas de sous catégorie disponible</option>');
+	                        selectElementSubCat.html('<option value="" disabled selected>Pas de sous-catégorie disponible</option>');
 	                        selectElementSubCat.selectpicker('refresh');
 	                    }
 	                }
@@ -1039,5 +1039,85 @@
             });
         };
 	});
+    
+    $('#getApi').submit(function(event){
+        event.preventDefault();
+		var request="";
+		var i=0;
+		$(this).find('input[type!="submit"]').each(function(){
+			if($.trim($(this).val())!=""){
+				if(i==0)
+					request+="q=";
+				else
+					request+="+";
+				request+=$(this).attr('name')+':'+$(this).val();
+				i++;
+			}
+		});
+
+		if(i!=0)
+			request+="&";
+
+		request+="langRestrict:fr";
+		console.log(request);
+        $("#listApi").html('<i class="fa fa-refresh fa-2x fa-spin left" aria-hidden="true"></i>');
+
+		$.ajax({
+            url: "{{ route('get_api') }}",
+            type: 'post',
+            data : {
+            	request: request
+           	},
+            success: function(data) {
+            	//console.log(data);
+                data = JSON.parse(data);
+                var html="";
+                $.each(data, function(key,value){
+                	html+=`<div class='row border'
+								data-image='`+value['image']+`'
+								data-title='`+value['title']+`'
+								data-date='`+value['date']+`'
+								data-author='`+value['author']+`'
+								data-link='`+value['link']+`'
+								data-isbn='`+value['isbn']+`'
+								data-description='`+value['description']+`'
+                			>`;
+                		html+="<div class='col-xs-3'><img src='"+value['image']+"'></div>";
+                		html+="<div class='col-xs-9 text-center'>";
+                			html+="<p>";
+                				html+="<span class='api_title'>"+value['title']+"</span>";
+                				html+="<span class='api_author'>"+value['author']+"</span>";
+                				html+="<span class='api_date'>";
+                					var date = value['date'].split('-');
+                					html+= (date) ? date[2]+'/'+date[1]+'/'+date[0] : 'Date inconnue';
+                				html+="</span>";
+                			html+="</p>";
+                			html+="<p>";
+                				html+="<span class='api_link'><a href='"+value.link+"' target='_blank'>Lien d'achat</a></span>";
+                				html+="<span class='api_isbn'>"+value.isbn+"</span>";
+                			html+="<p class='api_description'>"+value['description']+"</p>";
+                			html+="<button class='choose_api'>Selectionner cette oeuvre</button>";
+                		html+="</div>";
+                	html+="</div>";
+                });
+                $("#listApi").html(html);
+                importDatasApi();
+            }
+		});
+        return false;
+    });
+
+    function importDatasApi(){
+    	$('.choose_api').click(function(){
+    		var element = $(this).parent().parent();
+    		$('#elementManual #element_url_picture').val(element.data('image'));
+    		$('#elementManual #name').val(element.data('title'));
+    		$('#elementManual #element_date_publication').val(element.data('date'));
+    		$('#elementManual #creator').val(element.data('author'));
+    		$('#elementManual #element_url_shop').val(element.data('link'));
+    		//$('#elementManual #creator').val(element.data('isbn'));
+    		$('#elementManual #element_description').val(element.data('description'));
+    	});
+    }
 	</script>
 @endsection

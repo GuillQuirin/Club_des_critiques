@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Response;
+use DateTime;
 use App\User;
 use App\Room;
 use App\Element;
@@ -153,6 +154,71 @@ class AjaxController extends Controller
         $cat = $element->category->parent->id;
 
         return Response::json(['element' => $element, 'category' => $cat]);
+    }
+
+    /**
+     * Ajax Request : get api Google Books
+     * @return mixed
+     */
+    public function getApi()
+    {
+        $request=$_POST['request'];
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'https://www.googleapis.com/books/v1/volumes?'.$request.'&key=AIzaSyCMhhmyKgcCpoBySo1ZvjuMS4uRoGMxttA',
+            CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+        ));
+
+        $resp = curl_exec($curl);
+        if(!curl_exec($curl)){
+            //die('Error: "' . curl_error($curl) . '" - Code: ' . curl_errno($curl));
+            return 'RIEN';
+        }
+        else{
+            $resp = json_decode($resp);
+            $elements = [];
+            if(isset($resp->items)){
+                foreach($resp->items as $item){
+                    $elements[$item->id]['title'] = (isset($item->volumeInfo->title)) ? $item->volumeInfo->title : 'Sans titre';
+                
+                    if(isset($item->volumeInfo->authors))
+                        $elements[$item->id]['author'] = (count($item->volumeInfo->authors)>1) 
+                                                            ? implode(',',$item->volumeInfo->authors)
+                                                            : $item->volumeInfo->authors[0];
+                    else
+                        $elements[$item->id]['author'] = "Auteur inconnu"; 
+
+                    if(isset($item->volumeInfo->industryIdentifiers))
+                        $elements[$item->id]['isbn'] = $item->volumeInfo->industryIdentifiers[0]->type." : ".$item->volumeInfo->industryIdentifiers[0]->identifier;
+                    else
+                        $elements[$item->id]['isbn'] = "ISBN inconnu";
+
+                    if(isset($item->volumeInfo->publishedDate)){
+                        if(strlen($item->volumeInfo->publishedDate)==4)
+                            $elements[$item->id]['date'] = $item->volumeInfo->publishedDate."-01-01";
+                        else 
+                            $elements[$item->id]['date'] = date('Y-m-d', strtotime($item->volumeInfo->publishedDate));
+                    }
+                    else
+                        $elements[$item->id]['date'] = "Date inconnue";
+                    
+                    $elements[$item->id]['description'] = (isset($item->volumeInfo->description)) 
+                                                            ? str_replace('"', '&quot;', $item->volumeInfo->description) 
+                                                            : 'Pas de description';
+
+                    $elements[$item->id]['image'] = (isset($item->volumeInfo->imageLinks->thumbnail)) 
+                                                            ? $item->volumeInfo->imageLinks->thumbnail 
+                                                            : '';
+
+                    $elements[$item->id]['link'] = (isset($item->saleInfo->buyLink)) 
+                                                            ? $item->saleInfo->buyLink 
+                                                            : '#';
+                }
+            }
+            return json_encode($elements);
+        }
     }
 
     /**

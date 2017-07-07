@@ -38,3 +38,56 @@ i{
 p{
 	margin: 0 0 0px !important;
 }
+
+button.open_modal_api{
+	float: right;
+}
+
+#listApi>div.row{
+	border: 1px solid;
+    padding: 5px;
+    margin: 10px 0;
+}
+
+.api_description{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.api_title{
+    font-weight: bold;
+    font-size: 17px;
+    margin: 0 10px;
+    text-transform: uppercase;
+    display: block;
+}
+
+.api_author{
+    font-size: 17px;
+    margin: 0 10px;
+    text-transform: capitalize;	
+    display: block;
+}
+
+.api_date{
+	font-style: italic;
+	font-size: 13px;
+	display: block;
+}
+
+.api_link{
+	margin: 0 10px;
+    display: block;
+}
+
+.api_isbn{
+    margin: 0 10px;
+    display: block;
+}
+
+button.choose_api{
+    margin: 10px auto;
+    width: 50%;
+    display: block;
+}

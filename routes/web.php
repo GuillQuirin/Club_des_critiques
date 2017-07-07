@@ -147,6 +147,8 @@ Route::group(['middleware' => 'App\Http\Middleware\AdminMiddleware'], function()
 	Route::put('admin/refuse-ban-user-room', ['as' => 'refuse_ban_user_room', 'uses' => 'AjaxController@refuseBanUserRoom']);
 	Route::put('admin/valide-element-suggest', ['as' => 'valide_element_suggest', 'uses' => 'AjaxController@valideElementSuggest']);
 	Route::put('admin/refuse-element-suggest', ['as' => 'refuse_element_suggest', 'uses' => 'AjaxController@refuseElementSuggest']);
+
+	Route::post('admin/getApi', ['as' => 'get_api', 'uses' => 'AjaxController@getApi']);
 });
 
 //Routes classiques directement vers une Vue en particulier

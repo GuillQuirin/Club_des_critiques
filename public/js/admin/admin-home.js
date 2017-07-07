@@ -44,13 +44,13 @@ $(document).ready(function() {
                 success: function(data) {
                     if (data.length) {
                         selectSubCat.attr('disabled',false);
-                        selectSubCat.html('<option value="" disabled selected>Choisissez une sous ctégorie</option>');
+                        selectSubCat.html('<option value="" disabled selected>Choisissez une sous-catégorie</option>');
                         jQuery.each(data, function() {
                             selectSubCat.append(new Option(this.name, this.id));
                         });
                         selectSubCat.selectpicker('refresh');
                     } else {
-                        selectSubCat.html('<option value="" disabled selected>Pas de sous catégorie disponible</option>');
+                        selectSubCat.html('<option value="" disabled selected>Pas de sous-catégorie disponible</option>');
                         selectSubCat.selectpicker('refresh');
                     }
                 }

@@ -17,7 +17,7 @@ $(document).ready(function(){
             })
             .done(function (data) {
                 if (data.response === 'true') {
-                    console.log(data)
+                    //console.log(data)
                     add(data.message);
                 }
             });
@@ -34,6 +34,23 @@ $(document).ready(function(){
 
     //Gestion des oeuvres déjà échangeables
     loadExchanged();
+
+    $('#addExchange').submit(function(event){
+        event.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: form.serialize()
+        })
+        .done(function(data) {
+            console.log(data)
+            loadExchanged();
+        });
+        return false;
+    });
+
     function loadExchanged(){
         //Affichage des oeuvres echangée
         $.ajax({
@@ -41,7 +58,7 @@ $(document).ready(function(){
             type: 'POST'
         })
         .done(function(data) {
-            //console.log(data)
+            console.log(data)
             data = JSON.parse(data);
             if(data){
                 var html="";
@@ -50,7 +67,7 @@ $(document).ready(function(){
                         html+="["+value.categoryPName+"] ";
                         html+="<strong>"+value.elementName+"</strong>";
                         html+=" ( "+value.categoryName+" ) ";
-                        html+="<button class='deleteExchange'>Supprimer de ma liste</button>";
+                        html+="<button class='btn btn-danger deleteExchange'>Ne plus échanger</button>";
                     html+="</li>";
                 });
                 $('#listExchanged').html(html);

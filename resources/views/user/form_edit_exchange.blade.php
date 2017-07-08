@@ -1,7 +1,7 @@
 <div id="exchange" role="tabpanel" class="tab-pane fade">
   	<h4 class="text-center">Ajoutez une oeuvre que vous proposez d'échanger</h4>
     
-    {{ Form::open(['route' => 'add_exchange', 'method' => 'post', 'class' => 'col-md-12 notRedirect']) }}
+    {{ Form::open(['route' => 'add_exchange', 'id' => 'addExchange', 'method' => 'post', 'class' => 'col-md-12']) }}
 	    <div class="input-group input-group-md">
 	        <input type="text" name="autocomplete_element" id="autocomplete_element" class="form-control" placeholder="Nom de l'oeuvre">
 	        <span class="input-group-btn">

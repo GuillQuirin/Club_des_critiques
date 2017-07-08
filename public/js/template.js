@@ -152,8 +152,10 @@ $(document).ready(function(){
                     break;
             }
         }
-        else
+        else{
+            console.log(i);
             window.location.replace(i);
+        }
         
         form.find('.alert').hide();
         form.find(popUpMessage).fadeIn();

@@ -96,7 +96,11 @@ class UserController extends Controller
                                              'category.name as name_category',
                                              'category.id_parent as id_parent',
                                              'category.id as id_category')
-                                   ->where('user.id', '=', $id)
+                                   ->where([
+                                        ['user.id', '=', $id],
+                                        ['user_element.is_exchangeable', '=', 1],
+                                        ['user.is_deleted', '=', 0]
+                                   ])
                                    ->get();
 
 		return view('user.show')
@@ -468,8 +472,7 @@ class UserController extends Controller
      }
 
      //Autocomplétion de la recherche d'une oeuvre
-     public function autocompleteExchange()
-     {
+     public function autocompleteExchange(){
           $keyword = $_POST['term'];
           $data['response'] = 'false';
           $elements =  DB::select(DB::raw('SELECT e.name as elementName, e.id as idElement, 
@@ -481,7 +484,8 @@ class UserController extends Controller
                                                   AND e.id NOT IN (SELECT id_element 
                                                                  FROM user_element 
                                                                  WHERE id_user='.Auth::id().' 
-                                                                      AND is_deleted=0)
+                                                                      AND is_deleted=0
+                                                                      AND is_exchangeable=1)
                                                   AND e.name like "%'.$keyword.'%"
                                              GROUP BY cp.name, c.name, e.name, e.id
                                              ORDER BY cp.name, c.name, e.name, e.id'));
@@ -495,10 +499,10 @@ class UserController extends Controller
                          'value' => $element->elementName,
                          'class' => 'form-control',
                          'id' => $element->idElement
-                     );
-            }
-        }
-        echo json_encode($data);
+                    );
+               }
+          }
+          echo json_encode($data);
      }
 
      //Ajout d'une oeuvre échangeable
@@ -507,27 +511,40 @@ class UserController extends Controller
           try{
                if(Auth::check()){
                     $input = $request->all();
-                    var_dump($input);
                     
                     $element = DB::table('element')
+                                   ->select('id')
                                    ->where('name', '=', $input['autocomplete_element'])
                                    ->first();
 
-                    if($element){
-                         $exchange = [
-                              'id_element' => $element->id,
-                              'id_user' => Auth::id()
-                         ];
-                         /* ELISE */
-                         $exchange = UserElement::firstOrNew($exchange);
-                         $exchange->is_exchangeable = 1;
-                         $exchange->save();
-                         /* ----- */
+                    if($element){                         
+                         $user_exchange = DB::table('user_element')
+                                             ->select('id')
+                                             ->where([
+                                                  ['id_element','=', $element->id],
+                                                  ['id_user', '=', Auth::id()],
+                                             ])
+                                             ->first();
+                         var_dump($user_exchange);
+                         if(!$user_exchange){
+                              var_dump('creation');
+                              DB::table('user_element')->insert([
+                                                  'id_element' => $element->id, 
+                                                  'id_user' => Auth::id(),
+                                                  'is_exchangeable' => 1
+                                             ]);
+                         }
+                         else{
+                              var_dump('MAJ');
+                              DB::table('user_element')
+                                        ->where('id', $user_exchange->id)
+                                        ->update(['is_exchangeable' => 1, 'is_deleted' => 0]);
+                         }
                     }
                }
           }
           catch(\Exception $e){
-               var_dump($e->getMessage());
+               return $e->getMessage();
                return 3;
           }
      }
@@ -552,6 +569,7 @@ class UserController extends Controller
                }
                catch(\Exception $e){
                     //var_dump($e->getMessage());
+                    return 3;
                }
           }
      }
@@ -561,12 +579,14 @@ class UserController extends Controller
           if(Auth::check()){
                $element = htmlspecialchars(addslashes($_POST['idElement']));
                try{
-                    $elements =  DB::select(DB::raw('UPDATE user_element SET is_deleted=1 
+                    $elements =  DB::select(DB::raw('UPDATE user_element 
+                                                                 SET is_deleted=1, is_exchangeable=0 
                                                                  WHERE id_element = '.$element.'
                                                                       AND id_user = '.Auth::id().' '));
                }
                catch(\Exception $e){
                     //var_dump($e->getMessage());
+                    return 3;
                }
           }
      }

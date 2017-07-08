@@ -63,10 +63,12 @@
         <hr>
         
         <!-- ECHANGES -->
-        <h3>Propose d'échanger : </h3>
-        @include('templates.mosaique')
-        
-        <hr>
+        @if(count($grid))
+          <h3>Propose d'échanger : </h3>
+          @include('templates.mosaique')
+          
+          <hr>
+        @endif
         
         <!-- FORMULAIRE DE CONTACT -->
         <h3>Contacter {{$infos->first_name}}</h3>

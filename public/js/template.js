@@ -29,10 +29,10 @@ $(document).ready(function(){
             $('#nextRoomDetails .room').html(nextRoom.nameRoom);
             $('#nextRoomDetails .element').html(nextRoom.nameElement);
             $('#nextRoomDetails .date').html(datestring);
-            $('#nextRoomDetails a').attr('href', $('#nextRoomDetails a')
+            /*$('#nextRoomDetails a').attr('href', $('#nextRoomDetails a')
                                     .data('redirect')+'/'+nextRoom.id)
                                     .html('Accèdez à la fiche du salon');
-
+            */
             $('[data-countdown]').each(function() {
                 var $this = $(this), finalDate = $(this).data('countdown');
                 $this.countdown(finalDate, function(event) {

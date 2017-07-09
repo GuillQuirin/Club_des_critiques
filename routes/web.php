@@ -94,7 +94,7 @@
 	Route::get('rooms', ['as' => 'rooms', 'uses' => 'RoomsController@index']);
 	Route::get('rooms/futur_rooms', ['as' => 'futur_rooms', 'uses' => 'RoomsController@showFuturRooms']);
 	Route::get('rooms/my_rooms', ['as' => 'my_rooms', 'uses' => 'RoomsController@showMyRooms']);
-	/*DON'T TOUCH */Route::get('room', ['as' => 'next_room', 'uses' => 'RoomsController@index']);
+	//Route::get('room', ['as' => 'next_room', 'uses' => 'RoomsController@index']);
 	Route::post('room/join/', ['as' => 'join_room', 'uses' => 'RoomsController@joinBis']);
 
     Route::get('room/{id}', ['as' => 'show_room', 'uses' => 'RoomsController@show'])->middleware('App\Http\Middleware\RoomMiddleware');

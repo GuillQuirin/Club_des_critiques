@@ -22,6 +22,7 @@ class User extends Authenticatable
         'picture',
         'id_department',
         'email',
+        'external',
         'id_status',
         'password',
         'token',

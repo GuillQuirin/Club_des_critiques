@@ -9,26 +9,37 @@
             </div>
             <div class="modal-body">
                 {!! Form::open(['url' => 'proposition_element', 'class' => 'notRedirect', 'id' => 'proposition_element']) !!}
-                <div class="row form-group">
-                    <div class="col-md-6">
-                        {!! Form::label('label_type',"Type d'oeuvre") !!}
-                        {!! Form::text('category','',['id'=>'label_type',
-                                                                'class' => 'form-control',
-                                                                'required' => 'required']) !!}
-                    </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            {!! Form::label('label_type',"Type d'oeuvre") !!}
+                            {!! Form::text('category','',['id'=>'label_type',
+                                                                    'class' => 'form-control',
+                                                                    'required' => 'required',
+                                                                    'placeholder' => 'Livres, Films, Jeux...']) !!}
+                        </div>
 
-                    <div class="col-md-6">
-                        {!! Form::label('label_author',"Nom de l'auteur") !!}
-                        {!! Form::text('creator','',['id'=>'label_author',
-                                                    'class' => 'form-control',
-                                                    'required' => 'required']) !!}
+                        <div class="col-md-6">
+                            {!! Form::label('label_author',"Nom de l'auteur") !!}
+                            {!! Form::text('creator','',['id'=>'label_author',
+                                                        'class' => 'form-control',
+                                                        'required' => 'required']) !!}
+                        </div>
                     </div>
-                
-                    <div class="col-md-6">
-                        {!! Form::label('label_element',"Nom de l'oeuvre") !!}
-                        {!! Form::text('name','',['id'=>'label_element',
-                                                    'class' => 'form-control',
-                                                    'required' => 'required']) !!}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {!! Form::label('label_element',"Nom de l'oeuvre") !!}
+                            {!! Form::text('name','',['id'=>'label_element',
+                                                        'class' => 'form-control',
+                                                        'required' => 'required']) !!}
+                        </div>
+                        <div class="col-md-6">
+                            {!! Form::label('label_room',"Proposer un salon pour cette oeuvre") !!}
+                            {!! Form::checkbox('want_room', '1', null,[
+                                                                        'id' => 'label_room',
+                                                                        'class' => 'form-control'
+                                                                      ]) !!}
+                        </div>
                     </div>
                 </div>
                     <div class="alert alert-dismissible alert-success" role="alert">

@@ -42,7 +42,11 @@ class AdminController extends Controller
         $reports = Report::all();
         $elementSuggests = ElementSuggest::all();
 
-    	return view('admin.index', compact('concept', 'slogan', 'elements', 'allCategories', 'allUsers', 'categories', 'topElements', 'departments', 'status', 'footers', 'rooms', 'reports', 'elementSuggests'));
+        $nbrUsers = User::all()->count();
+        $nbrRooms = Room::all()->count();
+        $nbrElements = Element::all()->count();
+
+    	return view('admin.index', compact('concept', 'slogan', 'elements', 'allCategories', 'allUsers', 'categories', 'topElements', 'departments', 'status', 'footers', 'rooms', 'reports', 'elementSuggests', 'nbrUsers', 'nbrRooms', 'nbrElements'));
     }
 
     /**

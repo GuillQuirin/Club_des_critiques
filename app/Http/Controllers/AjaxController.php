@@ -307,7 +307,7 @@ class AjaxController extends Controller
         $report->status = 2;
         $report->save();
 
-        return Response::json($user_room);
+        return Response::json($report);
     }
 
     /**

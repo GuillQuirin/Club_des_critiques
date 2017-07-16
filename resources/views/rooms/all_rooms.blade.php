@@ -11,11 +11,16 @@
 @section('content')
     <div class="container">
         <div class="text-center">
-            <h1>Liste de tous les salons @if(Auth::guest())<small>Pour rejoindre un salon à venir, veuillez vous connecter.</small>@endif</h1>
+            <h1>Liste de tous les salons 
+                @if(Auth::guest())
+                    <small>Pour rejoindre un salon à venir, veuillez vous connecter.</small>
+                @endif
+            </h1>
             @if($rooms)
             <table id="salons" class="table table-hover table-responsive" cellspacing="0">
                 <thead>
                 <tr>
+                    <th>Nom du salon</th>
                     <th>Titre (auteur)</th>
                     <th>Dates du salon</th>
                     <th>Statut</th>
@@ -24,12 +29,16 @@
                 <tbody>
                 @foreach($rooms as $room)
                     <tr>
+                        <td>{{$room->name}}</td>
                         <td>{{$room->element->name}} ({{$room->element->creator}})</td>
-                        <td>Du {{date("d/m/Y", strtotime($room->date_start))}} au {{date("d/m/Y", strtotime($room->date_end))}}</td>
-                        <td>@if($room->status === 2)
-                                Salon à venir
-                            @elseif(($room->status === 1))
+                        <td>Du {{date("d/m/Y", strtotime($room->date_start))}} 
+                            au {{date("d/m/Y", strtotime($room->date_end))}}
+                        </td>
+                        <td>
+                            @if($room->status === 1)
                                 Salon en cours
+                            @elseif(($room->status === 2))
+                                Salon à venir
                             @elseif(($room->status === 3))
                                 Salon interrompu
                             @else

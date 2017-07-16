@@ -10,11 +10,16 @@
 
 @section('content')
     <div class="container">
-            <h1 class="text-center">Les salons à venir @if(Auth::guest())<small>Pour rejoindre un salon à venir, veuillez vous connecter.</small>@endif</h1>
+            <h1 class="text-center">Les salons à venir 
+                @if(Auth::guest())
+                    <small>Pour rejoindre un salon à venir, veuillez vous connecter.</small>
+                @endif
+            </h1>
             @if(count($rooms))
             <table id="salons" class="table table-hover table-responsive" cellspacing="0">
                 <thead>
                     <tr>
+                        <th>Nom du salon</th>
                         <th>Titre (Auteur)</th>
                         <th>Dates du salon</th>
                         @if(Auth::check())
@@ -25,10 +30,14 @@
                 <tbody>
                 @foreach($rooms as $room)
                     <tr>
+                        <td>{{$room->name}}</td>
                         <td>{{$room->element->name}} ({{$room->element->creator}})</td>
-                        <td>Du {{date("d/m/Y", strtotime($room->date_start))}} au {{date("d/m/Y", strtotime($room->date_end))}}</td>
+                        <td>Du {{date("d/m/Y", strtotime($room->date_start))}} 
+                            au {{date("d/m/Y", strtotime($room->date_end))}}
+                        </td>
                         @if(Auth::check())
-                        <td> @if(!($user_element->contains('id_element', $room->element->id)))
+                        <td> 
+                            @if(!($user_element->contains('id_element', $room->element->id)))
                                 <button type="button"
                                         class="btn btn-success"
                                         data-toggle="modal"
@@ -36,7 +45,7 @@
                                         data-title="{{$room->room['element']['name']}}"
                                         data-autor="{{$room->room['element']['creator']}}"
                                         data-salon="Salon 1">
-                                    Rejoindre le salon
+                                    M'inscrire au salon
                                 </button>
                             @else
                                  Salon déjà rejoint !

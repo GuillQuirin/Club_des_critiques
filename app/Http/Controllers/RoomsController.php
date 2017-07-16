@@ -39,7 +39,9 @@ class RoomsController extends Controller
      */
     public function showFuturRooms()
     {
-        $rooms = Room::where('date_start', '>', date("Y-m-d H:i:s"))->where('status', 2)->get();
+        $rooms = Room::where('date_start', '>', time())
+                        ->where('status', 2)
+                        ->get();
         $user_room = UserRoom::where('id_user', explode(',', Auth::id()))->get();
         $user_element = UserElement::where('id_user', Auth::id())->get();
         return view('rooms.index')
@@ -58,30 +60,30 @@ class RoomsController extends Controller
     {
         $rooms = Room::whereIn('id', function ($query) {
             $query->select('id_room')
-                ->from('user_room')
-                ->where('id_user', Auth::id());
+                    ->from('user_room')
+                    ->where('id_user', Auth::id());
         })->get();
 
         $test = DB::select('SELECT element.name as element_name, 
-                            element.creator, 
-                            element.date_publication,
-                            element.url_picture,
-                            category.name as category,
-                            user_element.mark, 
-                            room.name as room_name, 
-                            room.date_start, 
-                            room.date_end,
-                            room.status,
-                            room.number as number, 
-                            room.id as id_room,
-                            user_room.status_user
+                                element.creator, 
+                                element.date_publication,
+                                element.url_picture,
+                                category.name as category,
+                                user_element.mark, 
+                                room.name as room_name, 
+                                room.date_start, 
+                                room.date_end,
+                                room.status,
+                                room.number as number, 
+                                room.id as id_room,
+                                user_room.status_user
                             FROM element, user_element, room, user_room, category
                             WHERE room.id_element = user_element.id_element 
-                            and element.id_category = category.id
-                            and user_element.id_user = ' . Auth::id() . ' 
-                            and room.id_element = element.id
-                            and room.id = user_room.id_room
-                            and user_room.id_user = user_element.id_user');
+                                and element.id_category = category.id
+                                and user_element.id_user = ' . Auth::id() . ' 
+                                and room.id_element = element.id
+                                and room.id = user_room.id_room
+                                and user_room.id_user = user_element.id_user');
 
         return view('rooms.my_rooms')
             ->with(compact('rooms'))

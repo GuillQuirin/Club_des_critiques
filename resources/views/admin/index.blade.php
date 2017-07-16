@@ -583,13 +583,16 @@
                 	jQuery.each(data, function() {
                 		console.log(this);
                 		if(this.status_user == 1){
-							var status = "Membre";                			
+							var status = "Membre";
+							$('#listUsersRoom').append('<li class="list-group-item">' + this.first_name + ' ' + this.last_name + ' - ' + status +'  <span class=""><i class="fa fa-ban" id="' + this.id +'" aria-hidden="true"></i></span></li>');             			
                 		} else if(this.status_user == 2){
 							var status = "Administrateur";
+							$('#listUsersRoom').append('<li class="list-group-item">' + this.first_name + ' ' + this.last_name + ' - ' + status +'  <span class=""><i class="fa fa-ban" id="' + this.id +'" aria-hidden="true"></i></span></li>');
                 		}else{
                 			var status = "Bannis";
+                			$('#listUsersRoom').append('<li class="list-group-item">' + this.first_name + ' ' + this.last_name + ' - ' + status + '</li>');
                 		}
-                        $('#listUsersRoom').append('<li class="list-group-item">' + this.first_name + ' ' + this.last_name + ' - ' + status +'<span class=""><i class="fa fa-ban" id="' + this.id +'" aria-hidden="true"></i></span></li>');
+                        
                     });
 					myModal.modal('toggle');
 
@@ -597,6 +600,7 @@
 				    $('i.fa-ban').on('click', function() {
 				    	var userId = this.id;
 				    	var roomId = $('#roomId').val();
+				    	tdStatus = $( this ).parent();
 
 				    	swal(
 			    			{

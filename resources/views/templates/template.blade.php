@@ -224,9 +224,9 @@
         <footer class="footer">
 			<div class="container text-center">
 				<span class="text-muted">
-                        <a href="{{ route('home')}}#contact_us">Nous contacter</a>
+                        {{-- <a href="{{ route('home')}}#contact_us">Nous contacter</a> --}}
                         <a href="/"><img class="logo" src="/images/logo.png" alt="logo"></a>
-                        <a href="#">Copyright</a>
+                        {{-- <a href="#">Copyright</a> --}}
                 </span>
 			</div>
 		</footer>

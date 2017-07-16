@@ -3,7 +3,7 @@
     <div class="panel-body">                
         <p>
           <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseAddSalon" aria-expanded="false" aria-controls="collapseAddSalon" id="btnShowAddRoom">
-            Ajouter un salon
+            Créer un salon
           </button>
         </p>
         <div class="collapse" id="collapseAddSalon">

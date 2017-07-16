@@ -62,12 +62,12 @@
 		    	@include('admin.user')
 		    </div>
 		    
-		    <div class="panel panel-default">
+		    {{-- <div class="panel panel-default">
 		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseFooter">
 		      		<h4 class="panel-title">Footer</h4>
 		    	</div>
 		    	@include('admin.footer')
-		    </div>
+		    </div> --}}
 		    <div class="panel panel-default">
 		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseElementSuggest">
 		      		<h4 class="panel-title">Proposition d'oeuvre</h4>

@@ -2,7 +2,7 @@
     <div class="panel-body">
         <p>
           <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseAddElement" aria-expanded="false" aria-controls="collapseAddElement" id="btnShowAddElement">
-            Ajouter une oeuvre
+            Créer une oeuvre
           </button>
         </p>
         <div class="collapse" id="collapseAddElement">

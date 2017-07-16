@@ -39,7 +39,8 @@ class RoomsController extends Controller
      */
     public function showFuturRooms()
     {
-        $rooms = Room::where('date_start', '>', time())
+        $now = new \DateTime();
+        $rooms = Room::where('date_start', '>', $now)
                         ->where('status', 2)
                         ->get();
         $user_room = UserRoom::where('id_user', explode(',', Auth::id()))->get();

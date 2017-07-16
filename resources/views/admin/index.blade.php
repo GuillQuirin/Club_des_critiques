@@ -581,6 +581,7 @@
                 success: function(data) {
 
                 	jQuery.each(data, function() {
+                		console.log(this);
                 		if(this.status_user == 1){
 							var status = "Membre";                			
                 		} else if(this.status_user == 2){

@@ -254,8 +254,11 @@ class AjaxController extends Controller
     public function getUsersForRoom()
     {
         $roomId = Input::get('roomId');
-        $room = Room::find($roomId);
-        $users = $room->users();
+
+        $users = DB::select('SELECT u.id, ur.status_user, u.first_name, u.last_name
+                            FROM user_room ur, user u
+                            WHERE u.id = ur.id_user
+                            AND ur.id_room = ' . $roomId);
 
         return Response::json($users);
     }

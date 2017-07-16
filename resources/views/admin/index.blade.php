@@ -1022,6 +1022,8 @@
 
 	    function initializedDataTable(id) {
             $('#' + id).DataTable({
+            	"pageLength": 5,
+            	"lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Tout"]],
                 "language": {
                     "sProcessing":     "Traitement en cours...",
                     "sSearch":         "Rechercher&nbsp;:",

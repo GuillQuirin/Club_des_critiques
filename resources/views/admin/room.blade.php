@@ -57,8 +57,9 @@
                         <label for="room_date_end" class="col-2 col-form-label">Status : </label>
                         <div class="col-10">
                             <select id="room_status" name="status" class="form-control selectpicker" required>
-                                <option value="0">Inactif</option>
-                                <option value="1">Actif</option>
+                                <option value="0">Terminé</option>
+                                <option value="1">En cours</option>
+                                <option value="2" selected>A venir</option>
                             </select>
                         </div>
                     </div>
@@ -98,9 +99,11 @@
                             <td>{{ $room->users()->count() }}</td>
                             <td>
                                 @if($room->status == 0)
-                                    Inactif
-                                @else
-                                    Actif
+                                    Terminé
+                                @elseif($room->status === 1)
+                                    En cours
+                                @elseif($room->status === 2)
+                                    A venir
                                 @endif
                             </td>
                             <td>
@@ -191,8 +194,9 @@
                         <label for="edit_room_status" class="col-2 col-form-label">Status : </label>
                         <div class="col-10">
                             <select id="edit_room_status" name="status" class="form-control selectpicker" required>
-                                <option value="0">Inactif</option>
-                                <option value="1">Actif</option>
+                                <option value="0">Terminé</option>
+                                <option value="1">En cours</option>
+                                <option value="2">A venir</option>
                             </select>
                         </div>
                     </div>

@@ -299,7 +299,7 @@ class AjaxController extends Controller
      * Ajax Request : refuse to ban a user from a room
      * @return mixed
      */
-    public function refuseBanUserRoo()
+    public function refuseBanUserRoom()
     {
         $reportId = Input::get('reportId');
 

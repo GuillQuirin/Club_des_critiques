@@ -94,8 +94,8 @@
                             <td class="room-id">{{ $room->id }}</td>
                             <td>{{ $room->name }}</td>
                             <td>{{ $room->element->name }}</td>
-                            <td>{{ $room->date_start }}</td>
-                            <td>{{ $room->date_end }}</td>
+                            <td>{{ date('m/d/Y H:i:s', strtotime($room->date_start)) }}</td>
+                            <td>{{ date('m/d/Y H:i:s', strtotime($room->date_end)) }}</td>
                             <td>{{ $room->users()->count() }}</td>
                             <td>
                                 @if($room->status == 0)

@@ -579,6 +579,7 @@
                 url: "{{ route('get_users_for_room') }}",
                 type: 'get',
                 success: function(data) {
+
                 	jQuery.each(data, function() {
                 		if(this.status_user == 1){
 							var status = "Membre";                			
@@ -895,6 +896,8 @@
 		// Valide ban user
 		$('#banTable').on('click', 'i.valide-ban-user-room', function(){
 			var reportId = this.id;
+			tab = $( this ).parent();
+
 			swal(
     			{
 				  	title: "Voulez vous vraiment bannir cet utilisateur du salon ?",
@@ -912,7 +915,7 @@
 			                url: "{{ route('ban_user_room') }}",
 			                type: 'put',
 			            }).done(function(){
-			            	$('#report-status').html('<p class="text-success">Bannissement validé</p>');
+			            	tab.html('<p class="text-success">Bannissement validé</p>');
 			            	swal("Supprimé!", "L'utilisateur a bien été banni du salon.", "success");
 			            }).fail(function(){
 			            	swal("Erreur!", "L'utilisateur n'a pas été banni du salon.", "error");
@@ -926,6 +929,8 @@
 		// Refuse ban user
 		$('#banTable').on('click', 'i.refuse-ban-user-room', function(){
 			var reportId = this.id;
+			tab = $( this ).parent();
+
 			swal(
     			{
 				  	title: "Voulez vous vraiment refuser de bannir cet utilisateur du salon ?",
@@ -943,7 +948,7 @@
 			                url: "{{ route('refuse_ban_user_room') }}",
 			                type: 'put',
 			            }).done(function(){
-			            	$('#report-status').html('<p class="text-danger">Bannissement refusé</p>');
+			            	tab.html('<p class="text-danger">Bannissement refusé</p>');
 			            	swal("Supprimé!", "La bannissement de l'utilisateur a été refusé.", "success");
 			            }).fail(function(){
 			            	swal("Erreur!", "Erreur lors du refus de bannissement de l'utilisateur", "error");
@@ -959,6 +964,8 @@
 		// Validate element suggest
 		$('#elementSuggestTable').on('click', 'i.valide-element-suggest', function(){
 			var elementSuggestId = this.id;
+			tab = $( this ).parent();
+
 			swal(
     			{
 				  	title: "Voulez vous vraiment valider cette oeuvre ?",
@@ -975,7 +982,7 @@
 			                url: "{{ route('valide_element_suggest') }}",
 			                type: 'put',
 			            }).done(function(){
-			            	$('.element-suggest-status').html('<p class="text-success">Validé</p>');
+			            	tab.html('<p class="text-success">Validé</p>');
 			            	swal("Validé!", "Vous devez maintenant l'ajouter dans les oeuvres.", "success");
 			            }).fail(function(){
 			            	swal("Erreur!", "L'oeuvre n'a pas été validée.", "error");
@@ -989,6 +996,8 @@
 		// Refuse element suggest
 		$('#elementSuggestTable').on('click', 'i.refuse-element-suggest', function(){
 			var elementSuggestId = this.id;
+			tab = $( this ).parent();
+
 			swal(
     			{
 				  	title: "Voulez vous vraiment refuser cette oeuvre ?",
@@ -1006,8 +1015,7 @@
 			                url: "{{ route('refuse_element_suggest') }}",
 			                type: 'put',
 			            }).done(function(){
-			            	console.log('ok');
-			            	$('.element-suggest-status').html('<p class="text-danger">Refusé</p>');
+			            	tab.html('<p class="text-danger">Refusé</p>');
 			            	swal("Validé!", "L'oeuvre a été refusée.", "success");
 			            }).fail(function(){
 			            	swal("Erreur!", "L'oeuvre n'a pas été refusée.", "error");

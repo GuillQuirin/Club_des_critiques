@@ -93,11 +93,13 @@
                             <td>{{ $user->email }}</td>
                             <td class="user-status">{{ $user->status->label }}</td>
                             <td>
-                                <a href="#" class="btn edit-user"><i class="fa fa-pencil"></i></a>
-                                @if($user->id_status != 5)
+                                @if($user->id_status != 6)
+                                    <a href="#" class="btn edit-user"><i class="fa fa-pencil"></i></a>
+                                @endif
+                                @if($user->id_status != 5 && $user->id_status != 6)
                                     <i class="fa fa-ban ban-user" aria-hidden="true" id="{{ $user->id }}"></i> 
                                 @endif
-                                @if($user->status->id_status != 6)
+                                @if($user->id_status != 6)
                                     <i class="fa fa-trash delete-user" aria-hidden="true" id="{{ $user->id }}" style="padding: 6px 12px;"></i>
                                 @endif
                             </td>                               

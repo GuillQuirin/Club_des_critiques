@@ -17,7 +17,7 @@
     </div>
     <div class="container notPadding"> 
    		<div class="panel-group" id="accordion">
-   			<div class="panel panel-default">
+   			<div class="panel panel-default hidden-xs">
 		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseStat">
 		      		<h4 class="panel-title">Statistiques du site</h4>
 		    	</div>
@@ -81,14 +81,14 @@
 
 
 @section('js')
-	<script src="http://code.highcharts.com/highcharts.js"></script>
-	<script type="text/javascript" src="js/dataviz.js"></script>
+	<script src="js/highcharts.js"></script>
 	<script type="text/javascript" src="moment/min/moment.min.js"></script>
 	<script type="text/javascript" src="bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
 	<script type="text/javascript" src="js/fileinput.min.js"></script>
 	<script type="text/javascript" src="js/piexif.min.js"></script>
 	<script type="text/javascript" src="js/purify.min.js"></script>
 	<script type="text/javascript" src="js/sortable.min.js"></script>
+	<script type="text/javascript" src="js/dataviz.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 

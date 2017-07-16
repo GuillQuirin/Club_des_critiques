@@ -1,28 +1,11 @@
 <?php
+	include("connec_bdd.php");
 
 	$mois = array("","Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"); 
 	$months = array();
 	$month_fr = array();
 	$rooms = array();
 	$avg = array();
-
-
-	// Connexion à la BDD
-	$servername = "localhost";
-	$username = "root";
-	$password = "";
-	$bdd_name = "club_critique";
-
-	// Create connection
-	$conn = mysqli_connect($servername, $username, $password, $bdd_name);
-
-	// Check connection
-	if (!$conn) {
-		die("Connection failed: " . mysqli_connect_error());
-	}
-	
-	// Set le charset en UTF8 (pour éviter les problèmes d'accent)
-	mysqli_set_charset($conn, "utf8");
 
 	$query = "
 		SELECT ur.id_room, month(r.date_start) as 'month', count(*) as 'nb'

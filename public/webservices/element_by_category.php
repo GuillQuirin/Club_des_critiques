@@ -1,24 +1,8 @@
 <?php
+	include("connec_bdd.php");
 
 	// Le tableau de résultat
 	$result_request = array();
-	
-	// Connexion à la BDD
-	$servername = "localhost";
-	$username = "root";
-	$password = "";
-	$bdd_name = "club_critique";
-
-	// Create connection
-	$conn = mysqli_connect($servername, $username, $password, $bdd_name);
-
-	// Check connection
-	if (!$conn) {
-		die("Connection failed: " . mysqli_connect_error());
-	}
-	
-	// Set le charset en UTF8 (pour éviter les problèmes d'accent)
-	mysqli_set_charset($conn, "utf8");
 
 	$query = "
 		SELECT c.name, count(e.name)

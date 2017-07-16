@@ -1,29 +1,11 @@
 <?php
+	include("connec_bdd.php");
 
-setlocale(LC_TIME, "fr_FR");
+	setlocale(LC_TIME, "fr_FR");
 
 	$result_total = array();
 	$result_cpt = array();
-	$result_request = array();
-	
-
-	// Connexion à la BDD
-	$servername = "localhost";
-	$username = "root";
-	$password = "";
-	$bdd_name = "club_critique";
-
-	// Create connection
-	$conn = mysqli_connect($servername, $username, $password, $bdd_name);
-
-	// Check connection
-	if (!$conn) {
-		die("Connection failed: " . mysqli_connect_error());
-	}
-	
-	// Set le charset en UTF8 (pour éviter les problèmes d'accent)
-	mysqli_set_charset($conn, "utf8");
-	
+	$result_request = array();	
 
 	$query = "SELECT date_created, count(*) as 'nbr'
 		FROM user

@@ -97,7 +97,7 @@
                             <td>{{ date('m/d/Y H:i:s', strtotime($room->date_start)) }}</td>
                             <td>{{ date('m/d/Y H:i:s', strtotime($room->date_end)) }}</td>
                             <td>{{ $room->users()->count() }}</td>
-                            <td>
+                            <td class="room-status">
                                 @if($room->status == 0)
                                     Terminé
                                 @elseif($room->status === 1)

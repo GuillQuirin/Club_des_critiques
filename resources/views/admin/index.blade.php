@@ -641,6 +641,17 @@
 	    // Affiche la pop up de modification d'un salon
 		$('#roomTable').on('click', 'a.edit-room', function(){
 			    var myModal = $('#editRoomModal');
+			    var status = $.trim($(this).closest('tr').find('td.room-status').html());
+			    console.log(status);
+			    if(status == "Terminé"){
+			    	status = 0;
+			    } else if(status == "En cours") {
+			    	status = 1;
+			    } else if(status == "A venir") {
+			    	status = 2;
+			    }
+			    console.log(status);
+			    $('#edit_room_status').selectpicker('val', status);
 
 			    var roomId = $(this).closest('tr').find('td.room-id').html();
 			    var selectEditRoomSubCat = $('#edit_room_sub_category');
@@ -651,8 +662,6 @@
 	                url: "{{ route('get_room') }}",
 	                type: 'get',
 	                success: function(data) {
-	                	console.log(data.room.date_start);
-
 	                	$('#edit_room_date_start').datetimepicker({
 	                		format: 'YYYY-MM-DD HH:mm:ss',
 	                		defaultDate: data.room.date_start

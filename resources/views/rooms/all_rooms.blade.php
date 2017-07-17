@@ -11,44 +11,98 @@
 @section('content')
     <div class="container">
         <div class="text-center">
-            <h1>Liste de tous les salons 
+            <h1>Liste de tous les salons
                 @if(Auth::guest())
                     <small>Pour rejoindre un salon à venir, veuillez vous connecter.</small>
                 @endif
             </h1>
             @if($rooms)
-            <table id="salons" class="table table-hover table-responsive" cellspacing="0">
-                <thead>
-                <tr>
-                    <th>Nom du salon</th>
-                    <th>Titre (auteur)</th>
-                    <th>Dates du salon</th>
-                    <th>Statut</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($rooms as $room)
+                <table id="salons" class="table table-hover table-responsive" cellspacing="0">
+                    <thead>
                     <tr>
-                        <td>{{$room->name}}</td>
-                        <td>{{$room->element->name}} ({{$room->element->creator}})</td>
-                        <td>Du {{date("d/m/Y", strtotime($room->date_start))}} 
-                            au {{date("d/m/Y", strtotime($room->date_end))}}
-                        </td>
-                        <td>
-                            @if($room->status === 1)
-                                Salon en cours
-                            @elseif(($room->status === 2))
-                                Salon à venir
-                            @elseif(($room->status === 3))
-                                Salon interrompu
-                            @else
-                                Salon terminé
-                            @endif
-                        </td>
+                        <th>Nom du salon</th>
+                        <th>Titre (auteur)</th>
+                        <th>Dates du salon</th>
+                        <th>Statut</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach($rooms as $room)
+                        <tr>
+                            <td>{{$room->name}}</td>
+                            <td>{{$room->element->name}} ({{$room->element->creator}})</td>
+                            <td>Du {{date("d/m/Y", strtotime($room->date_start))}}
+                                au {{date("d/m/Y", strtotime($room->date_end))}}
+                            </td>
+                            <td>
+                                @if($room->status === 1)
+                                    @foreach($user_room as $ur)
+                                        @if(($ur->id_user == Auth::id()) && ($ur->id_room == $room->id))
+                                            <a class="btn" href="{{route('show_room', [ 'id' => $room->id ])}}">
+                                                Accéder au salon
+                                            </a>
+                                        @endif
+                                    @endforeach
+                                @elseif(($room->status === 2))
+                                    @if(Auth::check())
+                                        @if(!($user_element->contains('id_element', $room->element->id)))
+                                            <button type="button"
+                                                    class="btn btn-success"
+                                                    data-toggle="modal"
+                                                    data-target="#joinRoom"
+                                                    data-title="{{$room->room['element']['name']}}"
+                                                    data-autor="{{$room->room['element']['creator']}}"
+                                                    data-salon="Salon 1">
+                                                M'inscrire au salon
+                                            </button>
+                                        @else
+                                            Salon déjà rejoint !
+                                        @endif
+                                    @endif
+                                    <div class="modal fade" id="joinRoom" tabindex="300" role="dialog"
+                                         aria-labelledby="myModalLabel">
+                                        {{ Form::open(['route' => 'join_room', 'method' => 'post', 'class' => 'col-md-12']) }}
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h1 class="text-center text-uppercase col-xs-10 col-sm-12">{{$room->element->name}}
+                                                        <small>({{$room->element->creator}})</small>
+                                                    </h1>
+                                                    <div class="text-center" id="div_note">
+                                                        <h3>Donnez une note !</h3>
+                                                        <div class="rating">
+                                                            <a href="#4" title="Donner 4 étoiles">☆</a>
+                                                            <a href="#3" title="Donner 3 étoiles">☆</a>
+                                                            <a href="#2" title="Donner 2 étoiles">☆</a>
+                                                            <a href="#1" title="Donner 1 étoile">☆</a>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" name="element" value="{{$room->element->id}}"/>
+                                                    <input type="hidden" id="note" name="note"/>
+                                                </div>
+                                                <div class="modal-footer text-center">
+                                                    <button type="submit" class="btn btn-success btn-lg">Rejoindre
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{Form::close()}}
+                                    </div>
+                                @elseif(($room->status === 3))
+                                    Salon interrompu
+                                @else
+                                    Salon terminé
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             @else
                 Il n'y a pas de salons existants. Revenez plus tard !
             @endif
@@ -59,12 +113,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     <h1 class="text-center text-uppercase col-xs-10 col-sm-12" id="title"></h1>
                     <input type="hidden" name="room" id="room">
-                    <h1 class="text-center text-uppercase col-xs-10 col-sm-12" id="autor"><small></small></h1>
+                    <h1 class="text-center text-uppercase col-xs-10 col-sm-12" id="autor">
+                        <small></small>
+                    </h1>
                     <div class="text-center" id="div_note">
                         <h3>Donnez une note !</h3>
                         <div class="rating">
@@ -86,7 +143,7 @@
 
 @section('js')
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#salons').dataTable({
                 "language": {
                     "infoEmpty": "No entries to show",

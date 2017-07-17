@@ -36,13 +36,13 @@
                             </td>
                             <td>
                                 @if($room->status === 1)
-                                    @foreach($user_room as $ur)
-                                        @if(($ur->id_user == Auth::id()) && ($ur->id_room == $room->id))
-                                            <a class="btn" href="{{route('show_room', [ 'id' => $room->id ])}}">
-                                                Accéder au salon
-                                            </a>
-                                        @endif
-                                    @endforeach
+                                    @if(($user_room->contains('id_user', Auth::id())) && ($user_room->contains('id_room', $room->id)))
+                                        <a class="btn" href="{{route('show_room', [ 'id' => $room->id ])}}">
+                                            Accéder au salon
+                                        </a>
+                                    @else
+                                        Salon en cours
+                                    @endif
                                 @elseif(($room->status === 2))
                                     @if(Auth::check())
                                         @if(!($user_element->contains('id_element', $room->element->id)))
@@ -108,37 +108,6 @@
             @endif
         </div>
     </div>
-
-    <div class="modal fade" id="join" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <h1 class="text-center text-uppercase col-xs-10 col-sm-12" id="title"></h1>
-                    <input type="hidden" name="room" id="room">
-                    <h1 class="text-center text-uppercase col-xs-10 col-sm-12" id="autor">
-                        <small></small>
-                    </h1>
-                    <div class="text-center" id="div_note">
-                        <h3>Donnez une note !</h3>
-                        <div class="rating">
-                            <a href="#4" title="Donner 4 étoiles">☆</a>
-                            <a href="#3" title="Donner 3 étoiles">☆</a>
-                            <a href="#2" title="Donner 2 étoiles">☆</a>
-                            <a href="#1" title="Donner 1 étoile">☆</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <?php $id_room = \Illuminate\Support\Facades\Input::get('room'); ?>
-                    <a href="{{route('join_room', ['id' => 2 ])}}" type="button" class="btn btn-primary">Rejoindre</a>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('js')
@@ -168,6 +137,13 @@
                 modal.find('.modal-body #autor small').text(autor)
                 modal.find('.modal-title').text(salon)
                 modal.find('.modal-body #room').val(id_room)
+            })
+
+            $('.rating').children('a').each(function(){
+                $(this).click(function(){
+                    //alert(this.getAttribute("href"));
+                    document.getElementById('note').value = this.getAttribute("href").substring(1);
+                })
             })
         });
     </script>

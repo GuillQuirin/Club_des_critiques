@@ -26,9 +26,13 @@ class RoomsController extends Controller
      */
     public function index()
     {
-        $rooms = Room::all()->sortByDesc("date_start");;
+        $rooms = Room::all()->sortByDesc("date_start");
+        $user_room = UserRoom::all();
+        $user_element = UserElement::where('id_user', Auth::id())->get();
         return view('rooms.all_rooms')
-            ->with(compact('rooms'));
+            ->with(compact('rooms'))
+            ->with(compact('user_room'))
+            ->with(compact('user_element'));
     }
 
     /**

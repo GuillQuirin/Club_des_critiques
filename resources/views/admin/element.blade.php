@@ -106,7 +106,7 @@
                     <div class="form-group " id="description">
                         <label for="date_end" class="col-2 col-form-label">Description : </label>
                         <div class="col-10">
-                            <textarea class="form-control" rows="5" id="element_description" name="description"></textarea>
+                            <textarea class="form-control" rows="5" id="element_description" name="description" required></textarea>
                         </div>
                     </div>
 

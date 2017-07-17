@@ -412,25 +412,26 @@
 			);
 	    });
 
-	    // Sow pop up to edit element
+	    // Show pop up to edit element
 	    $('#elementTable').on('click', 'a.edit-element', function(){
 		    var myModal = $('#editElementModal');
 
 		    var elementId = $(this).closest('tr').find('td.element-id').html();
 		    var selectEditElementSubCat = $('#edit_element_sub_category');
 		    var selectEditElementCat = $('#edit_element_category');
-		    console.log(selectEditElementCat.val());
+		    //console.log(selectEditElementCat.val());
 
 		    $.ajax({
                 data : { elementId : elementId },
                 url: "{{ route('get_element') }}",
                 type: 'get',
                 success: function(data) {
-                	console.log(data);
+                	//console.log(data);
                 	$('#id_element').val(data.element.id);	
                 	$('#edit_element_name').val(data.element.name);	
                 	$('#edit_element_creator').val(data.element.creator);
                 	$('#edit_element_url_picture').val(data.element.url_picture);
+                	$('#edit_element_url_api').val(data.element.url_api);
                 	$('#edit_element_date_publication').val(data.element.date_publication);
                 	$('#edit_element_date_start').val(data.element.date_start);
                 	$('#edit_element_date_end').val(data.element.date_end);
@@ -1101,7 +1102,7 @@
             	request: request
            	},
             success: function(data) {
-            	//console.log(data);
+            	console.log(data);
                 data = JSON.parse(data);
                 var html="";
                 $.each(data, function(key,value){
@@ -1121,12 +1122,18 @@
                 				html+="<span class='api_author'>"+value['author']+"</span>";
                 				html+="<span class='api_date'>";
                 					var date = value['date'].split('-');
-                					html+= (date) ? date[2]+'/'+date[1]+'/'+date[0] : 'Date inconnue';
+                					html+= (date && date[1] && date[2]) ? date[2]+'/'+date[1]+'/'+date[0] : 'Date inconnue';
                 				html+="</span>";
                 			html+="</p>";
                 			html+="<p>";
-                				html+="<span class='api_link'><a href='"+value.link+"' target='_blank'>Lien d'achat</a></span>";
+                				html+="<span class='api_link'>";
+    	            				if(value.link && value.link != "#" && value.link != undefined)
+		                				html+="<a href='"+value.link+"' target='_blank'>Lien d'achat</a>";
+        						html+="</span>";
+                			html+="</p>";
+                			html+="<p>";
                 				html+="<span class='api_isbn'>"+value.isbn+"</span>";
+                			html+="</p>";
                 			html+="<p class='api_description'>"+value['description']+"</p>";
                 			html+="<button class='choose_api'>Selectionner cette oeuvre</button>";
                 		html+="</div>";

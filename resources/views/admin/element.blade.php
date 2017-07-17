@@ -202,7 +202,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="creator" class="col-2 col-form-label">Aueur / réalisateur : </label>
+                        <label for="creator" class="col-2 col-form-label">Auteur / réalisateur : </label>
                         <div class="col-10">
                             <input class="form-control" type="text" id="edit_element_creator" name="creator">
                         </div>
@@ -219,7 +219,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="category" class="col-2 col-form-label">Sous catégorie : </label>
+                        <label for="category" class="col-2 col-form-label">Sous-catégorie : </label>
                         <div class="col-10">
                             <select id="edit_element_sub_category" name="sub_category" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required">
                             </select>
@@ -235,7 +235,7 @@
                     <div class="form-group">
                         <label for="url_shop" class="col-2 col-form-label">Url de la boutique : </label>
                         <div class="col-10">
-                            <input class="form-control" type="text" id="element_url_shop" name="url_api">
+                            <input class="form-control" type="text" id="edit_element_url_api" name="url_api">
                         </div>
                     </div>
 

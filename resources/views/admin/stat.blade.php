@@ -39,26 +39,26 @@
 				    			<div class="counter col_fourth">
 		      						<i class="fa fa-users fa-2x"></i>
 		      						<h2 id="nbr_user" class="timer count-title count-number">{{ $nbrUsers }}</h2>
-		       						<p class="count-text ">Nombre d'utilisateur</p>
+		       						<p class="count-text ">Nombre d'utilisateurs</p>
 		       					</div>
 
 		    					<div class="counter col_fourth">
 		      						<i class="fa fa-book fa-2x"></i>
 		      						<h2 id="nbr_element" class="timer count-title count-number">{{ $nbrElements }}</h2>
-		       						<p class="count-text ">Nombre d'oeuvre</p>
+		       						<p class="count-text ">Nombre d'oeuvres</p>
 		    					</div>		    					
 	    					</div>
 	    					<div class="row">
 		    					<div class="counter col_fourth">
 		      						<i class="fa fa-calendar fa-2x"></i>
 		      						<h2 id="nbr_room" class="timer count-title count-number">{{ $nbrRooms }}</h2>
-		       						<p class="count-text ">Nombre total de salon</p>
+		       						<p class="count-text ">Nombre total de salons</p>
 		    					</div>
 
 		    					<div class="counter col_fourth">
 		      						<i class="fa fa-comments fa-2x"></i>
 		      						<h2 id="nbr_message_by_room" class="timer count-title count-number"></h2>
-		       						<p class="count-text ">Nombre moyen de message par salon</p>
+		       						<p class="count-text ">Nombre moyen de messages par salon</p>
 		    					</div>		    					
 		    				</div>
 	    				</div>

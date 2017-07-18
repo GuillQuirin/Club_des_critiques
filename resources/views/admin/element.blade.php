@@ -167,10 +167,17 @@
             </div>
             <div class="modal-body">
                 <form action="getApi" method="POST" id="getApi">
-                  <input type="text" name="intitle" placeholder="Titre">
-                  <input type="text" name="inauthor" placeholder="Auteur">
-                  <input type="number" name="isbn" placeholder="ISBN">
-                  <input type="submit" class="btn btn-success" value="Rechercher">
+                    <div class="form-group" id="dateStart">
+                        <input class="form-control" type="text" name="intitle" placeholder="Titre">
+                    </div>
+                    <div class="form-group" id="dateStart">
+                        <input class="form-control" type="text" name="inauthor" placeholder="Auteur">
+                    </div>
+                    <div class="form-group" id="dateStart">
+                        <input class="form-control" type="number" name="isbn" placeholder="ISBN">
+                    </div>
+                      
+                    <input type="submit" class="btn btn-success" value="Rechercher">
                 </form>
                 <div id="listApi">
                 </div>

@@ -172,7 +172,7 @@
 
 
 	getRequest("webservices/element_by_category.php", function(data) {
-		generatePie("element_by_category", data, 'Nombre d\'oeuvre par catégorie');
+		generatePie("element_by_category", data, 'Nombre d\'oeuvres par catégorie');
 	});
 
 	getRequest("webservices/room_by_category.php", function(data) {
@@ -180,11 +180,11 @@
 	});
 
 	getRequest("webservices/evolution_nbr_user.php", function(data) {
-		generateLine("evolution_nbr_user", data, 'Evolution du nombre d\'utilisateur');
+		generateLine("evolution_nbr_user", data, 'Evolution du nombre d\'utilisateurs');
 	});
 
 	getRequest('webservices/user_room_by_month.php', function(data) {
-		generateBar('user_room_by_month', data, 'Nombre moyen d\'utilisateur par salon par mois');
+		generateBar('user_room_by_month', data, 'Nombre moyen d\'utilisateurs par salon par mois');
 	});
 
 	getRequest('webservices/nbr_suggest.php', function(data) {

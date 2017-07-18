@@ -74,43 +74,47 @@ class UserController extends Controller
 	{
           //Liste des infos de l'utilisateur
           $infos = User::find($id);
-          $infos->picture = ($infos->picture) ? $infos->picture : "/images/user.png";
+          if(isset($infos)){
+               $infos->picture = ($infos->picture) ? $infos->picture : "/images/user.png";
 
-          $myAccount  = (Auth::check() && Auth::id() == $id);
-
-
-          $listDepartments = $this->getDepartments();
+               $myAccount  = (Auth::check() && Auth::id() == $id);
 
 
-          //Liste des oeuvres que l'utilisateur souhaite échanger
-          $popUp = 'element.show';
-          $exchangedElements = DB::table('user_element')
-                                   ->leftJoin('user', 'user.id' , '=' , 'user_element.id_user')
-                                   ->leftJoin('element', 'element.id', '=', 'user_element.id_element')
-                                   ->leftJoin('category', 'category.id', '=', 'element.id_category')
-                                   ->select( 'element.id', 
-                                             'element.name', 
-                                             'element.creator as subName',
-                                             'element.description',
-                                             'element.url_picture as picture',
-                                             'element.url_api as link',
-                                             'category.name as name_category',
-                                             'category.id_parent as id_parent',
-                                             'category.id as id_category')
-                                   ->where([
-                                        ['user.id', '=', $id],
-                                        ['user_element.is_exchangeable', '=', 1],
-                                        ['user.is_deleted', '=', 0]
-                                   ])
-                                   ->get();
+               $listDepartments = $this->getDepartments();
 
-		return view('user.show')
-                    ->with('infos',$infos)
-                    ->with('myAccount',$myAccount)
-                    ->with('department', $listDepartments)
-                    ->with('grid', $exchangedElements)
-                    ->with('nbElements', 8)
-                    ->with(compact('popUp', $popUp));
+
+               //Liste des oeuvres que l'utilisateur souhaite échanger
+               $popUp = 'element.show';
+               $exchangedElements = DB::table('user_element')
+                                        ->leftJoin('user', 'user.id' , '=' , 'user_element.id_user')
+                                        ->leftJoin('element', 'element.id', '=', 'user_element.id_element')
+                                        ->leftJoin('category', 'category.id', '=', 'element.id_category')
+                                        ->select( 'element.id', 
+                                                  'element.name', 
+                                                  'element.creator as subName',
+                                                  'element.description',
+                                                  'element.url_picture as picture',
+                                                  'element.url_api as link',
+                                                  'category.name as name_category',
+                                                  'category.id_parent as id_parent',
+                                                  'category.id as id_category')
+                                        ->where([
+                                             ['user.id', '=', $id],
+                                             ['user_element.is_exchangeable', '=', 1],
+                                             ['user.is_deleted', '=', 0]
+                                        ])
+                                        ->get();
+
+     		return view('user.show')
+                         ->with('infos',$infos)
+                         ->with('myAccount',$myAccount)
+                         ->with('department', $listDepartments)
+                         ->with('grid', $exchangedElements)
+                         ->with('nbElements', 8)
+                         ->with(compact('popUp', $popUp));
+          }
+          else
+               return redirect()->route('home');
 	}
 
 

@@ -128,8 +128,12 @@ class AjaxController extends Controller
      {
         $input = $request->all();
         $filter = [];
-        foreach ($input as $key => $value)
-            $filter[] = ["user.".$key, 'like', '%'.$value.'%'];
+        foreach ($input as $key => $value){
+            if($key=="id_department")
+                $filter[] = ["user.".$key, '=', $value];
+            else
+                $filter[] = ["user.".$key, 'like', '%'.$value.'%'];
+        }
 
         $listUsers = User::where($filter)->get();
 

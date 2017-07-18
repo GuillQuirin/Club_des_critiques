@@ -34,7 +34,7 @@ class ElementController extends Controller
                                         'category.id_parent as id_parent',
                                         'category.id as id_category',
                                         'element.date_publication as date')
-                            
+                            ->where('element.is_deleted', '<>', 1)
                             ->orderBy('date_publication', 'desc')
                             ->get();
         $popUp = 'element.show';

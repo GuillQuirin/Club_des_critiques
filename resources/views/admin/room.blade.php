@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="room_date_end" class="col-2 col-form-label">Status : </label>
+                        <label for="room_date_end" class="col-2 col-form-label">Statut : </label>
                         <div class="col-10">
                             <select id="room_status" name="status" class="form-control selectpicker" required>
                                 <option value="0">Terminé</option>
@@ -191,7 +191,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="edit_room_status" class="col-2 col-form-label">Status : </label>
+                        <label for="edit_room_status" class="col-2 col-form-label">Statut : </label>
                         <div class="col-10">
                             <select id="edit_room_status" name="status" class="form-control selectpicker" required>
                                 <option value="0">Terminé</option>

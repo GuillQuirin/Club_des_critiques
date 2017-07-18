@@ -93,6 +93,7 @@ class UserController extends Controller
                                              'element.creator as subName',
                                              'element.description',
                                              'element.url_picture as picture',
+                                             'element.url_api as link',
                                              'category.name as name_category',
                                              'category.id_parent as id_parent',
                                              'category.id as id_category')
@@ -553,8 +554,10 @@ class UserController extends Controller
      public function loadExchange(){
           if(Auth::check()){
                try{
-                    $elements =  DB::select(DB::raw('SELECT e.name as elementName, e.id as idElement, 
-                                                            c.name as categoryName, cp.name as categoryPName
+                    $elements =  DB::select(DB::raw('SELECT e.name as elementName, 
+                                                            e.id as idElement, 
+                                                            c.name as categoryName, 
+                                                            cp.name as categoryPName
                                                        FROM element e
                                                        LEFT OUTER JOIN category c ON c.id = e.id_category
                                                        LEFT OUTER JOIN category cp ON c.id_parent = cp.id
@@ -562,6 +565,7 @@ class UserController extends Controller
                                                             AND e.id IN (SELECT id_element 
                                                                            FROM user_element 
                                                                            WHERE id_user='.Auth::id().' 
+                                                                                AND is_exchangeable=1
                                                                                 AND is_deleted=0)
                                                        GROUP BY cp.name, c.name, e.name, e.id
                                                        ORDER BY cp.name, c.name, e.name, e.id'));

@@ -336,6 +336,9 @@
                                     if(value.id_department != undefined)
                                         html+= ' data-id_department="'+value.id_department+'"';
 
+                                    if(value.link != undefined)
+                                        html+= ' data-link="'+value.link+'"';
+
                                     if(redirect != undefined)
                                         html+= ' href="'+redirect+'/'+value.id+'"';
                                     else

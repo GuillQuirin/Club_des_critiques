@@ -32,6 +32,7 @@ class CategoryController extends Controller
                             ->leftJoin('element','element.id_category','=','category.id')
                             ->selectRaw('category.id, category.name, count(element.id) as nbElement')
                             ->where('category.id_parent', '=', $id)
+                            ->where('element.is_deleted', '<>', '1')
                             ->groupBy('category.id')
                             ->groupBy('category.name')
                             ->get();
@@ -53,8 +54,11 @@ class CategoryController extends Controller
                                         'category.id_parent as id_parent',
                                         'category.id as id_category',
                                         'element.date_publication as date')
-                            ->where('element.id_category', '=', $id)
-                            ->orWhere('category.id_parent', '=', $id)
+                            ->where(function($q) use ($id){
+                                $q->where('element.id_category', '=', $id)
+                                    ->orWhere('category.id_parent', '=', $id);
+                            })
+                            ->where('element.is_deleted', '<>', '1')
                             ->orderBy('date_publication', 'desc')
                             ->get();
         $popUp = 'element.show';

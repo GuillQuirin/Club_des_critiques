@@ -99,6 +99,8 @@ class AjaxController extends Controller
               $filter[] = ["element.".$key, 'like', '%'.$value.'%'];
         }
 
+        $filter[] = ["element.is_deleted", '<>', 1];
+
         $listElements = DB::table('element')
                             ->leftJoin('category', 'element.id_category', '=', 'category.id')
                             ->select(   'element.id', 
@@ -107,6 +109,7 @@ class AjaxController extends Controller
                                         'element.creator as subName',
                                         'element.id_category',
                                         'element.url_picture as picture',
+                                        'element.url_api as link',
                                         'category.name as name_category')
                             ->where($filter)
                             ->where(function($query) use($id_cat){

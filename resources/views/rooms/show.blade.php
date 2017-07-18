@@ -18,15 +18,17 @@
             <small>Du {{date("d/m/Y", strtotime($header->date_start))}}
                 au {{date("d/m/Y", strtotime($header->date_end))}}</small>
         </h1>
-        @if((Auth::check()) && (Auth::user()->id_status == 7 || Auth::user()->id_status == 3))
-            <button type="button"
-                    id="update-room"
-                    class="btn btn-default btn-lg"
-                    data-toggle="modal"
-                    data-target="#updateRoom"> Modifier le salon
-                 <span class="glyphicon glyphicon-cog" id="glyph_update-room" aria-hidden="true"></span>
-            </button>
-        @endif
+            @if (Auth::check() && (Auth::user()->id_status == 3 || $user_room->contains(function ($user_room, $key) use ($header) {
+            return $user_room->id_room == $header->id && $user_room->id_user == Auth::id() && $user_room->status_user == 2;
+            })))
+                <button type="button"
+                        id="update-room"
+                        class="btn btn-default btn-lg"
+                        data-toggle="modal"
+                        data-target="#updateRoom"> Modifier le salon
+                     <span class="glyphicon glyphicon-cog" id="glyph_update-room" aria-hidden="true"></span>
+                </button>
+            @endif
         <input type="hidden" value="{{$header->id}}" id="room"/>
         <div class="col-sm-3 col-sm-offset-1 col-xs-5 col-xs-offset-3">
             <img src="{{$element->url_picture}}"

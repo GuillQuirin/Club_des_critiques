@@ -64,7 +64,7 @@ class AdminController extends Controller
         $slogan->value = $request->home_slogan;
         $slogan->save();
 
-        if (Input::file('image')->isValid()) {
+        if ( null != Input::file('image') && Input::file('image')->isValid()) {
             Input::file('image')->move('images', 'welcome.jpeg'); 
             Session::flash('success', 'Upload successfully'); 
         }

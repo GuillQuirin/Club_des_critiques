@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('404', ['as' => '404', 'uses' => 'WelcomeController@error404']);
+
 
 /****** ACCUEIL ******/
 

@@ -36,7 +36,9 @@
                             </td>
                             <td>
                                 @if($room->status === 1)
-                                    @if(($user_room->contains('id_user', Auth::id())) && ($user_room->contains('id_room', $room->id)))
+                                    @if ($user_room->contains(function ($user_room, $key) use ($room) {
+            return $user_room->id_room == $room->id && $user_room->id_user == Auth::id();
+            }))
                                         <a class="btn" href="{{route('show_room', [ 'id' => $room->id ])}}">
                                             Accéder au salon
                                         </a>
@@ -50,48 +52,48 @@
                                                     class="btn btn-success"
                                                     data-toggle="modal"
                                                     data-target="#joinRoom"
-                                                    data-title="{{$room->room['element']['name']}}"
-                                                    data-autor="{{$room->room['element']['creator']}}"
+                                                    data-title="{{$room->element->name}}"
+                                                    data-autor="{{$room->element->creator}}"
                                                     data-salon="Salon 1">
                                                 M'inscrire au salon
                                             </button>
+                                            <div class="modal fade" id="joinRoom" tabindex="300" role="dialog"
+                                                 aria-labelledby="myModalLabel">
+                                                {{ Form::open(['route' => 'join_room', 'method' => 'post', 'class' => 'col-md-12']) }}
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <h1 class="text-center text-uppercase col-xs-10 col-sm-12">{{$room->element->name}}
+                                                                <small>({{$room->element->creator}})</small>
+                                                            </h1>
+                                                            <div class="text-center" id="div_note">
+                                                                <h3>Donnez une note !</h3>
+                                                                <div class="rating">
+                                                                    <a href="#4" title="Donner 4 étoiles">☆</a>
+                                                                    <a href="#3" title="Donner 3 étoiles">☆</a>
+                                                                    <a href="#2" title="Donner 2 étoiles">☆</a>
+                                                                    <a href="#1" title="Donner 1 étoile">☆</a>
+                                                                </div>
+                                                            </div>
+                                                            <input type="hidden" name="element" value="{{$room->element->id}}"/>
+                                                            <input type="hidden" id="note" name="note"/>
+                                                        </div>
+                                                        <div class="modal-footer text-center">
+                                                            <button type="submit" class="btn btn-success btn-lg">Rejoindre
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {{Form::close()}}
                                         @else
                                             Salon déjà rejoint !
                                         @endif
                                     @endif
-                                    <div class="modal fade" id="joinRoom" tabindex="300" role="dialog"
-                                         aria-labelledby="myModalLabel">
-                                        {{ Form::open(['route' => 'join_room', 'method' => 'post', 'class' => 'col-md-12']) }}
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close"><span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h1 class="text-center text-uppercase col-xs-10 col-sm-12">{{$room->element->name}}
-                                                        <small>({{$room->element->creator}})</small>
-                                                    </h1>
-                                                    <div class="text-center" id="div_note">
-                                                        <h3>Donnez une note !</h3>
-                                                        <div class="rating">
-                                                            <a href="#4" title="Donner 4 étoiles">☆</a>
-                                                            <a href="#3" title="Donner 3 étoiles">☆</a>
-                                                            <a href="#2" title="Donner 2 étoiles">☆</a>
-                                                            <a href="#1" title="Donner 1 étoile">☆</a>
-                                                        </div>
-                                                    </div>
-                                                    <input type="hidden" name="element" value="{{$room->element->id}}"/>
-                                                    <input type="hidden" id="note" name="note"/>
-                                                </div>
-                                                <div class="modal-footer text-center">
-                                                    <button type="submit" class="btn btn-success btn-lg">Rejoindre
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {{Form::close()}}
                                     </div>
                                 @elseif(($room->status === 3))
                                     Salon interrompu
@@ -126,7 +128,7 @@
                 }
             });
 
-            $('#join').on('show.bs.modal', function (event) {
+            $('#joinRoom').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget)
                 var title = button.data('title')
                 var autor = button.data('autor')

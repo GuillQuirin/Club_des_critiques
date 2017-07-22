@@ -111,10 +111,11 @@
                             <textarea class="form-control" name="message" id="message" rows="3" disabled>
                                 Vous avez été bloqué sur ce salon. Vous ne pouvez plus envoyer de message.
                             </textarea>
+                        @elseif($header->date_start > date("Y-m-d H:i:s"))
+                            <textarea class="form-control text-left" name="message" id="message" disabled>Ce salon n'a pas encore commencé. Revenez à partir du {{date("d/m/Y H:i", strtotime($header->date_start))}} pour pouvoir échanger avec les autres utilisateurs.</textarea>
                         @else
                             <textarea class="form-control" name="message" id="message" rows="3"></textarea>
-                            <span class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-xs-12"
-                                  style="margin-top: 10px">
+                            <span class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-xs-12" style="margin-top: 10px">
 		                        <button class="btn btn-warning btn-lg btn-block" id="send" name="send">Envoyer le message</button>
 		                    </span>
                         @endif
@@ -284,6 +285,13 @@
                                class="form-control"
                                name="autor_name"
                                value="{{$element->creator}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="end_date">Date de début</label>
+                        <input type="date"
+                               class="form-control"
+                               name="start_date"
+                               value="{{date("Y-m-d", strtotime($header->date_start))}}"/>
                     </div>
                     <div class="form-group">
                         <label for="end_date">Date de fin</label>

@@ -231,41 +231,17 @@ class RoomsController extends Controller
                 'is_deleted' => 0
             ]
         );
-        return Redirect::route('futur_rooms');
-    }
 
-    /////// ADMINISTRATION //////
+        DB::table('user_room')->insert(
+            [
+                'id_user' => Auth::id(),
+                'id_room' => $request->room,
+                'status_user' => 1
+            ]
+        );
+        //Ajouté pour que le client puisse tester un salon directement
 
-    /**
-     * Création d'un salon
-     *
-     * @return view
-     */
-    public function add()
-    {
-        # code...
-    }
-
-    /**
-     * Modification d'un salon
-     *
-     * @param  int $id
-     * @return view
-     */
-    public function edit($id)
-    {
-        # code...
-    }
-
-    /**
-     * Suppression d'un salon
-     *
-     * @param  int $id
-     * @return view
-     */
-    public function delete($id)
-    {
-        # code...
+        return Redirect::route('my_rooms');
     }
 
     public function addMessage()
@@ -376,20 +352,12 @@ class RoomsController extends Controller
             }
         }
 
-        /*echo "Nombre de participants : " . $nb_user . "<br>";
-        echo "Note 1/4 : " . $nb_one . "<br>";
-        echo "Note 2/4 : " . $nb_two . "<br>";
-        echo "Note 3/4 : " . $nb_three . "<br>";
-        echo "Note 4/4 : " . $nb_four . "<br>";*/
-
         //Détermine le nombre de salons nécessaires
         if ($nb_user > 20) {
             $nb_room = round(($nb_user / 20), 0) + 1;
         } else {
             $nb_room = 1;
         }
-
-        //echo "Nombre de salon nécessaire : " . $nb_room . "<br>";
 
         //Détermine le nombre de notes par salon
         $nb_one_room = round($nb_one / $nb_room, 0);
@@ -569,13 +537,13 @@ class RoomsController extends Controller
             ]);*/
     }
 
-    public
-    function updateRoom(Request $request)
+    public function updateRoom(Request $request)
     {
         DB::table('room')
             ->where('id', '=', $request->id_room)
             ->update([
                 'name' => $request->room_name,
+                'date_start' => $request->start_date,
                 'date_end' => $request->end_date
             ]);
         DB::table('element')
@@ -588,8 +556,7 @@ class RoomsController extends Controller
         return Redirect::route('show_room', ['id' => $request->id_room]);
     }
 
-    public
-    function interruptRoom(Request $request)
+    public function interruptRoom(Request $request)
     {
         DB::table('room')
             ->where('id', '=', $request->id_room)

@@ -42,8 +42,10 @@
                                         class="btn btn-success"
                                         data-toggle="modal"
                                         data-target="#join"
-                                        data-title="{{$room->room['element']['name']}}"
-                                        data-autor="{{$room->room['element']['creator']}}"
+                                        data-title="{{$room->element->name}}"
+                                        data-autor="{{$room->element->creator}}"
+                                        data-id_room="{{$room->id}}"
+                                        data-id_element="{{$room->element->id}}"
                                         data-salon="Salon 1">
                                     M'inscrire au salon
                                 </button>
@@ -61,7 +63,8 @@
                                 </div>
                                 {{ Form::open(['route' => 'join_room', 'method' => 'post', 'class' => 'col-md-12']) }}
                                 <div class="modal-body">
-                                    <h1 class="text-center text-uppercase col-xs-10 col-sm-12">{{$room->element->name}}<small>({{$room->element->creator}})</small></h1>
+                                    <h1 id="title" class="text-center text-uppercase col-xs-10 col-sm-12"></h1>
+                                    <h1 id="autor" class="text-center text-uppercase col-xs-10 col-sm-12 autor"></h1>
                                     <div class="text-center" id="div_note">
                                         <h3>Donnez une note !</h3>
                                         <div class="rating">
@@ -71,12 +74,12 @@
                                             <a href="#1" title="Donner 1 étoile">☆</a>
                                         </div>
                                     </div>
-                                    <input type="hidden" name="element" value="{{$room->element->id}}"/>
+                                    <input type="hidden" id="element" name="element"/>
+                                    <input type="hidden" id="room" name="room"/>
                                     <input type="hidden" id="note" name="note"/>
                                 </div>
                                 <div class="modal-footer text-center">
                                     <button type="submit" class="btn btn-success btn-lg">Rejoindre</button>
-                                    <!--<a href="{{route('join_room', ['id' => $room->id])}}" type="button" class="btn btn-primary">Rejoindre</a>-->
                                 </div>
                                 {{Form::close()}}
                             </div>
@@ -112,10 +115,13 @@
                 var title = button.data('title')
                 var autor = button.data('autor')
                 var salon = button.data('salon')
+                var id_room = button.data('id_room')
+                var id_element = button.data('id_element')
                 var modal = $(this)
-                modal.find('.modal-body #title').text(title + " - " + salon)
-                modal.find('.modal-body #autor small').text(autor)
-                modal.find('.modal-title').text(salon)
+                modal.find('.modal-body #title').text(title)
+                modal.find('.modal-body #autor').text("(" + autor + ")")
+                modal.find('.modal-body #room').val(id_room)
+                modal.find('.modal-body #element').val(id_element)
             })
 
             $('.rating').children('a').each(function(){

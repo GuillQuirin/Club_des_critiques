@@ -133,6 +133,13 @@ tr{
     margin:0px;
 }
 
+.autor{
+    font-weight:400;
+    color:#777;
+    line-height:1;
+    font-size: 25px;
+}
+
 #div_note{
     padding-top:80px;
 }

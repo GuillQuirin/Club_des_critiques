@@ -287,7 +287,11 @@ class RoomsController extends Controller
     public function inviteUser(Request $request)
     {
         $sender = User::where('id', Auth::id())->first();
-        $receiver = User::where('id', $request->id_user)->first();
+        $receiver = User::where([
+            ['first_name', '=', substr($request->autocomplete_user,0,-3)],
+            ['last_name', 'like', substr($request->autocomplete_user,-2,1)."%"]
+        ])->first();
+
         $room = Room::where('id', $request->id_room)->first();
         $data = [
             'sender' => $sender,
@@ -298,6 +302,8 @@ class RoomsController extends Controller
             $message->to($receiver->email);
             $message->subject('Club des critiques : un ami vous a invité à rejoindre un salon');
         });
+
+        return Redirect::route('show_room', ['id' => $request->id_room]);
     }
 
     public function reportUser(Request $request)

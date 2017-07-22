@@ -31,7 +31,8 @@
         <div class="col-xs-12 col-sm-6 col-md-6">
             <div class="form-group">
               {!! Form::label('locationInfo','Localisation') !!}
-              {!! Form::select('id_department',$department, $infos->department_code,['id' => 'locationInfo']) !!}
+              {!! Form::select('id_department',$department, $infos->department_code,['id' => 'locationInfo',
+                                                                                      'class' => 'form-control']) !!}
             </div>
         </div>
       </div>

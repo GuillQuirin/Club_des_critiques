@@ -88,7 +88,11 @@
                             <td class="user-id">{{ $user->id }}</td>
                             <td>{{ $user->last_name }}</td>
                             <td>{{ $user->first_name }}</td>
-                            <td>{{ $user->department->name }}</td>
+                            <td>
+                                @if(isset($user->department))
+                                    {{ $user->department->name }}
+                                @endif
+                            </td>
                             <td>{{ $user->picture }}</td>
                             <td>{{ $user->email }}</td>
                             <td class="user-status">{{ $user->status->label }}</td>

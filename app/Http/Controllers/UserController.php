@@ -97,13 +97,26 @@ class UserController extends Controller
                                                   'element.url_api as link',
                                                   'category.name as name_category',
                                                   'category.id_parent as id_parent',
-                                                  'category.id as id_category')
+                                                  'category.id as id_category',
+                                                  DB::raw(" (SELECT AVG(user_element.mark) 
+                                                                 FROM user_element 
+                                                                 WHERE user_element.id_element = element.id) as mark"))
                                         ->where([
                                              ['user.id', '=', $id],
                                              ['user_element.is_exchangeable', '=', 1],
                                              ['user.is_deleted', '=', 0]
                                         ])
+                                        ->groupBy('element.id', 
+                                                  'element.name', 
+                                                  'element.creator',
+                                                  'element.description',
+                                                  'element.url_picture',
+                                                  'element.url_api',
+                                                  'category.name',
+                                                  'category.id_parent',
+                                                  'category.id')
                                         ->get();
+                                        //var_dump($exchangedElements);die;
 
      		return view('user.show')
                          ->with('infos',$infos)

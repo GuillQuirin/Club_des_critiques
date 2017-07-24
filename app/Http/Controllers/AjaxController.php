@@ -103,6 +103,7 @@ class AjaxController extends Controller
 
         $listElements = DB::table('element')
                             ->leftJoin('category', 'element.id_category', '=', 'category.id')
+                            ->leftJoin('user_element', 'user_element.id_element', '=', 'element.id')
                             ->select(   'element.id', 
                                         'element.name', 
                                         'element.description', 
@@ -110,7 +111,8 @@ class AjaxController extends Controller
                                         'element.id_category',
                                         'element.url_picture as picture',
                                         'element.url_api as link',
-                                        'category.name as name_category')
+                                        'category.name as name_category',
+                                        DB::raw('AVG(user_element.mark) as mark'))
                             ->where($filter)
                             ->where(function($query) use($id_cat){
                                 if($id_cat!="")
@@ -118,6 +120,15 @@ class AjaxController extends Controller
                                         ->orWhere('category.id_parent', 'like',$id_cat);
                             })
                             ->orderBy('date_publication',$order)
+                            ->groupBy('element.id', 
+                                    'element.name', 
+                                    'element.description', 
+                                    'element.creator',
+                                    'element.id_category',
+                                    'element.url_picture',
+                                    'element.url_api',
+                                    'element.date_publication',
+                                    'category.name')
                             ->get();
 
         return json_encode($listElements);

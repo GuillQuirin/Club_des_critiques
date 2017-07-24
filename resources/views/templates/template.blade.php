@@ -339,6 +339,9 @@
                                     if(value.link != undefined)
                                         html+= ' data-link="'+value.link+'"';
 
+                                    if(value.mark != undefined)
+                                        html+= ' data-mark="'+value.mark+'"';
+
                                     if(redirect != undefined)
                                         html+= ' href="'+redirect+'/'+value.id+'"';
                                     else

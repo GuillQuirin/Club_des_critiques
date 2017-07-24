@@ -45,6 +45,7 @@ class CategoryController extends Controller
 
             $listElements = DB::table('element')
                                 ->leftJoin('category', 'element.id_category', '=', 'category.id')
+                                ->leftJoin('user_element', 'user_element.id_element', '=', 'element.id')
                                 ->select(   'element.id',
                                             'element.name',
                                             'element.creator as subName',
@@ -55,13 +56,25 @@ class CategoryController extends Controller
                                             'category.name as name_category',
                                             'category.id_parent as id_parent',
                                             'category.id as id_category',
-                                            'element.date_publication as date')
+                                            'element.date_publication as date',
+                                            DB::raw('AVG(user_element.mark) as mark'))
                                 ->where(function($q) use ($id){
                                     $q->where('element.id_category', '=', $id)
                                         ->orWhere('category.id_parent', '=', $id);
                                 })
                                 ->where('element.is_deleted', '<>', '1')
                                 ->orderBy('date_publication', 'desc')
+                                ->groupBy('element.id',
+                                            'element.name',
+                                            'element.creator',
+                                            'element.description',
+                                            'element.url_picture',
+                                            'element.url_api',
+                                            'element.id_category',
+                                            'category.name',
+                                            'category.id_parent',
+                                            'category.id',
+                                            'element.date_publication')
                                 ->get();
             $popUp = 'element.show';
 

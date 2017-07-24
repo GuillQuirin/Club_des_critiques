@@ -30,6 +30,13 @@
             <a id="route_category_parent" data-route="{{route('list_category')}}"><span id="name_category"></span></a>
         </div>
     </div>
+
+    <!-- Note -->
+    <div class="row">
+        <div class="text-center col-10 col-md-offset-1">Note des utilisateurs de cette oeuvre :
+            <span id="mark"></span> / 4
+        </div>
+    </div>
 </div>
 
 <div class="modal-footer">

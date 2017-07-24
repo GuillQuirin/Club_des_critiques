@@ -61,6 +61,11 @@ $(document).ready(function(){
         modal.find('#name').html(button.data('name'));
         modal.find('#subName').html(button.data('subname'));
         modal.find('#description').html(button.data('description'));
+        
+        if(button.data('mark') && parseInt(button.data('mark')))
+            modal.find('#mark').html(button.data('mark'));
+        else
+            modal.find('#mark').html("Pas de note");
 
         // ELEMENT : url shop
         if(button.data('name_category') != undefined){

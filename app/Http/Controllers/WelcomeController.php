@@ -36,6 +36,7 @@ class WelcomeController extends Controller
 		$popUp = 'element.show';
      	$listElements = DB::table('element')
      							->leftJoin('category', 'element.id_category', '=', 'category.id')
+     							->leftJoin('user_element', 'user_element.id_element', '=', 'element.id')
      							->select(	'element.id', 
  											'element.name', 
  											'element.creator as subName',
@@ -44,8 +45,19 @@ class WelcomeController extends Controller
  											'element.url_api as link',
  											'category.name as name_category',
 	                                        'category.id_parent as id_parent',
-	                                        'category.id as id_category')
+	                                        'category.id as id_category',
+											DB::raw('AVG(user_element.mark) as mark')
+								)
      							->where('is_new', '=', '1')
+     							->groupBy('element.id',
+     										'element.name',
+     										'element.creator',
+     										'element.description',
+ 											'element.url_picture',
+ 											'element.url_api',
+ 											'category.name',
+	                                        'category.id_parent',
+	                                        'category.id')
      							->get();
 
 		return view('welcome')

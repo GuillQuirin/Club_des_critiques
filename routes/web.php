@@ -109,7 +109,8 @@ Route::get('404', ['as' => '404', 'uses' => 'WelcomeController@error404']);
     Route::post('room/addMessage', ['as' => '/', 'uses' => 'RoomsController@addMessage'] );
     Route::post('room/getMessage', ['as' => '/', 'uses' => 'RoomsController@getMessage'] );
 	//Route::get('room/dispatch/', ['as' => 'dispatch_user', 'uses' => 'RoomsController@dispatchUser']);
-    //Route::get('join_room/{token}', ['as' => 'join_room', 'uses' => 'RoomController@checkToken']);
+    Route::get('join_room', ['as' => 'join_invitation', 'uses' => 'RoomsController@displayInvitation']);
+    Route::post('join_room', ['as' => 'valid_invitation', 'uses' => 'RoomsController@addInvitation']);
 
 /****** ADMINISTRATION ******/
 

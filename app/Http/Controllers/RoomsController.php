@@ -306,6 +306,37 @@ class RoomsController extends Controller
         return Redirect::route('show_room', ['id' => $request->id_room]);
     }
 
+     public function displayInvitation(){
+        return (Auth::check()) ? view('rooms.invitation') :  redirect('/');
+     }
+
+     public function addInvitation(Request $request){
+        if(Auth::check()){
+            $header = Room::findOrFail($request->room);
+            $element = Element::findOrFail($header->id_element);
+            
+            DB::table('user_room')->insert(
+                [
+                    'id_user' => Auth::id(),
+                    'id_room' => $request->room,
+                    'status_user' => 1
+                ]
+            );
+
+            DB::table('user_element')->insert(
+                [
+                    'id_user' => Auth::id(),
+                    'id_element' => $header->id_element,
+                    'mark' => $request->note,
+                    'is_exchangeable' => 0,
+                    'is_deleted' => 0
+                ]
+            );
+        }
+        //return view('rooms.invitation'); 
+        return redirect('/');
+     }
+
     public function reportUser(Request $request)
     {
         DB::table('report')->insert([

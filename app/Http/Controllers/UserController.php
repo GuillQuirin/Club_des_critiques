@@ -74,42 +74,60 @@ class UserController extends Controller
 	{
           //Liste des infos de l'utilisateur
           $infos = User::find($id);
-          $infos->picture = ($infos->picture) ? $infos->picture : "/images/user.png";
+          if(isset($infos)){
+               $infos->picture = ($infos->picture) ? $infos->picture : "/images/user.png";
 
-          $myAccount  = (Auth::check() && Auth::id() == $id);
-
-
-          $listDepartments = $this->getDepartments();
+               $myAccount  = (Auth::check() && Auth::id() == $id);
 
 
-          //Liste des oeuvres que l'utilisateur souhaite échanger
-          $popUp = 'element.show';
-          $exchangedElements = DB::table('user_element')
-                                   ->leftJoin('user', 'user.id' , '=' , 'user_element.id_user')
-                                   ->leftJoin('element', 'element.id', '=', 'user_element.id_element')
-                                   ->leftJoin('category', 'category.id', '=', 'element.id_category')
-                                   ->select( 'element.id', 
-                                             'element.name', 
-                                             'element.creator as subName',
-                                             'element.description',
-                                             'element.url_picture as picture',
-                                             'category.name as name_category',
-                                             'category.id_parent as id_parent',
-                                             'category.id as id_category')
-                                   ->where([
-                                        ['user.id', '=', $id],
-                                        ['user_element.is_exchangeable', '=', 1],
-                                        ['user.is_deleted', '=', 0]
-                                   ])
-                                   ->get();
+               $listDepartments = $this->getDepartments();
 
-		return view('user.show')
-                    ->with('infos',$infos)
-                    ->with('myAccount',$myAccount)
-                    ->with('department', $listDepartments)
-                    ->with('grid', $exchangedElements)
-                    ->with('nbElements', 8)
-                    ->with(compact('popUp', $popUp));
+
+               //Liste des oeuvres que l'utilisateur souhaite échanger
+               $popUp = 'element.show';
+               $exchangedElements = DB::table('user_element')
+                                        ->leftJoin('user', 'user.id' , '=' , 'user_element.id_user')
+                                        ->leftJoin('element', 'element.id', '=', 'user_element.id_element')
+                                        ->leftJoin('category', 'category.id', '=', 'element.id_category')
+                                        ->select( 'element.id', 
+                                                  'element.name', 
+                                                  'element.creator as subName',
+                                                  'element.description',
+                                                  'element.url_picture as picture',
+                                                  'element.url_api as link',
+                                                  'category.name as name_category',
+                                                  'category.id_parent as id_parent',
+                                                  'category.id as id_category',
+                                                  DB::raw(" (SELECT AVG(user_element.mark) 
+                                                                 FROM user_element 
+                                                                 WHERE user_element.id_element = element.id) as mark"))
+                                        ->where([
+                                             ['user.id', '=', $id],
+                                             ['user_element.is_exchangeable', '=', 1],
+                                             ['user.is_deleted', '=', 0]
+                                        ])
+                                        ->groupBy('element.id', 
+                                                  'element.name', 
+                                                  'element.creator',
+                                                  'element.description',
+                                                  'element.url_picture',
+                                                  'element.url_api',
+                                                  'category.name',
+                                                  'category.id_parent',
+                                                  'category.id')
+                                        ->get();
+                                        //var_dump($exchangedElements);die;
+
+     		return view('user.show')
+                         ->with('infos',$infos)
+                         ->with('myAccount',$myAccount)
+                         ->with('department', $listDepartments)
+                         ->with('grid', $exchangedElements)
+                         ->with('nbElements', 8)
+                         ->with(compact('popUp', $popUp));
+          }
+          else
+               return redirect()->route('home');
 	}
 
 
@@ -553,8 +571,10 @@ class UserController extends Controller
      public function loadExchange(){
           if(Auth::check()){
                try{
-                    $elements =  DB::select(DB::raw('SELECT e.name as elementName, e.id as idElement, 
-                                                            c.name as categoryName, cp.name as categoryPName
+                    $elements =  DB::select(DB::raw('SELECT e.name as elementName, 
+                                                            e.id as idElement, 
+                                                            c.name as categoryName, 
+                                                            cp.name as categoryPName
                                                        FROM element e
                                                        LEFT OUTER JOIN category c ON c.id = e.id_category
                                                        LEFT OUTER JOIN category cp ON c.id_parent = cp.id
@@ -562,6 +582,7 @@ class UserController extends Controller
                                                             AND e.id IN (SELECT id_element 
                                                                            FROM user_element 
                                                                            WHERE id_user='.Auth::id().' 
+                                                                                AND is_exchangeable=1
                                                                                 AND is_deleted=0)
                                                        GROUP BY cp.name, c.name, e.name, e.id
                                                        ORDER BY cp.name, c.name, e.name, e.id'));

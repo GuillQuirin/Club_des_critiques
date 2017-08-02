@@ -18,15 +18,17 @@
             <small>Du {{date("d/m/Y", strtotime($header->date_start))}}
                 au {{date("d/m/Y", strtotime($header->date_end))}}</small>
         </h1>
-        @if((Auth::check()) && (Auth::user()->id_status == 7 || Auth::user()->id_status == 3))
-            <button type="button"
-                    id="update-room"
-                    class="btn btn-default btn-lg"
-                    data-toggle="modal"
-                    data-target="#updateRoom"> Modifier le salon
-                 <span class="glyphicon glyphicon-cog" id="glyph_update-room" aria-hidden="true"></span>
-            </button>
-        @endif
+            @if (Auth::check() && (Auth::user()->id_status == 3 || $user_room->contains(function ($user_room, $key) use ($header) {
+            return $user_room->id_room == $header->id && $user_room->id_user == Auth::id() && $user_room->status_user == 2;
+            })))
+                <button type="button"
+                        id="update-room"
+                        class="btn btn-default btn-lg"
+                        data-toggle="modal"
+                        data-target="#updateRoom"> Modifier le salon
+                     <span class="glyphicon glyphicon-cog" id="glyph_update-room" aria-hidden="true"></span>
+                </button>
+            @endif
         <input type="hidden" value="{{$header->id}}" id="room"/>
         <div class="col-sm-3 col-sm-offset-1 col-xs-5 col-xs-offset-3">
             <img src="{{$element->url_picture}}"
@@ -109,10 +111,11 @@
                             <textarea class="form-control" name="message" id="message" rows="3" disabled>
                                 Vous avez été bloqué sur ce salon. Vous ne pouvez plus envoyer de message.
                             </textarea>
+                        @elseif($header->date_start > date("Y-m-d H:i:s"))
+                            <textarea class="form-control text-left" name="message" id="message" disabled>Ce salon n'a pas encore commencé. Revenez à partir du {{date("d/m/Y H:i", strtotime($header->date_start))}} pour pouvoir échanger avec les autres utilisateurs.</textarea>
                         @else
                             <textarea class="form-control" name="message" id="message" rows="3"></textarea>
-                            <span class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-xs-12"
-                                  style="margin-top: 10px">
+                            <span class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-xs-12" style="margin-top: 10px">
 		                        <button class="btn btn-warning btn-lg btn-block" id="send" name="send">Envoyer le message</button>
 		                    </span>
                         @endif
@@ -282,6 +285,13 @@
                                class="form-control"
                                name="autor_name"
                                value="{{$element->creator}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="end_date">Date de début</label>
+                        <input type="date"
+                               class="form-control"
+                               name="start_date"
+                               value="{{date("Y-m-d", strtotime($header->date_start))}}"/>
                     </div>
                     <div class="form-group">
                         <label for="end_date">Date de fin</label>

@@ -32,39 +32,61 @@ class CategoryController extends Controller
                             ->leftJoin('element','element.id_category','=','category.id')
                             ->selectRaw('category.id, category.name, count(element.id) as nbElement')
                             ->where('category.id_parent', '=', $id)
+                            ->where('element.is_deleted', '<>', '1')
                             ->groupBy('category.id')
                             ->groupBy('category.name')
                             ->get();
                             //var_dump($subCategory);die;
-        $listSubCategory = [];
-          foreach ($subCategory as $key => $category)
-               $listSubCategory[$category->id] = $category->name."(".$category->nbElement.")";
+    
+        if(isset($infoCategory[0]) && isset($subCategory[0])){
+            $listSubCategory = [];
+              foreach ($subCategory as $key => $category)
+                   $listSubCategory[$category->id] = $category->name."(".$category->nbElement.")";
 
-        $listElements = DB::table('element')
-                            ->leftJoin('category', 'element.id_category', '=', 'category.id')
-                            ->select(   'element.id',
-                                        'element.name',
-                                        'element.creator as subName',
-                                        'element.description',
-                                        'element.url_picture as picture',
-                                        'element.url_api as link',
-                                        'element.id_category',
-                                        'category.name as name_category',
-                                        'category.id_parent as id_parent',
-                                        'category.id as id_category',
-                                        'element.date_publication as date')
-                            ->where('element.id_category', '=', $id)
-                            ->orWhere('category.id_parent', '=', $id)
-                            ->orderBy('date_publication', 'desc')
-                            ->get();
-        $popUp = 'element.show';
+            $listElements = DB::table('element')
+                                ->leftJoin('category', 'element.id_category', '=', 'category.id')
+                                ->leftJoin('user_element', 'user_element.id_element', '=', 'element.id')
+                                ->select(   'element.id',
+                                            'element.name',
+                                            'element.creator as subName',
+                                            'element.description',
+                                            'element.url_picture as picture',
+                                            'element.url_api as link',
+                                            'element.id_category',
+                                            'category.name as name_category',
+                                            'category.id_parent as id_parent',
+                                            'category.id as id_category',
+                                            'element.date_publication as date',
+                                            DB::raw('AVG(user_element.mark) as mark'))
+                                ->where(function($q) use ($id){
+                                    $q->where('element.id_category', '=', $id)
+                                        ->orWhere('category.id_parent', '=', $id);
+                                })
+                                ->where('element.is_deleted', '<>', '1')
+                                ->orderBy('date_publication', 'desc')
+                                ->groupBy('element.id',
+                                            'element.name',
+                                            'element.creator',
+                                            'element.description',
+                                            'element.url_picture',
+                                            'element.url_api',
+                                            'element.id_category',
+                                            'category.name',
+                                            'category.id_parent',
+                                            'category.id',
+                                            'element.date_publication')
+                                ->get();
+            $popUp = 'element.show';
 
-		return view('category.show')
-                ->with('infoCategory', $infoCategory[0])
-                ->with('listSubCategory', $listSubCategory)
-                ->with('nbElements', 8)
-                ->with('grid', $listElements)
-                ->with(compact('popUp', $popUp));
+    		return view('category.show')
+                    ->with('infoCategory', $infoCategory[0])
+                    ->with('listSubCategory', $listSubCategory)
+                    ->with('nbElements', 8)
+                    ->with('grid', $listElements)
+                    ->with(compact('popUp', $popUp));
+        }
+        else
+            return redirect()->route('home');
 	}
 
     /** 

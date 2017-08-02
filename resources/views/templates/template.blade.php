@@ -122,13 +122,7 @@
                         <div id="nextRoomDetails" class="dropdown-menu">
                             <p>Prochain salon : <span class="room"></span></p>
                             <p>Oeuvre : <span class="element"></span></p>
-                            <p>Oeuvre : <span class="element"></span></p>
                             <p>Date de lancement : <span class="date"></span></p>
-                            @if(Auth::check())
-                                <a data-redirect="{{route('next_room')}}"></a>
-                            @else
-                                <p>Connectez-vous pour accèder à la page du salon</p>
-                            @endif
                         </div>
                     </li>
                     
@@ -230,9 +224,9 @@
         <footer class="footer">
 			<div class="container text-center">
 				<span class="text-muted">
-                        <a href="{{ route('home')}}#contact_us">Nous contacter</a>
+                        {{-- <a href="{{ route('home')}}#contact_us">Nous contacter</a> --}}
                         <a href="/"><img class="logo" src="/images/logo.png" alt="logo"></a>
-                        <a href="#">Copyright</a>
+                        {{-- <a href="#">Copyright</a> --}}
                 </span>
 			</div>
 		</footer>
@@ -341,6 +335,12 @@
                                     
                                     if(value.id_department != undefined)
                                         html+= ' data-id_department="'+value.id_department+'"';
+
+                                    if(value.link != undefined)
+                                        html+= ' data-link="'+value.link+'"';
+
+                                    if(value.mark != undefined)
+                                        html+= ' data-mark="'+value.mark+'"';
 
                                     if(redirect != undefined)
                                         html+= ' href="'+redirect+'/'+value.id+'"';

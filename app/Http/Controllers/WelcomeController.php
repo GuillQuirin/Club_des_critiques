@@ -36,15 +36,28 @@ class WelcomeController extends Controller
 		$popUp = 'element.show';
      	$listElements = DB::table('element')
      							->leftJoin('category', 'element.id_category', '=', 'category.id')
+     							->leftJoin('user_element', 'user_element.id_element', '=', 'element.id')
      							->select(	'element.id', 
  											'element.name', 
  											'element.creator as subName',
  											'element.description',
  											'element.url_picture as picture',
+ 											'element.url_api as link',
  											'category.name as name_category',
 	                                        'category.id_parent as id_parent',
-	                                        'category.id as id_category')
+	                                        'category.id as id_category',
+											DB::raw('AVG(user_element.mark) as mark')
+								)
      							->where('is_new', '=', '1')
+     							->groupBy('element.id',
+     										'element.name',
+     										'element.creator',
+     										'element.description',
+ 											'element.url_picture',
+ 											'element.url_api',
+ 											'category.name',
+	                                        'category.id_parent',
+	                                        'category.id')
      							->get();
 
 		return view('welcome')
@@ -63,5 +76,9 @@ class WelcomeController extends Controller
 			setcookie("alert_cookies",1,time()+60*60*24*30*12);//Expiration dans 1 an
 		}
 
+	}
+
+	public function error404(){
+		return view('errors.404');
 	}
 }

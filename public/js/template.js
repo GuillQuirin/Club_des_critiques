@@ -29,10 +29,10 @@ $(document).ready(function(){
             $('#nextRoomDetails .room').html(nextRoom.nameRoom);
             $('#nextRoomDetails .element').html(nextRoom.nameElement);
             $('#nextRoomDetails .date').html(datestring);
-            $('#nextRoomDetails a').attr('href', $('#nextRoomDetails a')
+            /*$('#nextRoomDetails a').attr('href', $('#nextRoomDetails a')
                                     .data('redirect')+'/'+nextRoom.id)
                                     .html('Accèdez à la fiche du salon');
-
+            */
             $('[data-countdown]').each(function() {
                 var $this = $(this), finalDate = $(this).data('countdown');
                 $this.countdown(finalDate, function(event) {
@@ -61,6 +61,11 @@ $(document).ready(function(){
         modal.find('#name').html(button.data('name'));
         modal.find('#subName').html(button.data('subname'));
         modal.find('#description').html(button.data('description'));
+        
+        if(button.data('mark') && parseInt(button.data('mark')))
+            modal.find('#mark').html(button.data('mark'));
+        else
+            modal.find('#mark').html("Pas de note");
 
         // ELEMENT : url shop
         if(button.data('name_category') != undefined){

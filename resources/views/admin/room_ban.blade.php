@@ -22,7 +22,7 @@
                             <td>{{ $report->user_asker->first_name }} {{ $report->user_asker->last_name }}</td>
                             <td>{{ $report->room->name }} ({{ $report->room->id }})</td>
                             <td>{{ $report->reason }}</td>
-                            <td>{{ $report->date_created }}</td>
+                            <td>{{ date('d/m/Y H:i:s', strtotime($report->date_created)) }}</td>
                             <td id="report-status">
                             	@if($report->status == 0)
 	                                <i class="fa fa-check valide-ban-user-room" aria-hidden="true" id="{{ $report->id }}"></i>

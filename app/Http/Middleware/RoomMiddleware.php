@@ -17,7 +17,7 @@ class RoomMiddleware
     public function handle($request, Closure $next)
     {
         $user_room = UserRoom::where('id_room', $request->route()->parameters('id_room'))->get();
-        if ($request->user() === null || (!($user_room->contains($request->user()->id))))
+        if ($request->user() === null || (!($user_room->contains('id_user', $request->user()->id))))
         {
             return redirect()->route('home');
         }

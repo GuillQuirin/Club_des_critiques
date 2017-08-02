@@ -99,15 +99,20 @@ class AjaxController extends Controller
               $filter[] = ["element.".$key, 'like', '%'.$value.'%'];
         }
 
+        $filter[] = ["element.is_deleted", '<>', 1];
+
         $listElements = DB::table('element')
                             ->leftJoin('category', 'element.id_category', '=', 'category.id')
+                            ->leftJoin('user_element', 'user_element.id_element', '=', 'element.id')
                             ->select(   'element.id', 
                                         'element.name', 
                                         'element.description', 
                                         'element.creator as subName',
                                         'element.id_category',
                                         'element.url_picture as picture',
-                                        'category.name as name_category')
+                                        'element.url_api as link',
+                                        'category.name as name_category',
+                                        DB::raw('ROUND(AVG(user_element.mark),1) as mark'))
                             ->where($filter)
                             ->where(function($query) use($id_cat){
                                 if($id_cat!="")
@@ -115,6 +120,15 @@ class AjaxController extends Controller
                                         ->orWhere('category.id_parent', 'like',$id_cat);
                             })
                             ->orderBy('date_publication',$order)
+                            ->groupBy('element.id', 
+                                    'element.name', 
+                                    'element.description', 
+                                    'element.creator',
+                                    'element.id_category',
+                                    'element.url_picture',
+                                    'element.url_api',
+                                    'element.date_publication',
+                                    'category.name')
                             ->get();
 
         return json_encode($listElements);
@@ -128,8 +142,12 @@ class AjaxController extends Controller
      {
         $input = $request->all();
         $filter = [];
-        foreach ($input as $key => $value)
-            $filter[] = ["user.".$key, 'like', '%'.$value.'%'];
+        foreach ($input as $key => $value){
+            if($key=="id_department")
+                $filter[] = ["user.".$key, '=', $value];
+            else
+                $filter[] = ["user.".$key, 'like', '%'.$value.'%'];
+        }
 
         $listUsers = User::where($filter)->get();
 
@@ -254,8 +272,11 @@ class AjaxController extends Controller
     public function getUsersForRoom()
     {
         $roomId = Input::get('roomId');
-        $room = Room::find($roomId);
-        $users = $room->users();
+
+        $users = DB::select('SELECT u.id, ur.status_user, u.first_name, u.last_name
+                            FROM user_room ur, user u
+                            WHERE u.id = ur.id_user
+                            AND ur.id_room = ' . $roomId);
 
         return Response::json($users);
     }
@@ -299,7 +320,7 @@ class AjaxController extends Controller
      * Ajax Request : refuse to ban a user from a room
      * @return mixed
      */
-    public function refuseBanUserRoo()
+    public function refuseBanUserRoom()
     {
         $reportId = Input::get('reportId');
 
@@ -307,7 +328,7 @@ class AjaxController extends Controller
         $report->status = 2;
         $report->save();
 
-        return Response::json($user_room);
+        return Response::json($report);
     }
 
     /**

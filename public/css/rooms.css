@@ -99,7 +99,7 @@ tr{
  */
 .rating {
     width: 226px;
-    margin-left: 150px;
+    margin-left: 135px;
     font-size: 45px;
     overflow:hidden;
 }
@@ -131,6 +131,13 @@ tr{
 
 #title, #autor{
     margin:0px;
+}
+
+.autor{
+    font-weight:400;
+    color:#777;
+    line-height:1;
+    font-size: 25px;
 }
 
 #div_note{

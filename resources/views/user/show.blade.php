@@ -37,6 +37,9 @@
             @else
               <small>Localisation non renseignée</small>
             @endif
+            @if(isset($infos->external))
+              <small><a href="{{$infos->external}}" target="_blank">Profil Youtube</a>
+            @endif
         </h1>
 
         <div class="row">

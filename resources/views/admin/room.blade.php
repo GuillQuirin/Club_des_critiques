@@ -3,7 +3,7 @@
     <div class="panel-body">                
         <p>
           <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseAddSalon" aria-expanded="false" aria-controls="collapseAddSalon" id="btnShowAddRoom">
-            Ajouter un salon
+            Créer un salon
           </button>
         </p>
         <div class="collapse" id="collapseAddSalon">
@@ -54,11 +54,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="room_date_end" class="col-2 col-form-label">Status : </label>
+                        <label for="room_date_end" class="col-2 col-form-label">Statut : </label>
                         <div class="col-10">
                             <select id="room_status" name="status" class="form-control selectpicker" required>
-                                <option value="0">Inactif</option>
-                                <option value="1">Actif</option>
+                                <option value="0">Terminé</option>
+                                <option value="1">En cours</option>
+                                <option value="2" selected>A venir</option>
                             </select>
                         </div>
                     </div>
@@ -93,14 +94,16 @@
                             <td class="room-id">{{ $room->id }}</td>
                             <td>{{ $room->name }}</td>
                             <td>{{ $room->element->name }}</td>
-                            <td>{{ $room->date_start }}</td>
-                            <td>{{ $room->date_end }}</td>
+                            <td>{{ date('d/m/Y H:i:s', strtotime($room->date_start)) }}</td>
+                            <td>{{ date('d/m/Y H:i:s', strtotime($room->date_end)) }}</td>
                             <td>{{ $room->users()->count() }}</td>
-                            <td>
+                            <td class="room-status">
                                 @if($room->status == 0)
-                                    Inactif
-                                @else
-                                    Actif
+                                    Terminé
+                                @elseif($room->status === 1)
+                                    En cours
+                                @elseif($room->status === 2)
+                                    A venir
                                 @endif
                             </td>
                             <td>
@@ -188,11 +191,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="edit_room_status" class="col-2 col-form-label">Status : </label>
+                        <label for="edit_room_status" class="col-2 col-form-label">Statut : </label>
                         <div class="col-10">
                             <select id="edit_room_status" name="status" class="form-control selectpicker" required>
-                                <option value="0">Inactif</option>
-                                <option value="1">Actif</option>
+                                <option value="0">Terminé</option>
+                                <option value="1">En cours</option>
+                                <option value="2">A venir</option>
                             </select>
                         </div>
                     </div>

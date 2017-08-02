@@ -23,6 +23,7 @@ class ElementController extends Controller
 	{
         $listElements = DB::table('element')
                             ->leftJoin('category', 'element.id_category', '=', 'category.id')
+                            ->leftJoin('user_element', 'user_element.id_element', '=', 'element.id')
                             ->select(   'element.id',
                                         'element.name',
                                         'element.creator as subName',
@@ -33,9 +34,21 @@ class ElementController extends Controller
                                         'category.name as name_category',
                                         'category.id_parent as id_parent',
                                         'category.id as id_category',
-                                        'element.date_publication as date')
-                            
+                                        'element.date_publication as date',
+                                        DB::raw('ROUND(AVG(user_element.mark),1) as mark'))
+                            ->where('element.is_deleted', '<>', 1)
                             ->orderBy('date_publication', 'desc')
+                            ->groupBy('element.id',
+                                        'element.name',
+                                        'element.creator',
+                                        'element.description',
+                                        'element.url_picture',
+                                        'element.url_api',
+                                        'element.id_category',
+                                        'category.name',
+                                        'category.id_parent',
+                                        'category.id',
+                                        'element.date_publication')
                             ->get();
         $popUp = 'element.show';
 

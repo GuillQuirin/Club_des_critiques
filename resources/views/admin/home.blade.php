@@ -10,7 +10,7 @@
 		    	<input type="text" value="{{$slogan->value}}" class="form-control" name="home_slogan" id="home_slogan">
 			</div>
 			<div class="form-group">
-				<label class="control-label">Changer d'image de bannière : </label>
+				<label class="control-label">Select File</label>
 				<!-- <input id="home_image" type="file" name="home_image" class="file"> -->
 				{!! Form::file('image') !!}
 			</div>
@@ -20,11 +20,11 @@
 
 	<div class="row">
 		<div class="col-md-12">
-			<h4>Oeuvres mises en avant : </h4><br>
+			<h4>Oeuvres à la une : </h4><br>
 
 			<p>
 	          <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseAddElementTop" aria-expanded="false" aria-controls="collapseAddElementTop" id="btnShowAddTopElement">
-	            Selectionner une oeuvre
+	            Ajouter une oeuvre
 	          </button>
 	        </p>
 	        <div class="collapse" id="collapseAddElementTop">

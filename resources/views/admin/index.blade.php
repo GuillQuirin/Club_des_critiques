@@ -17,17 +17,11 @@
     </div>
     <div class="container notPadding"> 
    		<div class="panel-group" id="accordion">
-   			<div class="panel panel-default hidden-xs">
-		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseStat">
-		      		<h4 class="panel-title">Statistiques du site</h4>
-		    	</div>
-	      		@include('admin.stat')
-		  	</div>
 		  	<div class="panel panel-default">
 		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseHome">
 		      		<h4 class="panel-title">Page d'accueil</h4>
 		    	</div>
-		    	<div id="collapseHome" class="panel-collapse collapse">
+		    	<div id="collapseHome" class="panel-collapse collapse in">
 		      		@include('admin.home')
 		    	</div>
 		  	</div>
@@ -62,12 +56,12 @@
 		    	@include('admin.user')
 		    </div>
 		    
-		    {{-- <div class="panel panel-default">
+		    <div class="panel panel-default">
 		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseFooter">
 		      		<h4 class="panel-title">Footer</h4>
 		    	</div>
 		    	@include('admin.footer')
-		    </div> --}}
+		    </div>
 		    <div class="panel panel-default">
 		    	<div class="panel-heading" data-parent="#accordion" data-toggle="collapse" href="#collapseElementSuggest">
 		      		<h4 class="panel-title">Proposition d'oeuvre</h4>
@@ -81,14 +75,12 @@
 
 
 @section('js')
-	<script src="js/highcharts.js"></script>
 	<script type="text/javascript" src="moment/min/moment.min.js"></script>
 	<script type="text/javascript" src="bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
 	<script type="text/javascript" src="js/fileinput.min.js"></script>
 	<script type="text/javascript" src="js/piexif.min.js"></script>
 	<script type="text/javascript" src="js/purify.min.js"></script>
 	<script type="text/javascript" src="js/sortable.min.js"></script>
-	<script type="text/javascript" src="js/dataviz.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 
@@ -412,26 +404,25 @@
 			);
 	    });
 
-	    // Show pop up to edit element
+	    // Sow pop up to edit element
 	    $('#elementTable').on('click', 'a.edit-element', function(){
 		    var myModal = $('#editElementModal');
 
 		    var elementId = $(this).closest('tr').find('td.element-id').html();
 		    var selectEditElementSubCat = $('#edit_element_sub_category');
 		    var selectEditElementCat = $('#edit_element_category');
-		    //console.log(selectEditElementCat.val());
+		    console.log(selectEditElementCat.val());
 
 		    $.ajax({
                 data : { elementId : elementId },
                 url: "{{ route('get_element') }}",
                 type: 'get',
                 success: function(data) {
-                	//console.log(data);
+                	console.log(data);
                 	$('#id_element').val(data.element.id);	
                 	$('#edit_element_name').val(data.element.name);	
                 	$('#edit_element_creator').val(data.element.creator);
                 	$('#edit_element_url_picture').val(data.element.url_picture);
-                	$('#edit_element_url_api').val(data.element.url_api);
                 	$('#edit_element_date_publication').val(data.element.date_publication);
                 	$('#edit_element_date_start').val(data.element.date_start);
                 	$('#edit_element_date_end').val(data.element.date_end);
@@ -580,20 +571,15 @@
                 url: "{{ route('get_users_for_room') }}",
                 type: 'get',
                 success: function(data) {
-
                 	jQuery.each(data, function() {
-                		console.log(this);
                 		if(this.status_user == 1){
-							var status = "Membre";
-							$('#listUsersRoom').append('<li class="list-group-item">' + this.first_name + ' ' + this.last_name + ' - ' + status +'  <span class=""><i class="fa fa-ban" id="' + this.id +'" aria-hidden="true"></i></span></li>');             			
+							var status = "Membre";                			
                 		} else if(this.status_user == 2){
 							var status = "Administrateur";
-							$('#listUsersRoom').append('<li class="list-group-item">' + this.first_name + ' ' + this.last_name + ' - ' + status +'  <span class=""><i class="fa fa-ban" id="' + this.id +'" aria-hidden="true"></i></span></li>');
                 		}else{
                 			var status = "Bannis";
-                			$('#listUsersRoom').append('<li class="list-group-item">' + this.first_name + ' ' + this.last_name + ' - ' + status + '</li>');
                 		}
-                        
+                        $('#listUsersRoom').append('<li class="list-group-item">' + this.first_name + ' ' + this.last_name + ' - ' + status +'<span class=""><i class="fa fa-ban" id="' + this.id +'" aria-hidden="true"></i></span></li>');
                     });
 					myModal.modal('toggle');
 
@@ -601,7 +587,6 @@
 				    $('i.fa-ban').on('click', function() {
 				    	var userId = this.id;
 				    	var roomId = $('#roomId').val();
-				    	tdStatus = $( this ).parent();
 
 				    	swal(
 			    			{
@@ -642,17 +627,6 @@
 	    // Affiche la pop up de modification d'un salon
 		$('#roomTable').on('click', 'a.edit-room', function(){
 			    var myModal = $('#editRoomModal');
-			    var status = $.trim($(this).closest('tr').find('td.room-status').html());
-			    console.log(status);
-			    if(status == "Terminé"){
-			    	status = 0;
-			    } else if(status == "En cours") {
-			    	status = 1;
-			    } else if(status == "A venir") {
-			    	status = 2;
-			    }
-			    console.log(status);
-			    $('#edit_room_status').selectpicker('val', status);
 
 			    var roomId = $(this).closest('tr').find('td.room-id').html();
 			    var selectEditRoomSubCat = $('#edit_room_sub_category');
@@ -663,6 +637,8 @@
 	                url: "{{ route('get_room') }}",
 	                type: 'get',
 	                success: function(data) {
+	                	console.log(data.room.date_start);
+
 	                	$('#edit_room_date_start').datetimepicker({
 	                		format: 'YYYY-MM-DD HH:mm:ss',
 	                		defaultDate: data.room.date_start
@@ -911,8 +887,6 @@
 		// Valide ban user
 		$('#banTable').on('click', 'i.valide-ban-user-room', function(){
 			var reportId = this.id;
-			tab = $( this ).parent();
-
 			swal(
     			{
 				  	title: "Voulez vous vraiment bannir cet utilisateur du salon ?",
@@ -930,7 +904,7 @@
 			                url: "{{ route('ban_user_room') }}",
 			                type: 'put',
 			            }).done(function(){
-			            	tab.html('<p class="text-success">Bannissement validé</p>');
+			            	$('#report-status').html('<p class="text-success">Bannissement validé</p>');
 			            	swal("Supprimé!", "L'utilisateur a bien été banni du salon.", "success");
 			            }).fail(function(){
 			            	swal("Erreur!", "L'utilisateur n'a pas été banni du salon.", "error");
@@ -944,8 +918,6 @@
 		// Refuse ban user
 		$('#banTable').on('click', 'i.refuse-ban-user-room', function(){
 			var reportId = this.id;
-			tab = $( this ).parent();
-
 			swal(
     			{
 				  	title: "Voulez vous vraiment refuser de bannir cet utilisateur du salon ?",
@@ -963,7 +935,7 @@
 			                url: "{{ route('refuse_ban_user_room') }}",
 			                type: 'put',
 			            }).done(function(){
-			            	tab.html('<p class="text-danger">Bannissement refusé</p>');
+			            	$('#report-status').html('<p class="text-danger">Bannissement refusé</p>');
 			            	swal("Supprimé!", "La bannissement de l'utilisateur a été refusé.", "success");
 			            }).fail(function(){
 			            	swal("Erreur!", "Erreur lors du refus de bannissement de l'utilisateur", "error");
@@ -979,8 +951,6 @@
 		// Validate element suggest
 		$('#elementSuggestTable').on('click', 'i.valide-element-suggest', function(){
 			var elementSuggestId = this.id;
-			tab = $( this ).parent();
-
 			swal(
     			{
 				  	title: "Voulez vous vraiment valider cette oeuvre ?",
@@ -997,7 +967,7 @@
 			                url: "{{ route('valide_element_suggest') }}",
 			                type: 'put',
 			            }).done(function(){
-			            	tab.html('<p class="text-success">Validé</p>');
+			            	$('.element-suggest-status').html('<p class="text-success">Validé</p>');
 			            	swal("Validé!", "Vous devez maintenant l'ajouter dans les oeuvres.", "success");
 			            }).fail(function(){
 			            	swal("Erreur!", "L'oeuvre n'a pas été validée.", "error");
@@ -1011,8 +981,6 @@
 		// Refuse element suggest
 		$('#elementSuggestTable').on('click', 'i.refuse-element-suggest', function(){
 			var elementSuggestId = this.id;
-			tab = $( this ).parent();
-
 			swal(
     			{
 				  	title: "Voulez vous vraiment refuser cette oeuvre ?",
@@ -1030,7 +998,8 @@
 			                url: "{{ route('refuse_element_suggest') }}",
 			                type: 'put',
 			            }).done(function(){
-			            	tab.html('<p class="text-danger">Refusé</p>');
+			            	console.log('ok');
+			            	$('.element-suggest-status').html('<p class="text-danger">Refusé</p>');
 			            	swal("Validé!", "L'oeuvre a été refusée.", "success");
 			            }).fail(function(){
 			            	swal("Erreur!", "L'oeuvre n'a pas été refusée.", "error");
@@ -1045,8 +1014,6 @@
 
 	    function initializedDataTable(id) {
             $('#' + id).DataTable({
-            	"pageLength": 5,
-            	"lengthMenu": [[5, 10, 15, -1], [5, 10, 15, "Tout"]],
                 "language": {
                     "sProcessing":     "Traitement en cours...",
                     "sSearch":         "Rechercher&nbsp;:",
@@ -1102,7 +1069,7 @@
             	request: request
            	},
             success: function(data) {
-            	console.log(data);
+            	//console.log(data);
                 data = JSON.parse(data);
                 var html="";
                 $.each(data, function(key,value){
@@ -1122,18 +1089,12 @@
                 				html+="<span class='api_author'>"+value['author']+"</span>";
                 				html+="<span class='api_date'>";
                 					var date = value['date'].split('-');
-                					html+= (date && date[1] && date[2]) ? date[2]+'/'+date[1]+'/'+date[0] : 'Date inconnue';
+                					html+= (date) ? date[2]+'/'+date[1]+'/'+date[0] : 'Date inconnue';
                 				html+="</span>";
                 			html+="</p>";
                 			html+="<p>";
-                				html+="<span class='api_link'>";
-    	            				if(value.link && value.link != "#" && value.link != undefined)
-		                				html+="<a href='"+value.link+"' target='_blank'>Lien d'achat</a>";
-        						html+="</span>";
-                			html+="</p>";
-                			html+="<p>";
+                				html+="<span class='api_link'><a href='"+value.link+"' target='_blank'>Lien d'achat</a></span>";
                 				html+="<span class='api_isbn'>"+value.isbn+"</span>";
-                			html+="</p>";
                 			html+="<p class='api_description'>"+value['description']+"</p>";
                 			html+="<button class='choose_api'>Selectionner cette oeuvre</button>";
                 		html+="</div>";

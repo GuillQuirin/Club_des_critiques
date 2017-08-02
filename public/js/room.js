@@ -27,14 +27,13 @@ $(document).ready(function(){
     };
 
     /*MAJ de la chatbox*/
-    //var timestamp = Math.round(+new Date() / 1000);
-    var month = new Date().getMonth() +1 ;
-    var timestamp = new Date().getFullYear() + "-" + (month<10 ? '0' : '') + month + "-" + (new Date().getDate()<10 ? '0' : '') + new Date().getDate()  +  " " + (new Date().getHours()<10 ? '0' : '') + new Date().getHours() + ":" + (new Date().getMinutes()<10 ? '0' : '') + new Date().getMinutes() + ":" + (new Date().getSeconds()<10 ? '0' : '') + new Date().getSeconds();
-
+    var timestamp = Math.round(+new Date() / 1000);
+    //console.log(timestamp);
     updateChatbox();
 
     function updateChatbox(){
         var id_room = $('#room').val();
+        //console.log(timestamp);
         $.ajax({
             url : "getMessage",
             type : "POST",
@@ -42,6 +41,7 @@ $(document).ready(function(){
         })
         .done(function(data){
             timestamp = Math.round(+new Date() / 1000);
+            //console.log(data);
             var data = JSON.parse(data);
             var html="";
             //console.log(data);
@@ -65,8 +65,7 @@ $(document).ready(function(){
                             html+='<p>'+value.message.replace("\n", '<br />')+'</p>';
                         html+='</div>';
                     html+='</li>';
-                    $('ul#chatbox').html(html);
-                    //$('ul#chatbox').append(html);
+                    $('ul#chatbox').append(html);
                 });
             }
             $("#messages").scrollTop($("#messages").prop('scrollHeight'));
@@ -103,7 +102,6 @@ $(document).ready(function(){
             })
             .done(function(data){
                 updateChatbox();
-                console.log("Mise à jour cb : "+message);
                 $('#message').val('');
             });
         }

@@ -95,7 +95,7 @@ figcaption .name{
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 0 20px;
-    white-space: nowrap;
+    /*white-space: nowrap;*/
 }
 
 figcaption .subName{
@@ -138,6 +138,13 @@ footer a:hover, footer a:active, footer a:focus{
     padding-top: 25px;
 }
 
+/* CSS appliqué pour l'ensemble des container hormis l'accueil*/
+.container:not(.notPadding){
+    padding-right: 75px;
+    padding-left: 75px;
+    position: relative;
+}
+
 .verti_marg{
     margin-top: 10px;
     margin-bottom: 10px;
@@ -147,17 +154,7 @@ ul.pagination a:hover{
     cursor: pointer;
 }
 
-@media(min-width:768px){
-
-    /* CSS appliqué pour l'ensemble des container hormis l'accueil*/
-    .container:not(.notPadding){
-        padding-right: 75px;
-        padding-left: 75px;
-        position: relative;
-    }
-}
-
-/* FORMAT SM */
+/* FORMAT XS */
 @media(max-width:768px){
 
 	/* VOLET DEROULANT */
@@ -199,13 +196,11 @@ ul.pagination a:hover{
     }
 
     ul.navbar-nav ul.dropdown-menu{
-        font-style: italic;
-        text-decoration: underline;
+        background-color: #dcf9e4 !important;
     }
     
     ul.navbar-nav>li.dropdown>a{
         padding-left: 25%;
-        font-weight: bold;
     }
 
     #nextRoomCountdown{

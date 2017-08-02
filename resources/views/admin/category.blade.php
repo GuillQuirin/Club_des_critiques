@@ -2,7 +2,7 @@
     <div class="panel-body">
         <p>
             <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="btnShowAddCategory">
-                Créer une catégorie
+                Ajouter une catégorie
             </button>
         </p>
         <div class="collapse" id="collapseExample">

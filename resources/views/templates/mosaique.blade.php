@@ -30,11 +30,7 @@
                 @if(isset($value->link))
                     data-link="{{$value->link}}"
                 @endif
-                
-                @if(isset($value->mark))
-                    data-mark="{{$value->mark}}"
-                @endif
-                
+
                 @if(isset($redirection))
                     href="{{ route($redirection,[ 'id' => $value->id ]) }}"
                 @else

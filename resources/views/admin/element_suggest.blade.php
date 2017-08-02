@@ -10,7 +10,6 @@
                             <th>Nom</th>
                             <th>Auteur</th>
                             <th>Catégorie</th>
-                            <th>Souhait salon</th>
                             <th>Status</th>                          
                         </tr>
                     </thead>
@@ -22,13 +21,6 @@
                                 <td>{{ $elementSuggest->name }}</td>
                                 <td>{{ $elementSuggest->creator }}</td>
                                 <td>{{ $elementSuggest->category }}</td>
-                                <td>
-                                    @if($elementSuggest->want_room == 0)
-                                        Non
-                                    @else 
-                                        Oui 
-                                    @endif
-                                </td>
                                 <td class="element-suggest-status">
                                     @if($elementSuggest->status == 0)
                                         <i class="fa fa-check valide-element-suggest" aria-hidden="true" id="{{ $elementSuggest->id }}"></i>

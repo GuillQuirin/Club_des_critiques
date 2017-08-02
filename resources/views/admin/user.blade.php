@@ -88,25 +88,19 @@
                             <td class="user-id">{{ $user->id }}</td>
                             <td>{{ $user->last_name }}</td>
                             <td>{{ $user->first_name }}</td>
-                            <td>
-                                @if(isset($user->department))
-                                    {{ $user->department->name }}
-                                @endif
-                            </td>
+                            <td>{{ $user->department->name }}</td>
                             <td>{{ $user->picture }}</td>
                             <td>{{ $user->email }}</td>
                             <td class="user-status">{{ $user->status->label }}</td>
                             <td>
-                                @if($user->id_status != 6)
-                                    <a href="#" class="btn edit-user"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="btn edit-user"><i class="fa fa-pencil"></i></a>
+                                @if($user->id_status != 5)
+                                    <i class="fa fa-ban ban-user" aria-hidden="true" id="{{ $user->id }}"></i> 
                                 @endif
-                                @if($user->id_status != 5 && $user->id_status != 6)
-                                    <i class="fa fa-ban ban-user" aria-hidden="true" id="{{ $user->id }}"></i>
-                                @endif
-                                @if($user->id_status != 6)
+                                @if($user->status->id_status != 6)
                                     <i class="fa fa-trash delete-user" aria-hidden="true" id="{{ $user->id }}" style="padding: 6px 12px;"></i>
                                 @endif
-                            </td>
+                            </td>                               
                         </tr>
                         @endforeach
                     </tbody>

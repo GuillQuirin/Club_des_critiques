@@ -26,13 +26,9 @@ class RoomsController extends Controller
      */
     public function index()
     {
-        $rooms = Room::all()->sortByDesc("date_start");
-        $user_room = UserRoom::all();
-        $user_element = UserElement::where('id_user', Auth::id())->get();
+        $rooms = Room::all()->sortByDesc("date_start");;
         return view('rooms.all_rooms')
-            ->with(compact('rooms'))
-            ->with(compact('user_room'))
-            ->with(compact('user_element'));
+            ->with(compact('rooms'));
     }
 
     /**
@@ -43,10 +39,7 @@ class RoomsController extends Controller
      */
     public function showFuturRooms()
     {
-        $now = new \DateTime();
-        $rooms = Room::where('date_start', '>', $now)
-                        ->where('status', 2)
-                        ->get();
+        $rooms = Room::where('date_start', '>', date("Y-m-d H:i:s"))->where('status', 2)->get();
         $user_room = UserRoom::where('id_user', explode(',', Auth::id()))->get();
         $user_element = UserElement::where('id_user', Auth::id())->get();
         return view('rooms.index')
@@ -65,30 +58,30 @@ class RoomsController extends Controller
     {
         $rooms = Room::whereIn('id', function ($query) {
             $query->select('id_room')
-                    ->from('user_room')
-                    ->where('id_user', Auth::id());
+                ->from('user_room')
+                ->where('id_user', Auth::id());
         })->get();
 
         $test = DB::select('SELECT element.name as element_name, 
-                                element.creator, 
-                                element.date_publication,
-                                element.url_picture,
-                                category.name as category,
-                                user_element.mark, 
-                                room.name as room_name, 
-                                room.date_start, 
-                                room.date_end,
-                                room.status,
-                                room.number as number, 
-                                room.id as id_room,
-                                user_room.status_user
+                            element.creator, 
+                            element.date_publication,
+                            element.url_picture,
+                            category.name as category,
+                            user_element.mark, 
+                            room.name as room_name, 
+                            room.date_start, 
+                            room.date_end,
+                            room.status,
+                            room.number as number, 
+                            room.id as id_room,
+                            user_room.status_user
                             FROM element, user_element, room, user_room, category
                             WHERE room.id_element = user_element.id_element 
-                                and element.id_category = category.id
-                                and user_element.id_user = ' . Auth::id() . ' 
-                                and room.id_element = element.id
-                                and room.id = user_room.id_room
-                                and user_room.id_user = user_element.id_user');
+                            and element.id_category = category.id
+                            and user_element.id_user = ' . Auth::id() . ' 
+                            and room.id_element = element.id
+                            and room.id = user_room.id_room
+                            and user_room.id_user = user_element.id_user');
 
         return view('rooms.my_rooms')
             ->with(compact('rooms'))
@@ -231,17 +224,41 @@ class RoomsController extends Controller
                 'is_deleted' => 0
             ]
         );
+        return Redirect::route('futur_rooms');
+    }
 
-        DB::table('user_room')->insert(
-            [
-                'id_user' => Auth::id(),
-                'id_room' => $request->room,
-                'status_user' => 1
-            ]
-        );
-        //Ajouté pour que le client puisse tester un salon directement
+    /////// ADMINISTRATION //////
 
-        return Redirect::route('my_rooms');
+    /**
+     * Création d'un salon
+     *
+     * @return view
+     */
+    public function add()
+    {
+        # code...
+    }
+
+    /**
+     * Modification d'un salon
+     *
+     * @param  int $id
+     * @return view
+     */
+    public function edit($id)
+    {
+        # code...
+    }
+
+    /**
+     * Suppression d'un salon
+     *
+     * @param  int $id
+     * @return view
+     */
+    public function delete($id)
+    {
+        # code...
     }
 
     public function addMessage()
@@ -287,11 +304,7 @@ class RoomsController extends Controller
     public function inviteUser(Request $request)
     {
         $sender = User::where('id', Auth::id())->first();
-        $receiver = User::where([
-            ['first_name', '=', substr($request->autocomplete_user,0,-3)],
-            ['last_name', 'like', substr($request->autocomplete_user,-2,1)."%"]
-        ])->first();
-
+        $receiver = User::where('id', $request->id_user)->first();
         $room = Room::where('id', $request->id_room)->first();
         $data = [
             'sender' => $sender,
@@ -302,41 +315,8 @@ class RoomsController extends Controller
             $message->to($receiver->email);
             $message->subject('Club des critiques : un ami vous a invité à rejoindre un salon');
         });
-
-        return Redirect::route('show_room', ['id' => $request->id_room]);
     }
 
-    public function displayInvitation(){
-        return (Auth::check()) ? view('rooms.invitation') :  redirect('/');
-     }
-
-     public function addInvitation(Request $request){
-        if(Auth::check()){
-            $header = Room::findOrFail($request->room);
-            $element = Element::findOrFail($header->id_element);
-            
-            DB::table('user_room')->insert(
-                [
-                    'id_user' => Auth::id(),
-                    'id_room' => $request->room,
-                    'status_user' => 1
-                ]
-            );
-
-            DB::table('user_element')->insert(
-                [
-                    'id_user' => Auth::id(),
-                    'id_element' => $header->id_element,
-                    'mark' => $request->note,
-                    'is_exchangeable' => 0,
-                    'is_deleted' => 0
-                ]
-            );
-        }
-        //return view('rooms.invitation'); 
-        return redirect('/');
-     }
-     
     public function reportUser(Request $request)
     {
         DB::table('report')->insert([
@@ -389,12 +369,20 @@ class RoomsController extends Controller
             }
         }
 
+        /*echo "Nombre de participants : " . $nb_user . "<br>";
+        echo "Note 1/4 : " . $nb_one . "<br>";
+        echo "Note 2/4 : " . $nb_two . "<br>";
+        echo "Note 3/4 : " . $nb_three . "<br>";
+        echo "Note 4/4 : " . $nb_four . "<br>";*/
+
         //Détermine le nombre de salons nécessaires
         if ($nb_user > 20) {
             $nb_room = round(($nb_user / 20), 0) + 1;
         } else {
             $nb_room = 1;
         }
+
+        //echo "Nombre de salon nécessaire : " . $nb_room . "<br>";
 
         //Détermine le nombre de notes par salon
         $nb_one_room = round($nb_one / $nb_room, 0);
@@ -574,13 +562,13 @@ class RoomsController extends Controller
             ]);*/
     }
 
-    public function updateRoom(Request $request)
+    public
+    function updateRoom(Request $request)
     {
         DB::table('room')
             ->where('id', '=', $request->id_room)
             ->update([
                 'name' => $request->room_name,
-                'date_start' => $request->start_date,
                 'date_end' => $request->end_date
             ]);
         DB::table('element')
@@ -593,7 +581,8 @@ class RoomsController extends Controller
         return Redirect::route('show_room', ['id' => $request->id_room]);
     }
 
-    public function interruptRoom(Request $request)
+    public
+    function interruptRoom(Request $request)
     {
         DB::table('room')
             ->where('id', '=', $request->id_room)

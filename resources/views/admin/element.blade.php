@@ -2,7 +2,7 @@
     <div class="panel-body">
         <p>
           <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseAddElement" aria-expanded="false" aria-controls="collapseAddElement" id="btnShowAddElement">
-            Créer une oeuvre
+            Ajouter une oeuvre
           </button>
         </p>
         <div class="collapse" id="collapseAddElement">
@@ -106,7 +106,7 @@
                     <div class="form-group " id="description">
                         <label for="date_end" class="col-2 col-form-label">Description : </label>
                         <div class="col-10">
-                            <textarea class="form-control" rows="5" id="element_description" name="description" required></textarea>
+                            <textarea class="form-control" rows="5" id="element_description" name="description"></textarea>
                         </div>
                     </div>
 
@@ -167,17 +167,10 @@
             </div>
             <div class="modal-body">
                 <form action="getApi" method="POST" id="getApi">
-                    <div class="form-group" id="dateStart">
-                        <input class="form-control" type="text" name="intitle" placeholder="Titre">
-                    </div>
-                    <div class="form-group" id="dateStart">
-                        <input class="form-control" type="text" name="inauthor" placeholder="Auteur">
-                    </div>
-                    <div class="form-group" id="dateStart">
-                        <input class="form-control" type="number" name="isbn" placeholder="ISBN">
-                    </div>
-                      
-                    <input type="submit" class="btn btn-success" value="Rechercher">
+                  <input type="text" name="intitle" placeholder="Titre">
+                  <input type="text" name="inauthor" placeholder="Auteur">
+                  <input type="number" name="isbn" placeholder="ISBN">
+                  <input type="submit" class="btn btn-success" value="Rechercher">
                 </form>
                 <div id="listApi">
                 </div>
@@ -209,7 +202,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="creator" class="col-2 col-form-label">Auteur / réalisateur : </label>
+                        <label for="creator" class="col-2 col-form-label">Aueur / réalisateur : </label>
                         <div class="col-10">
                             <input class="form-control" type="text" id="edit_element_creator" name="creator">
                         </div>
@@ -226,7 +219,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="category" class="col-2 col-form-label">Sous-catégorie : </label>
+                        <label for="category" class="col-2 col-form-label">Sous catégorie : </label>
                         <div class="col-10">
                             <select id="edit_element_sub_category" name="sub_category" class="form-control selectpicker"  data-size="7" data-live-search="true" required="required">
                             </select>
@@ -242,7 +235,7 @@
                     <div class="form-group">
                         <label for="url_shop" class="col-2 col-form-label">Url de la boutique : </label>
                         <div class="col-10">
-                            <input class="form-control" type="text" id="edit_element_url_api" name="url_api">
+                            <input class="form-control" type="text" id="element_url_shop" name="url_api">
                         </div>
                     </div>
 

@@ -37,9 +37,7 @@
                         <td>{{$room->number}}</td>
                         <td>{{$room->mark}}</td>
                         <td>@if($room->status_user != 0)
-                                <a class="btn" href="{{route('show_room', [ 'id' => $room->id_room ])}}">
-                                    Accéder au salon
-                                </a>
+                                <a class="btn" href="{{route('show_room', [ 'id' => $room->id_room ])}}">Accéder au salon</a>
                             @endif
                         </td>
                     </tr>
